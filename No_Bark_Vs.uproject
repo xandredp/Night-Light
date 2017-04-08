@@ -7,7 +7,10 @@
 		{
 			"Name": "No_Bark_Vs",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	]
 }
