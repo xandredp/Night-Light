@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "No_Bark_Vs.h"
+#include "BaseInteractable.h"
+#include "PlayController.h"
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "NBCharacter.h"
 
@@ -43,6 +45,12 @@ ANBCharacter::ANBCharacter()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
+void ANBCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	CheckForInteractables();
+}
+
 void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
@@ -81,7 +89,31 @@ void ANBCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	StopJumping();
 }
+void ANBCharacter::CheckForInteractables()
+{
+	//Trace with Raycasting Everytick and check the item is interactable. 
+	FHitResult HitResult;
 
+	FVector StartTrace = FollowCamera->GetComponentLocation();
+	FVector EndTrace = (FollowCamera->GetForwardVector() * 300) + StartTrace;
+
+	//Add To ignore these items for checking interactable
+	FCollisionQueryParams QuerryParams;
+	QuerryParams.AddIgnoredActor(this);
+
+	APlayController* playController = Cast<APlayController>(GetController());
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartTrace, EndTrace, ECC_Visibility, QuerryParams) && Controller)
+	{
+		if(ABaseInteractable* interactable = Cast<ABaseInteractable>(HitResult.GetActor()))
+		{
+			playController->CurrentInteractable = interactable;
+			return;
+		}
+	}
+
+	// If we didn't hit anything, or thing we hit was on to a interactable set current interactable nullptr. 
+	playController->CurrentInteractable = nullptr;
+}
 void ANBCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
