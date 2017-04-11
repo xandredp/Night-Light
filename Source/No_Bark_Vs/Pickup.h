@@ -16,6 +16,10 @@ class NO_BARK_VS_API APickup : public ABaseInteractable
 	
 public:
 	APickup();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Pickup")
+		void OnUsed();
+
 protected:
 	UPROPERTY(EditAnywhere, Category = "Pickup")
 	UStaticMeshComponent* PickupMesh;

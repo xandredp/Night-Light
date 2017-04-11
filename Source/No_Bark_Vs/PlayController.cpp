@@ -2,6 +2,8 @@
 
 #include "No_Bark_Vs.h"
 #include "BaseInteractable.h"
+#include "NBCharacter.h"
+#include "PlayGameMode.h"
 #include "PlayController.h"
 
 
@@ -14,6 +16,21 @@ void APlayController::Interact()
 		CurrentInteractable->Interact(this);
 
 	}
+}
+
+void APlayController::AddItemtoInventoryByID(FName ID)
+{
+	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
+	UDataTable* ItemTable = PlayGameMode->GetItemDB();
+	
+	FInventoryItem* ItemToADD = ItemTable->FindRow<FInventoryItem>(ID, "");
+	
+	if (ItemToADD)
+	{
+		Inventory.Add(*ItemToADD);
+	}
+
+
 }
 
 void APlayController::SetupInputComponent()

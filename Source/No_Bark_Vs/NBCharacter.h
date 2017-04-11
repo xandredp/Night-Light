@@ -39,6 +39,7 @@ public:
 		Action = FText::FromString("Use");
 		Description = FText::FromString("Description here");
 		Value = 10;
+		MaxStackNumber = 1;
 	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -55,7 +56,8 @@ public:
 		UTexture2D* Thumbnail;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText Description;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int32 MaxStackNumber;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<FCraftingInfo> CraftCombinations;
 

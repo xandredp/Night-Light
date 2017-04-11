@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/PlayerController.h"
+#include "NBCharacter.h"
 #include "PlayController.generated.h"
 
 /**
@@ -20,6 +21,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void Interact();
+	
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddItemtoInventoryByID(FName ID);
+
+	//Array of inventory
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FInventoryItem> Inventory;
 
 protected:
 
