@@ -4,11 +4,18 @@
 #include "BaseInteractable.h"
 #include "PlayController.h"
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
+#include "Engine.h"
+#include "Engine/Blueprint.h"
 #include "NBCharacter.h"
 
 
 ANBCharacter::ANBCharacter()
 {
+
+	ABaseWeapon* aBaseWeapon = Cast<ABaseWeapon>(WeaponClass);
+	WeaponClass->IsChildOf(ABaseWeapon::StaticClass());
+
+	WeaponClass = ABaseWeapon::StaticClass();
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -42,8 +49,22 @@ ANBCharacter::ANBCharacter()
 												   // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Input
+void ANBCharacter::BeginPlay()
+{
+
+	Super::BeginPlay();
+
+	if (WeaponClass != NULL)
+	{
+
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+
+		}
+	}
+
+}
 
 void ANBCharacter::Tick(float DeltaSeconds)
 {
@@ -57,6 +78,10 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
+
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
@@ -74,6 +99,10 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
 }
 
+
+void ANBCharacter::FireWeapon()
+{
+}
 
 void ANBCharacter::OnResetVR()
 {

@@ -1,10 +1,13 @@
 
 #pragma once
 
-#include "Engine/DataTable.h"
+
 #include "GameFramework/Character.h"
+#include "Engine/DataTable.h"
+#include "BaseWeapon.h"
 #include "NBCharacter.generated.h"
 
+//GunSkeltal -> bullet spawn point  = MuzzleTip
 
 // Struct of things I can Craft. 
 USTRUCT(BlueprintType)
@@ -78,6 +81,7 @@ UCLASS(config = Game)
 class NO_BARK_VS_API ANBCharacter : public ACharacter
 {
 	GENERATED_BODY()
+	
 		/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
@@ -90,8 +94,8 @@ public:
 	// Sets default values for this character's properties
 	ANBCharacter();
 
-	//// Called when the game starts or when spawned
-	//virtual void BeginPlay() override;
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 	//
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
@@ -106,6 +110,19 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
+
+	/************************************************************************/
+	/* weapon use                                                           */
+	/************************************************************************/
+
+	UFUNCTION()
+		void FireWeapon();
+	
+	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
+	UPROPERTY(EditDefaultsOnly, Category = Spawn)
+		TSubclassOf <class ABaseWeapon> WeaponClass;
+
+	ABaseWeapon *CurrentWeapon;
 
 protected:
 
