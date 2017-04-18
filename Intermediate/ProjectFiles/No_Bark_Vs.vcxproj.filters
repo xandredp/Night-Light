@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<None Include="..\..\No_Bark_Vs.uproject" />
+		<Filter Include="Source">
+			<UniqueIdentifier>{0B7F203F-8CB0-41D5-AFC9-75FAEA39DE06}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\No_Bark_Vs.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<None Include="..\..\Source\No_Bark_VsEditor.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<Filter Include="Config">
+			<UniqueIdentifier>{4FBDA53B-93DA-44BD-95D1-153F988E9A2F}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Config\DefaultEditor.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultEngine.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultGame.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultInput.ini">
+			<Filter>Config</Filter>
+		</None >
+		<Filter Include="Source\No_Bark_Vs">
+			<UniqueIdentifier>{2F8C2727-F94E-4697-BD6E-AE32B59EA626}</UniqueIdentifier>
+		</Filter>
+		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseInteractable.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseInteractable.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseWeapon.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseWeapon.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\NBCharacter.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\NBCharacter.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<None Include="..\..\Source\No_Bark_Vs\No_Bark_Vs.Build.cs">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</None >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\No_Bark_Vs.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\No_Bark_Vs.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\No_Bark_VsGameModeBase.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\No_Bark_VsGameModeBase.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\Pickup.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\Pickup.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\PickupHealth.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\PickupHealth.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\PlayController.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\PlayController.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\PlayGameMode.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\PlayGameMode.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+	</ItemGroup>
+</Project>

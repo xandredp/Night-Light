@@ -114,9 +114,6 @@ public:
 	/************************************************************************/
 	/* weapon use                                                           */
 	/************************************************************************/
-
-	UFUNCTION()
-		void FireWeapon();
 	
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(EditDefaultsOnly, Category = Spawn)
@@ -124,8 +121,13 @@ public:
 
 	ABaseWeapon *CurrentWeapon;
 
+
+
 protected:
 
+	/************************************************************************/
+	/* Movement                                                        */
+	/************************************************************************/
 	void OnResetVR();
 
 	void MoveForward(float Value);
@@ -140,7 +142,12 @@ protected:
 
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	void OnStartSprinting();
 
+	void OnStopSprinting();
+
+	void SetSprinting(bool NewSprinting);
+	
 	/************************************************************************/
 	/* Pickups                                                              */
 	/************************************************************************/

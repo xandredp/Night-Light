@@ -79,7 +79,8 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
+	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
+	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
 
 
@@ -97,17 +98,35 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
+
+
+	// Weapons
+	/*PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &ANBCharacter::OnStartTargeting);
+	PlayerInputComponent->BindAction("Targeting", IE_Released, this, &ANBCharacter::OnEndTargeting);
+
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::OnStartFire);
+	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::OnStopFire);
+
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::OnReload);
+
+	PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, this, &ANBCharacter::OnNextWeapon);
+	PlayerInputComponent->BindAction("PrevWeapon", IE_Pressed, this, &ANBCharacter::OnPrevWeapon);
+
+	PlayerInputComponent->BindAction("EquipPrimaryWeapon", IE_Pressed, this, &ANBCharacter::OnEquipPrimaryWeapon);
+	PlayerInputComponent->BindAction("EquipSecondaryWeapon", IE_Pressed, this, &ANBCharacter::OnEquipSecondaryWeapon);
+*/
+
+
+
 }
 
 
-void ANBCharacter::FireWeapon()
-{
-}
 
 void ANBCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
+
 
 void ANBCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
@@ -182,4 +201,23 @@ void ANBCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void ANBCharacter::OnStartSprinting()
+{
+	Jump();
+}
+
+void ANBCharacter::OnStopSprinting()
+{
+	StopJumping();
+}
+
+void ANBCharacter::SetSprinting(bool NewSprinting)
+{
+	//if (bWantsToRun)
+	//{
+	//	StopWeaponFire();
+	//}
+
 }
