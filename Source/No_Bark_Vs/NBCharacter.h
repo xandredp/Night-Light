@@ -111,6 +111,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
 
+	//UPROPERTY(Transient, Replicated)
+		bool bWantsToRun;
+
+	/** Sprinting rate this decides how fast sprint will be. */
+	UPROPERTY(EditDefaultsOnly, Category = Movement)
+		float SpeedValue;
 	/************************************************************************/
 	/* weapon use                                                           */
 	/************************************************************************/
@@ -147,7 +153,9 @@ protected:
 	void OnStopSprinting();
 
 	void SetSprinting(bool NewSprinting);
-	
+
+	void OnCrouchToggle();
+
 	/************************************************************************/
 	/* Pickups                                                              */
 	/************************************************************************/

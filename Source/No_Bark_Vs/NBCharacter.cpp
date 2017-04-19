@@ -5,7 +5,6 @@
 #include "PlayController.h"
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "Engine.h"
-#include "Engine/Blueprint.h"
 #include "NBCharacter.h"
 
 
@@ -22,6 +21,7 @@ ANBCharacter::ANBCharacter()
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
+	SpeedValue = 4.0;
 
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
@@ -70,6 +70,8 @@ void ANBCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	CheckForInteractables();
+
+	
 }
 
 void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -82,7 +84,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
 	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
-
+	InputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
@@ -184,7 +186,16 @@ void ANBCharacter::MoveForward(float Value)
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(Direction, Value);
+	
+		if (bWantsToRun== true)
+		{
+			AddMovementInput(Direction, SpeedValue*Value);
+		}
+		else
+		{
+			AddMovementInput(Direction, Value);
+		}
+		
 	}
 }
 
@@ -198,26 +209,55 @@ void ANBCharacter::MoveRight(float Value)
 
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
-		AddMovementInput(Direction, Value);
+		
+		if (bWantsToRun == true)
+		{
+			AddMovementInput(Direction, SpeedValue*Value);
+		}
+		else
+		{
+			AddMovementInput(Direction, Value);
+		}
 	}
 }
 
 void ANBCharacter::OnStartSprinting()
 {
-	Jump();
+	SetSprinting(true);
 }
 
 void ANBCharacter::OnStopSprinting()
 {
-	StopJumping();
+	SetSprinting(false);
 }
 
 void ANBCharacter::SetSprinting(bool NewSprinting)
 {
-	//if (bWantsToRun)
-	//{
-	//	StopWeaponFire();
-	//}
 
+	bWantsToRun = NewSprinting;
+
+	//If wanting to sprinting stop fire and uncrouch
+	if (bWantsToRun)
+	{
+		//StopWeaponFire();
+		//if (bIsCrouched)
+		//	UnCrouch();
+	}
+
+}
+
+void ANBCharacter::OnCrouchToggle()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "You are running faster");
+
+
+	// If we are crouching then CanCrouch will return false. If we cannot crouch then calling Crouch() wont do anything
+	if (CanCrouch())
+	{
+		Crouch();
+	}
+	else
+	{
+		UnCrouch();
+	}
 }
