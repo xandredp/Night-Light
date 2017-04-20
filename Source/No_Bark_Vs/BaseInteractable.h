@@ -17,8 +17,8 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintImplementableEvent)
-		void Interact(APlayerController* playerController);
+	//UFUNCTION(BlueprintImplementableEvent)
+		virtual void Interact(APlayerController* playerController);
 
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
 		FString GetInteractText() const;

@@ -6,12 +6,8 @@
 
 ABaseWeapon::ABaseWeapon()
 {
-	CollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComp"));
-	RootComponent = CollisionComp;
 
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>( TEXT("WeaponMesh"));
-	WeaponMesh->SetRelativeRotation(FRotator(0, 180, 0), false);
-	WeaponMesh->SetupAttachment(RootComponent);
+
 }
 
 
@@ -145,7 +141,7 @@ void ABaseWeapon::DetachFromPlayer()
 
 void ABaseWeapon::OnEquip()
 {
-	CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	WeaponCollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttachToPlayer();
 }
 

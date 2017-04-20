@@ -22,6 +22,10 @@ void ABaseInteractable::BeginPlay()
 	
 }
 
+void ABaseInteractable::Interact(APlayerController * playerController)
+{
+}
+
 FString ABaseInteractable::GetInteractText() const
 {
 	return FString::Printf(TEXT("%s : Press E to %s"), *Name, *Action);

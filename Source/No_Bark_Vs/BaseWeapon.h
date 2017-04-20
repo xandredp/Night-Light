@@ -2,8 +2,7 @@
 
 #pragma once
 
-
-#include "BaseInteractable.h"
+#include "Pickup.h"
 #include "Engine/DataTable.h"
 #include "BaseWeapon.generated.h"
 
@@ -61,7 +60,7 @@ public:
 
 
 UCLASS()
-class NO_BARK_VS_API ABaseWeapon : public ABaseInteractable
+class NO_BARK_VS_API ABaseWeapon : public APickup
 {
 	GENERATED_BODY()
 
@@ -83,13 +82,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Config")
 		TEnumAsByte<EProjectileType> ProjectileType;
-
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
-		class UBoxComponent* CollisionComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
-		class USkeletalMeshComponent* WeaponMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = Config)
 		USoundCue *FireSound;
@@ -119,19 +111,5 @@ protected:
 	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
 
 	ANBCharacter *MyPawn;
-
-	/************************************************************************/
-	/* iteractable elements                                                 */
-	/************************************************************************/
-
-public:
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Pickup")
-		void OnUsed();
-
-
-protected:
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
-		FName ItemID;
 
 };

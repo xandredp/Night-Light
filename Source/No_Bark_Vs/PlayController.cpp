@@ -4,10 +4,15 @@
 #include "BaseInteractable.h"
 #include "NBCharacter.h"
 #include "PlayGameMode.h"
+#include "Blueprint/UserWidget.h"
 #include "PlayController.h"
 
 
 
+
+APlayController::APlayController()
+{
+}
 
 void APlayController::Interact()
 {
@@ -20,17 +25,42 @@ void APlayController::Interact()
 
 void APlayController::AddItemtoInventoryByID(FName ID)
 {
+	// getting the game mode and get Item database. 
 	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
 	UDataTable* ItemTable = PlayGameMode->GetItemDB();
 	
+	// find inventory item. 
 	FInventoryItem* ItemToADD = ItemTable->FindRow<FInventoryItem>(ID, "");
 	
+	// if inventory item is valid add to inventory. 
 	if (ItemToADD)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added");
 		Inventory.Add(*ItemToADD);
 	}
 
 
+}
+
+void APlayController::OpenInventory()
+{
+	if (wInventory) // Check if the Asset is assigned in the blueprint.
+	{
+		
+		// Create the widget and store it.
+		MyInventory = CreateWidget<UUserWidget>(this, wInventory);
+		// now you can use the widget directly since you have a referance for it.
+		// Extra check to  make sure the pointer holds the widget.
+		if (MyInventory)
+		{
+			
+			//let add it to the view port
+			MyInventory->AddToViewport();
+		}
+
+		//Show the Cursor.
+		bShowMouseCursor = true;
+	}
 }
 
 void APlayController::SetupInputComponent()
@@ -38,6 +68,7 @@ void APlayController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	InputComponent->BindAction("Use", IE_Pressed, this, &APlayController::Interact);
+	InputComponent->BindAction("Inventory", IE_Pressed, this, &APlayController::OpenInventory);
 
 
 }

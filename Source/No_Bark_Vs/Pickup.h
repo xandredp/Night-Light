@@ -17,16 +17,28 @@ class NO_BARK_VS_API APickup : public ABaseInteractable
 public:
 	APickup();
 
+	// Called when the game starts or when spawned
+	virtual void Interact(APlayerController* playerController) override;
+	
+	void DestroyItemOnGround();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Colllision")
+		UStaticMeshComponent* PickupMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class USkeletalMeshComponent* WeaponMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class UBoxComponent* WeaponCollisionComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class UBoxComponent* PickupCollisionComp;
+
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Pickup")
 		void OnUsed();
 
-protected:
-	UPROPERTY(EditAnywhere, Category = "Pickup")
-	UStaticMeshComponent* PickupMesh;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
 	FName ItemID;
-
-
 	
 };

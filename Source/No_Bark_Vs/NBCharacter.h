@@ -9,6 +9,24 @@
 
 //GunSkeltal -> bullet spawn point  = MuzzleTip
 
+
+UENUM()
+enum class EInventorySlot : uint8
+{
+	/* For currently equipped items/weapons */
+	Hands,
+
+	/* For primary weapons on spine bone */
+	Primary,
+
+	/* For secondary weapons on spine bone */
+	Secondary,
+
+	/* For Knife weapons on bone */
+	Knife,
+};
+
+
 // Struct of things I can Craft. 
 USTRUCT(BlueprintType)
 struct FCraftingInfo : public FTableRowBase
@@ -126,6 +144,28 @@ public:
 		TSubclassOf <class ABaseWeapon> WeaponClass;
 
 	ABaseWeapon *CurrentWeapon;
+
+	/* Return socket name for attachments (to match the socket in the character skeleton) */
+	FName GetInventoryAttachPoint(EInventorySlot Slot) const;
+
+
+private:
+
+	/* Attachpoint for active weapon/item in hands */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName WeaponAttachPoint;
+
+	/* Attachpoint for items carried on the belt/pelvis. */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName KnifeAttachPoint;
+
+	/* Attachpoint for primary weapons */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName PrimaryAttachPoint;
+
+	/* Attachpoint for secondary weapons */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName SecondaryAttachPoint;
 
 
 

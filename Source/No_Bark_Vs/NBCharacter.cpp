@@ -47,6 +47,11 @@ ANBCharacter::ANBCharacter()
 
 												   // Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 												   // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+												   /* Names as specified in the character skeleton */
+	WeaponAttachPoint = TEXT("Weapon_Socket");
+	KnifeAttachPoint = TEXT("Thigh_Socket");
+	PrimaryAttachPoint = TEXT("Spine_Socket");
+	SecondaryAttachPoint = TEXT("Clavicle_Socket");
 }
 
 void ANBCharacter::BeginPlay()
@@ -248,7 +253,7 @@ void ANBCharacter::SetSprinting(bool NewSprinting)
 
 void ANBCharacter::OnCrouchToggle()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "You are running faster");
+	
 
 
 	// If we are crouching then CanCrouch will return false. If we cannot crouch then calling Crouch() wont do anything
@@ -259,5 +264,24 @@ void ANBCharacter::OnCrouchToggle()
 	else
 	{
 		UnCrouch();
+	}
+}
+
+FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const
+{
+	/* Return the socket name for the specified storage slot */
+	switch (Slot)
+	{
+	case EInventorySlot::Hands:
+		return WeaponAttachPoint;
+	case EInventorySlot::Primary:
+		return PrimaryAttachPoint;
+	case EInventorySlot::Secondary:
+		return SecondaryAttachPoint;
+	case EInventorySlot::Knife:
+		return KnifeAttachPoint;
+	default:
+		// Not implemented.
+		return "";
 	}
 }

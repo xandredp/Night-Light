@@ -14,6 +14,7 @@ class NO_BARK_VS_API APlayController : public APlayerController
 {
 	GENERATED_BODY()
 
+		APlayController();
 public:
 	//The interactable that player is currently looking at. 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -28,6 +29,16 @@ public:
 	//Array of inventory
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		TArray<FInventoryItem> Inventory;
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void OpenInventory();
+
+	// Reference UMG Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wInventory;
+
+	// Variable to hold the widget After Creating it.
+	UUserWidget* MyInventory;
 
 protected:
 
