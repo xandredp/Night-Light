@@ -1,0 +1,18 @@
+﻿  Creating makefile for No_Bark_Vs (ini files are newer that UBTMakefile)
+  Performing full C++ include scan (no include cache file)
+  Parsing headers for No_Bark_Vs
+    Running UnrealHeaderTool "E:\love-\Projects\Vertical-Slice\No_Bark_Vs.uproject" "E:\love-\Projects\Vertical-Slice\Intermediate\Build\Win64\No_Bark_Vs\Development\No_Bark_Vs.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -installed
+  Reflection code generated for No_Bark_Vs in 7.8797106 seconds
+  Performing 8 actions (4 in parallel)
+  GameHud.cpp
+  Pickup.cpp
+  BaseWeapon.cpp
+  NBCharacter.cpp
+  PlayGameMode.cpp
+  No_Bark_Vs.generated.cpp
+  PlayController.cpp
+E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\PlayController.cpp(48): error C2065: 'isMyInventoryOpen': undeclared identifier
+E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\PlayController.cpp(48): error C4805: '==': unsafe mix of type 'unknown-type' and type 'bool' in operation
+ERROR : UBT error : Failed to produce item: E:\love-\Projects\Vertical-Slice\Binaries\Win64\No_Bark_Vs.pdb
+  Total build time: 166.22 seconds
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.MakeFile.Targets(41,5): error MSB3075: The command ""E:\Program Files\Epic Games\UE_4.14\Engine\Build\BatchFiles\Build.bat" No_Bark_Vs Win64 Development "E:\love-\Projects\Vertical-Slice\No_Bark_Vs.uproject" -waitmutex" exited with code 5. Please verify that you have sufficient rights to run this command.

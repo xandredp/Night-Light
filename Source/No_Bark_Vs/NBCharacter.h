@@ -108,6 +108,11 @@ class NO_BARK_VS_API ANBCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
+	UCharacterMovementComponent* MoveComp;
+
+	FTimerHandle StartSprintingTimerHandle;
+	FTimerHandle StopSprintingTimerHandle;
+
 public:
 	// Sets default values for this character's properties
 	ANBCharacter();
@@ -129,12 +134,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
 
-	//UPROPERTY(Transient, Replicated)
-		bool bWantsToRun;
-
-	/** Sprinting rate this decides how fast sprint will be. */
-	UPROPERTY(EditDefaultsOnly, Category = Movement)
-		float SpeedValue;
 	/************************************************************************/
 	/* weapon use                                                           */
 	/************************************************************************/
@@ -147,6 +146,55 @@ public:
 
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
 	FName GetInventoryAttachPoint(EInventorySlot Slot) const;
+
+
+	/************************************************************************/
+	/* Status																*/
+	/************************************************************************/
+
+	/**  */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float CurrentHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MaxHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float CurrentStamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MaxStamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float CurrentMagic;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MaxMagic;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float StaminaRegenRate;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float SprintDeductionRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float StaminaTimerRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float HealthTimerRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MagicTimerRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float walkingSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MaxSprintSpeed;
+
+	/* DecreaseStamina, used by timer. */
+	void DecreaseHealth(float decreaseVal);
+	void IncreaseHealth(float increaseVal);
+	void DecreaseStamina();
+	void IncreaseStamina();
 
 
 private:
@@ -191,8 +239,6 @@ protected:
 	void OnStartSprinting();
 
 	void OnStopSprinting();
-
-	void SetSprinting(bool NewSprinting);
 
 	void OnCrouchToggle();
 

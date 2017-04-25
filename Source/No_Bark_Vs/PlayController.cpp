@@ -36,7 +36,8 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 	if (ItemToADD)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added");
-		Inventory.Add(*ItemToADD);
+		//Inventory.Add(*ItemToADD);
+		Inventory.AddUnique(*ItemToADD);
 	}
 
 
@@ -44,23 +45,40 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 
 void APlayController::OpenInventory()
 {
-	if (wInventory) // Check if the Asset is assigned in the blueprint.
+	if (isMyInventoryOpen == true)
 	{
-		
-		// Create the widget and store it.
-		MyInventory = CreateWidget<UUserWidget>(this, wInventory);
-		// now you can use the widget directly since you have a referance for it.
-		// Extra check to  make sure the pointer holds the widget.
-		if (MyInventory)
+		MyInventory->RemoveFromParent();
+		isMyInventoryOpen = false;
+	}
+	else
+	{
+		if (wInventory) // Check if the Asset is assigned in the blueprint.
 		{
-			
-			//let add it to the view port
-			MyInventory->AddToViewport();
+
+			// Create the widget and store it.
+			MyInventory = CreateWidget<UUserWidget>(this, wInventory);
+			// now you can use the widget directly since you have a referance for it.
+			// Extra check to  make sure the pointer holds the widget.
+			if (MyInventory)
+			{
+				FInputModeGameAndUI InputMode;
+				InputMode.SetHideCursorDuringCapture(true);
+				InputMode.SetLockMouseToViewport(false);
+
+				//let add it to the view port
+				MyInventory->AddToViewport(1);
+				SetInputMode(InputMode);
+
+			}
+
+			//Show the Cursor.
+			bShowMouseCursor = true;
 		}
 
-		//Show the Cursor.
-		bShowMouseCursor = true;
+		isMyInventoryOpen = true;
 	}
+	
+	
 }
 
 void APlayController::SetupInputComponent()

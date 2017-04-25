@@ -13,7 +13,7 @@ class NO_BARK_VS_API APlayGameMode : public AGameMode
 {
 	GENERATED_BODY()
 public:
-
+	APlayGameMode();
 	class UDataTable* GetItemDB() const { return ItemDB; }
 
 protected:

@@ -11,17 +11,34 @@
 ANBCharacter::ANBCharacter()
 {
 
+
+
+	walkingSpeed = 400.0f;
+	MaxSprintSpeed = 600.0f;
+
+
+	MoveComp = GetCharacterMovement();
+	// Adjust jump to make it less floaty
+	MoveComp->GravityScale = 1.5f;
+	MoveComp->JumpZVelocity = 620;
+	MoveComp->bCanWalkOffLedgesWhenCrouching = true;
+	MoveComp->MaxWalkSpeedCrouched = 200;
+	MoveComp->MaxWalkSpeed = walkingSpeed;
+
+	// Enable movements
+	MoveComp->GetNavAgentPropertiesRef().bCanCrouch = true;
+	MoveComp->GetNavAgentPropertiesRef().bCanFly = true;
+
 	ABaseWeapon* aBaseWeapon = Cast<ABaseWeapon>(WeaponClass);
 	WeaponClass->IsChildOf(ABaseWeapon::StaticClass());
-
 	WeaponClass = ABaseWeapon::StaticClass();
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
-	SpeedValue = 4.0;
 
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
@@ -52,6 +69,20 @@ ANBCharacter::ANBCharacter()
 	KnifeAttachPoint = TEXT("Thigh_Socket");
 	PrimaryAttachPoint = TEXT("Spine_Socket");
 	SecondaryAttachPoint = TEXT("Clavicle_Socket");
+
+
+	//Status
+	CurrentHealth = 100.0f;
+	MaxHealth = 100.0f;
+	CurrentStamina = 100.0f;
+	MaxStamina = 100.0f;
+	CurrentMagic = 100.0f;
+	MaxMagic = 100.0f;
+	StaminaRegenRate = 1.0f;
+	SprintDeductionRate = 1.3f;
+	StaminaTimerRate = 0.5f;
+	HealthTimerRate = 1.0f;
+	MagicTimerRate = 1.0f;
 }
 
 void ANBCharacter::BeginPlay()
@@ -129,6 +160,38 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 
 
+void ANBCharacter::DecreaseHealth(float decreaseVal)
+{
+}
+
+void ANBCharacter::IncreaseHealth(float increaseVal)
+{
+}
+
+void ANBCharacter::DecreaseStamina()
+{
+	if (CurrentHealth <= 0.0f)
+	{
+		OnStopSprinting();
+	}
+	else
+	{
+		CurrentStamina = CurrentStamina - SprintDeductionRate;
+	}
+}
+
+void ANBCharacter::IncreaseStamina()
+{
+	if (CurrentStamina >= MaxStamina)
+	{
+		GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
+	}
+	else
+	{
+		CurrentStamina = CurrentStamina + StaminaRegenRate;
+	}
+}
+
 void ANBCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
@@ -191,16 +254,7 @@ void ANBCharacter::MoveForward(float Value)
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
-		if (bWantsToRun== true)
-		{
-			AddMovementInput(Direction, SpeedValue*Value);
-		}
-		else
-		{
-			AddMovementInput(Direction, Value);
-		}
-		
+		AddMovementInput(Direction, Value);
 	}
 }
 
@@ -214,56 +268,43 @@ void ANBCharacter::MoveRight(float Value)
 
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		
-		if (bWantsToRun == true)
-		{
-			AddMovementInput(Direction, SpeedValue*Value);
-		}
-		else
-		{
-			AddMovementInput(Direction, Value);
-		}
+		// add movement in that direction
+		AddMovementInput(Direction, Value);
 	}
 }
 
 void ANBCharacter::OnStartSprinting()
 {
-	SetSprinting(true);
+	MoveComp->MaxWalkSpeed = MaxSprintSpeed;
+	if (Role == ROLE_Authority)
+	{
+		// Set a timer to increment hunger every interval
+		GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
+		GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
+	}
 }
 
 void ANBCharacter::OnStopSprinting()
 {
-	SetSprinting(false);
-}
+	MoveComp->MaxWalkSpeed = walkingSpeed;
 
-void ANBCharacter::SetSprinting(bool NewSprinting)
-{
-
-	bWantsToRun = NewSprinting;
-
-	//If wanting to sprinting stop fire and uncrouch
-	if (bWantsToRun)
+	if (Role == ROLE_Authority)
 	{
-		//StopWeaponFire();
-		//if (bIsCrouched)
-		//	UnCrouch();
+		// Set a timer to increment hunger every interval
+		GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
+		GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
 	}
-
 }
 
 void ANBCharacter::OnCrouchToggle()
 {
-	
-
-
-	// If we are crouching then CanCrouch will return false. If we cannot crouch then calling Crouch() wont do anything
-	if (CanCrouch())
+	if (bIsCrouched)
 	{
-		Crouch();
+		UnCrouch();
 	}
 	else
 	{
-		UnCrouch();
+		Crouch();
 	}
 }
 
