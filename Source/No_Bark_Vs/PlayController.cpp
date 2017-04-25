@@ -67,7 +67,7 @@ void APlayController::OpenInventory()
 
 				//let add it to the view port
 				MyInventory->AddToViewport(1);
-				SetInputMode(InputMode);
+				/*SetInputMode(InputMode);*/
 
 			}
 
