@@ -23,6 +23,29 @@ void APlayController::Interact()
 	}
 }
 
+void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APlayController* PlayController)
+{
+	for (auto Craft : ItemB.CraftCombinations)
+	{
+		if (Craft.ComponentID == ItemA.ItemID)
+		{
+			if (Craft.bDestroyItemA)
+			{
+				Inventory.RemoveSingle(ItemA);
+			}
+			if (Craft.bDestroyItemB)
+			{
+				Inventory.RemoveSingle(ItemB);
+			}
+
+			AddItemtoInventoryByID(Craft.ProductID);
+
+			ReloadInventory();
+		}
+	}
+}
+
+
 void APlayController::AddItemtoInventoryByID(FName ID)
 {
 	// getting the game mode and get Item database. 
@@ -40,7 +63,7 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 		Inventory.AddUnique(*ItemToADD);
 	}
 
-
+	ReloadInventory();
 }
 
 void APlayController::OpenInventory()
@@ -67,7 +90,7 @@ void APlayController::OpenInventory()
 
 				//let add it to the view port
 				MyInventory->AddToViewport(1);
-				/*SetInputMode(InputMode);*/
+				SetInputMode(InputMode);
 
 			}
 

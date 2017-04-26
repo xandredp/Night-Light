@@ -33,6 +33,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void OpenInventory();
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APlayController* PlayController);
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ReloadInventory();
+
 	// Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		TSubclassOf<class UUserWidget> wInventory;
@@ -41,6 +47,7 @@ public:
 		bool isMyInventoryOpen;
 
 	// Variable to hold the widget After Creating it.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 	UUserWidget* MyInventory;
 
 protected:
