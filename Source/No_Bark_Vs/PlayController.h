@@ -32,8 +32,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UnUseItem(FCurrentInventoryItemInfo iItemInfo);
-	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void DropItem(FCurrentInventoryItemInfo iItemInfo);
+
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void EnableActionBar(FCurrentInventoryItemInfo iItemInfo);
 

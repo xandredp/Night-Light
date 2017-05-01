@@ -1,0 +1,10 @@
+﻿  Performing full C++ include scan (no include cache file)
+  Performing 5 actions (4 in parallel)
+  No_Bark_Vs.generated.cpp
+  Pickup.cpp
+  PlayController.cpp
+  NBCharacter.cpp
+  [5/5] Link No_Bark_Vs.exe
+     Creating library E:\love-\Projects\Vertical-Slice\Binaries\Win64\No_Bark_Vs.lib and object E:\love-\Projects\Vertical-Slice\Binaries\Win64\No_Bark_Vs.exp
+  Total build time: 129.98 seconds
+  Prepping No_Bark_Vs for deployment to Win64

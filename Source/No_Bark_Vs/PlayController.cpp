@@ -15,7 +15,7 @@ APlayController::APlayController()
 {
 	MaxInventorySize = 5;
 	LastAddedInventoryIndex = 0;
-	
+
 }
 
 void APlayController::Interact()
@@ -152,10 +152,6 @@ void APlayController::UseItem(FCurrentInventoryItemInfo iItemInfo)
 }
 
 void APlayController::UnUseItem(FCurrentInventoryItemInfo iItemInfo)
-{
-}
-
-void APlayController::DropItem(FCurrentInventoryItemInfo iItemInfo)
 {
 }
 
