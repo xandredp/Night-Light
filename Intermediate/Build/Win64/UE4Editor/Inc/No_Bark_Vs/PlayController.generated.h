@@ -8,6 +8,7 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 struct FInventoryItem;
 class APlayController;
+struct FCurrentInventoryItemInfo;
 #ifdef NO_BARK_VS_PlayController_generated_h
 #error "PlayController.generated.h already included, missing '#pragma once' in PlayController.h"
 #endif
@@ -20,6 +21,24 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->SetupInputComponent(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execChangeMaxInventorySize) \
+	{ \
+		P_GET_PROPERTY(UIntProperty,Z_Param_iNoInventory); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->ChangeMaxInventorySize(Z_Param_iNoInventory); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execSetInputModetoGameandUI) \
+	{ \
+		P_GET_UBOOL(Z_Param_bHideCursor); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->SetInputModetoGameandUI(Z_Param_bHideCursor); \
 		P_NATIVE_END; \
 	} \
  \
@@ -39,6 +58,15 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->OpenInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execUseItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->UseItem(Z_Param_iItemInfo); \
 		P_NATIVE_END; \
 	} \
  \
@@ -70,6 +98,24 @@ class APlayController;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execChangeMaxInventorySize) \
+	{ \
+		P_GET_PROPERTY(UIntProperty,Z_Param_iNoInventory); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->ChangeMaxInventorySize(Z_Param_iNoInventory); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execSetInputModetoGameandUI) \
+	{ \
+		P_GET_UBOOL(Z_Param_bHideCursor); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->SetInputModetoGameandUI(Z_Param_bHideCursor); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execCraftItem) \
 	{ \
 		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
@@ -86,6 +132,15 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->OpenInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execUseItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->UseItem(Z_Param_iItemInfo); \
 		P_NATIVE_END; \
 	} \
  \

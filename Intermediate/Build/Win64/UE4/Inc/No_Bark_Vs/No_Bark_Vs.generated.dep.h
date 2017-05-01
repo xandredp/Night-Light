@@ -20,6 +20,9 @@
 #ifndef NO_BARK_VS_GameHud_generated_h
 	#include "GameHud.h"
 #endif
+#ifndef NO_BARK_VS_TypeClass_generated_h
+	#include "TypeClass.h"
+#endif
 #ifndef NO_BARK_VS_NBCharacter_generated_h
 	#include "NBCharacter.h"
 #endif

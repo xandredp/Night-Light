@@ -6,6 +6,8 @@
 ===========================================================================*/
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+struct FInventoryItem;
+class APlayController;
 #ifdef NO_BARK_VS_PlayController_generated_h
 #error "PlayController.generated.h already included, missing '#pragma once' in PlayController.h"
 #endif
@@ -18,6 +20,36 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->SetupInputComponent(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execFindIndexInInventoryArray) \
+	{ \
+		P_GET_STRUCT(FInventoryItem,Z_Param_ItemToADD); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(int32*)Z_Param__Result=this->FindIndexInInventoryArray(Z_Param_ItemToADD); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execSetInputModeOnViewport) \
+	{ \
+		P_GET_UBOOL(Z_Param_bHideCursor); \
+		P_GET_UBOOL(Z_Param_vLockMouse); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->SetInputModeOnViewport(Z_Param_bHideCursor,Z_Param_vLockMouse); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execCraftItem) \
+	{ \
+		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
+		P_GET_STRUCT(FInventoryItem,Z_Param_ItemB); \
+		P_GET_OBJECT(APlayController,Z_Param_PlayController); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CraftItem(Z_Param_ItemA,Z_Param_ItemB,Z_Param_PlayController); \
 		P_NATIVE_END; \
 	} \
  \
@@ -57,6 +89,36 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execFindIndexInInventoryArray) \
+	{ \
+		P_GET_STRUCT(FInventoryItem,Z_Param_ItemToADD); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(int32*)Z_Param__Result=this->FindIndexInInventoryArray(Z_Param_ItemToADD); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execSetInputModeOnViewport) \
+	{ \
+		P_GET_UBOOL(Z_Param_bHideCursor); \
+		P_GET_UBOOL(Z_Param_vLockMouse); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->SetInputModeOnViewport(Z_Param_bHideCursor,Z_Param_vLockMouse); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execCraftItem) \
+	{ \
+		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
+		P_GET_STRUCT(FInventoryItem,Z_Param_ItemB); \
+		P_GET_OBJECT(APlayController,Z_Param_PlayController); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CraftItem(Z_Param_ItemA,Z_Param_ItemB,Z_Param_PlayController); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execOpenInventory) \
 	{ \
 		P_FINISH; \
@@ -83,6 +145,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	}
 
 
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_EVENT_PARMS
+extern NO_BARK_VS_API  FName NO_BARK_VS_ReloadInventory;
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_CALLBACK_WRAPPERS
 #define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesAPlayController(); \
@@ -130,12 +195,16 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(APlayController); \
 
 
 #define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_PRIVATE_PROPERTY_OFFSET
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_12_PROLOG
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_12_PROLOG \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_EVENT_PARMS
+
+
 #define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_PRIVATE_PROPERTY_OFFSET \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_RPC_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_CALLBACK_WRAPPERS \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_STANDARD_CONSTRUCTORS \
 public: \
@@ -147,6 +216,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_PRIVATE_PROPERTY_OFFSET \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_CALLBACK_WRAPPERS \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS_NO_PURE_DECLS \
 	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_ENHANCED_CONSTRUCTORS \
 private: \

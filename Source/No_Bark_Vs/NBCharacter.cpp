@@ -66,7 +66,7 @@ ANBCharacter::ANBCharacter()
 												   // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 												   /* Names as specified in the character skeleton */
 	WeaponAttachPoint = TEXT("Weapon_Socket");
-	KnifeAttachPoint = TEXT("Thigh_Socket");
+	MeleeAttachPoint = TEXT("Thigh_Socket");
 	PrimaryAttachPoint = TEXT("Spine_Socket");
 	SecondaryAttachPoint = TEXT("Clavicle_Socket");
 
@@ -83,6 +83,10 @@ ANBCharacter::ANBCharacter()
 	StaminaTimerRate = 0.5f;
 	HealthTimerRate = 1.0f;
 	MagicTimerRate = 1.0f;
+
+	// Item
+
+	MaxInteractDistance = 500.0f;
 }
 
 void ANBCharacter::BeginPlay()
@@ -209,28 +213,44 @@ void ANBCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 }
 void ANBCharacter::CheckForInteractables()
 {
-	//Trace with Raycasting Everytick and check the item is interactable. 
-	FHitResult HitResult;
-
-	FVector StartTrace = FollowCamera->GetComponentLocation();
-	FVector EndTrace = (FollowCamera->GetForwardVector() * 300) + StartTrace;
-
-	//Add To ignore these items for checking interactable
-	FCollisionQueryParams QuerryParams;
-	QuerryParams.AddIgnoredActor(this);
-
+	
 	APlayController* playController = Cast<APlayController>(GetController());
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartTrace, EndTrace, ECC_Visibility, QuerryParams) && Controller)
+	if (ABaseInteractable* interactable = GetInteractableInView())
 	{
-		if(ABaseInteractable* interactable = Cast<ABaseInteractable>(HitResult.GetActor()))
-		{
-			playController->CurrentInteractable = interactable;
-			return;
-		}
+		playController->CurrentInteractable = interactable;
+		return;
 	}
-
 	// If we didn't hit anything, or thing we hit was on to a interactable set current interactable nullptr. 
 	playController->CurrentInteractable = nullptr;
+}
+
+
+ABaseInteractable* ANBCharacter::GetInteractableInView()
+{
+	FVector CamLoc;
+	FRotator CamRot;
+
+	if (Controller == nullptr)
+		return nullptr;
+
+	Controller->GetPlayerViewPoint(CamLoc, CamRot);
+	const FVector TraceStart = CamLoc;
+	const FVector Direction = CamRot.Vector();
+	const FVector TraceEnd = TraceStart + (Direction * MaxInteractDistance);
+
+	FCollisionQueryParams TraceParams(TEXT("TraceUsableActor"), true, this);
+	TraceParams.bTraceAsyncScene = true;
+	TraceParams.bReturnPhysicalMaterial = false;
+
+	/* Not tracing complex uses the rough collision instead making tiny objects easier to select. */
+	TraceParams.bTraceComplex = false;
+
+	FHitResult Hit(ForceInit);
+	GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
+
+	DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
+
+	return Cast<ABaseInteractable>(Hit.GetActor());
 }
 void ANBCharacter::TurnAtRate(float Rate)
 {
@@ -319,8 +339,8 @@ FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const
 		return PrimaryAttachPoint;
 	case EInventorySlot::Secondary:
 		return SecondaryAttachPoint;
-	case EInventorySlot::Knife:
-		return KnifeAttachPoint;
+	case EInventorySlot::Melee:
+		return MeleeAttachPoint;
 	default:
 		// Not implemented.
 		return "";

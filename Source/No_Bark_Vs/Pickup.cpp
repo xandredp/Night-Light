@@ -7,24 +7,8 @@
 APickup::APickup()
 {
 
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
-	WeaponMesh->SetRelativeRotation(FRotator(0, 180, 0), false);
-	WeaponMesh->SetupAttachment(RootComponent);
-
-	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>("PickupMesh");
-	PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
-	PickupMesh->SetupAttachment(RootComponent);
-
-	WeaponCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollisionComp"));
-	WeaponCollisionComp->SetupAttachment(WeaponMesh);
-
-	PickupCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("PickupCollisionComp"));
-	PickupCollisionComp->SetupAttachment(PickupMesh);
-
 
 	ItemID = FName("Please EnterID");
-
-
 
 }
 
@@ -48,3 +32,4 @@ void APickup::DestroyItemOnGround()
 {
 	Destroy();
 }
+

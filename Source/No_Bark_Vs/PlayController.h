@@ -13,9 +13,10 @@ UCLASS()
 class NO_BARK_VS_API APlayController : public APlayerController
 {
 	GENERATED_BODY()
-
-		APlayController();
 public:
+	APlayController();
+
+
 	//The interactable that player is currently looking at. 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class ABaseInteractable* CurrentInteractable;
@@ -25,10 +26,11 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddItemtoInventoryByID(FName ID);
-
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void UseItem(FCurrentInventoryItemInfo iItemInfo);
 	//Array of inventory
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		TArray<FInventoryItem> Inventory;
+		TArray<FCurrentInventoryItemInfo> FCurrentInventory;
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void OpenInventory();
@@ -39,6 +41,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void ReloadInventory();
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void SetInputModetoGameandUI(bool bHideCursor);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void ChangeMaxInventorySize(int iNoInventory);
+
 	// Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		TSubclassOf<class UUserWidget> wInventory;
@@ -48,8 +56,13 @@ public:
 
 	// Variable to hold the widget After Creating it.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-	UUserWidget* MyInventory;
+	UUserWidget* MyInventoryWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		int MaxInventorySize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		int32 LastAddedInventoryIndex;
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")

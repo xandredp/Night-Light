@@ -3,6 +3,7 @@
 #include "No_Bark_Vs.h"
 #include "BaseInteractable.h"
 #include "NBCharacter.h"
+#include "TypeClass.h"
 #include "PlayGameMode.h"
 #include "Blueprint/UserWidget.h"
 #include "PlayController.h"
@@ -12,13 +13,19 @@
 
 APlayController::APlayController()
 {
+	MaxInventorySize = 5;
+	LastAddedInventoryIndex = 0;
+	
 }
 
 void APlayController::Interact()
-{
+{//ABaseInteractable
+
+
 	if (CurrentInteractable)
 	{
 		CurrentInteractable->Interact(this);
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
 
 	}
 }
@@ -31,11 +38,11 @@ void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APla
 		{
 			if (Craft.bDestroyItemA)
 			{
-				Inventory.RemoveSingle(ItemA);
+				//Inventory.RemoveSingle(ItemA)
 			}
 			if (Craft.bDestroyItemB)
 			{
-				Inventory.RemoveSingle(ItemB);
+				//Inventory.RemoveSingle(ItemB);
 			}
 
 			AddItemtoInventoryByID(Craft.ProductID);
@@ -45,33 +52,113 @@ void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APla
 	}
 }
 
+void APlayController::SetInputModetoGameandUI(bool bHideCursor)
+{
+	FInputModeGameAndUI InputMode;
+	FInputModeGameOnly GameOnlyInputMode;
+	if (bHideCursor == true)
+	{
+		InputMode.SetHideCursorDuringCapture(bHideCursor);
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		SetInputMode(InputMode);
+	}
+	else
+	{
+		SetInputMode(GameOnlyInputMode);
+	}
+
+}
+
+void APlayController::ChangeMaxInventorySize(int iNoInventory)
+{
+	MaxInventorySize = iNoInventory;
+}
 
 void APlayController::AddItemtoInventoryByID(FName ID)
 {
 	// getting the game mode and get Item database. 
 	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
-	UDataTable* ItemTable = PlayGameMode->GetItemDB();
-	
+	UDataTable* ItemTable = PlayGameMode->GetItemDB();	
 	// find inventory item. 
 	FInventoryItem* ItemToADD = ItemTable->FindRow<FInventoryItem>(ID, "");
-	
+	FCurrentInventoryItemInfo CurrentItemToAddInventory;
+	CurrentItemToAddInventory.CurrentStackNumber = 1;
+	CurrentItemToAddInventory.ItemInfo = *ItemToADD;
+	CurrentItemToAddInventory.ItemIndex = LastAddedInventoryIndex;
+	bool bItemAdded = false;
 	// if inventory item is valid add to inventory. 
 	if (ItemToADD)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added");
-		//Inventory.Add(*ItemToADD);
-		Inventory.AddUnique(*ItemToADD);
+		do // do until the Item is added
+		{
+			if (FCurrentInventory.Num()==0)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added as index  0 is  false ");
+				LastAddedInventoryIndex = FCurrentInventory.AddUnique(CurrentItemToAddInventory);
+				bItemAdded = true;
+		
+			}
+			else
+			{
+				// Search all items to check if item already exist, if it does increment current stack number.
+				for (int32 i = 0; i < FCurrentInventory.Num(); i++)
+				{
+					if (FCurrentInventory[i].ItemInfo.ItemID == ItemToADD->ItemID)
+					{
+						if (FCurrentInventory[i].CurrentStackNumber < FCurrentInventory[i].ItemInfo.MaxStackNumber)
+						{
+							FCurrentInventory[i].CurrentStackNumber = FCurrentInventory[i].CurrentStackNumber + 1;
+							
+							FString string;
+							string = "Item has been added CurrentstackNumber :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
+							GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string );
+							
+							bItemAdded = true;
+						}
+					}
+				}
+				//if same item doesn't exist Add unique item 
+				if (bItemAdded == false)
+				{				
+					if (LastAddedInventoryIndex >= MaxInventorySize)
+					{
+						///Todo : Warning Inventory is full and remove the item. 
+					}
+					else
+					{
+						FString string;
+						string = "Item was full CurrentstackNumber :";
+
+						LastAddedInventoryIndex = FCurrentInventory.Add(CurrentItemToAddInventory);
+						FCurrentInventory[LastAddedInventoryIndex].ItemIndex = LastAddedInventoryIndex;
+					}
+
+					bItemAdded = true;
+				}
+
+			}
+
+		} while (bItemAdded != true);
+
+		
 	}
 
 	ReloadInventory();
+}
+
+void APlayController::UseItem(FCurrentInventoryItemInfo iItemInfo)
+{
+
 }
 
 void APlayController::OpenInventory()
 {
 	if (isMyInventoryOpen == true)
 	{
-		MyInventory->RemoveFromParent();
+		MyInventoryWidget->RemoveFromParent();
 		isMyInventoryOpen = false;
+		SetInputModetoGameandUI(false);
+		
 	}
 	else
 	{
@@ -79,23 +166,14 @@ void APlayController::OpenInventory()
 		{
 
 			// Create the widget and store it.
-			MyInventory = CreateWidget<UUserWidget>(this, wInventory);
+			MyInventoryWidget = CreateWidget<UUserWidget>(this, wInventory);
 			// now you can use the widget directly since you have a referance for it.
 			// Extra check to  make sure the pointer holds the widget.
-			if (MyInventory)
+			if (MyInventoryWidget)
 			{
-				FInputModeGameAndUI InputMode;
-				InputMode.SetHideCursorDuringCapture(true);
-				InputMode.SetLockMouseToViewport(false);
-
-				//let add it to the view port
-				MyInventory->AddToViewport(1);
-				SetInputMode(InputMode);
-
+				SetInputModetoGameandUI(true);
+				MyInventoryWidget->AddToViewport(1);
 			}
-
-			//Show the Cursor.
-			bShowMouseCursor = true;
 		}
 
 		isMyInventoryOpen = true;

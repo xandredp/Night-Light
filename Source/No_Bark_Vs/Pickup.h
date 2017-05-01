@@ -22,18 +22,6 @@ public:
 	
 	void DestroyItemOnGround();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Colllision")
-		UStaticMeshComponent* PickupMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
-		class USkeletalMeshComponent* WeaponMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
-		class UBoxComponent* WeaponCollisionComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
-		class UBoxComponent* PickupCollisionComp;
-
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Pickup")
 		void OnUsed();

@@ -6,24 +6,21 @@
 ===========================================================================*/
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class ABaseInteractable;
 #ifdef NO_BARK_VS_NBCharacter_generated_h
 #error "NBCharacter.generated.h already included, missing '#pragma once' in NBCharacter.h"
 #endif
 #define NO_BARK_VS_NBCharacter_generated_h
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_53_GENERATED_BODY \
-	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FInventoryItem(); \
-	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
-	typedef FTableRowBase Super;
-
-
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_34_GENERATED_BODY \
-	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCraftingInfo(); \
-	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
-	typedef FTableRowBase Super;
-
-
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_RPC_WRAPPERS \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execGetInteractableInView) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(ABaseInteractable**)Z_Param__Result=this->GetInteractableInView(); \
+		P_NATIVE_END; \
+	} \
  \
 	DECLARE_FUNCTION(execCheckForInteractables) \
 	{ \
@@ -34,7 +31,15 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	}
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execGetInteractableInView) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(ABaseInteractable**)Z_Param__Result=this->GetInteractableInView(); \
+		P_NATIVE_END; \
+	} \
  \
 	DECLARE_FUNCTION(execCheckForInteractables) \
 	{ \
@@ -45,7 +50,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	}
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_INCLASS_NO_PURE_DECLS \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesANBCharacter(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_ANBCharacter(); \
@@ -56,7 +61,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_INCLASS \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS \
 	private: \
 	static void StaticRegisterNativesANBCharacter(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_ANBCharacter(); \
@@ -67,7 +72,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_STANDARD_CONSTRUCTORS \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ANBCharacter(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ANBCharacter) \
@@ -80,7 +85,7 @@ private: \
 public:
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_ENHANCED_CONSTRUCTORS \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ANBCharacter(ANBCharacter&&); \
@@ -91,34 +96,34 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(ANBCharacter); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ANBCharacter)
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_PRIVATE_PROPERTY_OFFSET \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__CameraBoom() { return STRUCT_OFFSET(ANBCharacter, CameraBoom); } \
 	FORCEINLINE static uint32 __PPO__FollowCamera() { return STRUCT_OFFSET(ANBCharacter, FollowCamera); } \
 	FORCEINLINE static uint32 __PPO__WeaponAttachPoint() { return STRUCT_OFFSET(ANBCharacter, WeaponAttachPoint); } \
-	FORCEINLINE static uint32 __PPO__KnifeAttachPoint() { return STRUCT_OFFSET(ANBCharacter, KnifeAttachPoint); } \
+	FORCEINLINE static uint32 __PPO__MeleeAttachPoint() { return STRUCT_OFFSET(ANBCharacter, MeleeAttachPoint); } \
 	FORCEINLINE static uint32 __PPO__PrimaryAttachPoint() { return STRUCT_OFFSET(ANBCharacter, PrimaryAttachPoint); } \
 	FORCEINLINE static uint32 __PPO__SecondaryAttachPoint() { return STRUCT_OFFSET(ANBCharacter, SecondaryAttachPoint); }
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_98_PROLOG
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_GENERATED_BODY_LEGACY \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_15_PROLOG
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_PRIVATE_PROPERTY_OFFSET \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_RPC_WRAPPERS \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_INCLASS \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_STANDARD_CONSTRUCTORS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_PRIVATE_PROPERTY_OFFSET \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_RPC_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_PRIVATE_PROPERTY_OFFSET \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_RPC_WRAPPERS_NO_PURE_DECLS \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_INCLASS_NO_PURE_DECLS \
-	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_101_ENHANCED_CONSTRUCTORS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_PRIVATE_PROPERTY_OFFSET \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -127,9 +132,4 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 #define CURRENT_FILE_ID Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h
 
 
-#define FOREACH_ENUM_EINVENTORYSLOT(op) \
-	op(EInventorySlot::Hands) \
-	op(EInventorySlot::Primary) \
-	op(EInventorySlot::Secondary) \
-	op(EInventorySlot::Knife) 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

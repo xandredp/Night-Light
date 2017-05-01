@@ -5,95 +5,12 @@
 #include "GameFramework/Character.h"
 #include "Engine/DataTable.h"
 #include "BaseWeapon.h"
+#include "TypeClass.h"
 #include "NBCharacter.generated.h"
 
 //GunSkeltal -> bullet spawn point  = MuzzleTip
 
 
-UENUM()
-enum class EInventorySlot : uint8
-{
-	/* For currently equipped items/weapons */
-	Hands,
-
-	/* For primary weapons on spine bone */
-	Primary,
-
-	/* For secondary weapons on spine bone */
-	Secondary,
-
-	/* For Knife weapons on bone */
-	Knife,
-};
-
-
-// Struct of things I can Craft. 
-USTRUCT(BlueprintType)
-struct FCraftingInfo : public FTableRowBase
-{
-	GENERATED_BODY()
-
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName ComponentID; //item used to create Item (  cog)
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName ProductID; // item that gets created (barrier)
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bDestroyItemA; // destroy component
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bDestroyItemB; // destroy product id
-};
-
-
-//TableRowBase for Data TABLE. 
-USTRUCT(BlueprintType)
-struct FInventoryItem : public FTableRowBase
-{
-	GENERATED_BODY()
-
-public:
-
-	FInventoryItem()
-	{
-		Name = FText::FromString("Item");
-		Action = FText::FromString("Use");
-		Description = FText::FromString("Description here");
-		Value = 10;
-		MaxStackNumber = 1;
-	}
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName ItemID;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TSubclassOf<class APickup>ItemPickup;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FText Name;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FText Action;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int32 Value;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UTexture2D* Thumbnail;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FText Description;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int32 MaxStackNumber;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TArray<FCraftingInfo> CraftCombinations;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bCanBeUsed;
-
-	//ureal requires oveloading the data. 
-	bool operator == (const FInventoryItem& Item) const
-	{
-		if (ItemID == Item.ItemID)
-			return true;
-		else return false;
-
-	}
-};
 
 UCLASS(config = Game)
 class NO_BARK_VS_API ANBCharacter : public ACharacter
@@ -196,6 +113,12 @@ public:
 	void DecreaseStamina();
 	void IncreaseStamina();
 
+	/************************************************************************/
+	/* Pickups                                                              */
+	/************************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MaxInteractDistance;
 
 private:
 
@@ -205,7 +128,7 @@ private:
 
 	/* Attachpoint for items carried on the belt/pelvis. */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
-		FName KnifeAttachPoint;
+		FName MeleeAttachPoint;
 
 	/* Attachpoint for primary weapons */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
@@ -249,25 +172,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "PickupCondition")
 		void CheckForInteractables();
 
-	/************************************************************************/
-	/* Health                                                               */
-	/************************************************************************/
-	//UFUNCTION(BlueprintCallable, Category = "PlayerCondition")
-	//	float GetMaxHealth() const;
+	UFUNCTION(BlueprintCallable, Category = "PickupCondition")
+		ABaseInteractable* GetInteractableInView();
 
-	//UFUNCTION(BlueprintCallable, Category = "PlayerCondition")
-	//	float GetHealth() const;
 
-	//UFUNCTION(BlueprintCallable, Category = "PlayerCondition")
-	//	bool IsAlive() const;
-
-	//UFUNCTION(BlueprintCallable, Category = "Movement")
-	//	virtual bool IsSprinting() const;
-
-	///* Client/local call to update sprint state  */
-	//virtual void SetSprinting(bool NewSprinting);
-
-	//float GetSprintingSpeedModifier() const;
 
 public:
 	/** Returns CameraBoom subobject **/

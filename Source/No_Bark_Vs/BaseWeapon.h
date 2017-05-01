@@ -64,9 +64,18 @@ class NO_BARK_VS_API ABaseWeapon : public APickup
 {
 	GENERATED_BODY()
 
+
+
 public:
 	ABaseWeapon();
 
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class USkeletalMeshComponent* WeaponMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class UBoxComponent* WeaponCollisionComp;
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 	void FireAmmos();
