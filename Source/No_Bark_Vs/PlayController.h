@@ -26,14 +26,26 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddItemtoInventoryByID(FName ID);
+	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UseItem(FCurrentInventoryItemInfo iItemInfo);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void UnUseItem(FCurrentInventoryItemInfo iItemInfo);
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void DropItem(FCurrentInventoryItemInfo iItemInfo);
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void EnableActionBar(FCurrentInventoryItemInfo iItemInfo);
+
 	//Array of inventory
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		TArray<FCurrentInventoryItemInfo> FCurrentInventory;
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void OpenInventory();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void CloseInventory();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APlayController* PlayController);
@@ -50,6 +62,8 @@ public:
 	// Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		TSubclassOf<class UUserWidget> wInventory;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool isMyInventoryOpen;
@@ -57,6 +71,9 @@ public:
 	// Variable to hold the widget After Creating it.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 	UUserWidget* MyInventoryWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		UUserWidget* MyEquipmentWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int MaxInventorySize;

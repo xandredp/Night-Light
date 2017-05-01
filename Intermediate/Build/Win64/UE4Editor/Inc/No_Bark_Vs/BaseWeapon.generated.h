@@ -11,13 +11,13 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define NO_BARK_VS_BaseWeapon_generated_h
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_28_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_40_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FWeaponData(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_RPC_WRAPPERS \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execProjectileFire) \
 	{ \
@@ -44,7 +44,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	}
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execProjectileFire) \
 	{ \
@@ -71,7 +71,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	}
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_INCLASS_NO_PURE_DECLS \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesABaseWeapon(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon(); \
@@ -82,7 +82,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_INCLASS \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_INCLASS \
 	private: \
 	static void StaticRegisterNativesABaseWeapon(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon(); \
@@ -93,7 +93,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_STANDARD_CONSTRUCTORS \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ABaseWeapon(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ABaseWeapon) \
@@ -106,7 +106,7 @@ private: \
 public:
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_ENHANCED_CONSTRUCTORS \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ABaseWeapon(ABaseWeapon&&); \
@@ -117,26 +117,26 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(ABaseWeapon); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ABaseWeapon)
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_PRIVATE_PROPERTY_OFFSET
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_62_PROLOG
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_GENERATED_BODY_LEGACY \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_PRIVATE_PROPERTY_OFFSET
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_85_PROLOG
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_PRIVATE_PROPERTY_OFFSET \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_RPC_WRAPPERS \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_INCLASS \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_STANDARD_CONSTRUCTORS \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_PRIVATE_PROPERTY_OFFSET \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_RPC_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_INCLASS \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_PRIVATE_PROPERTY_OFFSET \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_RPC_WRAPPERS_NO_PURE_DECLS \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_INCLASS_NO_PURE_DECLS \
-	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_65_ENHANCED_CONSTRUCTORS \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_PRIVATE_PROPERTY_OFFSET \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_RPC_WRAPPERS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_INCLASS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -149,4 +149,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	op(EBullet) \
 	op(ESpread) \
 	op(EProjectile) 
+#define FOREACH_ENUM_EATTACKTYPE(op) \
+	op(EAttackType::EMelee) \
+	op(EAttackType::ERanged) 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

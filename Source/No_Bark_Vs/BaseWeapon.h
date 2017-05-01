@@ -12,6 +12,18 @@ class ANBCharacter;
  * 
  */
 //
+
+UENUM()
+enum class EAttackType : uint8
+{
+	/* For currently equipped items/weapons */
+	EMelee,
+
+	/* For primary weapons on spine bone */
+	ERanged,
+
+};
+
 UENUM(BlueprintType)
 enum EProjectileType
 {
@@ -29,6 +41,22 @@ struct FWeaponData : public FTableRowBase
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EAttackType eAttackType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		float WeaponDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		float WeaponRange;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		float WeaponSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		float WeaponSpread;
+
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ammo)
 		int32 MaxAmmo;
@@ -43,12 +71,6 @@ public:
 		int32 ShotCost;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
-		float WeaponRange;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
-		float WeaponSpread;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		FString Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
@@ -56,6 +78,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 Priority;
+
 };
 
 
@@ -86,7 +109,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		virtual void ProjectileFire();
 
-	UPROPERTY(EditDefaultsOnly, Category = "Config")
+	//WeaponInfo
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		FWeaponData WeaponConfig;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Config")

@@ -38,6 +38,18 @@ static class UEnum* EProjectileType_StaticEnum()
 	return Singleton;
 }
 static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EProjectileType(EProjectileType_StaticEnum, TEXT("/Script/No_Bark_Vs"), TEXT("EProjectileType"), false, nullptr, nullptr);
+static class UEnum* EAttackType_StaticEnum()
+{
+	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
+	static class UEnum* Singleton = NULL;
+	if (!Singleton)
+	{
+		extern NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EAttackType();
+		Singleton = GetStaticEnum(Z_Construct_UEnum_No_Bark_Vs_EAttackType, Z_Construct_UPackage__Script_No_Bark_Vs(), TEXT("EAttackType"));
+	}
+	return Singleton;
+}
+static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EAttackType(EAttackType_StaticEnum, TEXT("/Script/No_Bark_Vs"), TEXT("EAttackType"), false, nullptr, nullptr);
 class UScriptStruct* FWeaponData::StaticStruct()
 {
 	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -64,7 +76,7 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFWeaponData
 		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "Instant_Fire",(Native)&ABaseWeapon::execInstant_Fire);
 		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "ProjectileFire",(Native)&ABaseWeapon::execProjectileFire);
 	}
-	IMPLEMENT_CLASS(ABaseWeapon, 747406522);
+	IMPLEMENT_CLASS(ABaseWeapon, 3352387554);
 	void APickupHealth::StaticRegisterNativesAPickupHealth()
 	{
 	}
@@ -215,14 +227,18 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	{
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "AddItemtoInventoryByID",(Native)&APlayController::execAddItemtoInventoryByID);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "ChangeMaxInventorySize",(Native)&APlayController::execChangeMaxInventorySize);
+		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "CloseInventory",(Native)&APlayController::execCloseInventory);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "CraftItem",(Native)&APlayController::execCraftItem);
+		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "DropItem",(Native)&APlayController::execDropItem);
+		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "EnableActionBar",(Native)&APlayController::execEnableActionBar);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "Interact",(Native)&APlayController::execInteract);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "OpenInventory",(Native)&APlayController::execOpenInventory);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "SetInputModetoGameandUI",(Native)&APlayController::execSetInputModetoGameandUI);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "SetupInputComponent",(Native)&APlayController::execSetupInputComponent);
+		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "UnUseItem",(Native)&APlayController::execUnUseItem);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "UseItem",(Native)&APlayController::execUseItem);
 	}
-	IMPLEMENT_CLASS(APlayController, 1584863954);
+	IMPLEMENT_CLASS(APlayController, 581991604);
 	void APlayGameMode::StaticRegisterNativesAPlayGameMode()
 	{
 	}
@@ -258,6 +274,7 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_APickup_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_APickup();
 	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EProjectileType();
+	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EAttackType();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FWeaponData();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_FireAmmos();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_Instant_Fire();
@@ -285,12 +302,16 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANo_Bark_VsGameModeBase();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_AddItemtoInventoryByID();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_ChangeMaxInventorySize();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_CloseInventory();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_CraftItem();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_DropItem();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_EnableActionBar();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_Interact();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_OpenInventory();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_ReloadInventory();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_SetInputModetoGameandUI();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_SetupInputComponent();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_UnUseItem();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_UseItem();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_APlayController_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_APlayController();
@@ -450,6 +471,30 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		return ReturnEnum;
 	}
 	uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EProjectileType_CRC() { return 1953445956U; }
+	UEnum* Z_Construct_UEnum_No_Bark_Vs_EAttackType()
+	{
+		UPackage* Outer=Z_Construct_UPackage__Script_No_Bark_Vs();
+		extern uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EAttackType_CRC();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EAttackType"), 0, Get_Z_Construct_UEnum_No_Bark_Vs_EAttackType_CRC(), false);
+		if (!ReturnEnum)
+		{
+			ReturnEnum = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EAttackType"), RF_Public|RF_Transient|RF_MarkAsNative) UEnum(FObjectInitializer());
+			TArray<TPair<FName, uint8>> EnumNames;
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EAttackType::EMelee")), 0));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EAttackType::ERanged")), 1));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EAttackType::EAttackType_MAX")), 2));
+			ReturnEnum->SetEnums(EnumNames, UEnum::ECppForm::EnumClass);
+			ReturnEnum->CppType = TEXT("EAttackType");
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnEnum->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnEnum, TEXT("EMelee.ToolTip"), TEXT("For currently equipped items/weapons"));
+			MetaData->SetValue(ReturnEnum, TEXT("ERanged.ToolTip"), TEXT("For primary weapons on spine bone"));
+			MetaData->SetValue(ReturnEnum, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+#endif
+		}
+		return ReturnEnum;
+	}
+	uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EAttackType_CRC() { return 1699267903U; }
 	UScriptStruct* Z_Construct_UScriptStruct_FWeaponData()
 	{
 		UPackage* Outer = Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -461,12 +506,15 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			UProperty* NewProp_Priority = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Priority"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(Priority, FWeaponData), 0x0010000000000005);
 			UProperty* NewProp_SplashArt = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("SplashArt"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(SplashArt, FWeaponData), 0x0010000000000005, Z_Construct_UClass_UTexture2D_NoRegister());
 			UProperty* NewProp_Name = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Name"), RF_Public|RF_Transient|RF_MarkAsNative) UStrProperty(CPP_PROPERTY_BASE(Name, FWeaponData), 0x0010000000000005);
-			UProperty* NewProp_WeaponSpread = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("WeaponSpread"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(WeaponSpread, FWeaponData), 0x0010000000000005);
-			UProperty* NewProp_WeaponRange = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("WeaponRange"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(WeaponRange, FWeaponData), 0x0010000000000005);
 			UProperty* NewProp_ShotCost = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("ShotCost"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(ShotCost, FWeaponData), 0x0010000000000005);
 			UProperty* NewProp_TimeBetweenShots = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("TimeBetweenShots"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(TimeBetweenShots, FWeaponData), 0x0010000000000005);
 			UProperty* NewProp_MaxClip = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("MaxClip"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(MaxClip, FWeaponData), 0x0010000000000005);
 			UProperty* NewProp_MaxAmmo = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("MaxAmmo"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(MaxAmmo, FWeaponData), 0x0010000000000005);
+			UProperty* NewProp_WeaponSpread = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("WeaponSpread"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(WeaponSpread, FWeaponData), 0x0010000000000005);
+			UProperty* NewProp_WeaponSpeed = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("WeaponSpeed"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(WeaponSpeed, FWeaponData), 0x0010000000000005);
+			UProperty* NewProp_WeaponRange = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("WeaponRange"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(WeaponRange, FWeaponData), 0x0010000000000005);
+			UProperty* NewProp_WeaponDamage = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("WeaponDamage"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(WeaponDamage, FWeaponData), 0x0010000000000005);
+			UProperty* NewProp_eAttackType = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("eAttackType"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(eAttackType, FWeaponData), 0x0010000000000005, Z_Construct_UEnum_No_Bark_Vs_EAttackType());
 			ReturnStruct->StaticLink();
 #if WITH_METADATA
 			UMetaData* MetaData = ReturnStruct->GetOutermost()->GetMetaData();
@@ -479,10 +527,6 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			MetaData->SetValue(NewProp_SplashArt, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
 			MetaData->SetValue(NewProp_Name, TEXT("Category"), TEXT("Config"));
 			MetaData->SetValue(NewProp_Name, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
-			MetaData->SetValue(NewProp_WeaponSpread, TEXT("Category"), TEXT("Config"));
-			MetaData->SetValue(NewProp_WeaponSpread, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
-			MetaData->SetValue(NewProp_WeaponRange, TEXT("Category"), TEXT("Config"));
-			MetaData->SetValue(NewProp_WeaponRange, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
 			MetaData->SetValue(NewProp_ShotCost, TEXT("Category"), TEXT("Ammo"));
 			MetaData->SetValue(NewProp_ShotCost, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
 			MetaData->SetValue(NewProp_TimeBetweenShots, TEXT("Category"), TEXT("Config"));
@@ -491,11 +535,21 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			MetaData->SetValue(NewProp_MaxClip, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
 			MetaData->SetValue(NewProp_MaxAmmo, TEXT("Category"), TEXT("Ammo"));
 			MetaData->SetValue(NewProp_MaxAmmo, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+			MetaData->SetValue(NewProp_WeaponSpread, TEXT("Category"), TEXT("Config"));
+			MetaData->SetValue(NewProp_WeaponSpread, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+			MetaData->SetValue(NewProp_WeaponSpeed, TEXT("Category"), TEXT("Config"));
+			MetaData->SetValue(NewProp_WeaponSpeed, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+			MetaData->SetValue(NewProp_WeaponRange, TEXT("Category"), TEXT("Config"));
+			MetaData->SetValue(NewProp_WeaponRange, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+			MetaData->SetValue(NewProp_WeaponDamage, TEXT("Category"), TEXT("Config"));
+			MetaData->SetValue(NewProp_WeaponDamage, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+			MetaData->SetValue(NewProp_eAttackType, TEXT("Category"), TEXT("WeaponData"));
+			MetaData->SetValue(NewProp_eAttackType, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
 #endif
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FWeaponData_CRC() { return 1056266276U; }
+	uint32 Get_Z_Construct_UScriptStruct_FWeaponData_CRC() { return 3958897703U; }
 	UFunction* Z_Construct_UFunction_ABaseWeapon_FireAmmos()
 	{
 		UObject* Outer=Z_Construct_UClass_ABaseWeapon();
@@ -573,7 +627,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_CurrentAmmo = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentAmmo"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(CurrentAmmo, ABaseWeapon), 0x0010000000000005);
 				UProperty* NewProp_FireSound = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FireSound"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(FireSound, ABaseWeapon), 0x0010000000010001, Z_Construct_UClass_USoundCue_NoRegister());
 				UProperty* NewProp_ProjectileType = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("ProjectileType"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(ProjectileType, ABaseWeapon), 0x0010000000010001, Z_Construct_UEnum_No_Bark_Vs_EProjectileType());
-				UProperty* NewProp_WeaponConfig = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponConfig"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(WeaponConfig, ABaseWeapon), 0x0010000000010001, Z_Construct_UScriptStruct_FWeaponData());
+				UProperty* NewProp_WeaponConfig = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponConfig"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(WeaponConfig, ABaseWeapon), 0x0010000000020005, Z_Construct_UScriptStruct_FWeaponData());
 				UProperty* NewProp_WeaponCollisionComp = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponCollisionComp"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(WeaponCollisionComp, ABaseWeapon), 0x00100000000a000d, Z_Construct_UClass_UBoxComponent_NoRegister());
 				UProperty* NewProp_WeaponMesh = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponMesh"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(WeaponMesh, ABaseWeapon), 0x00100000000a000d, Z_Construct_UClass_USkeletalMeshComponent_NoRegister());
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
@@ -595,6 +649,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_ProjectileType, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
 				MetaData->SetValue(NewProp_WeaponConfig, TEXT("Category"), TEXT("Config"));
 				MetaData->SetValue(NewProp_WeaponConfig, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
+				MetaData->SetValue(NewProp_WeaponConfig, TEXT("ToolTip"), TEXT("WeaponInfo"));
 				MetaData->SetValue(NewProp_WeaponCollisionComp, TEXT("Category"), TEXT("Collision"));
 				MetaData->SetValue(NewProp_WeaponCollisionComp, TEXT("EditInline"), TEXT("true"));
 				MetaData->SetValue(NewProp_WeaponCollisionComp, TEXT("ModuleRelativePath"), TEXT("BaseWeapon.h"));
@@ -1192,6 +1247,23 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		}
 		return ReturnFunction;
 	}
+	UFunction* Z_Construct_UFunction_APlayController_CloseInventory()
+	{
+		UObject* Outer=Z_Construct_UClass_APlayController();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("CloseInventory"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Interactable"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UFunction* Z_Construct_UFunction_APlayController_CraftItem()
 	{
 		struct PlayController_eventCraftItem_Parms
@@ -1208,6 +1280,50 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			UProperty* NewProp_PlayController = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("PlayController"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(PlayController, PlayController_eventCraftItem_Parms), 0x0010000000000080, Z_Construct_UClass_APlayController_NoRegister());
 			UProperty* NewProp_ItemB = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("ItemB"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(ItemB, PlayController_eventCraftItem_Parms), 0x0010000000000080, Z_Construct_UScriptStruct_FInventoryItem());
 			UProperty* NewProp_ItemA = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("ItemA"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(ItemA, PlayController_eventCraftItem_Parms), 0x0010000000000080, Z_Construct_UScriptStruct_FInventoryItem());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Interactable"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_APlayController_DropItem()
+	{
+		struct PlayController_eventDropItem_Parms
+		{
+			FCurrentInventoryItemInfo iItemInfo;
+		};
+		UObject* Outer=Z_Construct_UClass_APlayController();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("DropItem"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535, sizeof(PlayController_eventDropItem_Parms));
+			UProperty* NewProp_iItemInfo = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("iItemInfo"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(iItemInfo, PlayController_eventDropItem_Parms), 0x0010000000000080, Z_Construct_UScriptStruct_FCurrentInventoryItemInfo());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Interactable"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_APlayController_EnableActionBar()
+	{
+		struct PlayController_eventEnableActionBar_Parms
+		{
+			FCurrentInventoryItemInfo iItemInfo;
+		};
+		UObject* Outer=Z_Construct_UClass_APlayController();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EnableActionBar"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535, sizeof(PlayController_eventEnableActionBar_Parms));
+			UProperty* NewProp_iItemInfo = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("iItemInfo"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(iItemInfo, PlayController_eventEnableActionBar_Parms), 0x0010000000000080, Z_Construct_UScriptStruct_FCurrentInventoryItemInfo());
 			ReturnFunction->Bind();
 			ReturnFunction->StaticLink();
 #if WITH_METADATA
@@ -1308,6 +1424,28 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		}
 		return ReturnFunction;
 	}
+	UFunction* Z_Construct_UFunction_APlayController_UnUseItem()
+	{
+		struct PlayController_eventUnUseItem_Parms
+		{
+			FCurrentInventoryItemInfo iItemInfo;
+		};
+		UObject* Outer=Z_Construct_UClass_APlayController();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("UnUseItem"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535, sizeof(PlayController_eventUnUseItem_Parms));
+			UProperty* NewProp_iItemInfo = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("iItemInfo"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(iItemInfo, PlayController_eventUnUseItem_Parms), 0x0010000000000080, Z_Construct_UScriptStruct_FCurrentInventoryItemInfo());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Interactable"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UFunction* Z_Construct_UFunction_APlayController_UseItem()
 	{
 		struct PlayController_eventUseItem_Parms
@@ -1326,6 +1464,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
 			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Interactable"));
 			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+			MetaData->SetValue(ReturnFunction, TEXT("ToolTip"), TEXT("inventory interaction functions"));
 #endif
 		}
 		return ReturnFunction;
@@ -1349,20 +1488,26 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_AddItemtoInventoryByID());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_ChangeMaxInventorySize());
+				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_CloseInventory());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_CraftItem());
+				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_DropItem());
+				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_EnableActionBar());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_Interact());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_OpenInventory());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_ReloadInventory());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_SetInputModetoGameandUI());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_SetupInputComponent());
+				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_UnUseItem());
 				OuterClass->LinkChild(Z_Construct_UFunction_APlayController_UseItem());
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_LastAddedInventoryIndex = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("LastAddedInventoryIndex"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(LastAddedInventoryIndex, APlayController), 0x0010000000000005);
 				UProperty* NewProp_MaxInventorySize = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("MaxInventorySize"), RF_Public|RF_Transient|RF_MarkAsNative) UUnsizedIntProperty(CPP_PROPERTY_BASE(MaxInventorySize, APlayController), 0x0010000000000005);
+				UProperty* NewProp_MyEquipmentWidget = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("MyEquipmentWidget"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(MyEquipmentWidget, APlayController), 0x0010000000000005, Z_Construct_UClass_UUserWidget_NoRegister());
 				UProperty* NewProp_MyInventoryWidget = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("MyInventoryWidget"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(MyInventoryWidget, APlayController), 0x0010000000000005, Z_Construct_UClass_UUserWidget_NoRegister());
 				CPP_BOOL_PROPERTY_BITMASK_STRUCT(isMyInventoryOpen, APlayController, bool);
 				UProperty* NewProp_isMyInventoryOpen = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("isMyInventoryOpen"), RF_Public|RF_Transient|RF_MarkAsNative) UBoolProperty(FObjectInitializer(), EC_CppProperty, CPP_BOOL_PROPERTY_OFFSET(isMyInventoryOpen, APlayController), 0x0010000000000005, CPP_BOOL_PROPERTY_BITMASK(isMyInventoryOpen, APlayController), sizeof(bool), true);
+				UProperty* NewProp_wEquipment = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("wEquipment"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(wEquipment, APlayController), 0x0014000000000005, Z_Construct_UClass_UUserWidget_NoRegister(), UClass::StaticClass());
 				UProperty* NewProp_wInventory = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("wInventory"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(wInventory, APlayController), 0x0014000000000005, Z_Construct_UClass_UUserWidget_NoRegister(), UClass::StaticClass());
 				UProperty* NewProp_FCurrentInventory = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FCurrentInventory"), RF_Public|RF_Transient|RF_MarkAsNative) UArrayProperty(CPP_PROPERTY_BASE(FCurrentInventory, APlayController), 0x0010000000020005);
 				UProperty* NewProp_FCurrentInventory_Inner = new(EC_InternalUseOnlyConstructor, NewProp_FCurrentInventory, TEXT("FCurrentInventory"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(FObjectInitializer(), EC_CppProperty, 0, 0x0000000000020000, Z_Construct_UScriptStruct_FCurrentInventoryItemInfo());
@@ -1370,13 +1515,17 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_AddItemtoInventoryByID(), "AddItemtoInventoryByID"); // 3382341165
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_ChangeMaxInventorySize(), "ChangeMaxInventorySize"); // 1384057146
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_CloseInventory(), "CloseInventory"); // 188329387
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_CraftItem(), "CraftItem"); // 743880769
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_DropItem(), "DropItem"); // 2446701164
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_EnableActionBar(), "EnableActionBar"); // 3949029879
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_Interact(), "Interact"); // 2061274985
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_OpenInventory(), "OpenInventory"); // 1071467656
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_ReloadInventory(), "ReloadInventory"); // 2539732454
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_SetInputModetoGameandUI(), "SetInputModetoGameandUI"); // 2781731518
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_SetupInputComponent(), "SetupInputComponent"); // 3880574209
-				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_UseItem(), "UseItem"); // 2156799710
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_UnUseItem(), "UnUseItem"); // 847783340
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_UseItem(), "UseItem"); // 2388829574
 				OuterClass->ClassConfigName = FName(TEXT("Game"));
 				OuterClass->StaticLink();
 #if WITH_METADATA
@@ -1388,11 +1537,15 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_LastAddedInventoryIndex, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
 				MetaData->SetValue(NewProp_MaxInventorySize, TEXT("Category"), TEXT("Widgets"));
 				MetaData->SetValue(NewProp_MaxInventorySize, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+				MetaData->SetValue(NewProp_MyEquipmentWidget, TEXT("Category"), TEXT("Widgets"));
+				MetaData->SetValue(NewProp_MyEquipmentWidget, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
 				MetaData->SetValue(NewProp_MyInventoryWidget, TEXT("Category"), TEXT("Widgets"));
 				MetaData->SetValue(NewProp_MyInventoryWidget, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
 				MetaData->SetValue(NewProp_MyInventoryWidget, TEXT("ToolTip"), TEXT("Variable to hold the widget After Creating it."));
 				MetaData->SetValue(NewProp_isMyInventoryOpen, TEXT("Category"), TEXT("Status"));
 				MetaData->SetValue(NewProp_isMyInventoryOpen, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
+				MetaData->SetValue(NewProp_wEquipment, TEXT("Category"), TEXT("Widgets"));
+				MetaData->SetValue(NewProp_wEquipment, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
 				MetaData->SetValue(NewProp_wInventory, TEXT("Category"), TEXT("Widgets"));
 				MetaData->SetValue(NewProp_wInventory, TEXT("ModuleRelativePath"), TEXT("PlayController.h"));
 				MetaData->SetValue(NewProp_wInventory, TEXT("ToolTip"), TEXT("Reference UMG Asset in the Editor"));
@@ -1457,8 +1610,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/No_Bark_Vs")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0xB2182518;
-			Guid.B = 0xD555B286;
+			Guid.A = 0x1AECCB87;
+			Guid.B = 0x1B4EF166;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);

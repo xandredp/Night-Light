@@ -151,11 +151,23 @@ void APlayController::UseItem(FCurrentInventoryItemInfo iItemInfo)
 
 }
 
+void APlayController::UnUseItem(FCurrentInventoryItemInfo iItemInfo)
+{
+}
+
+void APlayController::DropItem(FCurrentInventoryItemInfo iItemInfo)
+{
+}
+
+void APlayController::EnableActionBar(FCurrentInventoryItemInfo iItemInfo)
+{
+}
+
 void APlayController::OpenInventory()
 {
 	if (isMyInventoryOpen == true)
 	{
-		MyInventoryWidget->RemoveFromParent();
+		CloseInventory();
 		isMyInventoryOpen = false;
 		SetInputModetoGameandUI(false);
 		
@@ -167,12 +179,14 @@ void APlayController::OpenInventory()
 
 			// Create the widget and store it.
 			MyInventoryWidget = CreateWidget<UUserWidget>(this, wInventory);
+			MyEquipmentWidget = CreateWidget<UUserWidget>(this, wEquipment);
 			// now you can use the widget directly since you have a referance for it.
 			// Extra check to  make sure the pointer holds the widget.
 			if (MyInventoryWidget)
 			{
 				SetInputModetoGameandUI(true);
 				MyInventoryWidget->AddToViewport(1);
+				MyEquipmentWidget->AddToViewport(1);
 			}
 		}
 
@@ -180,6 +194,12 @@ void APlayController::OpenInventory()
 	}
 	
 	
+}
+
+void APlayController::CloseInventory()
+{
+	MyInventoryWidget->RemoveFromParent();
+	MyEquipmentWidget->RemoveFromParent();
 }
 
 void APlayController::SetupInputComponent()

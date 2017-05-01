@@ -53,11 +53,46 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execCloseInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CloseInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execOpenInventory) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->OpenInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execEnableActionBar) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->EnableActionBar(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execDropItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->DropItem(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execUnUseItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->UnUseItem(Z_Param_iItemInfo); \
 		P_NATIVE_END; \
 	} \
  \
@@ -127,11 +162,46 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execCloseInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CloseInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execOpenInventory) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->OpenInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execEnableActionBar) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->EnableActionBar(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execDropItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->DropItem(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execUnUseItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->UnUseItem(Z_Param_iItemInfo); \
 		P_NATIVE_END; \
 	} \
  \
