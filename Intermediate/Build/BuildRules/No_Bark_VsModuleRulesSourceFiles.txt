@@ -1,3 +1,0 @@
-E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\No_Bark_Vs.Build.cs
-E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs.Target.cs
-E:\love-\Projects\Vertical-Slice\Source\No_Bark_VsEditor.Target.cs
