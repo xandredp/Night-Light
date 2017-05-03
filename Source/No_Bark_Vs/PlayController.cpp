@@ -16,6 +16,8 @@ APlayController::APlayController()
 	MaxInventorySize = 5;
 	LastAddedInventoryIndex = 0;
 	isMyMapOpen = false;
+	isMyInventoryOpen = false;
+	bShowMouseCursor = false;
 
 }
 
@@ -36,14 +38,13 @@ void APlayController::OpenInventory()
 	if (isMyInventoryOpen == true)
 	{
 		CloseInventory();
-		isMyInventoryOpen = false;
-		SetInputModetoGameandUI(false);
-
+		
 	}
 	else
 	{
 		if (wInventory) // Check if the Asset is assigned in the blueprint.
 		{
+			
 
 			// Create the widget and store it.
 			MyInventoryWidget = CreateWidget<UUserWidget>(this, wInventory);
@@ -53,6 +54,8 @@ void APlayController::OpenInventory()
 			if (MyInventoryWidget)
 			{
 				SetInputModetoGameandUI(true);
+				MyInventoryWidget->bIsFocusable = true;
+				bShowMouseCursor = true;
 				MyInventoryWidget->AddToViewport(1);
 				MyEquipmentWidget->AddToViewport(1);
 			}
@@ -102,6 +105,10 @@ void APlayController::CloseInventory()
 {
 	MyInventoryWidget->RemoveFromParent();
 	MyEquipmentWidget->RemoveFromParent();
+
+	isMyInventoryOpen = false;
+	SetInputModetoGameandUI(false);
+	bShowMouseCursor = false;
 }
 
 void APlayController::AddItemtoInventoryByID(FName ID)
