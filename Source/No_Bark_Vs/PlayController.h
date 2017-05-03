@@ -21,11 +21,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class ABaseInteractable* CurrentInteractable;
 
+	/************************************************************************/
+	/* Interaction With key press                                                      */
+	/************************************************************************/
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void OpenInventory();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void OpenMap();
+
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void Interact();
 	
-	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void AddItemtoInventoryByID(FName ID);
+
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UseItem(FCurrentInventoryItemInfo iItemInfo);
@@ -33,52 +41,86 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UnUseItem(FCurrentInventoryItemInfo iItemInfo);
 
-	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void EnableActionBar(FCurrentInventoryItemInfo iItemInfo);
 
+	/************************************************************************/
+	/* Inventory                                                      */
+	/************************************************************************/
 	//Array of inventory
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		TArray<FCurrentInventoryItemInfo> FCurrentInventory;
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void OpenInventory();
+		void AddItemtoInventoryByID(FName ID);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void CloseInventory();
+		void RemoveItemFromInventory(FCurrentInventoryItemInfo ItemToRemove);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APlayController* PlayController);
-
-	UFUNCTION(BlueprintImplementableEvent)
-		void ReloadInventory();
-
+	
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void CloseInventory();
+	
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void SetInputModetoGameandUI(bool bHideCursor);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void ChangeMaxInventorySize(int iNoInventory);
 
-	// Reference UMG Asset in the Editor
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-		TSubclassOf<class UUserWidget> wInventory;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-		TSubclassOf<class UUserWidget> wEquipment;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		bool isMyInventoryOpen;
-
-	// Variable to hold the widget After Creating it.
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-	UUserWidget* MyInventoryWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-		UUserWidget* MyEquipmentWidget;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int MaxInventorySize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int32 LastAddedInventoryIndex;
+
+	/************************************************************************/
+	/* Equipment                                                      */
+	/************************************************************************/
+	//Array of inventory
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FCurrentInventoryItemInfo> FCurrentEquipment;
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AttachEquipmenttoCharacter(FCurrentInventoryItemInfo ItemToAttech);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void DetachEquipmentfromCharacter(FCurrentInventoryItemInfo ItemToDetach);
+	
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddItemToEquipment(FCurrentInventoryItemInfo ItemtoAdd);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove);
+	/************************************************************************/
+	/* Widgets                                                      */
+	/************************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool isMyInventoryOpen;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool isMyMapOpen;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ReloadInventory();
+
+	// Reference UMG Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wInventory;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wEquipment;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wMinimap;
+	// Variable to hold the widget After Creating it.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		UUserWidget* MyInventoryWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		UUserWidget* MyEquipmentWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		UUserWidget* MyMapWidget;
+
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")

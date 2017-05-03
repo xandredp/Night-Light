@@ -42,6 +42,14 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execCloseInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CloseInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execCraftItem) \
 	{ \
 		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
@@ -53,28 +61,12 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execCloseInventory) \
+	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
 	{ \
+		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->CloseInventory(); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execOpenInventory) \
-	{ \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->OpenInventory(); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execEnableActionBar) \
-	{ \
-		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->EnableActionBar(Z_Param_iItemInfo); \
+		this->AddItemtoInventoryByID(Z_Param_ID); \
 		P_NATIVE_END; \
 	} \
  \
@@ -96,20 +88,19 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
-	{ \
-		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->AddItemtoInventoryByID(Z_Param_ID); \
-		P_NATIVE_END; \
-	} \
- \
 	DECLARE_FUNCTION(execInteract) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->Interact(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execOpenInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->OpenInventory(); \
 		P_NATIVE_END; \
 	}
 
@@ -142,6 +133,14 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execCloseInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CloseInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execCraftItem) \
 	{ \
 		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
@@ -153,28 +152,12 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execCloseInventory) \
+	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
 	{ \
+		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->CloseInventory(); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execOpenInventory) \
-	{ \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->OpenInventory(); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execEnableActionBar) \
-	{ \
-		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->EnableActionBar(Z_Param_iItemInfo); \
+		this->AddItemtoInventoryByID(Z_Param_ID); \
 		P_NATIVE_END; \
 	} \
  \
@@ -196,20 +179,19 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
-	{ \
-		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->AddItemtoInventoryByID(Z_Param_ID); \
-		P_NATIVE_END; \
-	} \
- \
 	DECLARE_FUNCTION(execInteract) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->Interact(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execOpenInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->OpenInventory(); \
 		P_NATIVE_END; \
 	}
 

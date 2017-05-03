@@ -6,9 +6,9 @@
 ===========================================================================*/
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+struct FCurrentInventoryItemInfo;
 struct FInventoryItem;
 class APlayController;
-struct FCurrentInventoryItemInfo;
 #ifdef NO_BARK_VS_PlayController_generated_h
 #error "PlayController.generated.h already included, missing '#pragma once' in PlayController.h"
 #endif
@@ -24,6 +24,42 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execRemoveItemFromEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoRemove); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->RemoveItemFromEquipment(Z_Param_ItemtoRemove); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execAddItemToEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoAdd); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->AddItemToEquipment(Z_Param_ItemtoAdd); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execDetachEquipmentfromCharacter) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemToDetach); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->DetachEquipmentfromCharacter(Z_Param_ItemToDetach); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execAttachEquipmenttoCharacter) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemToAttech); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->AttachEquipmenttoCharacter(Z_Param_ItemToAttech); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execChangeMaxInventorySize) \
 	{ \
 		P_GET_PROPERTY(UIntProperty,Z_Param_iNoInventory); \
@@ -42,6 +78,14 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execCloseInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CloseInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execCraftItem) \
 	{ \
 		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
@@ -53,28 +97,21 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execCloseInventory) \
+	DECLARE_FUNCTION(execRemoveItemFromInventory) \
 	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemToRemove); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->CloseInventory(); \
+		this->RemoveItemFromInventory(Z_Param_ItemToRemove); \
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execOpenInventory) \
+	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
 	{ \
+		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->OpenInventory(); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execEnableActionBar) \
-	{ \
-		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->EnableActionBar(Z_Param_iItemInfo); \
+		this->AddItemtoInventoryByID(Z_Param_ID); \
 		P_NATIVE_END; \
 	} \
  \
@@ -96,20 +133,27 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
-	{ \
-		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->AddItemtoInventoryByID(Z_Param_ID); \
-		P_NATIVE_END; \
-	} \
- \
 	DECLARE_FUNCTION(execInteract) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->Interact(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execOpenMap) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->OpenMap(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execOpenInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->OpenInventory(); \
 		P_NATIVE_END; \
 	}
 
@@ -124,6 +168,42 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execRemoveItemFromEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoRemove); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->RemoveItemFromEquipment(Z_Param_ItemtoRemove); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execAddItemToEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoAdd); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->AddItemToEquipment(Z_Param_ItemtoAdd); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execDetachEquipmentfromCharacter) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemToDetach); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->DetachEquipmentfromCharacter(Z_Param_ItemToDetach); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execAttachEquipmenttoCharacter) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemToAttech); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->AttachEquipmenttoCharacter(Z_Param_ItemToAttech); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execChangeMaxInventorySize) \
 	{ \
 		P_GET_PROPERTY(UIntProperty,Z_Param_iNoInventory); \
@@ -142,6 +222,14 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execCloseInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->CloseInventory(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execCraftItem) \
 	{ \
 		P_GET_STRUCT(FInventoryItem,Z_Param_ItemA); \
@@ -153,28 +241,21 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execCloseInventory) \
+	DECLARE_FUNCTION(execRemoveItemFromInventory) \
 	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemToRemove); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->CloseInventory(); \
+		this->RemoveItemFromInventory(Z_Param_ItemToRemove); \
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execOpenInventory) \
+	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
 	{ \
+		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->OpenInventory(); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execEnableActionBar) \
-	{ \
-		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->EnableActionBar(Z_Param_iItemInfo); \
+		this->AddItemtoInventoryByID(Z_Param_ID); \
 		P_NATIVE_END; \
 	} \
  \
@@ -196,20 +277,27 @@ struct FCurrentInventoryItemInfo;
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execAddItemtoInventoryByID) \
-	{ \
-		P_GET_PROPERTY(UNameProperty,Z_Param_ID); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->AddItemtoInventoryByID(Z_Param_ID); \
-		P_NATIVE_END; \
-	} \
- \
 	DECLARE_FUNCTION(execInteract) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->Interact(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execOpenMap) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->OpenMap(); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execOpenInventory) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->OpenInventory(); \
 		P_NATIVE_END; \
 	}
 

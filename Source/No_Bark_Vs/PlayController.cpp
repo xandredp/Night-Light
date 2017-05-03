@@ -15,6 +15,7 @@ APlayController::APlayController()
 {
 	MaxInventorySize = 5;
 	LastAddedInventoryIndex = 0;
+	isMyMapOpen = false;
 
 }
 
@@ -28,6 +29,155 @@ void APlayController::Interact()
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
 
 	}
+}
+
+void APlayController::OpenInventory()
+{
+	if (isMyInventoryOpen == true)
+	{
+		CloseInventory();
+		isMyInventoryOpen = false;
+		SetInputModetoGameandUI(false);
+
+	}
+	else
+	{
+		if (wInventory) // Check if the Asset is assigned in the blueprint.
+		{
+
+			// Create the widget and store it.
+			MyInventoryWidget = CreateWidget<UUserWidget>(this, wInventory);
+			MyEquipmentWidget = CreateWidget<UUserWidget>(this, wEquipment);
+			// now you can use the widget directly since you have a referance for it.
+			// Extra check to  make sure the pointer holds the widget.
+			if (MyInventoryWidget)
+			{
+				SetInputModetoGameandUI(true);
+				MyInventoryWidget->AddToViewport(1);
+				MyEquipmentWidget->AddToViewport(1);
+			}
+		}
+
+		isMyInventoryOpen = true;
+	}
+
+
+}
+
+void APlayController::OpenMap()
+{
+
+	if (isMyMapOpen == true)
+	{
+		MyMapWidget->RemoveFromParent();
+		isMyMapOpen = false;
+	}
+	else
+	{
+		if (wMinimap) // Check if the Asset is assigned in the blueprint.
+		{
+			MyMapWidget = CreateWidget<UUserWidget>(this, wMinimap);
+			// now you can use the widget directly since you have a referance for it.
+			// Extra check to  make sure the pointer holds the widget.
+			if (MyMapWidget)
+			{
+				MyMapWidget->AddToViewport(1);
+			}
+		}
+
+		isMyMapOpen = true;
+	}
+}
+
+void APlayController::UseItem(FCurrentInventoryItemInfo iItemInfo)
+{
+
+}
+
+void APlayController::UnUseItem(FCurrentInventoryItemInfo iItemInfo)
+{
+}
+
+void APlayController::CloseInventory()
+{
+	MyInventoryWidget->RemoveFromParent();
+	MyEquipmentWidget->RemoveFromParent();
+}
+
+void APlayController::AddItemtoInventoryByID(FName ID)
+{
+	// getting the game mode and get Item database. 
+	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
+	UDataTable* ItemTable = PlayGameMode->GetItemDB();
+	// find inventory item. 
+	FInventoryItem* ItemToADD = ItemTable->FindRow<FInventoryItem>(ID, "");
+	FCurrentInventoryItemInfo CurrentItemToAddInventory;
+	CurrentItemToAddInventory.CurrentStackNumber = 1;
+	CurrentItemToAddInventory.ItemInfo = *ItemToADD;
+	CurrentItemToAddInventory.ItemIndex = LastAddedInventoryIndex;
+	bool bItemAdded = false;
+	// if inventory item is valid add to inventory. 
+	if (ItemToADD)
+	{
+		do // do until the Item is added
+		{
+			if (FCurrentInventory.Num() == 0)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added as index  0 is  false ");
+				LastAddedInventoryIndex = FCurrentInventory.AddUnique(CurrentItemToAddInventory);
+				bItemAdded = true;
+
+			}
+			else
+			{
+				// Search all items to check if item already exist, if it does increment current stack number.
+				for (int32 i = 0; i < FCurrentInventory.Num(); i++)
+				{
+					if (FCurrentInventory[i].ItemInfo.ItemID == ItemToADD->ItemID)
+					{
+						if (FCurrentInventory[i].CurrentStackNumber < FCurrentInventory[i].ItemInfo.MaxStackNumber)
+						{
+							FCurrentInventory[i].CurrentStackNumber = FCurrentInventory[i].CurrentStackNumber + 1;
+
+							FString string;
+							string = "Item has been added CurrentstackNumber :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
+							GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string);
+
+							bItemAdded = true;
+						}
+					}
+				}
+				//if same item doesn't exist Add unique item 
+				if (bItemAdded == false)
+				{
+					if (LastAddedInventoryIndex >= MaxInventorySize)
+					{
+						///Todo : Warning Inventory is full and remove the item. 
+					}
+					else
+					{
+						FString string;
+						string = "Item was full CurrentstackNumber :";
+
+						LastAddedInventoryIndex = FCurrentInventory.Add(CurrentItemToAddInventory);
+						FCurrentInventory[LastAddedInventoryIndex].ItemIndex = LastAddedInventoryIndex;
+					}
+
+					bItemAdded = true;
+				}
+
+			}
+
+		} while (bItemAdded != true);
+
+
+	}
+
+	ReloadInventory();
+}
+
+void APlayController::RemoveItemFromInventory(FCurrentInventoryItemInfo ItemToRemove)
+{
 }
 
 void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APlayController* PlayController)
@@ -52,6 +202,7 @@ void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APla
 	}
 }
 
+//private?
 void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 {
 	FInputModeGameAndUI InputMode;
@@ -68,134 +219,25 @@ void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 	}
 
 }
-
 void APlayController::ChangeMaxInventorySize(int iNoInventory)
 {
 	MaxInventorySize = iNoInventory;
 }
 
-void APlayController::AddItemtoInventoryByID(FName ID)
-{
-	// getting the game mode and get Item database. 
-	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
-	UDataTable* ItemTable = PlayGameMode->GetItemDB();	
-	// find inventory item. 
-	FInventoryItem* ItemToADD = ItemTable->FindRow<FInventoryItem>(ID, "");
-	FCurrentInventoryItemInfo CurrentItemToAddInventory;
-	CurrentItemToAddInventory.CurrentStackNumber = 1;
-	CurrentItemToAddInventory.ItemInfo = *ItemToADD;
-	CurrentItemToAddInventory.ItemIndex = LastAddedInventoryIndex;
-	bool bItemAdded = false;
-	// if inventory item is valid add to inventory. 
-	if (ItemToADD)
-	{
-		do // do until the Item is added
-		{
-			if (FCurrentInventory.Num()==0)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added as index  0 is  false ");
-				LastAddedInventoryIndex = FCurrentInventory.AddUnique(CurrentItemToAddInventory);
-				bItemAdded = true;
-		
-			}
-			else
-			{
-				// Search all items to check if item already exist, if it does increment current stack number.
-				for (int32 i = 0; i < FCurrentInventory.Num(); i++)
-				{
-					if (FCurrentInventory[i].ItemInfo.ItemID == ItemToADD->ItemID)
-					{
-						if (FCurrentInventory[i].CurrentStackNumber < FCurrentInventory[i].ItemInfo.MaxStackNumber)
-						{
-							FCurrentInventory[i].CurrentStackNumber = FCurrentInventory[i].CurrentStackNumber + 1;
-							
-							FString string;
-							string = "Item has been added CurrentstackNumber :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
-							GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string );
-							
-							bItemAdded = true;
-						}
-					}
-				}
-				//if same item doesn't exist Add unique item 
-				if (bItemAdded == false)
-				{				
-					if (LastAddedInventoryIndex >= MaxInventorySize)
-					{
-						///Todo : Warning Inventory is full and remove the item. 
-					}
-					else
-					{
-						FString string;
-						string = "Item was full CurrentstackNumber :";
-
-						LastAddedInventoryIndex = FCurrentInventory.Add(CurrentItemToAddInventory);
-						FCurrentInventory[LastAddedInventoryIndex].ItemIndex = LastAddedInventoryIndex;
-					}
-
-					bItemAdded = true;
-				}
-
-			}
-
-		} while (bItemAdded != true);
-
-		
-	}
-
-	ReloadInventory();
-}
-
-void APlayController::UseItem(FCurrentInventoryItemInfo iItemInfo)
-{
-
-}
-
-void APlayController::UnUseItem(FCurrentInventoryItemInfo iItemInfo)
+void APlayController::AttachEquipmenttoCharacter(FCurrentInventoryItemInfo ItemToAttech)
 {
 }
 
-void APlayController::EnableActionBar(FCurrentInventoryItemInfo iItemInfo)
+void APlayController::DetachEquipmentfromCharacter(FCurrentInventoryItemInfo ItemToDetach)
 {
 }
 
-void APlayController::OpenInventory()
+void APlayController::AddItemToEquipment(FCurrentInventoryItemInfo ItemtoAdd)
 {
-	if (isMyInventoryOpen == true)
-	{
-		CloseInventory();
-		isMyInventoryOpen = false;
-		SetInputModetoGameandUI(false);
-		
-	}
-	else
-	{
-		if (wInventory) // Check if the Asset is assigned in the blueprint.
-		{
-
-			// Create the widget and store it.
-			MyInventoryWidget = CreateWidget<UUserWidget>(this, wInventory);
-			MyEquipmentWidget = CreateWidget<UUserWidget>(this, wEquipment);
-			// now you can use the widget directly since you have a referance for it.
-			// Extra check to  make sure the pointer holds the widget.
-			if (MyInventoryWidget)
-			{
-				SetInputModetoGameandUI(true);
-				MyInventoryWidget->AddToViewport(1);
-				MyEquipmentWidget->AddToViewport(1);
-			}
-		}
-
-		isMyInventoryOpen = true;
-	}
-	
-	
 }
 
-void APlayController::CloseInventory()
+void APlayController::RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove)
 {
-	MyInventoryWidget->RemoveFromParent();
-	MyEquipmentWidget->RemoveFromParent();
 }
 
 void APlayController::SetupInputComponent()
@@ -204,6 +246,13 @@ void APlayController::SetupInputComponent()
 
 	InputComponent->BindAction("Use", IE_Pressed, this, &APlayController::Interact);
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &APlayController::OpenInventory);
+	InputComponent->BindAction("OpenMap", IE_Pressed, this, &APlayController::OpenMap);
+	/*InputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &APlayController::OpenInventory);
+	InputComponent->BindAction("ScondaryWeapon", IE_Pressed, this, &APlayController::OpenInventory);
+	InputComponent->BindAction("MeleeWeapon", IE_Pressed, this, &APlayController::OpenInventory);
+	InputComponent->BindAction("EqupSlot4", IE_Pressed, this, &APlayController::OpenInventory);
+	InputComponent->BindAction("EqupSlot5", IE_Pressed, this, &APlayController::OpenInventory);
+	InputComponent->BindAction("EquipSlot6", IE_Pressed, this, &APlayController::OpenInventory);*/
 
 
 }
