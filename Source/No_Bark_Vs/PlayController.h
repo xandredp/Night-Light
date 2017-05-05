@@ -50,7 +50,10 @@ public:
 		TArray<FCurrentInventoryItemInfo> FCurrentInventory;
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void AddItemtoInventoryByID(FName ID);
+		void AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumber);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void MoveItemWithinInventory(int ItemAIndex, int ItemBIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void RemoveItemFromInventory(FCurrentInventoryItemInfo ItemToRemove);
@@ -78,6 +81,10 @@ public:
 	/************************************************************************/
 	//Array of inventory
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FCurrentInventoryItemInfo> FCurrentEquippedWeapons;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		FCurrentInventoryItemInfo FCurrentEquippedMeleeWeapon;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		TArray<FCurrentInventoryItemInfo> FCurrentEquipment;
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
@@ -87,10 +94,20 @@ public:
 		void DetachEquipmentfromCharacter(FCurrentInventoryItemInfo ItemToDetach);
 	
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void AddItemToEquipment(FCurrentInventoryItemInfo ItemtoAdd);
+		void RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove);
+		void MoveItemToInventory(FCurrentInventoryItemInfo iItemFromEqupment, int ItemBIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemtoAdd, int toIndex);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		int MaxEquipmentSize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		FCurrentInventoryItemInfo iItemRemovedfromEquipment;
+	
 	/************************************************************************/
 	/* Widgets                                                      */
 	/************************************************************************/

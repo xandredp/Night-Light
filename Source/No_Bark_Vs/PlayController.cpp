@@ -14,19 +14,20 @@
 APlayController::APlayController()
 {
 	MaxInventorySize = 5;
+	MaxEquipmentSize = 6;
 	LastAddedInventoryIndex = 0;
 	isMyMapOpen = false;
 	isMyInventoryOpen = false;
 	bShowMouseCursor = false;
-
+	FCurrentEquippedMeleeWeapon.CurrentStackNumber = 0;
+	FCurrentEquippedMeleeWeapon.ItemInfo.eItemType = EItemType::MeleeWeapon;
 }
 
 void APlayController::Interact()
 {//ABaseInteractable
-
-
 	if (CurrentInteractable)
 	{
+
 		CurrentInteractable->Interact(this);
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
 
@@ -111,7 +112,7 @@ void APlayController::CloseInventory()
 	bShowMouseCursor = false;
 }
 
-void APlayController::AddItemtoInventoryByID(FName ID)
+void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumber)
 {
 	// getting the game mode and get Item database. 
 	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
@@ -130,8 +131,11 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 		{
 			if (FCurrentInventory.Num() == 0)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Item has been added as index  0 is  false ");
 				LastAddedInventoryIndex = FCurrentInventory.AddUnique(CurrentItemToAddInventory);
+				FCurrentInventory[LastAddedInventoryIndex].CurrentStackNumber = ItemCurrentStackNumber;
+				FCurrentInventory[LastAddedInventoryIndex].ItemIndex = LastAddedInventoryIndex;
+
+
 				bItemAdded = true;
 
 			}
@@ -144,7 +148,7 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 					{
 						if (FCurrentInventory[i].CurrentStackNumber < FCurrentInventory[i].ItemInfo.MaxStackNumber)
 						{
-							FCurrentInventory[i].CurrentStackNumber = FCurrentInventory[i].CurrentStackNumber + 1;
+							FCurrentInventory[i].CurrentStackNumber = FCurrentInventory[i].CurrentStackNumber + ItemCurrentStackNumber;
 
 							FString string;
 							string = "Item has been added CurrentstackNumber :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
@@ -157,9 +161,11 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 				//if same item doesn't exist Add unique item 
 				if (bItemAdded == false)
 				{
-					if (LastAddedInventoryIndex >= MaxInventorySize)
+					if (FCurrentInventory.Num() >= MaxInventorySize)
 					{
 						///Todo : Warning Inventory is full and remove the item. 
+						GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "InventoryIsFull");
+
 					}
 					else
 					{
@@ -168,6 +174,7 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 
 						LastAddedInventoryIndex = FCurrentInventory.Add(CurrentItemToAddInventory);
 						FCurrentInventory[LastAddedInventoryIndex].ItemIndex = LastAddedInventoryIndex;
+						FCurrentInventory[LastAddedInventoryIndex].CurrentStackNumber = ItemCurrentStackNumber;
 					}
 
 					bItemAdded = true;
@@ -183,8 +190,64 @@ void APlayController::AddItemtoInventoryByID(FName ID)
 	ReloadInventory();
 }
 
-void APlayController::RemoveItemFromInventory(FCurrentInventoryItemInfo ItemToRemove)
+void APlayController::MoveItemWithinInventory(int ItemAIndex, int ItemBIndex)
 {
+	FCurrentInventoryItemInfo ItemFrom;
+	FCurrentInventoryItemInfo ItemTo;
+
+	if (FCurrentInventory[ItemAIndex].CurrentStackNumber == 0)
+	{
+
+	}
+	else
+	{
+		ItemFrom = FCurrentInventory[ItemAIndex];
+
+		if (FCurrentInventory[ItemBIndex].CurrentStackNumber == 0)
+		{
+			
+		}
+		else if (FCurrentInventory.Num() == ItemAIndex)
+		{
+
+		}
+		else
+		{
+			ItemTo = FCurrentInventory[ItemBIndex];
+			
+			FCurrentInventory[ItemBIndex].CurrentStackNumber = ItemFrom.CurrentStackNumber;
+			FCurrentInventory[ItemBIndex].ItemInfo = ItemFrom.ItemInfo;
+			FCurrentInventory[ItemBIndex].ItemIndex = ItemBIndex;
+
+			FCurrentInventory[ItemAIndex].CurrentStackNumber = ItemTo.CurrentStackNumber;
+			FCurrentInventory[ItemAIndex].ItemInfo = ItemTo.ItemInfo;
+			FCurrentInventory[ItemAIndex].ItemIndex = ItemAIndex;
+
+		}
+	}
+
+	ReloadInventory();
+}
+
+void APlayController::RemoveItemFromInventory(FCurrentInventoryItemInfo ItemToRemove)
+{//Item has been used Remove 1Stack Number From Inventory.
+	int relatedindex = ItemToRemove.ItemIndex;
+	if (ItemToRemove.CurrentStackNumber == 1)
+	{
+		FCurrentInventory.RemoveAt(relatedindex);
+		
+		ReloadInventory();
+
+		for (int32 i = 0; i < FCurrentInventory.Num(); i++)
+		{
+			FCurrentInventory[i].ItemIndex = i;
+		}
+	}
+	else if (ItemToRemove.CurrentStackNumber > 1)
+	{
+		FCurrentInventory[relatedindex].CurrentStackNumber = FCurrentInventory[relatedindex].CurrentStackNumber -1;
+	}
+	
 }
 
 void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APlayController* PlayController)
@@ -202,7 +265,7 @@ void APlayController::CraftItem(FInventoryItem ItemA, FInventoryItem ItemB, APla
 				//Inventory.RemoveSingle(ItemB);
 			}
 
-			AddItemtoInventoryByID(Craft.ProductID);
+			AddItemtoInventoryByID(Craft.ProductID, 1);
 
 			ReloadInventory();
 		}
@@ -239,12 +302,141 @@ void APlayController::DetachEquipmentfromCharacter(FCurrentInventoryItemInfo Ite
 {
 }
 
-void APlayController::AddItemToEquipment(FCurrentInventoryItemInfo ItemtoAdd)
-{
-}
-
 void APlayController::RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove)
 {
+	int iIndex = ItemtoRemove.ItemIndex;
+	FCurrentEquipment[iIndex].CurrentStackNumber = 0;
+	FCurrentEquipment[iIndex].ItemInfo.eItemType = EItemType::None;
+}
+void APlayController::MoveItemToInventory(FCurrentInventoryItemInfo iItemFromEqupment, int ItemBIndex)
+{
+
+	FCurrentInventoryItemInfo ItemFrom;
+	FCurrentInventoryItemInfo ItemTo;
+	int CurrentIndex;
+
+	if (iItemFromEqupment.CurrentStackNumber == 0)
+	{
+		// do nothing just remoive item B.
+	}
+	else
+	{
+		ItemFrom = iItemFromEqupment;
+		CurrentIndex = FCurrentInventory.Add(iItemFromEqupment);
+		FCurrentInventory[CurrentIndex].ItemIndex = CurrentIndex;
+	}
+	ReloadInventory();
+}
+
+void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemtoAdd, int toIndex)
+{
+	int LastAddedEquipmentyIndex = 0;
+	bool bItemAdded = false;
+	bool bItemRemovedinInventory = false;
+	EItemType iItemType = iItemtoAdd.ItemInfo.eItemType;
+	iItemRemovedfromEquipment.CurrentStackNumber = 0;
+	// if inventory item is valid add to inventory. 
+	do // do until the Item is added
+	{
+		if (iItemType==EItemType::None)
+		{
+		}
+		else if (iItemType == EItemType::Weapon)
+		{
+
+			if (FCurrentEquippedWeapons.Num() <= 1)
+			{
+				LastAddedEquipmentyIndex = FCurrentEquippedWeapons.Add(iItemtoAdd);
+				FCurrentEquippedWeapons[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+
+				bItemAdded = true;
+			}
+			else if (toIndex <= 1)
+			{
+				LastAddedEquipmentyIndex = toIndex;
+				iItemRemovedfromEquipment = FCurrentEquippedWeapons[LastAddedEquipmentyIndex];
+				FCurrentEquippedWeapons[LastAddedEquipmentyIndex] = iItemtoAdd;
+				FCurrentEquippedWeapons[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+
+				bItemAdded = true;
+			}
+			else
+			{
+				LastAddedEquipmentyIndex = 1;
+				iItemRemovedfromEquipment = FCurrentEquippedWeapons[LastAddedEquipmentyIndex];
+				FCurrentEquippedWeapons[LastAddedEquipmentyIndex] = iItemtoAdd;
+				FCurrentEquippedWeapons[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+
+				bItemAdded = true;
+			}
+		}
+
+		else if (iItemType == EItemType::MeleeWeapon)
+		{
+			iItemRemovedfromEquipment = FCurrentEquippedMeleeWeapon;
+			FCurrentEquippedMeleeWeapon = iItemtoAdd;
+
+			bItemAdded = true;
+		}
+		//// if  EItemType::Not Weapon...
+		else
+		{
+
+			if (FCurrentEquipment.Num() <= 2)
+			{
+				LastAddedEquipmentyIndex = FCurrentEquipment.Add(iItemtoAdd);
+				FCurrentEquipment[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+
+				bItemAdded = true;
+			}
+			else if (toIndex <= 2)
+			{
+				LastAddedEquipmentyIndex = toIndex;
+				iItemRemovedfromEquipment = FCurrentEquipment[LastAddedEquipmentyIndex];
+				FCurrentEquipment[LastAddedEquipmentyIndex] = iItemtoAdd;
+				FCurrentEquipment[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+
+				bItemAdded = true;
+			}
+			else
+			{
+				LastAddedEquipmentyIndex = 2;
+				iItemRemovedfromEquipment = FCurrentEquipment[LastAddedEquipmentyIndex];
+				FCurrentEquipment[LastAddedEquipmentyIndex] = iItemtoAdd;
+				FCurrentEquipment[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+
+				bItemAdded = true;
+			}
+		}
+
+		bItemAdded = true;
+	} while (bItemAdded != true);
+	
+	for (int32 i = 0; i < FCurrentInventory.Num(); i++)
+	{
+		FCurrentInventory[i].ItemIndex = i;
+	}
+	for (int32 j = 0; j < FCurrentInventory.Num(); j++)
+	{
+		if (FCurrentInventory[j].ItemInfo.ItemID == iItemtoAdd.ItemInfo.ItemID)
+		{
+			if (FCurrentInventory[j].CurrentStackNumber == iItemtoAdd.CurrentStackNumber)
+			{
+				if (bItemRemovedinInventory == false)
+				{
+					FCurrentInventory.RemoveAt(j);
+					bItemRemovedinInventory = true;
+				}
+			}
+		}
+	}
+	
+	if (iItemRemovedfromEquipment.CurrentStackNumber > 0)
+	{
+		AddItemtoInventoryByID(iItemRemovedfromEquipment.ItemInfo.ItemID, iItemRemovedfromEquipment.CurrentStackNumber);
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "stacknumber higherthan 0");
+	}
+	ReloadInventory();
 }
 
 void APlayController::SetupInputComponent()

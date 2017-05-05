@@ -84,7 +84,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{2DBCB323-61ED-4C55-A6DB-72FC4F3FD07C}</ProjectGuid>
+		<ProjectGuid>{4336FAF9-F232-4FCD-9CE7-5530A2904332}</ProjectGuid>
 		<Keyword>MakeFileProj</Keyword>
 		<RootNamespace>No_Bark_Vs</RootNamespace>
        <PlatformToolset>v140</PlatformToolset>

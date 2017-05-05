@@ -19,7 +19,7 @@ enum class EInventorySlot : uint8
 	Melee,
 };
 
-UENUM()
+UENUM(BlueprintType)
 enum class EItemType : uint8
 {
 	None,
