@@ -33,7 +33,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void Interact();
 	
-
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UseItem(FCurrentInventoryItemInfo iItemInfo);
@@ -41,6 +40,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UnUseItem(FCurrentInventoryItemInfo iItemInfo);
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void ReArrangeItems();
+
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void DropItem(FCurrentInventoryItemInfo iItemInfo, TArray<FCurrentInventoryItemInfo> FCurrentInventory);
 
 	/************************************************************************/
 	/* Inventory                                                      */
@@ -76,6 +81,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int32 LastAddedInventoryIndex;
 
+
 	/************************************************************************/
 	/* Equipment                                                      */
 	/************************************************************************/
@@ -94,13 +100,20 @@ public:
 		void DetachEquipmentfromCharacter(FCurrentInventoryItemInfo ItemToDetach);
 	
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove);
-
-	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void MoveItemToInventory(FCurrentInventoryItemInfo iItemFromEqupment, int ItemBIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemtoAdd, int toIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AttachEquipment(FCurrentInventoryItemInfo iItemInfo);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void UnAttachEquipment(FCurrentInventoryItemInfo iItemInfo);
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int MaxEquipmentSize;
@@ -108,6 +121,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		FCurrentInventoryItemInfo iItemRemovedfromEquipment;
 	
+	/* Class to add to SpawnLocation when picked up */
+	UPROPERTY(EditDefaultsOnly, Category = "WeaponClass")
+		TSubclassOf<ABaseWeapon> WeaponClass;
+
 	/************************************************************************/
 	/* Widgets                                                      */
 	/************************************************************************/

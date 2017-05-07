@@ -84,7 +84,7 @@
 		</ProjectConfiguration>
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
-		<ProjectGuid>{4336FAF9-F232-4FCD-9CE7-5530A2904332}</ProjectGuid>
+		<ProjectGuid>{482D217D-56A2-4791-B501-B7C4F606DB5C}</ProjectGuid>
 		<Keyword>MakeFileProj</Keyword>
 		<RootNamespace>No_Bark_Vs</RootNamespace>
        <PlatformToolset>v140</PlatformToolset>
@@ -429,8 +429,6 @@
 		<ClInclude Include="..\..\Source\No_Bark_Vs\No_Bark_VsGameModeBase.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\Pickup.cpp" />
 		<ClInclude Include="..\..\Source\No_Bark_Vs\Pickup.h" />
-		<ClCompile Include="..\..\Source\No_Bark_Vs\PickupHealth.cpp" />
-		<ClInclude Include="..\..\Source\No_Bark_Vs\PickupHealth.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\PlayController.cpp" />
 		<ClInclude Include="..\..\Source\No_Bark_Vs\PlayController.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\PlayGameMode.cpp" />

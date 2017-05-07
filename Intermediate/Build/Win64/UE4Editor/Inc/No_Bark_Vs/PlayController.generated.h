@@ -24,6 +24,33 @@ class APlayController;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execUnAttachEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->UnAttachEquipment(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execAttachEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->AttachEquipment(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execRemoveItemFromEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoRemove); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->RemoveItemFromEquipment(Z_Param_ItemtoRemove); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execAddItemtoEquipmentByItem) \
 	{ \
 		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemtoAdd); \
@@ -41,15 +68,6 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->MoveItemToInventory(Z_Param_iItemFromEqupment,Z_Param_ItemBIndex); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execRemoveItemFromEquipment) \
-	{ \
-		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoRemove); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->RemoveItemFromEquipment(Z_Param_ItemtoRemove); \
 		P_NATIVE_END; \
 	} \
  \
@@ -134,6 +152,24 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->AddItemtoInventoryByID(Z_Param_ID,Z_Param_ItemCurrentStackNumber); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execDropItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_GET_TARRAY(FCurrentInventoryItemInfo,Z_Param_FCurrentInventory); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->DropItem(Z_Param_iItemInfo,Z_Param_FCurrentInventory); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execReArrangeItems) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->ReArrangeItems(); \
 		P_NATIVE_END; \
 	} \
  \
@@ -190,6 +226,33 @@ class APlayController;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execUnAttachEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->UnAttachEquipment(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execAttachEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->AttachEquipment(Z_Param_iItemInfo); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execRemoveItemFromEquipment) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoRemove); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->RemoveItemFromEquipment(Z_Param_ItemtoRemove); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execAddItemtoEquipmentByItem) \
 	{ \
 		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemtoAdd); \
@@ -207,15 +270,6 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->MoveItemToInventory(Z_Param_iItemFromEqupment,Z_Param_ItemBIndex); \
-		P_NATIVE_END; \
-	} \
- \
-	DECLARE_FUNCTION(execRemoveItemFromEquipment) \
-	{ \
-		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_ItemtoRemove); \
-		P_FINISH; \
-		P_NATIVE_BEGIN; \
-		this->RemoveItemFromEquipment(Z_Param_ItemtoRemove); \
 		P_NATIVE_END; \
 	} \
  \
@@ -300,6 +354,24 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->AddItemtoInventoryByID(Z_Param_ID,Z_Param_ItemCurrentStackNumber); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execDropItem) \
+	{ \
+		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
+		P_GET_TARRAY(FCurrentInventoryItemInfo,Z_Param_FCurrentInventory); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->DropItem(Z_Param_iItemInfo,Z_Param_FCurrentInventory); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execReArrangeItems) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		this->ReArrangeItems(); \
 		P_NATIVE_END; \
 	} \
  \

@@ -95,10 +95,62 @@ void APlayController::OpenMap()
 
 void APlayController::UseItem(FCurrentInventoryItemInfo iItemInfo)
 {
+	EItemType eItemType = iItemInfo.ItemInfo.eItemType;
+	if (iItemInfo.CurrentStackNumber != 0)
+	{
+		if (iItemInfo.ItemInfo.eItemType != EItemType::None)
+		{
+			switch (eItemType)
+			{
+			case EItemType::Weapon:
+				break;
+
+			case EItemType::MeleeWeapon:
+				break;
+
+			case EItemType::Armor:
+				break;
+
+			case EItemType::Grenades:
+				break;
+
+			case EItemType::Food:
+				break;
+
+			case EItemType::Potion:
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
 
 }
 
 void APlayController::UnUseItem(FCurrentInventoryItemInfo iItemInfo)
+{
+}
+
+void APlayController::ReArrangeItems()
+{
+	for (int32 i = 0; i < FCurrentInventory.Num(); i++)
+	{
+		FCurrentInventory[i].ItemIndex = i;
+	}
+
+	for (int32 i = 0; i < FCurrentEquippedWeapons.Num(); i++)
+	{
+		FCurrentEquippedWeapons[i].ItemIndex = i;
+	}
+
+	for (int32 i = 0; i < FCurrentEquipment.Num(); i++)
+	{
+		FCurrentEquipment[i].ItemIndex = i;
+	}
+}
+
+void APlayController::DropItem(FCurrentInventoryItemInfo iItemInfo, TArray<FCurrentInventoryItemInfo> FCurrentInventory)
 {
 }
 
@@ -238,10 +290,9 @@ void APlayController::RemoveItemFromInventory(FCurrentInventoryItemInfo ItemToRe
 		
 		ReloadInventory();
 
-		for (int32 i = 0; i < FCurrentInventory.Num(); i++)
-		{
-			FCurrentInventory[i].ItemIndex = i;
-		}
+		ReArrangeItems();
+
+
 	}
 	else if (ItemToRemove.CurrentStackNumber > 1)
 	{
@@ -411,11 +462,10 @@ void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemto
 
 		bItemAdded = true;
 	} while (bItemAdded != true);
-	
-	for (int32 i = 0; i < FCurrentInventory.Num(); i++)
-	{
-		FCurrentInventory[i].ItemIndex = i;
-	}
+
+	ReArrangeItems();
+
+	// Remove Iteam. 
 	for (int32 j = 0; j < FCurrentInventory.Num(); j++)
 	{
 		if (FCurrentInventory[j].ItemInfo.ItemID == iItemtoAdd.ItemInfo.ItemID)
@@ -430,13 +480,52 @@ void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemto
 			}
 		}
 	}
-	
+
 	if (iItemRemovedfromEquipment.CurrentStackNumber > 0)
 	{
 		AddItemtoInventoryByID(iItemRemovedfromEquipment.ItemInfo.ItemID, iItemRemovedfromEquipment.CurrentStackNumber);
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "stacknumber higherthan 0");
 	}
 	ReloadInventory();
+}
+
+void APlayController::AttachEquipment(FCurrentInventoryItemInfo iItemInfo)
+{
+	EItemType eItemType = iItemInfo.ItemInfo.eItemType;
+	if (iItemInfo.CurrentStackNumber != 0)
+	{
+		if (iItemInfo.ItemInfo.eItemType != EItemType::None)
+		{
+			switch (eItemType)
+			{
+			case EItemType::Weapon:
+				break;
+
+			case EItemType::MeleeWeapon:
+				break;
+
+			case EItemType::Armor:
+				break;
+
+			case EItemType::Grenades:
+				break;
+
+			case EItemType::Food:
+				break;
+
+			case EItemType::Potion:
+				break;	
+
+			default:
+				break;
+			}
+		}
+	}
+	
+}
+
+void APlayController::UnAttachEquipment(FCurrentInventoryItemInfo iItemInfo)
+{
 }
 
 void APlayController::SetupInputComponent()

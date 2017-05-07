@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\No_Bark_Vs.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{719198C8-A5BE-409A-99A9-2BE6A8A38877}</UniqueIdentifier>
+			<UniqueIdentifier>{E066EE96-A310-4C7A-BF78-D50CC4D2FC74}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\No_Bark_Vs.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{44601AA7-0B45-4161-B1A9-9C2FCEF8244F}</UniqueIdentifier>
+			<UniqueIdentifier>{C70E8CA0-7F15-47CB-8A5D-A525B0E49EDE}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -28,7 +28,7 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\No_Bark_Vs">
-			<UniqueIdentifier>{5028E9E4-D498-4E94-AB72-2D24A6472830}</UniqueIdentifier>
+			<UniqueIdentifier>{0132D48D-90DD-41C9-9AA2-6392CA5F76DF}</UniqueIdentifier>
 		</Filter>
 		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseInteractable.cpp">
 			<Filter>Source\No_Bark_Vs</Filter>
@@ -73,12 +73,6 @@
 			<Filter>Source\No_Bark_Vs</Filter>
 		</ClCompile >
 		<ClInclude Include="..\..\Source\No_Bark_Vs\Pickup.h">
-			<Filter>Source\No_Bark_Vs</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\No_Bark_Vs\PickupHealth.cpp">
-			<Filter>Source\No_Bark_Vs</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\No_Bark_Vs\PickupHealth.h">
 			<Filter>Source\No_Bark_Vs</Filter>
 		</ClInclude >
 		<ClCompile Include="..\..\Source\No_Bark_Vs\PlayController.cpp">

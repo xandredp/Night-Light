@@ -21,8 +21,7 @@ void APickup::Interact(APlayerController* playerController)
 	if (aPlayController)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Interactiion Successed");
-		aPlayController->AddItemtoInventoryByID(ItemID, 1);
-		
+		aPlayController->AddItemtoInventoryByID(ItemID, 1);		
 	}
 
 	DestroyItemOnGround();

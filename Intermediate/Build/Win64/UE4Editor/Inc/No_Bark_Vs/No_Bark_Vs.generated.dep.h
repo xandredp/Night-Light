@@ -14,9 +14,6 @@
 #ifndef NO_BARK_VS_BaseWeapon_generated_h
 	#include "BaseWeapon.h"
 #endif
-#ifndef NO_BARK_VS_PickupHealth_generated_h
-	#include "PickupHealth.h"
-#endif
 #ifndef NO_BARK_VS_GameHud_generated_h
 	#include "GameHud.h"
 #endif

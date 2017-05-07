@@ -76,7 +76,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	static void StaticRegisterNativesABaseWeapon(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon(); \
 	public: \
-	DECLARE_CLASS(ABaseWeapon, APickup, COMPILED_IN_FLAGS(0), 0, TEXT("/Script/No_Bark_Vs"), NO_API) \
+	DECLARE_CLASS(ABaseWeapon, AActor, COMPILED_IN_FLAGS(0), 0, TEXT("/Script/No_Bark_Vs"), NO_API) \
 	DECLARE_SERIALIZER(ABaseWeapon) \
 	/** Indicates whether the class is compiled into the engine */ \
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
@@ -87,7 +87,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	static void StaticRegisterNativesABaseWeapon(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon(); \
 	public: \
-	DECLARE_CLASS(ABaseWeapon, APickup, COMPILED_IN_FLAGS(0), 0, TEXT("/Script/No_Bark_Vs"), NO_API) \
+	DECLARE_CLASS(ABaseWeapon, AActor, COMPILED_IN_FLAGS(0), 0, TEXT("/Script/No_Bark_Vs"), NO_API) \
 	DECLARE_SERIALIZER(ABaseWeapon) \
 	/** Indicates whether the class is compiled into the engine */ \
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};

@@ -83,7 +83,7 @@ public:
 
 
 UCLASS()
-class NO_BARK_VS_API ABaseWeapon : public APickup
+class NO_BARK_VS_API ABaseWeapon : public AActor
 {
 	GENERATED_BODY()
 
