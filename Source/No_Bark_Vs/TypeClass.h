@@ -92,6 +92,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TSubclassOf<class APickup>ItemPickup;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSubclassOf<class ABaseWeapon>ItemWeaponClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText Name;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText Action;

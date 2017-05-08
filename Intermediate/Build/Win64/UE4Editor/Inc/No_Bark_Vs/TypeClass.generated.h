@@ -11,7 +11,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define NO_BARK_VS_TypeClass_generated_h
 
-#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_159_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_161_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FTakeHitInfo(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
 	FORCEINLINE static uint32 __PPO__EnsureReplicationByte() { return STRUCT_OFFSET(FTakeHitInfo, EnsureReplicationByte); } \
@@ -20,7 +20,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	FORCEINLINE static uint32 __PPO__RadialDamageEvent() { return STRUCT_OFFSET(FTakeHitInfo, RadialDamageEvent); }
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_129_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_131_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCurrentInventoryItemInfo(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct();
 

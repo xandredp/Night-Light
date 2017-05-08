@@ -987,6 +987,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			UProperty* NewProp_Value = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Value"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(Value, FInventoryItem), 0x0010000000000005);
 			UProperty* NewProp_Action = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Action"), RF_Public|RF_Transient|RF_MarkAsNative) UTextProperty(CPP_PROPERTY_BASE(Action, FInventoryItem), 0x0010000000000005);
 			UProperty* NewProp_Name = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Name"), RF_Public|RF_Transient|RF_MarkAsNative) UTextProperty(CPP_PROPERTY_BASE(Name, FInventoryItem), 0x0010000000000005);
+			UProperty* NewProp_ItemWeaponClass = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("ItemWeaponClass"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(ItemWeaponClass, FInventoryItem), 0x0014000000000005, Z_Construct_UClass_ABaseWeapon_NoRegister(), UClass::StaticClass());
 			UProperty* NewProp_ItemPickup = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("ItemPickup"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(ItemPickup, FInventoryItem), 0x0014000000000005, Z_Construct_UClass_APickup_NoRegister(), UClass::StaticClass());
 			UProperty* NewProp_ItemID = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("ItemID"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(ItemID, FInventoryItem), 0x0010000000000005);
 			ReturnStruct->StaticLink();
@@ -1013,6 +1014,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			MetaData->SetValue(NewProp_Action, TEXT("ModuleRelativePath"), TEXT("TypeClass.h"));
 			MetaData->SetValue(NewProp_Name, TEXT("Category"), TEXT("InventoryItem"));
 			MetaData->SetValue(NewProp_Name, TEXT("ModuleRelativePath"), TEXT("TypeClass.h"));
+			MetaData->SetValue(NewProp_ItemWeaponClass, TEXT("Category"), TEXT("InventoryItem"));
+			MetaData->SetValue(NewProp_ItemWeaponClass, TEXT("ModuleRelativePath"), TEXT("TypeClass.h"));
 			MetaData->SetValue(NewProp_ItemPickup, TEXT("Category"), TEXT("InventoryItem"));
 			MetaData->SetValue(NewProp_ItemPickup, TEXT("ModuleRelativePath"), TEXT("TypeClass.h"));
 			MetaData->SetValue(NewProp_ItemID, TEXT("Category"), TEXT("InventoryItem"));
@@ -1021,7 +1024,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FInventoryItem_CRC() { return 1226026906U; }
+	uint32 Get_Z_Construct_UScriptStruct_FInventoryItem_CRC() { return 1760514103U; }
 	UScriptStruct* Z_Construct_UScriptStruct_FCraftingInfo()
 	{
 		UPackage* Outer = Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -2097,7 +2100,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/No_Bark_Vs")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0x537B8AD0;
+			Guid.A = 0x004C78FD;
 			Guid.B = 0x8131FDEF;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
