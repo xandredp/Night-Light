@@ -124,7 +124,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
 	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
-
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
 	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 
@@ -148,7 +148,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	/*PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &ANBCharacter::OnStartTargeting);
 	PlayerInputComponent->BindAction("Targeting", IE_Released, this, &ANBCharacter::OnEndTargeting);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::OnStartFire);
+	
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::OnStopFire);
 
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::OnReload);
@@ -175,8 +175,10 @@ void ANBCharacter::EquipPrimaryWeapon()
 	}
 	else
 	{
-		AttachEquipmentToHand();
+		SpawnWeapon(WeaponClass);
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+
+
 	}
 }
 
@@ -200,6 +202,19 @@ void ANBCharacter::GetEquipment(int index)
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+	}
+}
+
+void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> WeaponClass)
+{
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+	CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(WeaponClass, SpawnParams);
+	if (CurrentWeapon)
+	{
+		AttachEquipmentToHand();
 	}
 }
 
@@ -288,7 +303,7 @@ ABaseInteractable* ANBCharacter::GetInteractableInView()
 	FHitResult Hit(ForceInit);
 	GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
 
-	DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
+	//DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
 
 	return Cast<ABaseInteractable>(Hit.GetActor());
 }
@@ -366,6 +381,14 @@ void ANBCharacter::OnCrouchToggle()
 	{
 		Crouch();
 	}
+}
+void ANBCharacter::FireWeapon()
+{
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->Fire();
+	}
+	
 }
 FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const
 {

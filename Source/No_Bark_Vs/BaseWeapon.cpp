@@ -2,6 +2,7 @@
 
 #include "No_Bark_Vs.h"
 #include "NBCharacter.h"
+#include "BaseEnemy.h"
 #include "BaseWeapon.h"
 
 ABaseWeapon::ABaseWeapon()
@@ -17,7 +18,7 @@ ABaseWeapon::ABaseWeapon()
 }
 
 
-void ABaseWeapon::FireAmmos()
+void ABaseWeapon::Fire()
 {
 
 	if (ProjectileType == EProjectileType::EBullet)
@@ -98,7 +99,7 @@ FHitResult ABaseWeapon::WeaponTrace(const FVector & TraceFrom, const FVector & T
 
 	FHitResult Hit(ForceInit);
 
-	GetWorld()->LineTraceSingleByChannel(Hit, TraceFrom, TraceTo, COLLISION_INTERACTABLE, TraceParams);
+	GetWorld()->LineTraceSingleByChannel(Hit, TraceFrom, TraceTo, WEAPON_TRACE, TraceParams);
 
 	return Hit;
 }
@@ -110,12 +111,12 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
 	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 10000, 10.f);
 
-	//AEnemy *Enemy = Cast<AEnemy>(Impact.GetActor());
-	//if (Enemy)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
-	//	Enemy->Destroy();
-	//}
+	ABaseEnemy *Enemy = Cast<ABaseEnemy>(Impact.GetActor());
+	if (Enemy)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
+		Enemy->Destroy();
+	}
 }
 
 void ABaseWeapon::SetOwningPawn(ANBCharacter * NewOwner)

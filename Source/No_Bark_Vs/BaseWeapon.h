@@ -35,7 +35,7 @@ enum EProjectileType
 
 //TableRowBase for Weapon Data TABLE. 
 USTRUCT(BlueprintType)
-struct FWeaponData : public FTableRowBase
+struct FWeaponData 
 {
 	GENERATED_BODY()
 
@@ -101,7 +101,7 @@ public:
 		class UBoxComponent* WeaponCollisionComp;
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
-	void FireAmmos();
+	void Fire();
 	
 	UFUNCTION(BlueprintCallable, Category = "Config")
 	void Instant_Fire();
@@ -110,7 +110,7 @@ public:
 		virtual void ProjectileFire();
 
 	//WeaponInfo
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditDefaultsOnly, Category = Config)
 		FWeaponData WeaponConfig;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Config")

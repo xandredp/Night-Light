@@ -51,6 +51,8 @@ public:
 
 	void GetEquipment(int index);
 
+	void SpawnWeapon(TSubclassOf <class ABaseWeapon> WeaponClass);
+
 	UFUNCTION(BlueprintImplementableEvent)
 		void AttachEquipmentToHand();
 
@@ -177,6 +179,8 @@ protected:
 	void OnStopSprinting();
 
 	void OnCrouchToggle();
+
+	void FireWeapon();
 
 	/************************************************************************/
 	/* Pickups                                                              */

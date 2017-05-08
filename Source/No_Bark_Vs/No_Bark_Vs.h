@@ -4,4 +4,4 @@
 
 #include "Engine.h"
 
-#define COLLISION_INTERACTABLE ECC_GameTraceChannel1
+#define WEAPON_TRACE ECC_GameTraceChannel1

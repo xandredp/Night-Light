@@ -82,11 +82,11 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFWeaponData
 } ScriptStruct_No_Bark_Vs_StaticRegisterNativesFWeaponData;
 	void ABaseWeapon::StaticRegisterNativesABaseWeapon()
 	{
-		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "FireAmmos",(Native)&ABaseWeapon::execFireAmmos);
+		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "Fire",(Native)&ABaseWeapon::execFire);
 		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "Instant_Fire",(Native)&ABaseWeapon::execInstant_Fire);
 		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "ProjectileFire",(Native)&ABaseWeapon::execProjectileFire);
 	}
-	IMPLEMENT_CLASS(ABaseWeapon, 1079320535);
+	IMPLEMENT_CLASS(ABaseWeapon, 626647854);
 static class UEnum* EItemType_StaticEnum()
 {
 	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -213,7 +213,7 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 		FNativeFunctionRegistrar::RegisterFunction(ANBCharacter::StaticClass(), "GetInteractableInView",(Native)&ANBCharacter::execGetInteractableInView);
 		FNativeFunctionRegistrar::RegisterFunction(ANBCharacter::StaticClass(), "GetInventoryAttachPoint",(Native)&ANBCharacter::execGetInventoryAttachPoint);
 	}
-	IMPLEMENT_CLASS(ANBCharacter, 457879775);
+	IMPLEMENT_CLASS(ANBCharacter, 3621778266);
 	void AEnemyAIController::StaticRegisterNativesAEnemyAIController()
 	{
 		FNativeFunctionRegistrar::RegisterFunction(AEnemyAIController::StaticClass(), "SearchForEnemy",(Native)&AEnemyAIController::execSearchForEnemy);
@@ -288,7 +288,6 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHUDState(EHUDState_Stat
 	ENGINE_API class UClass* Z_Construct_UClass_AActor();
 	ENGINE_API class UClass* Z_Construct_UClass_UBoxComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
-	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FTableRowBase();
 	ENGINE_API class UClass* Z_Construct_UClass_UTexture2D_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USoundCue_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USkeletalMeshComponent_NoRegister();
@@ -297,6 +296,7 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHUDState(EHUDState_Stat
 	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FDamageEvent();
 	ENGINE_API class UClass* Z_Construct_UClass_AActor_NoRegister();
 	COREUOBJECT_API class UClass* Z_Construct_UClass_UObject_NoRegister();
+	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FTableRowBase();
 	ENGINE_API class UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 	AIMODULE_API class UClass* Z_Construct_UClass_AAIController();
@@ -321,7 +321,7 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHUDState(EHUDState_Stat
 	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EProjectileType();
 	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EAttackType();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FWeaponData();
-	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_FireAmmos();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_Fire();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_Instant_Fire();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_ProjectileFire();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon_NoRegister();
@@ -668,7 +668,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		static UScriptStruct* ReturnStruct = FindExistingStructIfHotReloadOrDynamic(Outer, TEXT("WeaponData"), sizeof(FWeaponData), Get_Z_Construct_UScriptStruct_FWeaponData_CRC(), false);
 		if (!ReturnStruct)
 		{
-			ReturnStruct = new(EC_InternalUseOnlyConstructor, Outer, TEXT("WeaponData"), RF_Public|RF_Transient|RF_MarkAsNative) UScriptStruct(FObjectInitializer(), Z_Construct_UScriptStruct_FTableRowBase(), new UScriptStruct::TCppStructOps<FWeaponData>, EStructFlags(0x00000001));
+			ReturnStruct = new(EC_InternalUseOnlyConstructor, Outer, TEXT("WeaponData"), RF_Public|RF_Transient|RF_MarkAsNative) UScriptStruct(FObjectInitializer(), NULL, new UScriptStruct::TCppStructOps<FWeaponData>, EStructFlags(0x00000001));
 			UProperty* NewProp_Priority = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Priority"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(Priority, FWeaponData), 0x0010000000000005);
 			UProperty* NewProp_SplashArt = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("SplashArt"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(SplashArt, FWeaponData), 0x0010000000000005, Z_Construct_UClass_UTexture2D_NoRegister());
 			UProperty* NewProp_Name = new(EC_InternalUseOnlyConstructor, ReturnStruct, TEXT("Name"), RF_Public|RF_Transient|RF_MarkAsNative) UStrProperty(CPP_PROPERTY_BASE(Name, FWeaponData), 0x0010000000000005);
@@ -715,14 +715,14 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FWeaponData_CRC() { return 3958897703U; }
-	UFunction* Z_Construct_UFunction_ABaseWeapon_FireAmmos()
+	uint32 Get_Z_Construct_UScriptStruct_FWeaponData_CRC() { return 2122090225U; }
+	UFunction* Z_Construct_UFunction_ABaseWeapon_Fire()
 	{
 		UObject* Outer=Z_Construct_UClass_ABaseWeapon();
 		static UFunction* ReturnFunction = NULL;
 		if (!ReturnFunction)
 		{
-			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("FireAmmos"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535);
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("Fire"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535);
 			ReturnFunction->Bind();
 			ReturnFunction->StaticLink();
 #if WITH_METADATA
@@ -784,7 +784,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				UObjectForceRegistration(OuterClass);
 				OuterClass->ClassFlags |= 0x20900080;
 
-				OuterClass->LinkChild(Z_Construct_UFunction_ABaseWeapon_FireAmmos());
+				OuterClass->LinkChild(Z_Construct_UFunction_ABaseWeapon_Fire());
 				OuterClass->LinkChild(Z_Construct_UFunction_ABaseWeapon_Instant_Fire());
 				OuterClass->LinkChild(Z_Construct_UFunction_ABaseWeapon_ProjectileFire());
 
@@ -793,11 +793,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_CurrentAmmo = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentAmmo"), RF_Public|RF_Transient|RF_MarkAsNative) UIntProperty(CPP_PROPERTY_BASE(CurrentAmmo, ABaseWeapon), 0x0010000000000005);
 				UProperty* NewProp_FireSound = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FireSound"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(FireSound, ABaseWeapon), 0x0010000000010001, Z_Construct_UClass_USoundCue_NoRegister());
 				UProperty* NewProp_ProjectileType = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("ProjectileType"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(ProjectileType, ABaseWeapon), 0x0010000000010001, Z_Construct_UEnum_No_Bark_Vs_EProjectileType());
-				UProperty* NewProp_WeaponConfig = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponConfig"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(WeaponConfig, ABaseWeapon), 0x0010000000020005, Z_Construct_UScriptStruct_FWeaponData());
+				UProperty* NewProp_WeaponConfig = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponConfig"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(WeaponConfig, ABaseWeapon), 0x0010000000010001, Z_Construct_UScriptStruct_FWeaponData());
 				UProperty* NewProp_WeaponCollisionComp = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponCollisionComp"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(WeaponCollisionComp, ABaseWeapon), 0x00100000000a000d, Z_Construct_UClass_UBoxComponent_NoRegister());
 				UProperty* NewProp_WeaponMesh = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponMesh"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(WeaponMesh, ABaseWeapon), 0x00100000000a000d, Z_Construct_UClass_USkeletalMeshComponent_NoRegister());
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
-				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ABaseWeapon_FireAmmos(), "FireAmmos"); // 275812306
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ABaseWeapon_Fire(), "Fire"); // 3447790818
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ABaseWeapon_Instant_Fire(), "Instant_Fire"); // 2945436617
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ABaseWeapon_ProjectileFire(), "ProjectileFire"); // 3789654708
 				OuterClass->StaticLink();
@@ -1194,7 +1194,6 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_WeaponClass = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponClass"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(WeaponClass, ANBCharacter), 0x0014000000000005, Z_Construct_UClass_ABaseWeapon_NoRegister(), UClass::StaticClass());
 				UProperty* NewProp_BaseLookUpRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BaseLookUpRate"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(BaseLookUpRate, ANBCharacter), 0x0010000000020015);
 				UProperty* NewProp_BaseTurnRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BaseTurnRate"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(BaseTurnRate, ANBCharacter), 0x0010000000020015);
-				UProperty* NewProp_CurrentWeaponHeld = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentWeaponHeld"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(CurrentWeaponHeld, ANBCharacter), 0x0010000000000005, Z_Construct_UClass_ABaseWeapon_NoRegister());
 				UProperty* NewProp_FollowCamera = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FollowCamera"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(FollowCamera, ANBCharacter), 0x00400000000a001d, Z_Construct_UClass_UCameraComponent_NoRegister());
 				UProperty* NewProp_CameraBoom = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraBoom"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(CameraBoom, ANBCharacter), 0x00400000000a001d, Z_Construct_UClass_USpringArmComponent_NoRegister());
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
@@ -1261,8 +1260,6 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_BaseTurnRate, TEXT("Category"), TEXT("Camera"));
 				MetaData->SetValue(NewProp_BaseTurnRate, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_BaseTurnRate, TEXT("ToolTip"), TEXT("Base turn rate, in deg/sec. Other scaling may affect final turn rate."));
-				MetaData->SetValue(NewProp_CurrentWeaponHeld, TEXT("Category"), TEXT("Mesh"));
-				MetaData->SetValue(NewProp_CurrentWeaponHeld, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_FollowCamera, TEXT("AllowPrivateAccess"), TEXT("true"));
 				MetaData->SetValue(NewProp_FollowCamera, TEXT("Category"), TEXT("Camera"));
 				MetaData->SetValue(NewProp_FollowCamera, TEXT("EditInline"), TEXT("true"));
@@ -2159,8 +2156,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/No_Bark_Vs")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0xF3893CB5;
-			Guid.B = 0xE93067A9;
+			Guid.A = 0x8728D86A;
+			Guid.B = 0xDE3B4C26;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);

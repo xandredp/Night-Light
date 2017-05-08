@@ -13,8 +13,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_40_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FWeaponData(); \
-	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
-	typedef FTableRowBase Super;
+	NO_BARK_VS_API static class UScriptStruct* StaticStruct();
 
 
 #define Vertical_Slice_Source_No_Bark_Vs_BaseWeapon_h_88_RPC_WRAPPERS \
@@ -35,11 +34,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execFireAmmos) \
+	DECLARE_FUNCTION(execFire) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->FireAmmos(); \
+		this->Fire(); \
 		P_NATIVE_END; \
 	}
 
@@ -62,11 +61,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 		P_NATIVE_END; \
 	} \
  \
-	DECLARE_FUNCTION(execFireAmmos) \
+	DECLARE_FUNCTION(execFire) \
 	{ \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->FireAmmos(); \
+		this->Fire(); \
 		P_NATIVE_END; \
 	}
 
