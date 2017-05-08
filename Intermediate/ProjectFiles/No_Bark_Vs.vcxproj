@@ -414,10 +414,16 @@
 		<None Include="..\..\Config\DefaultEngine.ini" />
 		<None Include="..\..\Config\DefaultGame.ini" />
 		<None Include="..\..\Config\DefaultInput.ini" />
+		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseCharacter.cpp" />
+		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseCharacter.h" />
+		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseEnemy.cpp" />
+		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseEnemy.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseInteractable.cpp" />
 		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseInteractable.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseWeapon.cpp" />
 		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseWeapon.h" />
+		<ClCompile Include="..\..\Source\No_Bark_Vs\EnemyAIController.cpp" />
+		<ClInclude Include="..\..\Source\No_Bark_Vs\EnemyAIController.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\GameHud.cpp" />
 		<ClInclude Include="..\..\Source\No_Bark_Vs\GameHud.h" />
 		<ClCompile Include="..\..\Source\No_Bark_Vs\NBCharacter.cpp" />

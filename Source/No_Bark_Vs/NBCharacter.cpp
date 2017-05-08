@@ -11,8 +11,6 @@
 ANBCharacter::ANBCharacter()
 {
 
-
-
 	walkingSpeed = 400.0f;
 	MaxSprintSpeed = 600.0f;
 
@@ -65,6 +63,8 @@ ANBCharacter::ANBCharacter()
 												   // Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 												   // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 												   /* Names as specified in the character skeleton */
+
+
 	WeaponAttachPoint = TEXT("Weapon_Socket");
 	MeleeAttachPoint = TEXT("Thigh_Socket");
 	PrimaryAttachPoint = TEXT("Spine_Socket");

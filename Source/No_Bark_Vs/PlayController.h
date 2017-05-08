@@ -45,7 +45,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void DropItem(FCurrentInventoryItemInfo iItemInfo, TArray<FCurrentInventoryItemInfo> FCurrentInventory);
+		void DropItem(FCurrentInventoryItemInfo iItemInfo);
 
 	/************************************************************************/
 	/* Inventory                                                      */

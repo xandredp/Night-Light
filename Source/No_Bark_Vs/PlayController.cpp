@@ -150,7 +150,7 @@ void APlayController::ReArrangeItems()
 	}
 }
 
-void APlayController::DropItem(FCurrentInventoryItemInfo iItemInfo, TArray<FCurrentInventoryItemInfo> FCurrentInventory)
+void APlayController::DropItem(FCurrentInventoryItemInfo iItemInfo)
 {
 }
 

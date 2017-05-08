@@ -13,6 +13,15 @@ void EmptyLinkFunctionForGeneratedCode1No_Bark_Vs() {}
 FName NO_BARK_VS_OnStateChanged = FName(TEXT("OnStateChanged"));
 FName NO_BARK_VS_OnUsed = FName(TEXT("OnUsed"));
 FName NO_BARK_VS_ReloadInventory = FName(TEXT("ReloadInventory"));
+	void ABaseCharacter::StaticRegisterNativesABaseCharacter()
+	{
+		FNativeFunctionRegistrar::RegisterFunction(ABaseCharacter::StaticClass(), "CalculateHealth",(Native)&ABaseCharacter::execCalculateHealth);
+	}
+	IMPLEMENT_CLASS(ABaseCharacter, 985087151);
+	void ABaseEnemy::StaticRegisterNativesABaseEnemy()
+	{
+	}
+	IMPLEMENT_CLASS(ABaseEnemy, 3113091124);
 	void ABaseInteractable::StaticRegisterNativesABaseInteractable()
 	{
 		FNativeFunctionRegistrar::RegisterFunction(ABaseInteractable::StaticClass(), "GetInteractText",(Native)&ABaseInteractable::execGetInteractText);
@@ -77,30 +86,6 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFWeaponData
 		FNativeFunctionRegistrar::RegisterFunction(ABaseWeapon::StaticClass(), "ProjectileFire",(Native)&ABaseWeapon::execProjectileFire);
 	}
 	IMPLEMENT_CLASS(ABaseWeapon, 1079320535);
-static class UEnum* EHUDState_StaticEnum()
-{
-	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
-	static class UEnum* Singleton = NULL;
-	if (!Singleton)
-	{
-		extern NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EHUDState();
-		Singleton = GetStaticEnum(Z_Construct_UEnum_No_Bark_Vs_EHUDState, Z_Construct_UPackage__Script_No_Bark_Vs(), TEXT("EHUDState"));
-	}
-	return Singleton;
-}
-static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHUDState(EHUDState_StaticEnum, TEXT("/Script/No_Bark_Vs"), TEXT("EHUDState"), false, nullptr, nullptr);
-	void AGameHud::OnStateChanged(EHUDState NewState)
-	{
-		GameHud_eventOnStateChanged_Parms Parms;
-		Parms.NewState=NewState;
-		ProcessEvent(FindFunctionChecked(NO_BARK_VS_OnStateChanged),&Parms);
-	}
-	void AGameHud::StaticRegisterNativesAGameHud()
-	{
-		FNativeFunctionRegistrar::RegisterFunction(AGameHud::StaticClass(), "GetCurrentState",(Native)&AGameHud::execGetCurrentState);
-		FNativeFunctionRegistrar::RegisterFunction(AGameHud::StaticClass(), "OnStateChanged",(Native)&AGameHud::execOnStateChanged);
-	}
-	IMPLEMENT_CLASS(AGameHud, 427289753);
 static class UEnum* EItemType_StaticEnum()
 {
 	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -125,6 +110,18 @@ static class UEnum* EInventorySlot_StaticEnum()
 	return Singleton;
 }
 static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EInventorySlot(EInventorySlot_StaticEnum, TEXT("/Script/No_Bark_Vs"), TEXT("EInventorySlot"), false, nullptr, nullptr);
+static class UEnum* EBotBehaviorType_StaticEnum()
+{
+	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
+	static class UEnum* Singleton = NULL;
+	if (!Singleton)
+	{
+		extern NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType();
+		Singleton = GetStaticEnum(Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType, Z_Construct_UPackage__Script_No_Bark_Vs(), TEXT("EBotBehaviorType"));
+	}
+	return Singleton;
+}
+static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EBotBehaviorType(EBotBehaviorType_StaticEnum, TEXT("/Script/No_Bark_Vs"), TEXT("EBotBehaviorType"), false, nullptr, nullptr);
 class UScriptStruct* FTakeHitInfo::StaticStruct()
 {
 	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -211,6 +208,35 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 		FNativeFunctionRegistrar::RegisterFunction(ANBCharacter::StaticClass(), "GetInteractableInView",(Native)&ANBCharacter::execGetInteractableInView);
 	}
 	IMPLEMENT_CLASS(ANBCharacter, 1599596045);
+	void AEnemyAIController::StaticRegisterNativesAEnemyAIController()
+	{
+		FNativeFunctionRegistrar::RegisterFunction(AEnemyAIController::StaticClass(), "SearchForEnemy",(Native)&AEnemyAIController::execSearchForEnemy);
+	}
+	IMPLEMENT_CLASS(AEnemyAIController, 3978304241);
+static class UEnum* EHUDState_StaticEnum()
+{
+	extern NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
+	static class UEnum* Singleton = NULL;
+	if (!Singleton)
+	{
+		extern NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EHUDState();
+		Singleton = GetStaticEnum(Z_Construct_UEnum_No_Bark_Vs_EHUDState, Z_Construct_UPackage__Script_No_Bark_Vs(), TEXT("EHUDState"));
+	}
+	return Singleton;
+}
+static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHUDState(EHUDState_StaticEnum, TEXT("/Script/No_Bark_Vs"), TEXT("EHUDState"), false, nullptr, nullptr);
+	void AGameHud::OnStateChanged(EHUDState NewState)
+	{
+		GameHud_eventOnStateChanged_Parms Parms;
+		Parms.NewState=NewState;
+		ProcessEvent(FindFunctionChecked(NO_BARK_VS_OnStateChanged),&Parms);
+	}
+	void AGameHud::StaticRegisterNativesAGameHud()
+	{
+		FNativeFunctionRegistrar::RegisterFunction(AGameHud::StaticClass(), "GetCurrentState",(Native)&AGameHud::execGetCurrentState);
+		FNativeFunctionRegistrar::RegisterFunction(AGameHud::StaticClass(), "OnStateChanged",(Native)&AGameHud::execOnStateChanged);
+	}
+	IMPLEMENT_CLASS(AGameHud, 427289753);
 	void ANo_Bark_VsGameModeBase::StaticRegisterNativesANo_Bark_VsGameModeBase()
 	{
 	}
@@ -244,13 +270,15 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "UnUseItem",(Native)&APlayController::execUnUseItem);
 		FNativeFunctionRegistrar::RegisterFunction(APlayController::StaticClass(), "UseItem",(Native)&APlayController::execUseItem);
 	}
-	IMPLEMENT_CLASS(APlayController, 4068950857);
+	IMPLEMENT_CLASS(APlayController, 1690339848);
 	void APlayGameMode::StaticRegisterNativesAPlayGameMode()
 	{
 	}
 	IMPLEMENT_CLASS(APlayGameMode, 3464750897);
 #if USE_COMPILED_IN_NATIVES
 // Cross Module References
+	ENGINE_API class UClass* Z_Construct_UClass_ACharacter();
+	AIMODULE_API class UClass* Z_Construct_UClass_UBehaviorTree_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_AActor();
 	ENGINE_API class UClass* Z_Construct_UClass_UBoxComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
@@ -258,21 +286,26 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	ENGINE_API class UClass* Z_Construct_UClass_UTexture2D_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USoundCue_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USkeletalMeshComponent_NoRegister();
-	ENGINE_API class UClass* Z_Construct_UClass_AHUD();
 	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FRadialDamageEvent();
 	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FPointDamageEvent();
 	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FDamageEvent();
 	ENGINE_API class UClass* Z_Construct_UClass_AActor_NoRegister();
 	COREUOBJECT_API class UClass* Z_Construct_UClass_UObject_NoRegister();
-	ENGINE_API class UClass* Z_Construct_UClass_ACharacter();
 	ENGINE_API class UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
+	AIMODULE_API class UClass* Z_Construct_UClass_AAIController();
+	ENGINE_API class UClass* Z_Construct_UClass_AHUD();
 	ENGINE_API class UClass* Z_Construct_UClass_AGameModeBase();
 	ENGINE_API class UClass* Z_Construct_UClass_APlayerController();
 	UMG_API class UClass* Z_Construct_UClass_UUserWidget_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_AGameMode();
 	ENGINE_API class UClass* Z_Construct_UClass_UDataTable_NoRegister();
 
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseCharacter_CalculateHealth();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseCharacter_NoRegister();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseCharacter();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseEnemy_NoRegister();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseEnemy();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseInteractable_GetInteractText();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseInteractable_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseInteractable();
@@ -287,13 +320,9 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ABaseWeapon_ProjectileFire();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ABaseWeapon();
-	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EHUDState();
-	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_AGameHud_GetCurrentState();
-	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_AGameHud_OnStateChanged();
-	NO_BARK_VS_API class UClass* Z_Construct_UClass_AGameHud_NoRegister();
-	NO_BARK_VS_API class UClass* Z_Construct_UClass_AGameHud();
 	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EItemType();
 	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EInventorySlot();
+	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FTakeHitInfo();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCurrentInventoryItemInfo();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FInventoryItem();
@@ -302,6 +331,14 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ANBCharacter_GetInteractableInView();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANBCharacter_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANBCharacter();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_AEnemyAIController_SearchForEnemy();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_AEnemyAIController_NoRegister();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_AEnemyAIController();
+	NO_BARK_VS_API class UEnum* Z_Construct_UEnum_No_Bark_Vs_EHUDState();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_AGameHud_GetCurrentState();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_AGameHud_OnStateChanged();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_AGameHud_NoRegister();
+	NO_BARK_VS_API class UClass* Z_Construct_UClass_AGameHud();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANo_Bark_VsGameModeBase_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANo_Bark_VsGameModeBase();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_APlayController_AddItemtoEquipmentByItem();
@@ -332,6 +369,113 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_APlayGameMode_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_APlayGameMode();
 	NO_BARK_VS_API class UPackage* Z_Construct_UPackage__Script_No_Bark_Vs();
+	UFunction* Z_Construct_UFunction_ABaseCharacter_CalculateHealth()
+	{
+		struct BaseCharacter_eventCalculateHealth_Parms
+		{
+			float delta;
+		};
+		UObject* Outer=Z_Construct_UClass_ABaseCharacter();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("CalculateHealth"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020400, 65535, sizeof(BaseCharacter_eventCalculateHealth_Parms));
+			UProperty* NewProp_delta = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("delta"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(delta, BaseCharacter_eventCalculateHealth_Parms), 0x0010000000000080);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Config"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("BaseCharacter.h"));
+			MetaData->SetValue(ReturnFunction, TEXT("ToolTip"), TEXT("calculate health function"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UClass* Z_Construct_UClass_ABaseCharacter_NoRegister()
+	{
+		return ABaseCharacter::StaticClass();
+	}
+	UClass* Z_Construct_UClass_ABaseCharacter()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_ACharacter();
+			Z_Construct_UPackage__Script_No_Bark_Vs();
+			OuterClass = ABaseCharacter::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x20900080;
+
+				OuterClass->LinkChild(Z_Construct_UFunction_ABaseCharacter_CalculateHealth());
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				CPP_BOOL_PROPERTY_BITMASK_STRUCT(bisDead, ABaseCharacter, bool);
+				UProperty* NewProp_bisDead = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("bisDead"), RF_Public|RF_Transient|RF_MarkAsNative) UBoolProperty(FObjectInitializer(), EC_CppProperty, CPP_BOOL_PROPERTY_OFFSET(bisDead, ABaseCharacter), 0x0010000000000005, CPP_BOOL_PROPERTY_BITMASK(bisDead, ABaseCharacter), sizeof(bool), true);
+				UProperty* NewProp_Health = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("Health"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(Health, ABaseCharacter), 0x0010000000000005);
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ABaseCharacter_CalculateHealth(), "CalculateHealth"); // 1422859434
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Navigation"));
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("BaseCharacter.h"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("BaseCharacter.h"));
+				MetaData->SetValue(NewProp_bisDead, TEXT("Category"), TEXT("Base Character"));
+				MetaData->SetValue(NewProp_bisDead, TEXT("ModuleRelativePath"), TEXT("BaseCharacter.h"));
+				MetaData->SetValue(NewProp_Health, TEXT("Category"), TEXT("Base Character"));
+				MetaData->SetValue(NewProp_Health, TEXT("ModuleRelativePath"), TEXT("BaseCharacter.h"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_ABaseCharacter(Z_Construct_UClass_ABaseCharacter, &ABaseCharacter::StaticClass, TEXT("ABaseCharacter"), false, nullptr, nullptr, nullptr);
+	DEFINE_VTABLE_PTR_HELPER_CTOR(ABaseCharacter);
+	UClass* Z_Construct_UClass_ABaseEnemy_NoRegister()
+	{
+		return ABaseEnemy::StaticClass();
+	}
+	UClass* Z_Construct_UClass_ABaseEnemy()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_ABaseCharacter();
+			Z_Construct_UPackage__Script_No_Bark_Vs();
+			OuterClass = ABaseEnemy::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x20900080;
+
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				UProperty* NewProp_BehaviorTree = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BehaviorTree"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(BehaviorTree, ABaseEnemy), 0x0010000000010001, Z_Construct_UClass_UBehaviorTree_NoRegister());
+				CPP_BOOL_PROPERTY_BITMASK_STRUCT(bIsPunching, ABaseEnemy, bool);
+				UProperty* NewProp_bIsPunching = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("bIsPunching"), RF_Public|RF_Transient|RF_MarkAsNative) UBoolProperty(FObjectInitializer(), EC_CppProperty, CPP_BOOL_PROPERTY_OFFSET(bIsPunching, ABaseEnemy), 0x0010000000000004, CPP_BOOL_PROPERTY_BITMASK(bIsPunching, ABaseEnemy), sizeof(bool), true);
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Navigation"));
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("BaseEnemy.h"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("BaseEnemy.h"));
+				MetaData->SetValue(NewProp_BehaviorTree, TEXT("Category"), TEXT("AI"));
+				MetaData->SetValue(NewProp_BehaviorTree, TEXT("ModuleRelativePath"), TEXT("BaseEnemy.h"));
+				MetaData->SetValue(NewProp_bIsPunching, TEXT("Category"), TEXT("Attacking"));
+				MetaData->SetValue(NewProp_bIsPunching, TEXT("ModuleRelativePath"), TEXT("BaseEnemy.h"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_ABaseEnemy(Z_Construct_UClass_ABaseEnemy, &ABaseEnemy::StaticClass, TEXT("ABaseEnemy"), false, nullptr, nullptr, nullptr);
+	DEFINE_VTABLE_PTR_HELPER_CTOR(ABaseEnemy);
 	UFunction* Z_Construct_UFunction_ABaseInteractable_GetInteractText()
 	{
 		struct BaseInteractable_eventGetInteractText_Parms
@@ -678,109 +822,6 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_ABaseWeapon(Z_Construct_UClass_ABaseWeapon, &ABaseWeapon::StaticClass, TEXT("ABaseWeapon"), false, nullptr, nullptr, nullptr);
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ABaseWeapon);
-	UEnum* Z_Construct_UEnum_No_Bark_Vs_EHUDState()
-	{
-		UPackage* Outer=Z_Construct_UPackage__Script_No_Bark_Vs();
-		extern uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EHUDState_CRC();
-		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EHUDState"), 0, Get_Z_Construct_UEnum_No_Bark_Vs_EHUDState_CRC(), false);
-		if (!ReturnEnum)
-		{
-			ReturnEnum = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EHUDState"), RF_Public|RF_Transient|RF_MarkAsNative) UEnum(FObjectInitializer());
-			TArray<TPair<FName, uint8>> EnumNames;
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::Playing")), 0));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::Spectating")), 1));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::MatchEnd")), 2));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::EHUDState_MAX")), 3));
-			ReturnEnum->SetEnums(EnumNames, UEnum::ECppForm::EnumClass);
-			ReturnEnum->CppType = TEXT("EHUDState");
-#if WITH_METADATA
-			UMetaData* MetaData = ReturnEnum->GetOutermost()->GetMetaData();
-			MetaData->SetValue(ReturnEnum, TEXT("BlueprintType"), TEXT("true"));
-			MetaData->SetValue(ReturnEnum, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
-#endif
-		}
-		return ReturnEnum;
-	}
-	uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EHUDState_CRC() { return 3778790446U; }
-	UFunction* Z_Construct_UFunction_AGameHud_GetCurrentState()
-	{
-		struct GameHud_eventGetCurrentState_Parms
-		{
-			EHUDState ReturnValue;
-		};
-		UObject* Outer=Z_Construct_UClass_AGameHud();
-		static UFunction* ReturnFunction = NULL;
-		if (!ReturnFunction)
-		{
-			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetCurrentState"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535, sizeof(GameHud_eventGetCurrentState_Parms));
-			UProperty* NewProp_ReturnValue = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("ReturnValue"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(ReturnValue, GameHud_eventGetCurrentState_Parms), 0x0010000000000580, Z_Construct_UEnum_No_Bark_Vs_EHUDState());
-			ReturnFunction->Bind();
-			ReturnFunction->StaticLink();
-#if WITH_METADATA
-			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
-			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("HUD"));
-			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
-#endif
-		}
-		return ReturnFunction;
-	}
-	UFunction* Z_Construct_UFunction_AGameHud_OnStateChanged()
-	{
-		UObject* Outer=Z_Construct_UClass_AGameHud();
-		static UFunction* ReturnFunction = NULL;
-		if (!ReturnFunction)
-		{
-			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("OnStateChanged"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x08020C00, 65535, sizeof(GameHud_eventOnStateChanged_Parms));
-			UProperty* NewProp_NewState = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("NewState"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(NewState, GameHud_eventOnStateChanged_Parms), 0x0010000000000080, Z_Construct_UEnum_No_Bark_Vs_EHUDState());
-			ReturnFunction->Bind();
-			ReturnFunction->StaticLink();
-#if WITH_METADATA
-			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
-			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("HUDEvents"));
-			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
-			MetaData->SetValue(ReturnFunction, TEXT("ToolTip"), TEXT("/ Event hook to update HUD state (eg. to determine visibility of widgets)"));
-#endif
-		}
-		return ReturnFunction;
-	}
-	UClass* Z_Construct_UClass_AGameHud_NoRegister()
-	{
-		return AGameHud::StaticClass();
-	}
-	UClass* Z_Construct_UClass_AGameHud()
-	{
-		static UClass* OuterClass = NULL;
-		if (!OuterClass)
-		{
-			Z_Construct_UClass_AHUD();
-			Z_Construct_UPackage__Script_No_Bark_Vs();
-			OuterClass = AGameHud::StaticClass();
-			if (!(OuterClass->ClassFlags & CLASS_Constructed))
-			{
-				UObjectForceRegistration(OuterClass);
-				OuterClass->ClassFlags |= 0x2090028C;
-
-				OuterClass->LinkChild(Z_Construct_UFunction_AGameHud_GetCurrentState());
-				OuterClass->LinkChild(Z_Construct_UFunction_AGameHud_OnStateChanged());
-
-				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_AGameHud_GetCurrentState(), "GetCurrentState"); // 2935681971
-				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_AGameHud_OnStateChanged(), "OnStateChanged"); // 498739155
-				OuterClass->ClassConfigName = FName(TEXT("Game"));
-				OuterClass->StaticLink();
-#if WITH_METADATA
-				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
-				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Rendering Actor Input Replication"));
-				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("GameHud.h"));
-				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
-				MetaData->SetValue(OuterClass, TEXT("ShowCategories"), TEXT("Input|MouseInput Input|TouchInput"));
-#endif
-			}
-		}
-		check(OuterClass->GetClass());
-		return OuterClass;
-	}
-	static FCompiledInDefer Z_CompiledInDefer_UClass_AGameHud(Z_Construct_UClass_AGameHud, &AGameHud::StaticClass, TEXT("AGameHud"), false, nullptr, nullptr, nullptr);
-	DEFINE_VTABLE_PTR_HELPER_CTOR(AGameHud);
 	UEnum* Z_Construct_UEnum_No_Bark_Vs_EItemType()
 	{
 		UPackage* Outer=Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -837,6 +878,30 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		return ReturnEnum;
 	}
 	uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EInventorySlot_CRC() { return 973525024U; }
+	UEnum* Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType()
+	{
+		UPackage* Outer=Z_Construct_UPackage__Script_No_Bark_Vs();
+		extern uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType_CRC();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EBotBehaviorType"), 0, Get_Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType_CRC(), false);
+		if (!ReturnEnum)
+		{
+			ReturnEnum = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EBotBehaviorType"), RF_Public|RF_Transient|RF_MarkAsNative) UEnum(FObjectInitializer());
+			TArray<TPair<FName, uint8>> EnumNames;
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EBotBehaviorType::Passive")), 0));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EBotBehaviorType::Patrolling")), 1));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EBotBehaviorType::EBotBehaviorType_MAX")), 2));
+			ReturnEnum->SetEnums(EnumNames, UEnum::ECppForm::EnumClass);
+			ReturnEnum->CppType = TEXT("EBotBehaviorType");
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnEnum->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnEnum, TEXT("ModuleRelativePath"), TEXT("TypeClass.h"));
+			MetaData->SetValue(ReturnEnum, TEXT("Passive.ToolTip"), TEXT("Does not move, remains in place until a player is spotted"));
+			MetaData->SetValue(ReturnEnum, TEXT("Patrolling.ToolTip"), TEXT("Patrols a region until a player is spotted"));
+#endif
+		}
+		return ReturnEnum;
+	}
+	uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EBotBehaviorType_CRC() { return 752446711U; }
 	UScriptStruct* Z_Construct_UScriptStruct_FTakeHitInfo()
 	{
 		UPackage* Outer = Z_Construct_UPackage__Script_No_Bark_Vs();
@@ -1154,6 +1219,174 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_ANBCharacter(Z_Construct_UClass_ANBCharacter, &ANBCharacter::StaticClass, TEXT("ANBCharacter"), false, nullptr, nullptr, nullptr);
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ANBCharacter);
+	UFunction* Z_Construct_UFunction_AEnemyAIController_SearchForEnemy()
+	{
+		UObject* Outer=Z_Construct_UClass_AEnemyAIController();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("SearchForEnemy"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020400, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("AIBehavior"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("EnemyAIController.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UClass* Z_Construct_UClass_AEnemyAIController_NoRegister()
+	{
+		return AEnemyAIController::StaticClass();
+	}
+	UClass* Z_Construct_UClass_AEnemyAIController()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_AAIController();
+			Z_Construct_UPackage__Script_No_Bark_Vs();
+			OuterClass = AEnemyAIController::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x20900280;
+
+				OuterClass->LinkChild(Z_Construct_UFunction_AEnemyAIController_SearchForEnemy());
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				UProperty* NewProp_BotTypeKeyName = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BotTypeKeyName"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(BotTypeKeyName, AEnemyAIController), 0x0010000000010001);
+				UProperty* NewProp_CurrentWaypointKeyName = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentWaypointKeyName"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(CurrentWaypointKeyName, AEnemyAIController), 0x0010000000010001);
+				UProperty* NewProp_PatrolLocationKeyName = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("PatrolLocationKeyName"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(PatrolLocationKeyName, AEnemyAIController), 0x0010000000010001);
+				UProperty* NewProp_TargetEnemyKeyName = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("TargetEnemyKeyName"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(TargetEnemyKeyName, AEnemyAIController), 0x0010000000010001);
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_AEnemyAIController_SearchForEnemy(), "SearchForEnemy"); // 652500684
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Collision Rendering Utilities|Transformation"));
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("EnemyAIController.h"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("EnemyAIController.h"));
+				MetaData->SetValue(NewProp_BotTypeKeyName, TEXT("Category"), TEXT("AI"));
+				MetaData->SetValue(NewProp_BotTypeKeyName, TEXT("ModuleRelativePath"), TEXT("EnemyAIController.h"));
+				MetaData->SetValue(NewProp_CurrentWaypointKeyName, TEXT("Category"), TEXT("AI"));
+				MetaData->SetValue(NewProp_CurrentWaypointKeyName, TEXT("ModuleRelativePath"), TEXT("EnemyAIController.h"));
+				MetaData->SetValue(NewProp_PatrolLocationKeyName, TEXT("Category"), TEXT("AI"));
+				MetaData->SetValue(NewProp_PatrolLocationKeyName, TEXT("ModuleRelativePath"), TEXT("EnemyAIController.h"));
+				MetaData->SetValue(NewProp_TargetEnemyKeyName, TEXT("Category"), TEXT("AI"));
+				MetaData->SetValue(NewProp_TargetEnemyKeyName, TEXT("ModuleRelativePath"), TEXT("EnemyAIController.h"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_AEnemyAIController(Z_Construct_UClass_AEnemyAIController, &AEnemyAIController::StaticClass, TEXT("AEnemyAIController"), false, nullptr, nullptr, nullptr);
+	DEFINE_VTABLE_PTR_HELPER_CTOR(AEnemyAIController);
+	UEnum* Z_Construct_UEnum_No_Bark_Vs_EHUDState()
+	{
+		UPackage* Outer=Z_Construct_UPackage__Script_No_Bark_Vs();
+		extern uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EHUDState_CRC();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EHUDState"), 0, Get_Z_Construct_UEnum_No_Bark_Vs_EHUDState_CRC(), false);
+		if (!ReturnEnum)
+		{
+			ReturnEnum = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EHUDState"), RF_Public|RF_Transient|RF_MarkAsNative) UEnum(FObjectInitializer());
+			TArray<TPair<FName, uint8>> EnumNames;
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::Playing")), 0));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::Spectating")), 1));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::MatchEnd")), 2));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EHUDState::EHUDState_MAX")), 3));
+			ReturnEnum->SetEnums(EnumNames, UEnum::ECppForm::EnumClass);
+			ReturnEnum->CppType = TEXT("EHUDState");
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnEnum->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnEnum, TEXT("BlueprintType"), TEXT("true"));
+			MetaData->SetValue(ReturnEnum, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
+#endif
+		}
+		return ReturnEnum;
+	}
+	uint32 Get_Z_Construct_UEnum_No_Bark_Vs_EHUDState_CRC() { return 3778790446U; }
+	UFunction* Z_Construct_UFunction_AGameHud_GetCurrentState()
+	{
+		struct GameHud_eventGetCurrentState_Parms
+		{
+			EHUDState ReturnValue;
+		};
+		UObject* Outer=Z_Construct_UClass_AGameHud();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetCurrentState"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535, sizeof(GameHud_eventGetCurrentState_Parms));
+			UProperty* NewProp_ReturnValue = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("ReturnValue"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(ReturnValue, GameHud_eventGetCurrentState_Parms), 0x0010000000000580, Z_Construct_UEnum_No_Bark_Vs_EHUDState());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("HUD"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_AGameHud_OnStateChanged()
+	{
+		UObject* Outer=Z_Construct_UClass_AGameHud();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("OnStateChanged"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x08020C00, 65535, sizeof(GameHud_eventOnStateChanged_Parms));
+			UProperty* NewProp_NewState = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("NewState"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(NewState, GameHud_eventOnStateChanged_Parms), 0x0010000000000080, Z_Construct_UEnum_No_Bark_Vs_EHUDState());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("HUDEvents"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
+			MetaData->SetValue(ReturnFunction, TEXT("ToolTip"), TEXT("/ Event hook to update HUD state (eg. to determine visibility of widgets)"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UClass* Z_Construct_UClass_AGameHud_NoRegister()
+	{
+		return AGameHud::StaticClass();
+	}
+	UClass* Z_Construct_UClass_AGameHud()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_AHUD();
+			Z_Construct_UPackage__Script_No_Bark_Vs();
+			OuterClass = AGameHud::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x2090028C;
+
+				OuterClass->LinkChild(Z_Construct_UFunction_AGameHud_GetCurrentState());
+				OuterClass->LinkChild(Z_Construct_UFunction_AGameHud_OnStateChanged());
+
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_AGameHud_GetCurrentState(), "GetCurrentState"); // 2935681971
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_AGameHud_OnStateChanged(), "OnStateChanged"); // 498739155
+				OuterClass->ClassConfigName = FName(TEXT("Game"));
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Rendering Actor Input Replication"));
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("GameHud.h"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("GameHud.h"));
+				MetaData->SetValue(OuterClass, TEXT("ShowCategories"), TEXT("Input|MouseInput Input|TouchInput"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_AGameHud(Z_Construct_UClass_AGameHud, &AGameHud::StaticClass, TEXT("AGameHud"), false, nullptr, nullptr, nullptr);
+	DEFINE_VTABLE_PTR_HELPER_CTOR(AGameHud);
 	UClass* Z_Construct_UClass_ANo_Bark_VsGameModeBase_NoRegister()
 	{
 		return ANo_Bark_VsGameModeBase::StaticClass();
@@ -1371,15 +1604,12 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		struct PlayController_eventDropItem_Parms
 		{
 			FCurrentInventoryItemInfo iItemInfo;
-			TArray<FCurrentInventoryItemInfo> FCurrentInventory;
 		};
 		UObject* Outer=Z_Construct_UClass_APlayController();
 		static UFunction* ReturnFunction = NULL;
 		if (!ReturnFunction)
 		{
 			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("DropItem"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x04020401, 65535, sizeof(PlayController_eventDropItem_Parms));
-			UProperty* NewProp_FCurrentInventory = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("FCurrentInventory"), RF_Public|RF_Transient|RF_MarkAsNative) UArrayProperty(CPP_PROPERTY_BASE(FCurrentInventory, PlayController_eventDropItem_Parms), 0x0010000000000080);
-			UProperty* NewProp_FCurrentInventory_Inner = new(EC_InternalUseOnlyConstructor, NewProp_FCurrentInventory, TEXT("FCurrentInventory"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(FObjectInitializer(), EC_CppProperty, 0, 0x0000000000000000, Z_Construct_UScriptStruct_FCurrentInventoryItemInfo());
 			UProperty* NewProp_iItemInfo = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("iItemInfo"), RF_Public|RF_Transient|RF_MarkAsNative) UStructProperty(CPP_PROPERTY_BASE(iItemInfo, PlayController_eventDropItem_Parms), 0x0010000000000080, Z_Construct_UScriptStruct_FCurrentInventoryItemInfo());
 			ReturnFunction->Bind();
 			ReturnFunction->StaticLink();
@@ -1748,7 +1978,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_CloseInventory(), "CloseInventory"); // 188329387
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_CraftItem(), "CraftItem"); // 743880769
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_DetachEquipmentfromCharacter(), "DetachEquipmentfromCharacter"); // 2387283476
-				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_DropItem(), "DropItem"); // 788829819
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_DropItem(), "DropItem"); // 2446701164
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_Interact(), "Interact"); // 2061274985
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_MoveItemToInventory(), "MoveItemToInventory"); // 1802590890
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_APlayController_MoveItemWithinInventory(), "MoveItemWithinInventory"); // 2398471832
@@ -1867,8 +2097,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/No_Bark_Vs")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0x6850D4C3;
-			Guid.B = 0xDDDD2473;
+			Guid.A = 0x537B8AD0;
+			Guid.B = 0x8131FDEF;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);

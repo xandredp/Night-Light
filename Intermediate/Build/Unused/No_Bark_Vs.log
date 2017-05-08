@@ -1,0 +1,28 @@
+﻿  Compiling game modules for hot reload
+  Parsing headers for No_Bark_VsEditor
+    Running UnrealHeaderTool "E:\love-\Projects\Vertical-Slice\No_Bark_Vs.uproject" "E:\love-\Projects\Vertical-Slice\Intermediate\Build\Win64\No_Bark_VsEditor\Development\No_Bark_VsEditor.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -installed
+  Reflection code generated for No_Bark_VsEditor in 5.7756466 seconds
+  Performing 3 actions (4 in parallel)
+  No_Bark_Vs.generated.cpp
+  EnemyAIController.cpp
+E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(77): error C2027: use of undefined type 'UBehaviorTreeComponent'
+  e:\program files\epic games\ue_4.14\engine\source\runtime\aimodule\classes\BehaviorTree/BehaviorTreeTypes.h(8): note: see declaration of 'UBehaviorTreeComponent'
+  E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\EnemyAIController.cpp(10): note: see reference to function template instantiation 'TReturnType *UObject::CreateDefaultSubobject<UBehaviorTreeComponent>(FName,bool)' being compiled
+          with
+          [
+              TReturnType=UBehaviorTreeComponent
+          ]
+E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): error C2440: 'static_cast': cannot convert from 'UObject *' to 'UBehaviorTreeComponent *'
+  E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(77): error C2027: use of undefined type 'UBlackboardComponent'
+  E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\AIModule\Classes\AIController.h(23): note: see declaration of 'UBlackboardComponent'
+  E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\EnemyAIController.cpp(11): note: see reference to function template instantiation 'TReturnType *UObject::CreateDefaultSubobject<UBlackboardComponent>(FName,bool)' being compiled
+          with
+          [
+              TReturnType=UBlackboardComponent
+          ]
+E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): error C2440: 'static_cast': cannot convert from 'UObject *' to 'UBlackboardComponent *'
+  E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+ERROR : UBT error : Failed to produce item: E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-8088.dll
+  Total build time: 10.11 seconds
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.MakeFile.Targets(41,5): error MSB3075: The command ""E:\Program Files\Epic Games\UE_4.14\Engine\Build\BatchFiles\Build.bat" No_Bark_VsEditor Win64 Development "E:\love-\Projects\Vertical-Slice\No_Bark_Vs.uproject" -waitmutex" exited with code 5. Please verify that you have sufficient rights to run this command.

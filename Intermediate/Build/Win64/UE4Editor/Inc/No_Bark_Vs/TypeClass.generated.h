@@ -11,7 +11,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define NO_BARK_VS_TypeClass_generated_h
 
-#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_148_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_159_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FTakeHitInfo(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
 	FORCEINLINE static uint32 __PPO__EnsureReplicationByte() { return STRUCT_OFFSET(FTakeHitInfo, EnsureReplicationByte); } \
@@ -20,18 +20,18 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	FORCEINLINE static uint32 __PPO__RadialDamageEvent() { return STRUCT_OFFSET(FTakeHitInfo, RadialDamageEvent); }
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_118_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_129_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCurrentInventoryItemInfo(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct();
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_66_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_77_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FInventoryItem(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_45_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_TypeClass_h_56_GENERATED_BODY \
 	friend NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCraftingInfo(); \
 	NO_BARK_VS_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -54,4 +54,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	op(EInventorySlot::Primary) \
 	op(EInventorySlot::Secondary) \
 	op(EInventorySlot::Melee) 
+#define FOREACH_ENUM_EBOTBEHAVIORTYPE(op) \
+	op(EBotBehaviorType::Passive) \
+	op(EBotBehaviorType::Patrolling) 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

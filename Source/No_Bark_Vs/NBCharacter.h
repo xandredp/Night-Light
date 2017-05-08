@@ -30,6 +30,7 @@ class NO_BARK_VS_API ANBCharacter : public ACharacter
 	FTimerHandle StartSprintingTimerHandle;
 	FTimerHandle StopSprintingTimerHandle;
 
+
 public:
 	// Sets default values for this character's properties
 	ANBCharacter();

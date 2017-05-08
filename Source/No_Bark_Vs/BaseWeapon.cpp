@@ -8,7 +8,7 @@ ABaseWeapon::ABaseWeapon()
 {
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 	WeaponMesh->SetupAttachment(RootComponent);
-	WeaponMesh->SetVisibility(false);
+	WeaponMesh->SetVisibility(true);
 
 	WeaponCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollisionComp"));
 	WeaponCollisionComp->SetupAttachment(WeaponMesh);

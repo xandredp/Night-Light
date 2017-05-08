@@ -5,6 +5,12 @@
 	DO NOT modify this manually! Edit the corresponding .h files instead!
 ===========================================================================*/
 
+#ifndef NO_BARK_VS_BaseCharacter_generated_h
+	#include "BaseCharacter.h"
+#endif
+#ifndef NO_BARK_VS_BaseEnemy_generated_h
+	#include "BaseEnemy.h"
+#endif
 #ifndef NO_BARK_VS_BaseInteractable_generated_h
 	#include "BaseInteractable.h"
 #endif
@@ -14,14 +20,17 @@
 #ifndef NO_BARK_VS_BaseWeapon_generated_h
 	#include "BaseWeapon.h"
 #endif
-#ifndef NO_BARK_VS_GameHud_generated_h
-	#include "GameHud.h"
-#endif
 #ifndef NO_BARK_VS_TypeClass_generated_h
 	#include "TypeClass.h"
 #endif
 #ifndef NO_BARK_VS_NBCharacter_generated_h
 	#include "NBCharacter.h"
+#endif
+#ifndef NO_BARK_VS_EnemyAIController_generated_h
+	#include "EnemyAIController.h"
+#endif
+#ifndef NO_BARK_VS_GameHud_generated_h
+	#include "GameHud.h"
 #endif
 #ifndef NO_BARK_VS_No_Bark_VsGameModeBase_generated_h
 	#include "No_Bark_VsGameModeBase.h"

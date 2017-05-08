@@ -4,6 +4,17 @@
 #include "TypeClass.generated.h"
 
 UENUM()
+enum class EBotBehaviorType : uint8
+{
+	/* Does not move, remains in place until a player is spotted */
+	Passive,
+
+	/* Patrols a region until a player is spotted */
+	Patrolling,
+};
+
+
+UENUM()
 enum class EInventorySlot : uint8
 {
 	/* For currently equipped items/weapons */

@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\No_Bark_Vs.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{E066EE96-A310-4C7A-BF78-D50CC4D2FC74}</UniqueIdentifier>
+			<UniqueIdentifier>{4D6FEF02-F088-4B6F-B10C-0D2E857611D4}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\No_Bark_Vs.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{C70E8CA0-7F15-47CB-8A5D-A525B0E49EDE}</UniqueIdentifier>
+			<UniqueIdentifier>{9984FFEC-EC9B-4A2A-94C4-A7B0D015119E}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -28,8 +28,20 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\No_Bark_Vs">
-			<UniqueIdentifier>{0132D48D-90DD-41C9-9AA2-6392CA5F76DF}</UniqueIdentifier>
+			<UniqueIdentifier>{D8E0F0A2-7EC4-4B79-8384-3EFD6047F880}</UniqueIdentifier>
 		</Filter>
+		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseCharacter.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseCharacter.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseEnemy.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseEnemy.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
 		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseInteractable.cpp">
 			<Filter>Source\No_Bark_Vs</Filter>
 		</ClCompile >
@@ -40,6 +52,12 @@
 			<Filter>Source\No_Bark_Vs</Filter>
 		</ClCompile >
 		<ClInclude Include="..\..\Source\No_Bark_Vs\BaseWeapon.h">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\No_Bark_Vs\EnemyAIController.cpp">
+			<Filter>Source\No_Bark_Vs</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\No_Bark_Vs\EnemyAIController.h">
 			<Filter>Source\No_Bark_Vs</Filter>
 		</ClInclude >
 		<ClCompile Include="..\..\Source\No_Bark_Vs\GameHud.cpp">

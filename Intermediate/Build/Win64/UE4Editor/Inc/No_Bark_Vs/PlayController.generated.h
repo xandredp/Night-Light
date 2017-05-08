@@ -158,10 +158,9 @@ class APlayController;
 	DECLARE_FUNCTION(execDropItem) \
 	{ \
 		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
-		P_GET_TARRAY(FCurrentInventoryItemInfo,Z_Param_FCurrentInventory); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->DropItem(Z_Param_iItemInfo,Z_Param_FCurrentInventory); \
+		this->DropItem(Z_Param_iItemInfo); \
 		P_NATIVE_END; \
 	} \
  \
@@ -360,10 +359,9 @@ class APlayController;
 	DECLARE_FUNCTION(execDropItem) \
 	{ \
 		P_GET_STRUCT(FCurrentInventoryItemInfo,Z_Param_iItemInfo); \
-		P_GET_TARRAY(FCurrentInventoryItemInfo,Z_Param_FCurrentInventory); \
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
-		this->DropItem(Z_Param_iItemInfo,Z_Param_FCurrentInventory); \
+		this->DropItem(Z_Param_iItemInfo); \
 		P_NATIVE_END; \
 	} \
  \
