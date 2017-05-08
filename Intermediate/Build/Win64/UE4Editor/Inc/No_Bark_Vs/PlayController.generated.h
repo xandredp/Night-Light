@@ -89,6 +89,14 @@ class APlayController;
 		P_NATIVE_END; \
 	} \
  \
+	DECLARE_FUNCTION(execGetIsInventoryFull) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(bool*)Z_Param__Result=this->GetIsInventoryFull(); \
+		P_NATIVE_END; \
+	} \
+ \
 	DECLARE_FUNCTION(execChangeMaxInventorySize) \
 	{ \
 		P_GET_PROPERTY(UIntProperty,Z_Param_iNoInventory); \
@@ -287,6 +295,14 @@ class APlayController;
 		P_FINISH; \
 		P_NATIVE_BEGIN; \
 		this->AttachEquipmenttoCharacter(Z_Param_ItemToAttech); \
+		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execGetIsInventoryFull) \
+	{ \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(bool*)Z_Param__Result=this->GetIsInventoryFull(); \
 		P_NATIVE_END; \
 	} \
  \

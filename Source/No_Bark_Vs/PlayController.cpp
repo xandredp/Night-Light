@@ -176,6 +176,7 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 	CurrentItemToAddInventory.ItemInfo = *ItemToADD;
 	CurrentItemToAddInventory.ItemIndex = LastAddedInventoryIndex;
 	bool bItemAdded = false;
+	bIsInventoryFull = bItemAdded;
 	// if inventory item is valid add to inventory. 
 	if (ItemToADD)
 	{
@@ -217,6 +218,7 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 					{
 						///Todo : Warning Inventory is full and remove the item. 
 						GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "InventoryIsFull");
+						bIsInventoryFull = true;
 
 					}
 					else
@@ -343,6 +345,11 @@ void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 void APlayController::ChangeMaxInventorySize(int iNoInventory)
 {
 	MaxInventorySize = iNoInventory;
+}
+
+bool APlayController::GetIsInventoryFull()
+{
+	return bIsInventoryFull;
 }
 
 void APlayController::AttachEquipmenttoCharacter(FCurrentInventoryItemInfo ItemToAttech)

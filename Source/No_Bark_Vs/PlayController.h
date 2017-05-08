@@ -76,13 +76,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void ChangeMaxInventorySize(int iNoInventory);
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		bool GetIsInventoryFull();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int MaxInventorySize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int32 LastAddedInventoryIndex;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		bool bIsInventoryFull;
+	
 	/************************************************************************/
 	/* Equipment                                                      */
 	/************************************************************************/

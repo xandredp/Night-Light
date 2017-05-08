@@ -16,15 +16,21 @@ void APickup::Interact(APlayerController* playerController)
 {
 
 //	Super::Interact(playerController);
-
+	bool bNoSpaceInInventory = false;
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Interactiion Successed");
 		aPlayController->AddItemtoInventoryByID(ItemID, 1);		
+		bNoSpaceInInventory = aPlayController->GetIsInventoryFull();
+		if (bNoSpaceInInventory == false)
+		{
+			DestroyItemOnGround();
+		}
+	
 	}
 
-	DestroyItemOnGround();
+	
 }
 
 void APickup::DestroyItemOnGround()
