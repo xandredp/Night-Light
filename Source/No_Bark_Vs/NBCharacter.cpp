@@ -124,7 +124,10 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
 	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
-	InputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
+
+	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
+	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
@@ -140,7 +143,6 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
-
 
 	// Weapons
 	/*PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &ANBCharacter::OnStartTargeting);
@@ -162,6 +164,44 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 }
 
+void ANBCharacter::EquipPrimaryWeapon()
+{
+	GetEquipment(0);
+	
+	if (WeaponClass == NULL)
+	{	
+		
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	}
+	else
+	{
+		AttachEquipmentToHand();
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	}
+}
+
+
+void ANBCharacter::GetEquipment(int index)
+{
+	APlayController* playController = Cast<APlayController>(GetController());
+	if (playController)
+	{
+		if (playController->FCurrentEquippedWeapons.Num() != 0)
+		{
+			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedWeapons[0];
+			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+	}
+}
 
 
 void ANBCharacter::DecreaseHealth(float decreaseVal)
@@ -327,7 +367,6 @@ void ANBCharacter::OnCrouchToggle()
 		Crouch();
 	}
 }
-
 FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const
 {
 	/* Return the socket name for the specified storage slot */

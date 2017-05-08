@@ -28,6 +28,15 @@ class ABaseInteractable;
 		P_NATIVE_BEGIN; \
 		this->CheckForInteractables(); \
 		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execGetInventoryAttachPoint) \
+	{ \
+		P_GET_PROPERTY(UByteProperty,Z_Param_Slot); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(FName*)Z_Param__Result=this->GetInventoryAttachPoint(EInventorySlot(Z_Param_Slot)); \
+		P_NATIVE_END; \
 	}
 
 
@@ -47,9 +56,21 @@ class ABaseInteractable;
 		P_NATIVE_BEGIN; \
 		this->CheckForInteractables(); \
 		P_NATIVE_END; \
+	} \
+ \
+	DECLARE_FUNCTION(execGetInventoryAttachPoint) \
+	{ \
+		P_GET_PROPERTY(UByteProperty,Z_Param_Slot); \
+		P_FINISH; \
+		P_NATIVE_BEGIN; \
+		*(FName*)Z_Param__Result=this->GetInventoryAttachPoint(EInventorySlot(Z_Param_Slot)); \
+		P_NATIVE_END; \
 	}
 
 
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_EVENT_PARMS
+extern NO_BARK_VS_API  FName NO_BARK_VS_AttachEquipmentToHand;
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_CALLBACK_WRAPPERS
 #define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesANBCharacter(); \
@@ -105,12 +126,16 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(ANBCharacter); \
 	FORCEINLINE static uint32 __PPO__SecondaryAttachPoint() { return STRUCT_OFFSET(ANBCharacter, SecondaryAttachPoint); }
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_15_PROLOG
+#define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_15_PROLOG \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_EVENT_PARMS
+
+
 #define Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_PRIVATE_PROPERTY_OFFSET \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_RPC_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_CALLBACK_WRAPPERS \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_STANDARD_CONSTRUCTORS \
 public: \
@@ -122,6 +147,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_PRIVATE_PROPERTY_OFFSET \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_CALLBACK_WRAPPERS \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_INCLASS_NO_PURE_DECLS \
 	Vertical_Slice_Source_No_Bark_Vs_NBCharacter_h_18_ENHANCED_CONSTRUCTORS \
 private: \

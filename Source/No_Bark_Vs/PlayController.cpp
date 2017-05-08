@@ -535,12 +535,6 @@ void APlayController::SetupInputComponent()
 	InputComponent->BindAction("Use", IE_Pressed, this, &APlayController::Interact);
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &APlayController::OpenInventory);
 	InputComponent->BindAction("OpenMap", IE_Pressed, this, &APlayController::OpenMap);
-	/*InputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &APlayController::OpenInventory);
-	InputComponent->BindAction("ScondaryWeapon", IE_Pressed, this, &APlayController::OpenInventory);
-	InputComponent->BindAction("MeleeWeapon", IE_Pressed, this, &APlayController::OpenInventory);
-	InputComponent->BindAction("EqupSlot4", IE_Pressed, this, &APlayController::OpenInventory);
-	InputComponent->BindAction("EqupSlot5", IE_Pressed, this, &APlayController::OpenInventory);
-	InputComponent->BindAction("EquipSlot6", IE_Pressed, this, &APlayController::OpenInventory);*/
 
 
 }

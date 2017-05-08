@@ -4,6 +4,7 @@
 
 #include "GameFramework/PlayerController.h"
 #include "NBCharacter.h"
+#include "TypeClass.h"
 #include "PlayController.generated.h"
 
 /**

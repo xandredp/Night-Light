@@ -16,6 +16,7 @@ UCLASS(config = Game)
 class NO_BARK_VS_API ANBCharacter : public ACharacter
 {
 	GENERATED_BODY()
+		
 	
 		/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -31,6 +32,8 @@ class NO_BARK_VS_API ANBCharacter : public ACharacter
 	FTimerHandle StopSprintingTimerHandle;
 
 
+
+
 public:
 	// Sets default values for this character's properties
 	ANBCharacter();
@@ -43,6 +46,13 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void EquipPrimaryWeapon();
+
+	void GetEquipment(int index);
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void AttachEquipmentToHand();
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -57,12 +67,14 @@ public:
 	/************************************************************************/
 	
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
-	UPROPERTY(EditDefaultsOnly, Category = Spawn)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
 		TSubclassOf <class ABaseWeapon> WeaponClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	ABaseWeapon *CurrentWeapon;
 
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
+	UFUNCTION(BlueprintCallable, Category = "Equip")
 	FName GetInventoryAttachPoint(EInventorySlot Slot) const;
 
 

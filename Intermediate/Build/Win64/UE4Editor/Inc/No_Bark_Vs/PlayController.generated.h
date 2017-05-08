@@ -14,7 +14,7 @@ class APlayController;
 #endif
 #define NO_BARK_VS_PlayController_generated_h
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_RPC_WRAPPERS \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execSetupInputComponent) \
 	{ \
@@ -215,7 +215,7 @@ class APlayController;
 	}
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execSetupInputComponent) \
 	{ \
@@ -416,10 +416,10 @@ class APlayController;
 	}
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_EVENT_PARMS
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_EVENT_PARMS
 extern NO_BARK_VS_API  FName NO_BARK_VS_ReloadInventory;
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_CALLBACK_WRAPPERS
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS_NO_PURE_DECLS \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_CALLBACK_WRAPPERS
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesAPlayController(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_APlayController(); \
@@ -430,7 +430,7 @@ extern NO_BARK_VS_API  FName NO_BARK_VS_ReloadInventory;
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_INCLASS \
 	private: \
 	static void StaticRegisterNativesAPlayController(); \
 	friend NO_BARK_VS_API class UClass* Z_Construct_UClass_APlayController(); \
@@ -441,7 +441,7 @@ extern NO_BARK_VS_API  FName NO_BARK_VS_ReloadInventory;
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_STANDARD_CONSTRUCTORS \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API APlayController(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(APlayController) \
@@ -454,7 +454,7 @@ private: \
 public:
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_ENHANCED_CONSTRUCTORS \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API APlayController(APlayController&&); \
@@ -465,31 +465,31 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(APlayController); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(APlayController)
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_PRIVATE_PROPERTY_OFFSET
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_12_PROLOG \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_EVENT_PARMS
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_PRIVATE_PROPERTY_OFFSET
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_13_PROLOG \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_EVENT_PARMS
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_GENERATED_BODY_LEGACY \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_PRIVATE_PROPERTY_OFFSET \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_RPC_WRAPPERS \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_CALLBACK_WRAPPERS \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_STANDARD_CONSTRUCTORS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_PRIVATE_PROPERTY_OFFSET \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_RPC_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_CALLBACK_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_INCLASS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_GENERATED_BODY \
+#define Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_PRIVATE_PROPERTY_OFFSET \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_CALLBACK_WRAPPERS \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_INCLASS_NO_PURE_DECLS \
-	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_15_ENHANCED_CONSTRUCTORS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_PRIVATE_PROPERTY_OFFSET \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_CALLBACK_WRAPPERS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_INCLASS_NO_PURE_DECLS \
+	Vertical_Slice_Source_No_Bark_Vs_PlayController_h_16_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

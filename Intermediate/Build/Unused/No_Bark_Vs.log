@@ -1,28 +1,70 @@
-﻿  Compiling game modules for hot reload
+﻿  Performing full C++ include scan (building a new target)
+  Creating makefile for No_Bark_VsEditor (no existing makefile)
   Parsing headers for No_Bark_VsEditor
     Running UnrealHeaderTool "E:\love-\Projects\Vertical-Slice\No_Bark_Vs.uproject" "E:\love-\Projects\Vertical-Slice\Intermediate\Build\Win64\No_Bark_VsEditor\Development\No_Bark_VsEditor.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -installed
-  Reflection code generated for No_Bark_VsEditor in 5.7756466 seconds
-  Performing 3 actions (4 in parallel)
-  No_Bark_Vs.generated.cpp
-  EnemyAIController.cpp
-E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(77): error C2027: use of undefined type 'UBehaviorTreeComponent'
-  e:\program files\epic games\ue_4.14\engine\source\runtime\aimodule\classes\BehaviorTree/BehaviorTreeTypes.h(8): note: see declaration of 'UBehaviorTreeComponent'
-  E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\EnemyAIController.cpp(10): note: see reference to function template instantiation 'TReturnType *UObject::CreateDefaultSubobject<UBehaviorTreeComponent>(FName,bool)' being compiled
-          with
-          [
-              TReturnType=UBehaviorTreeComponent
-          ]
-E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): error C2440: 'static_cast': cannot convert from 'UObject *' to 'UBehaviorTreeComponent *'
-  E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
-E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(77): error C2027: use of undefined type 'UBlackboardComponent'
-  E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\AIModule\Classes\AIController.h(23): note: see declaration of 'UBlackboardComponent'
-  E:\love-\Projects\Vertical-Slice\Source\No_Bark_Vs\EnemyAIController.cpp(11): note: see reference to function template instantiation 'TReturnType *UObject::CreateDefaultSubobject<UBlackboardComponent>(FName,bool)' being compiled
-          with
-          [
-              TReturnType=UBlackboardComponent
-          ]
-E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): error C2440: 'static_cast': cannot convert from 'UObject *' to 'UBlackboardComponent *'
-  E:\Program Files\Epic Games\UE_4.14\Engine\Source\Runtime\CoreUObject\Public\UObject\Object.h(78): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
-ERROR : UBT error : Failed to produce item: E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-8088.dll
-  Total build time: 10.11 seconds
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.MakeFile.Targets(41,5): error MSB3075: The command ""E:\Program Files\Epic Games\UE_4.14\Engine\Build\BatchFiles\Build.bat" No_Bark_VsEditor Win64 Development "E:\love-\Projects\Vertical-Slice\No_Bark_Vs.uproject" -waitmutex" exited with code 5. Please verify that you have sufficient rights to run this command.
+  Reflection code generated for No_Bark_VsEditor in 5.2323642 seconds
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1399.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1399.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1442.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1442.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1733.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1733.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1964.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1964.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1981.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1981.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1986.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-1986.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-209.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-209.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-2513.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-2513.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-2588.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-2588.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-277.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-277.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-3340.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-3340.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-4360.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-4360.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-4380.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-4380.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-5243.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-5243.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-5262.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-5262.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-530.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-530.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-5571.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-5571.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-6283.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-6283.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-6555.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-6555.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-6663.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-6663.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-7024.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-7024.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-7272.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-7272.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-8299.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-8299.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-8434.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-8434.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9179.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9179.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9438.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9438.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9665.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9665.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9808.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9808.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9886.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9886.pdb".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9957.dll".
+  Deleting old hot reload file: "E:\love-\Projects\Vertical-Slice\Binaries\Win64\UE4Editor-No_Bark_Vs-9957.pdb".
+  Performing 2 actions (4 in parallel)
+  NBCharacter.cpp
+  [2/2] Link UE4Editor-No_Bark_Vs.dll
+     Creating library E:\love-\Projects\Vertical-Slice\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-No_Bark_Vs.lib and object E:\love-\Projects\Vertical-Slice\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-No_Bark_Vs.exp
+  Total build time: 24.83 seconds

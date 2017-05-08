@@ -10,6 +10,7 @@
 #include "No_Bark_Vs.generated.dep.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCode1No_Bark_Vs() {}
+FName NO_BARK_VS_AttachEquipmentToHand = FName(TEXT("AttachEquipmentToHand"));
 FName NO_BARK_VS_OnStateChanged = FName(TEXT("OnStateChanged"));
 FName NO_BARK_VS_OnUsed = FName(TEXT("OnUsed"));
 FName NO_BARK_VS_ReloadInventory = FName(TEXT("ReloadInventory"));
@@ -202,12 +203,17 @@ static struct FScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo
 		UScriptStruct::DeferCppStructOps(FName(TEXT("CraftingInfo")),new UScriptStruct::TCppStructOps<FCraftingInfo>);
 	}
 } ScriptStruct_No_Bark_Vs_StaticRegisterNativesFCraftingInfo;
+	void ANBCharacter::AttachEquipmentToHand()
+	{
+		ProcessEvent(FindFunctionChecked(NO_BARK_VS_AttachEquipmentToHand),NULL);
+	}
 	void ANBCharacter::StaticRegisterNativesANBCharacter()
 	{
 		FNativeFunctionRegistrar::RegisterFunction(ANBCharacter::StaticClass(), "CheckForInteractables",(Native)&ANBCharacter::execCheckForInteractables);
 		FNativeFunctionRegistrar::RegisterFunction(ANBCharacter::StaticClass(), "GetInteractableInView",(Native)&ANBCharacter::execGetInteractableInView);
+		FNativeFunctionRegistrar::RegisterFunction(ANBCharacter::StaticClass(), "GetInventoryAttachPoint",(Native)&ANBCharacter::execGetInventoryAttachPoint);
 	}
-	IMPLEMENT_CLASS(ANBCharacter, 1599596045);
+	IMPLEMENT_CLASS(ANBCharacter, 457879775);
 	void AEnemyAIController::StaticRegisterNativesAEnemyAIController()
 	{
 		FNativeFunctionRegistrar::RegisterFunction(AEnemyAIController::StaticClass(), "SearchForEnemy",(Native)&AEnemyAIController::execSearchForEnemy);
@@ -327,8 +333,10 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHUDState(EHUDState_Stat
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCurrentInventoryItemInfo();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FInventoryItem();
 	NO_BARK_VS_API class UScriptStruct* Z_Construct_UScriptStruct_FCraftingInfo();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ANBCharacter_AttachEquipmentToHand();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ANBCharacter_CheckForInteractables();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ANBCharacter_GetInteractableInView();
+	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_ANBCharacter_GetInventoryAttachPoint();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANBCharacter_NoRegister();
 	NO_BARK_VS_API class UClass* Z_Construct_UClass_ANBCharacter();
 	NO_BARK_VS_API class UFunction* Z_Construct_UFunction_AEnemyAIController_SearchForEnemy();
@@ -1061,6 +1069,22 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		return ReturnStruct;
 	}
 	uint32 Get_Z_Construct_UScriptStruct_FCraftingInfo_CRC() { return 2041587229U; }
+	UFunction* Z_Construct_UFunction_ANBCharacter_AttachEquipmentToHand()
+	{
+		UObject* Outer=Z_Construct_UClass_ANBCharacter();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("AttachEquipmentToHand"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x08020800, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UFunction* Z_Construct_UFunction_ANBCharacter_CheckForInteractables()
 	{
 		UObject* Outer=Z_Construct_UClass_ANBCharacter();
@@ -1100,6 +1124,31 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 		}
 		return ReturnFunction;
 	}
+	UFunction* Z_Construct_UFunction_ANBCharacter_GetInventoryAttachPoint()
+	{
+		struct NBCharacter_eventGetInventoryAttachPoint_Parms
+		{
+			EInventorySlot Slot;
+			FName ReturnValue;
+		};
+		UObject* Outer=Z_Construct_UClass_ANBCharacter();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetInventoryAttachPoint"), RF_Public|RF_Transient|RF_MarkAsNative) UFunction(FObjectInitializer(), NULL, 0x54020401, 65535, sizeof(NBCharacter_eventGetInventoryAttachPoint_Parms));
+			UProperty* NewProp_ReturnValue = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("ReturnValue"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(ReturnValue, NBCharacter_eventGetInventoryAttachPoint_Parms), 0x0010000000000580);
+			UProperty* NewProp_Slot = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("Slot"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(Slot, NBCharacter_eventGetInventoryAttachPoint_Parms), 0x0010000000000080, Z_Construct_UEnum_No_Bark_Vs_EInventorySlot());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("Equip"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
+			MetaData->SetValue(ReturnFunction, TEXT("ToolTip"), TEXT("Return socket name for attachments (to match the socket in the character skeleton)"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_ANBCharacter_NoRegister()
 	{
 		return ANBCharacter::StaticClass();
@@ -1117,8 +1166,10 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				UObjectForceRegistration(OuterClass);
 				OuterClass->ClassFlags |= 0x20900080;
 
+				OuterClass->LinkChild(Z_Construct_UFunction_ANBCharacter_AttachEquipmentToHand());
 				OuterClass->LinkChild(Z_Construct_UFunction_ANBCharacter_CheckForInteractables());
 				OuterClass->LinkChild(Z_Construct_UFunction_ANBCharacter_GetInteractableInView());
+				OuterClass->LinkChild(Z_Construct_UFunction_ANBCharacter_GetInventoryAttachPoint());
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_SecondaryAttachPoint = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("SecondaryAttachPoint"), RF_Public|RF_Transient|RF_MarkAsNative) UNameProperty(CPP_PROPERTY_BASE(SecondaryAttachPoint, ANBCharacter), 0x0040000000010001);
@@ -1139,14 +1190,18 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_CurrentStamina = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentStamina"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(CurrentStamina, ANBCharacter), 0x0010000000000005);
 				UProperty* NewProp_MaxHealth = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("MaxHealth"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(MaxHealth, ANBCharacter), 0x0010000000000005);
 				UProperty* NewProp_CurrentHealth = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentHealth"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(CurrentHealth, ANBCharacter), 0x0010000000000005);
-				UProperty* NewProp_WeaponClass = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponClass"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(WeaponClass, ANBCharacter), 0x0014000000010001, Z_Construct_UClass_ABaseWeapon_NoRegister(), UClass::StaticClass());
+				UProperty* NewProp_CurrentWeapon = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentWeapon"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(CurrentWeapon, ANBCharacter), 0x0010000000000005, Z_Construct_UClass_ABaseWeapon_NoRegister());
+				UProperty* NewProp_WeaponClass = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("WeaponClass"), RF_Public|RF_Transient|RF_MarkAsNative) UClassProperty(CPP_PROPERTY_BASE(WeaponClass, ANBCharacter), 0x0014000000000005, Z_Construct_UClass_ABaseWeapon_NoRegister(), UClass::StaticClass());
 				UProperty* NewProp_BaseLookUpRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BaseLookUpRate"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(BaseLookUpRate, ANBCharacter), 0x0010000000020015);
 				UProperty* NewProp_BaseTurnRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BaseTurnRate"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(BaseTurnRate, ANBCharacter), 0x0010000000020015);
+				UProperty* NewProp_CurrentWeaponHeld = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CurrentWeaponHeld"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(CurrentWeaponHeld, ANBCharacter), 0x0010000000000005, Z_Construct_UClass_ABaseWeapon_NoRegister());
 				UProperty* NewProp_FollowCamera = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FollowCamera"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(FollowCamera, ANBCharacter), 0x00400000000a001d, Z_Construct_UClass_UCameraComponent_NoRegister());
 				UProperty* NewProp_CameraBoom = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraBoom"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(CameraBoom, ANBCharacter), 0x00400000000a001d, Z_Construct_UClass_USpringArmComponent_NoRegister());
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ANBCharacter_AttachEquipmentToHand(), "AttachEquipmentToHand"); // 2375037324
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ANBCharacter_CheckForInteractables(), "CheckForInteractables"); // 271824645
 				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ANBCharacter_GetInteractableInView(), "GetInteractableInView"); // 3992094905
+				OuterClass->AddFunctionToFunctionMapWithOverriddenName(Z_Construct_UFunction_ANBCharacter_GetInventoryAttachPoint(), "GetInventoryAttachPoint"); // 2196554398
 				OuterClass->ClassConfigName = FName(TEXT("Game"));
 				OuterClass->StaticLink();
 #if WITH_METADATA
@@ -1195,6 +1250,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_MaxHealth, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_CurrentHealth, TEXT("Category"), TEXT("Status"));
 				MetaData->SetValue(NewProp_CurrentHealth, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
+				MetaData->SetValue(NewProp_CurrentWeapon, TEXT("Category"), TEXT("Status"));
+				MetaData->SetValue(NewProp_CurrentWeapon, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_WeaponClass, TEXT("Category"), TEXT("Spawn"));
 				MetaData->SetValue(NewProp_WeaponClass, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_WeaponClass, TEXT("ToolTip"), TEXT("Base look up/down rate, in deg/sec. Other scaling may affect final rate."));
@@ -1204,6 +1261,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_BaseTurnRate, TEXT("Category"), TEXT("Camera"));
 				MetaData->SetValue(NewProp_BaseTurnRate, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_BaseTurnRate, TEXT("ToolTip"), TEXT("Base turn rate, in deg/sec. Other scaling may affect final turn rate."));
+				MetaData->SetValue(NewProp_CurrentWeaponHeld, TEXT("Category"), TEXT("Mesh"));
+				MetaData->SetValue(NewProp_CurrentWeaponHeld, TEXT("ModuleRelativePath"), TEXT("NBCharacter.h"));
 				MetaData->SetValue(NewProp_FollowCamera, TEXT("AllowPrivateAccess"), TEXT("true"));
 				MetaData->SetValue(NewProp_FollowCamera, TEXT("Category"), TEXT("Camera"));
 				MetaData->SetValue(NewProp_FollowCamera, TEXT("EditInline"), TEXT("true"));
@@ -2100,8 +2159,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/No_Bark_Vs")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0x004C78FD;
-			Guid.B = 0x8131FDEF;
+			Guid.A = 0xF3893CB5;
+			Guid.B = 0xE93067A9;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);
