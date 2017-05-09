@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\No_Bark_Vs.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{4D6FEF02-F088-4B6F-B10C-0D2E857611D4}</UniqueIdentifier>
+			<UniqueIdentifier>{D46E9421-8FBC-448C-A950-653FDCFB4F7A}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\No_Bark_Vs.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{9984FFEC-EC9B-4A2A-94C4-A7B0D015119E}</UniqueIdentifier>
+			<UniqueIdentifier>{44D98ABB-6967-4F07-84DF-56B7BBBDEB84}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -28,7 +28,7 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\No_Bark_Vs">
-			<UniqueIdentifier>{D8E0F0A2-7EC4-4B79-8384-3EFD6047F880}</UniqueIdentifier>
+			<UniqueIdentifier>{58A776CB-6705-4981-B195-6E3E3D26339D}</UniqueIdentifier>
 		</Filter>
 		<ClCompile Include="..\..\Source\No_Bark_Vs\BaseCharacter.cpp">
 			<Filter>Source\No_Bark_Vs</Filter>
