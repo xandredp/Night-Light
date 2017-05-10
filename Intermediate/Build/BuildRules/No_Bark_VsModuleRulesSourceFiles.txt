@@ -1,3 +1,0 @@
-F:\2017\Vertical Slice\Vert\Source\No_Bark_Vs\No_Bark_Vs.Build.cs
-F:\2017\Vertical Slice\Vert\Source\No_Bark_Vs.Target.cs
-F:\2017\Vertical Slice\Vert\Source\No_Bark_VsEditor.Target.cs
