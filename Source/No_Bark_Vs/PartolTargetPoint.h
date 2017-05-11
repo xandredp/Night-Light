@@ -2,20 +2,18 @@
 
 #pragma once
 
-#include "Monster.h"
-#include "SkinnyMonster.generated.h"
+#include "Engine/TargetPoint.h"
+#include "PartolTargetPoint.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class NO_BARK_VS_API ASkinnyMonster : public AMonster
+class NO_BARK_VS_API APartolTargetPoint : public ATargetPoint
 {
 	GENERATED_BODY()
 	
-public:
-
-
+	
 	
 	
 };
