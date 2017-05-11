@@ -13,5 +13,18 @@
 				"AIModule"
 			]
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "Paper2D",
+			"Enabled": false
+		},
+		{
+			"Name": "AI_Plugin",
+			"Enabled": true
+		}
+	],
+	"AdditionalPluginDirectories": [
+		"/../../../Vertical_Slice/Plugins"
 	]
 }

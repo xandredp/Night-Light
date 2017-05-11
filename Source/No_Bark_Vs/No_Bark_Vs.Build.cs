@@ -6,7 +6,19 @@ public class No_Bark_Vs : ModuleRules
 {
 	public No_Bark_Vs(TargetInfo Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "GameplayTasks" });
+		PublicDependencyModuleNames.AddRange(new string[] {
+            "Core",
+            "CoreUObject",
+            "Engine",
+            "InputCore",
+
+            "UMG",
+            "GameplayTasks",
+
+            //plugin
+            "AI_Plugin"
+
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

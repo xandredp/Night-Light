@@ -3,8 +3,9 @@
 #pragma once
 
 #include "Engine.h"
-
+#include "AI_Plugin.h"
 #define WEAPON_TRACE ECC_GameTraceChannel1
+
 
 
 /** when you modify this, please note that this information can be saved with instances
@@ -14,3 +15,4 @@
 #define SURFACE_ENEMYBODY			SurfaceType2
 #define SURFACE_ENEMYHEAD			SurfaceType3
 #define SURFACE_ENEMYLIMB			SurfaceType4
+

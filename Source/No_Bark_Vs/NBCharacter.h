@@ -8,6 +8,7 @@
 #include "TypeClass.h"
 #include "NBCharacter.generated.h"
 
+
 //GunSkeltal -> bullet spawn point  = MuzzleTip
 
 
