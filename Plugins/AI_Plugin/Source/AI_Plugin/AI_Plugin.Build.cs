@@ -39,7 +39,10 @@ public class AI_Plugin : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				// ... add private dependencies that you statically link with here ...	
+                		// ... add private dependencies that you statically link with here ...	
+                "InputCore", 
+                "EditorStyle",
+		
 			}
 			);
 		
