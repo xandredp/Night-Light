@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "GameFramework/Character.h"
+#include "ModuleManager.h"
 #include "AIBaseCharacter.generated.h"
 
 UCLASS()
@@ -22,7 +22,5 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	
 	
 };

@@ -8,3 +8,6 @@
 #ifndef AI_PLUGIN_AIBaseCharacter_generated_h
 	#include "Public/AIBaseCharacter.h"
 #endif
+#ifndef AI_PLUGIN_EnemyType_generated_h
+	#include "Public/EnemyType.h"
+#endif
