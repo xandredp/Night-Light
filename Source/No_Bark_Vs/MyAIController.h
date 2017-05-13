@@ -23,13 +23,23 @@ class NO_BARK_VS_API AMyAIController : public AAIController
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName LocationToGoKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName TargetKey;
+
+
 	TArray<AActor*> TargetPoints;
 
-	virtual void Possess(APawn* Pawn) override;
+	
 
 public:
 
 	AMyAIController();
+	
+	//Executes when the controller possess the AI pawn
+	virtual void Possess(APawn* Pawn) override;
+
+	//Sets the sensed target in the blackboard
+	void SetSeenTarget(APawn* Pawn);
 
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 

@@ -10,12 +10,14 @@
 
 AMyAIController::AMyAIController()
 {
-	// initialize behaviorTreeComponent, BlackBoardComponent and the corresponding key
+	// initialize behaviorTreeComponent, BlackBoardComponent and the corresponding keys
 	BehaviourComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorComp"));
 
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
 
 	LocationToGoKey = "LocationToGo";
+
+	TargetKey = "Target";
 }
 
 void AMyAIController::Possess(APawn* Pawn)
@@ -38,5 +40,13 @@ void AMyAIController::Possess(APawn* Pawn)
 
 		//Start the behavior tree which corresponds to the specific character
 		BehaviourComp->StartTree(*(AIChar->BehaviorTree));
+	}
+}
+
+void AMyAIController::SetSeenTarget(APawn* Pawn)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(TargetKey, Pawn);
 	}
 }

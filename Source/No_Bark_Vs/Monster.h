@@ -10,6 +10,10 @@ class NO_BARK_VS_API AMonster : public ACharacter
 {
 	GENERATED_BODY()
 
+private:
+	UFUNCTION()
+	void OnSeePlayer(APawn* Pawn);
+
 public:
 	// Sets default values for this character's properties
 	AMonster();
@@ -20,6 +24,11 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	//AI seeing, Sensing component
+	UPROPERTY(VisibleAnywhere, Category = "AI")
+	class UPawnSensingComponent* PawnSensingComp;
+
+	// The behaviour tree of the character
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviorTree;
 

@@ -15,9 +15,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define CURRENT_FILE_ID Vertical_Slice_Plugins_AI_Plugin_Source_AI_Plugin_Public_EnemyType_h
 
 
-#define FOREACH_ENUM_EENEMYBEHAVIORTYPE(op) \
-	op(EEnemyBehaviorType::Neutral) \
-	op(EEnemyBehaviorType::Suspicious) \
-	op(EEnemyBehaviorType::Agression) \
-	op(EEnemyBehaviorType::Flee) 
+#define FOREACH_ENUM_EENEMYBEHAVIOURTYPE(op) \
+	op(EEnemyBehaviourType::Neutral) \
+	op(EEnemyBehaviourType::Suspicious) \
+	op(EEnemyBehaviourType::Agression) \
+	op(EEnemyBehaviourType::Flee) 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

@@ -13,6 +13,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 	if (AICon)
 	{
 		UBlackboardComponent* BlackBoardComp = AICon->GetBlackBoardComp();
+
 		APartolTargetPoint* CurrentPoint = Cast<APartolTargetPoint>(BlackBoardComp->GetValueAsObject("LocationGoTo"));
 
 		TArray<AActor*> AvailableTargetPoints = AICon->GetAvailableTargetPoints();

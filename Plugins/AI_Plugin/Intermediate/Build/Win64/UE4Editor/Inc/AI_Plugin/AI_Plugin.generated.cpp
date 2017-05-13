@@ -14,25 +14,25 @@ void EmptyLinkFunctionForGeneratedCode1AI_Plugin() {}
 	{
 	}
 	IMPLEMENT_CLASS(AAIBaseCharacter, 3418276342);
-static class UEnum* EEnemyBehaviorType_StaticEnum()
+static class UEnum* EEnemyBehaviourType_StaticEnum()
 {
 	extern AI_PLUGIN_API class UPackage* Z_Construct_UPackage__Script_AI_Plugin();
 	static class UEnum* Singleton = NULL;
 	if (!Singleton)
 	{
-		extern AI_PLUGIN_API class UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType();
-		Singleton = GetStaticEnum(Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType, Z_Construct_UPackage__Script_AI_Plugin(), TEXT("EEnemyBehaviorType"));
+		extern AI_PLUGIN_API class UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType();
+		Singleton = GetStaticEnum(Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType, Z_Construct_UPackage__Script_AI_Plugin(), TEXT("EEnemyBehaviourType"));
 	}
 	return Singleton;
 }
-static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviorType(EEnemyBehaviorType_StaticEnum, TEXT("/Script/AI_Plugin"), TEXT("EEnemyBehaviorType"), false, nullptr, nullptr);
+static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviourType(EEnemyBehaviourType_StaticEnum, TEXT("/Script/AI_Plugin"), TEXT("EEnemyBehaviourType"), false, nullptr, nullptr);
 #if USE_COMPILED_IN_NATIVES
 // Cross Module References
 	ENGINE_API class UClass* Z_Construct_UClass_ACharacter();
 
 	AI_PLUGIN_API class UClass* Z_Construct_UClass_AAIBaseCharacter_NoRegister();
 	AI_PLUGIN_API class UClass* Z_Construct_UClass_AAIBaseCharacter();
-	AI_PLUGIN_API class UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType();
+	AI_PLUGIN_API class UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType();
 	AI_PLUGIN_API class UPackage* Z_Construct_UPackage__Script_AI_Plugin();
 	UClass* Z_Construct_UClass_AAIBaseCharacter_NoRegister()
 	{
@@ -66,22 +66,22 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviorType(EEnem
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_AAIBaseCharacter(Z_Construct_UClass_AAIBaseCharacter, &AAIBaseCharacter::StaticClass, TEXT("AAIBaseCharacter"), false, nullptr, nullptr, nullptr);
 	DEFINE_VTABLE_PTR_HELPER_CTOR(AAIBaseCharacter);
-	UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType()
+	UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType()
 	{
 		UPackage* Outer=Z_Construct_UPackage__Script_AI_Plugin();
-		extern uint32 Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType_CRC();
-		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EEnemyBehaviorType"), 0, Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType_CRC(), false);
+		extern uint32 Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType_CRC();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EEnemyBehaviourType"), 0, Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType_CRC(), false);
 		if (!ReturnEnum)
 		{
-			ReturnEnum = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EEnemyBehaviorType"), RF_Public|RF_Transient|RF_MarkAsNative) UEnum(FObjectInitializer());
+			ReturnEnum = new(EC_InternalUseOnlyConstructor, Outer, TEXT("EEnemyBehaviourType"), RF_Public|RF_Transient|RF_MarkAsNative) UEnum(FObjectInitializer());
 			TArray<TPair<FName, uint8>> EnumNames;
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviorType::Neutral")), 0));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviorType::Suspicious")), 1));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviorType::Agression")), 2));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviorType::Flee")), 3));
-			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviorType::EEnemyBehaviorType_MAX")), 4));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviourType::Neutral")), 0));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviourType::Suspicious")), 1));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviourType::Agression")), 2));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviourType::Flee")), 3));
+			EnumNames.Add(TPairInitializer<FName, uint8>(FName(TEXT("EEnemyBehaviourType::EEnemyBehaviourType_MAX")), 4));
 			ReturnEnum->SetEnums(EnumNames, UEnum::ECppForm::EnumClass);
-			ReturnEnum->CppType = TEXT("EEnemyBehaviorType");
+			ReturnEnum->CppType = TEXT("EEnemyBehaviourType");
 #if WITH_METADATA
 			UMetaData* MetaData = ReturnEnum->GetOutermost()->GetMetaData();
 			MetaData->SetValue(ReturnEnum, TEXT("Agression.ToolTip"), TEXT("Attack. ."));
@@ -93,7 +93,7 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviorType(EEnem
 		}
 		return ReturnEnum;
 	}
-	uint32 Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviorType_CRC() { return 4218153404U; }
+	uint32 Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType_CRC() { return 2255440357U; }
 	UPackage* Z_Construct_UPackage__Script_AI_Plugin()
 	{
 		static UPackage* ReturnPackage = NULL;
@@ -102,8 +102,8 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviorType(EEnem
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/AI_Plugin")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0x8A5B923F;
-			Guid.B = 0xB79117B7;
+			Guid.A = 0x77425A84;
+			Guid.B = 0x1A9A576C;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);
