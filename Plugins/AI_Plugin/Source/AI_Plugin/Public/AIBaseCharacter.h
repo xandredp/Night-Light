@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ModuleManager.h"
+#include "EnemyType.h"
 #include "AIBaseCharacter.generated.h"
 
 UCLASS()
@@ -22,5 +23,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EEnemyBehaviourType eItemType;
 	
 };

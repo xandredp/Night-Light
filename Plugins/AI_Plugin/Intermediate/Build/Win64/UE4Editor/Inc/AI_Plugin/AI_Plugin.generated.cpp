@@ -10,10 +10,6 @@
 #include "AI_Plugin.generated.dep.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCode1AI_Plugin() {}
-	void AAIBaseCharacter::StaticRegisterNativesAAIBaseCharacter()
-	{
-	}
-	IMPLEMENT_CLASS(AAIBaseCharacter, 3418276342);
 static class UEnum* EEnemyBehaviourType_StaticEnum()
 {
 	extern AI_PLUGIN_API class UPackage* Z_Construct_UPackage__Script_AI_Plugin();
@@ -26,46 +22,18 @@ static class UEnum* EEnemyBehaviourType_StaticEnum()
 	return Singleton;
 }
 static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviourType(EEnemyBehaviourType_StaticEnum, TEXT("/Script/AI_Plugin"), TEXT("EEnemyBehaviourType"), false, nullptr, nullptr);
+	void AAIBaseCharacter::StaticRegisterNativesAAIBaseCharacter()
+	{
+	}
+	IMPLEMENT_CLASS(AAIBaseCharacter, 220686868);
 #if USE_COMPILED_IN_NATIVES
 // Cross Module References
 	ENGINE_API class UClass* Z_Construct_UClass_ACharacter();
 
+	AI_PLUGIN_API class UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType();
 	AI_PLUGIN_API class UClass* Z_Construct_UClass_AAIBaseCharacter_NoRegister();
 	AI_PLUGIN_API class UClass* Z_Construct_UClass_AAIBaseCharacter();
-	AI_PLUGIN_API class UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType();
 	AI_PLUGIN_API class UPackage* Z_Construct_UPackage__Script_AI_Plugin();
-	UClass* Z_Construct_UClass_AAIBaseCharacter_NoRegister()
-	{
-		return AAIBaseCharacter::StaticClass();
-	}
-	UClass* Z_Construct_UClass_AAIBaseCharacter()
-	{
-		static UClass* OuterClass = NULL;
-		if (!OuterClass)
-		{
-			Z_Construct_UClass_ACharacter();
-			Z_Construct_UPackage__Script_AI_Plugin();
-			OuterClass = AAIBaseCharacter::StaticClass();
-			if (!(OuterClass->ClassFlags & CLASS_Constructed))
-			{
-				UObjectForceRegistration(OuterClass);
-				OuterClass->ClassFlags |= 0x20900080;
-
-
-				OuterClass->StaticLink();
-#if WITH_METADATA
-				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
-				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Navigation"));
-				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("AIBaseCharacter.h"));
-				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("Public/AIBaseCharacter.h"));
-#endif
-			}
-		}
-		check(OuterClass->GetClass());
-		return OuterClass;
-	}
-	static FCompiledInDefer Z_CompiledInDefer_UClass_AAIBaseCharacter(Z_Construct_UClass_AAIBaseCharacter, &AAIBaseCharacter::StaticClass, TEXT("AAIBaseCharacter"), false, nullptr, nullptr, nullptr);
-	DEFINE_VTABLE_PTR_HELPER_CTOR(AAIBaseCharacter);
 	UEnum* Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType()
 	{
 		UPackage* Outer=Z_Construct_UPackage__Script_AI_Plugin();
@@ -94,6 +62,43 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviourType(EEne
 		return ReturnEnum;
 	}
 	uint32 Get_Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType_CRC() { return 2255440357U; }
+	UClass* Z_Construct_UClass_AAIBaseCharacter_NoRegister()
+	{
+		return AAIBaseCharacter::StaticClass();
+	}
+	UClass* Z_Construct_UClass_AAIBaseCharacter()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_ACharacter();
+			Z_Construct_UPackage__Script_AI_Plugin();
+			OuterClass = AAIBaseCharacter::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x20900080;
+
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				UProperty* NewProp_eItemType = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("eItemType"), RF_Public|RF_Transient|RF_MarkAsNative) UByteProperty(CPP_PROPERTY_BASE(eItemType, AAIBaseCharacter), 0x0010000000000005, Z_Construct_UEnum_AI_Plugin_EEnemyBehaviourType());
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("HideCategories"), TEXT("Navigation"));
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("AIBaseCharacter.h"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("Public/AIBaseCharacter.h"));
+				MetaData->SetValue(NewProp_eItemType, TEXT("Category"), TEXT("AIBaseCharacter"));
+				MetaData->SetValue(NewProp_eItemType, TEXT("ModuleRelativePath"), TEXT("Public/AIBaseCharacter.h"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_AAIBaseCharacter(Z_Construct_UClass_AAIBaseCharacter, &AAIBaseCharacter::StaticClass, TEXT("AAIBaseCharacter"), false, nullptr, nullptr, nullptr);
+	DEFINE_VTABLE_PTR_HELPER_CTOR(AAIBaseCharacter);
 	UPackage* Z_Construct_UPackage__Script_AI_Plugin()
 	{
 		static UPackage* ReturnPackage = NULL;
@@ -102,8 +107,8 @@ static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EEnemyBehaviourType(EEne
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/AI_Plugin")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0x77425A84;
-			Guid.B = 0x1A9A576C;
+			Guid.A = 0xFCF17E0F;
+			Guid.B = 0xF39568D9;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);
