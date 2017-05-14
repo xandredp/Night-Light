@@ -14,6 +14,7 @@ ANBCharacter::ANBCharacter()
 	walkingSpeed = 400.0f;
 	MaxSprintSpeed = 600.0f;
 
+	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
 	MoveComp = GetCharacterMovement();
 	// Adjust jump to make it less floaty
@@ -407,4 +408,19 @@ FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const
 		// Not implemented.
 		return "";
 	}
+}
+
+void ANBCharacter::ReportNoise(USoundBase* SoundToPlay, float Volume)
+{
+	//If we have a valid sound to play, play the sound and
+	//report it to our game
+	if (SoundToPlay)
+	{
+		//Play the actual sound
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SoundToPlay, GetActorLocation(), Volume);
+
+		//Report that we've played a sound with a certain volume in a specific location
+		MakeNoise(Volume, this, GetActorLocation());
+	}
+
 }

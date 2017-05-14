@@ -2,6 +2,10 @@
 
 #pragma once
 
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
 #include "AIController.h"
 #include "MyAIController.generated.h"
 
@@ -13,6 +17,12 @@ class NO_BARK_VS_API AMyAIController : public AAIController
 {
 	GENERATED_BODY()
 
+protected:
+
+	/*This property is used to find a certain key for our blackboard.
+	We will create the blackboard later in this tutorial*/
+	UPROPERTY(EditDefaultsOnly)
+		FName SensedTarget = "SensedPawn";
 	// Behaviour tree ref
 	UBehaviorTreeComponent* BehaviourComp;
 
@@ -40,6 +50,9 @@ public:
 
 	//Sets the sensed target in the blackboard
 	void SetSeenTarget(APawn* Pawn);
+
+	/*Sets the new sensed target value inside our Blackboard values*/
+	void SetSensedTarget(APawn* NewTarget);
 
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 

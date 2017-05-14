@@ -2,8 +2,12 @@
 
 #pragma once
 
+#include "Perception/PawnSensingComponent.h"
+#include "BehaviorTree/BehaviorTree.h"
+
 #include "GameFramework/Character.h"
 #include "Monster.generated.h"
+
 
 UCLASS()
 class NO_BARK_VS_API AMonster : public ACharacter
@@ -15,6 +19,11 @@ private:
 	void OnSeePlayer(APawn* Pawn);
 
 public:
+
+	/*Hearing function - will be executed when we hear a Pawn*/
+	UFUNCTION()
+		void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
+
 	// Sets default values for this character's properties
 	AMonster();
 

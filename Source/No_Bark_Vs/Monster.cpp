@@ -16,6 +16,9 @@ AMonster::AMonster()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	// Set the peripheral vision angle to 80 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
+
+
+
 }
 
 // Called when the game starts or when spawned
@@ -27,9 +30,21 @@ void AMonster::BeginPlay()
 	if (PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AMonster::OnSeePlayer);
+		PawnSensingComp->OnHearNoise.AddDynamic(this, &AMonster::OnHearNoise);
 	}
 }
 
+void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume)
+{
+	//AMyAIController* Con = Cast<AMyAIController>(GetController());
+
+	//We don't want to hear ourselves
+	//if (Con && PawnInstigator != this)
+	//{
+	//	//Updates our target based on what we've heard.
+	//	//Con->SetSensedTarget(PawnInstigator);
+	//}
+}
 void AMonster::OnSeePlayer(APawn* Pawn)
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
@@ -41,6 +56,7 @@ void AMonster::OnSeePlayer(APawn* Pawn)
 		AIController->SetSeenTarget(Pawn);
 	}
 }
+
 
 // Called every frame
 void AMonster::Tick( float DeltaTime )

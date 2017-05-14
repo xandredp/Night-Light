@@ -1,7 +1,7 @@
 
 #pragma once
 
-
+#include "Perception/PawnSensingComponent.h"
 #include "GameFramework/Character.h"
 #include "Engine/DataTable.h"
 #include "BaseWeapon.h"
@@ -38,6 +38,14 @@ class NO_BARK_VS_API ANBCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ANBCharacter();
+
+	/*The function that is going to play the sound and report it to our game*/
+	UFUNCTION(BlueprintCallable, Category = "AI")
+		void ReportNoise(USoundBase* SoundToPlay, float Volume);
+
+	/*A Pawn Noise Emitter component which is used in order to emit the sounds to nearby AIs*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

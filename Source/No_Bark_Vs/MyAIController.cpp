@@ -43,6 +43,12 @@ void AMyAIController::Possess(APawn* Pawn)
 	}
 }
 
+void AMyAIController::SetSensedTarget(APawn* NewTarget)
+{
+	//Set a new target to follow
+	if (BlackboardComp) BlackboardComp->SetValueAsObject(SensedTarget, NewTarget);
+}
+
 void AMyAIController::SetSeenTarget(APawn* Pawn)
 {
 	if (BlackboardComp)
