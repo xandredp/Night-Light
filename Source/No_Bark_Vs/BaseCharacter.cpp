@@ -9,7 +9,8 @@ ABaseCharacter::ABaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	/* Ignore this channel or it will absorb the trace impacts instead of the skeletal mesh */
+	GetCapsuleComponent()->SetCollisionResponseToChannel(WEAPON_TRACE, ECR_Ignore);
 }
 
 // Called when the game starts or when spawned

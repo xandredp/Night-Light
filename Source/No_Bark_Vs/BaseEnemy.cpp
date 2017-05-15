@@ -7,5 +7,11 @@
 
 ABaseEnemy::ABaseEnemy()
 {
-	//AIControllerClass = AEnemyAIController::StaticClass();
+	/* Ignore this channel or it will absorb the trace impacts instead of the skeletal mesh */
+	GetCapsuleComponent()->SetCollisionResponseToChannel(WEAPON_TRACE, ECR_Ignore);
+	GetCapsuleComponent()->SetCapsuleHalfHeight(96.0f, false);
+	GetCapsuleComponent()->SetCapsuleRadius(42.0f);
+
+	Health = 100;
+
 }
