@@ -177,6 +177,7 @@ void ANBCharacter::EquipPrimaryWeapon()
 	else
 	{
 		SpawnWeapon(WeaponClass);
+	
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 
 
@@ -207,7 +208,13 @@ void ANBCharacter::GetEquipment(int index)
 }
 
 void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> WeaponClass)
-{
+{	
+	//if (CurrentWeapon)
+	//{
+	//	AttachEquipmentToHand();
+	//	CurrentWeapon->SetOwningPawn(nullptr);
+	//}
+
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
@@ -216,6 +223,7 @@ void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> WeaponClass)
 	if (CurrentWeapon)
 	{
 		AttachEquipmentToHand();
+		CurrentWeapon->SetOwningPawn(this);
 	}
 }
 
@@ -304,7 +312,7 @@ ABaseInteractable* ANBCharacter::GetInteractableInView()
 	FHitResult Hit(ForceInit);
 	GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
 
-	//DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 1.0f);
+	//DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Blue, false, 1.0f);
 
 	return Cast<ABaseInteractable>(Hit.GetActor());
 }
@@ -388,6 +396,8 @@ void ANBCharacter::FireWeapon()
 	if (CurrentWeapon)
 	{
 		CurrentWeapon->Fire();
+		
+	
 	}
 	
 }

@@ -12,7 +12,14 @@ class ANBCharacter;
  * 
  */
 //
-
+UENUM()
+enum class EWeaponState : uint8
+{
+	Idle,
+	Firing,
+	Equipping,
+	Reloading
+};
 UENUM()
 enum class EAttackType : uint8
 {
@@ -56,8 +63,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		float WeaponSpread;
 
-
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ammo)
 		int32 MaxAmmo;
 
@@ -92,13 +97,15 @@ class NO_BARK_VS_API ABaseWeapon : public AActor
 public:
 	ABaseWeapon();
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
+		class ANBCharacter* MyPawn;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 		class USkeletalMeshComponent* WeaponMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 		class UBoxComponent* WeaponCollisionComp;
+
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 	void Fire();
@@ -125,7 +132,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 CurrentClip;
 
-	void SetOwningPawn(ANBCharacter *NewOwner);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		EWeaponState CurrentState;
+
+
+	/* Set the weapon's owning pawn */
+	void SetOwningPawn(ANBCharacter* NewOwner);
+
+	/* Get pawn owner */
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		class ANBCharacter* GetPawnOwner() const;
 
 	void AttachToPlayer();
 	void DetachFromPlayer();
@@ -143,6 +159,9 @@ protected:
 
 	void ProcessInstantHit(const FHitResult &Impact, const FVector &Origin, const FVector &ShootDir, int32 RandomSeed, float ReticleSpread);
 
-	ANBCharacter *MyPawn;
+	FVector GetAdjustedAim() const;
+	FVector GetCameraDamageStartLocation(const FVector& AimDir) const;
+
+
 
 };
