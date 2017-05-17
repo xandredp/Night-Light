@@ -3,6 +3,7 @@
 #include "No_Bark_Vs.h"
 #include "Monster.h"
 #include "MyAIController.h"
+#include "TypeClass.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -16,6 +17,8 @@ AMonster::AMonster()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	// Set the peripheral vision angle to 80 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
+
+	MonsterState = EBotBehaviorType::Neutral;
 
 
 
@@ -63,4 +66,8 @@ void AMonster::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+}
+
+void AMonster::TakeDamage()
+{
 }

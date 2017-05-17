@@ -4,7 +4,7 @@
 
 #include "Perception/PawnSensingComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
-
+#include "TypeClass.h"
 #include "GameFramework/Character.h"
 #include "Monster.generated.h"
 
@@ -49,6 +49,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float AttackDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
+		EBotBehaviorType MonsterState;
 
 	void TakeDamage();
 };

@@ -6,11 +6,16 @@
 UENUM()
 enum class EBotBehaviorType : uint8
 {
-	/* Does not move, remains in place until a player is spotted */
-	Passive,
-
-	/* Patrols a region until a player is spotted */
-	Patrolling,
+	// passive patrolling mode
+	Neutral,
+	//hearing or seeing someone. 
+	Suspicious,
+	//Running towards the player and attacking
+	Agression,
+	// Torches on he is in the light and not moving
+	Stunned,
+	//Move out of the light.
+	Flee, 
 };
 
 
@@ -167,10 +172,10 @@ struct FTakeHitInfo
 		UClass* DamageTypeClass;
 
 	UPROPERTY()
-		TWeakObjectPtr<class ANBCharacter> PawnInstigator;
+		TSubclassOf<class ANBCharacter> PawnInstigator;
 
 	UPROPERTY()
-		TWeakObjectPtr<class AActor> DamageCauser;
+		TSubclassOf<class AActor> DamageCauser;
 
 	UPROPERTY()
 		uint8 DamageEventClassID;
