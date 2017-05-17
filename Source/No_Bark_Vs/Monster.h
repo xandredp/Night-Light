@@ -53,5 +53,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 		EBotBehaviorType MonsterState;
 
-	void TakeDamage();
+	void ReduceHealth();
 };

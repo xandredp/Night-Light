@@ -68,6 +68,6 @@ void AMonster::Tick( float DeltaTime )
 
 }
 
-void AMonster::TakeDamage()
+void AMonster::ReduceHealth()
 {
 }
