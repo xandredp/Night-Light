@@ -134,6 +134,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		EWeaponState CurrentState;
+	//damage
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UNBDamageType> DamageType;
 
 
 	/* Set the weapon's owning pawn */

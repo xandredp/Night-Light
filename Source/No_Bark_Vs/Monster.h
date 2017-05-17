@@ -50,8 +50,22 @@ public:
 	UPROPERTY(EditAnywhere)
 	float AttackDamage;
 
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 		EBotBehaviorType MonsterState;
 
-	void ReduceHealth();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bisMonsterDead;
+
+
+	// inventory interaction functions
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void ReduceHealth(int DamageValue);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		bool GetMonsterDead();
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void SetRagdollPhysics();
 };

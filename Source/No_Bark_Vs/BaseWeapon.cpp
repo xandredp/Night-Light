@@ -4,6 +4,7 @@
 #include "NBCharacter.h"
 #include "PlayController.h"
 //#include "BaseEnemy.h"
+#include "NBDamageType.h"
 #include "Monster.h"
 #include "BaseWeapon.h"
 
@@ -208,7 +209,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 
 	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 500, 10.f);
 
-	//USDamageType* DmgType = Cast<USDamageType>(DamageType->GetDefaultObject());
+	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
 	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
 //	if (PhysMat && DmgType)
