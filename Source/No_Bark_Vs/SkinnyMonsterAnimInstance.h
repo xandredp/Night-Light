@@ -13,6 +13,13 @@ class NO_BARK_VS_API USkinnyMonsterAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool CanAttack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool IsHit;
+
 protected:
 
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
