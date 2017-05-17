@@ -5,6 +5,9 @@
 	DO NOT modify this manually! Edit the corresponding .h files instead!
 ===========================================================================*/
 
+#ifndef AI_PLUGIN_EnemyType_generated_h
+	#include "Public/EnemyType.h"
+#endif
 #ifndef AI_PLUGIN_AIBaseCharacter_generated_h
 	#include "Public/AIBaseCharacter.h"
 #endif
