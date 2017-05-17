@@ -22,6 +22,8 @@ AMonster::AMonster()
 
 	bisMonsterDead = false;
 
+	Health
+
 
 }
 

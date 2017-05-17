@@ -202,7 +202,6 @@ FHitResult ABaseWeapon::WeaponTrace(const FVector & TraceFrom, const FVector & T
 
 void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & Origin, const FVector & ShootDir, int32 RandomSeed, float ReticleSpread)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
 	float ActualHitDamage = WeaponConfig.WeaponDamage;
 	//const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	//const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
@@ -212,22 +211,27 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
 	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+	float CurrentDamage = 0;
 //	if (PhysMat && DmgType)
 	if (PhysMat)
 	{
 		if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
 		{
+			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
-			Enemy->Destroy();
+			Enemy->ReduceHealth(CurrentDamage);
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
 		{
+			CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
-			
+			Enemy->ReduceHealth(CurrentDamage);
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
 		{
+			CurrentDamage = WeaponConfig.WeaponDamage;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
+			Enemy->ReduceHealth(CurrentDamage);
 		}
 		else if (PhysMat->SurfaceType == SURFACE_FLESH)
 		{
