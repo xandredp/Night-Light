@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include "SkinnyMonster.generated.h"
 
+
 /**
  * 
  */
@@ -13,9 +14,11 @@ class NO_BARK_VS_API ASkinnyMonster : public AMonster
 {
 	GENERATED_BODY()
 	
+private:
+	ASkinnyMonster();
+
 public:
-
-
-	
+	AMonster* Monster;
+	//USphereCollisionComponent* AttackRangeSphere;
 	
 };

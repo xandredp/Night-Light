@@ -4,5 +4,9 @@
 #include "SkinnyMonster.h"
 
 
+ASkinnyMonster::ASkinnyMonster()
+{
+	//AttackRangeSphere = CreateDefaultSubobject<USphereCollisionComponent>(TEXT("Attack Range Sphere"));
 
-
+	
+}

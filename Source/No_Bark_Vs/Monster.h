@@ -41,15 +41,18 @@ public:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviorTree;
 
+	/* Properties shared across all derived classes */
 	UPROPERTY(EditAnywhere)
-	float MovementSpeed;
+		float MovementSpeed;
 
 	UPROPERTY(EditAnywhere)
-	float Health;
+		float Health;
 
 	UPROPERTY(EditAnywhere)
-	float AttackDamage;
+		float AttackDamage;
 
+	UPROPERTY(EditAnywhere)
+		float AttackRange;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")

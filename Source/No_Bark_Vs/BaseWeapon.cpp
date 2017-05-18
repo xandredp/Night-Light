@@ -208,7 +208,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 
 	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 500, 10.f);
 
-	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
+//	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
 	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
 	float CurrentDamage = 0;
