@@ -21,6 +21,8 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 		// Contains a random index to define the next target point
 		int32 RandomIndex;
 
+		
+
 		//Store the next possible point
 		APartolTargetPoint* NextTargetPoint = nullptr;
 
