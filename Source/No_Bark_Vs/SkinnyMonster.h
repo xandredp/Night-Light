@@ -19,6 +19,8 @@ private:
 
 public:
 	AMonster* Monster;
-	//USphereCollisionComponent* AttackRangeSphere;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class USphereComponent* AttackRangeSphere;
 	
 };

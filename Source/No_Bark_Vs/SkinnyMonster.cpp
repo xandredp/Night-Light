@@ -6,7 +6,12 @@
 
 ASkinnyMonster::ASkinnyMonster()
 {
-	//AttackRangeSphere = CreateDefaultSubobject<USphereCollisionComponent>(TEXT("Attack Range Sphere"));
+	MovementSpeed = 75.0f;
+	Health = 100.0f;
+	AttackDamage = 20.0f;
+	AttackRange = 100.0f;
 
-	
+	AttackRangeSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Range Sphere"));
+	AttackRangeSphere->AttachTo(RootComponent);
+	AttackRangeSphere->SetSphereRadius(AttackRange);
 }

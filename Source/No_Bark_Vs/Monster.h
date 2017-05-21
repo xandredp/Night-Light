@@ -18,6 +18,7 @@ private:
 	UFUNCTION()
 	void OnSeePlayer(APawn* Pawn);
 
+
 public:
 
 	/*Hearing function - will be executed when we hear a Pawn*/
@@ -40,6 +41,7 @@ public:
 	// The behaviour tree of the character
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviorTree;
+
 
 	/* Properties shared across all derived classes */
 	UPROPERTY(EditAnywhere)

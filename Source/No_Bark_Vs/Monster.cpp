@@ -7,7 +7,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "Perception/PawnSensingComponent.h"
 
-// Sets default values
+//Sets default values
 AMonster::AMonster()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -21,10 +21,6 @@ AMonster::AMonster()
 	MonsterState = EBotBehaviorType::Neutral;
 
 	bisMonsterDead = false;
-
-	//Health
-
-
 }
 
 // Called when the game starts or when spawned
@@ -51,6 +47,7 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 	//	//Con->SetSensedTarget(PawnInstigator);
 	//}
 }
+
 void AMonster::OnSeePlayer(APawn* Pawn)
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
