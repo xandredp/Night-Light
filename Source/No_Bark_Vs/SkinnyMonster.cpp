@@ -14,4 +14,18 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackRangeSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Range Sphere"));
 	AttackRangeSphere->AttachTo(RootComponent);
 	AttackRangeSphere->SetSphereRadius(AttackRange);
+	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
+}
+
+
+void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	// Other Actor is the actor that triggered the event.Check that is not ourself.
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		// Check if collision is with the player character
+
+			// Set CanAttack in AnimInstance to true
+			
+	}
 }
