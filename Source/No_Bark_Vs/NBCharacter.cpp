@@ -207,19 +207,12 @@ void ANBCharacter::GetEquipment(int index)
 	}
 }
 
-void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> WeaponClass)
+void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
 {	
-	//if (CurrentWeapon)
-	//{
-	//	AttachEquipmentToHand();
-	//	CurrentWeapon->SetOwningPawn(nullptr);
-	//}
-
-
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
 	SpawnParams.Instigator = Instigator;
-	CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(WeaponClass, SpawnParams);
+	CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
 	if (CurrentWeapon)
 	{
 		AttachEquipmentToHand();
@@ -362,7 +355,6 @@ void ANBCharacter::OnStartSprinting()
 	MoveComp->MaxWalkSpeed = MaxSprintSpeed;
 	if (Role == ROLE_Authority)
 	{
-		// Set a timer to increment hunger every interval
 		GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
 		GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
 	}
@@ -374,7 +366,7 @@ void ANBCharacter::OnStopSprinting()
 
 	if (Role == ROLE_Authority)
 	{
-		// Set a timer to increment hunger every interval
+
 		GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
 		GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
 	}

@@ -60,7 +60,7 @@ public:
 
 	void GetEquipment(int index);
 
-	void SpawnWeapon(TSubclassOf <class ABaseWeapon> WeaponClass);
+	void SpawnWeapon(TSubclassOf <class ABaseWeapon> iWeaponClass);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void AttachEquipmentToHand();

@@ -13,6 +13,10 @@ class NO_BARK_VS_API ACrackingObjForLight : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
+	FTimerHandle StartLightingTimerHandle;
+	FTimerHandle StopLightingTimerHandle;
+
+
 public:
 	ACrackingObjForLight();
 	
@@ -31,14 +35,43 @@ public:
 		float Energy;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		float AddEnergyBy;
-
+	//Energy decreased everysecond
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		float DeductEnergyBy;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
-		bool IsLightOn;
+		bool bIsEnergyZero;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
-		bool IsEnergyZero;
-	
+		bool bIsEnergyMaxed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float EnergyTimerRate;
+
+
+	//Energy decreased everysecond using set energy amt 
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void DecreaseEnergy();
+	//Energy Added on Everny Cracking action using set energy amt 
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void IncreaseEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void DecreaseEnergyByFloat(float deductBy);
+	//Energy Added on Everny Cracking action
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void IncreaseEnergyByFloat(float addBy);
+	//Check bIsEnergyZero
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		bool CheckbIsEnergyZero();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		bool CheckbIsEnergyMaxed();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void LightingOnStart();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void LightingOnStop();
+
 };

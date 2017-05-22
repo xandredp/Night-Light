@@ -13,6 +13,7 @@
 ASwichObjForLight::ASwichObjForLight()
 {
 	ItemID = FName("Please EnterID");
+	bIsLightOn = false;
 }
 
 void ASwichObjForLight::Interact(APlayerController* playerController)
@@ -21,7 +22,28 @@ void ASwichObjForLight::Interact(APlayerController* playerController)
 	if (aPlayController)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "SwitchFlicked");
-		//ACrackingObjForLight* aCrackingObjForLight = Cast<ACrackingObjForLight>
+
+		
+		if (aCrackingObjForLight)
+		{
+			if (aCrackingObjForLight->CheckbIsEnergyZero())
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off No EnergyLeft");
+			}
+			else
+			{
+				if (bIsLightOn)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
+				
+				}
+				else
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
+				}
+			
+			}
+		}
 	}
 }
 
