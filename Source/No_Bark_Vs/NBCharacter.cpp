@@ -179,8 +179,6 @@ void ANBCharacter::EquipPrimaryWeapon()
 		SpawnWeapon(WeaponClass);
 	
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
-
-
 	}
 }
 
@@ -223,10 +221,12 @@ void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
 
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
+	CurrentHealth -= decreaseVal;
 }
 
 void ANBCharacter::IncreaseHealth(float increaseVal)
 {
+	CurrentHealth += increaseVal;
 }
 
 void ANBCharacter::DecreaseStamina()

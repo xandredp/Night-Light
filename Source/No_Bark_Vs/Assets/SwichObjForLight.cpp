@@ -6,10 +6,6 @@
 #include "SwichObjForLight.h"
 
 
-
-
-
-
 ASwichObjForLight::ASwichObjForLight()
 {
 	ItemID = FName("Please EnterID");
@@ -28,17 +24,20 @@ void ASwichObjForLight::Interact(APlayerController* playerController)
 		{
 			if (aCrackingObjForLight->CheckbIsEnergyZero())
 			{
+				bIsLightOn = false;
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off No EnergyLeft");
 			}
 			else
 			{
 				if (bIsLightOn)
 				{
+					bIsLightOn = false;
 					GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 				
 				}
 				else
 				{
+					bIsLightOn = true;
 					GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
 				}
 			

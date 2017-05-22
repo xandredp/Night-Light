@@ -25,9 +25,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		FName ItemID;
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
-	TSubclassOf <class ABaseWeapon> WeaponClass;*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		ACrackingObjForLight *aCrackingObjForLight;
 
