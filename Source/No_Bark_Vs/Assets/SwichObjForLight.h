@@ -3,7 +3,6 @@
 #pragma once
 
 #include "BaseInteractable.h"
-
 #include "SwichObjForLight.generated.h"
 
 /**
@@ -17,17 +16,24 @@ class NO_BARK_VS_API ASwichObjForLight : public ABaseInteractable
 public:
 	ASwichObjForLight();
 
+
+
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;
 
 	void DestroyItemOnGround();
 
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void SwitchingOnAndOff();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		FName ItemID;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		ACrackingObjForLight *aCrackingObjForLight;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
+		AActor_Light *LightActorComp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		bool bIsLightOn;
