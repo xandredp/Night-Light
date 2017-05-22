@@ -23,9 +23,7 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 	// Other Actor is the actor that triggered the event.Check that is not ourself.
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-		// Check if collision is with the player character
-
-			// Set CanAttack in AnimInstance to true
-			
+		// Set CanAttack in AnimInstance to true
+		//AnimInstance.CanAttack = true;
 	}
 }

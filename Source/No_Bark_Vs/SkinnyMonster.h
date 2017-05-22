@@ -20,7 +20,7 @@ private:
 
 public:
 	AMonster* Monster;
-	USkinnyMonsterAnimInstance* AnimInstance;
+	//USkinnyMonsterAnimInstance AnimInstance;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USphereComponent* AttackRangeSphere;
