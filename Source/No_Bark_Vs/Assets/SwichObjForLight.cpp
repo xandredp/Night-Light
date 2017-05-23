@@ -11,6 +11,7 @@ ASwichObjForLight::ASwichObjForLight()
 {
 	ItemID = FName("Please EnterID");
 	bIsLightOn = false;
+	EnergyTimerRate = 0.2f;
 }
 
 void ASwichObjForLight::Interact(APlayerController* playerController)
@@ -46,6 +47,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off :  No EnergyLeft");
 
 			LightActorComp->TogglePointLightComp(false);
+			LightingOnStop();
 		}
 
 		//There is energy
@@ -58,6 +60,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 
 				LightActorComp->TogglePointLightComp(false);
+				LightingOnStop();
 
 			}
 			// Turn On light
@@ -66,6 +69,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 				bIsLightOn = true;
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
 				LightActorComp->TogglePointLightComp(true);
+				LightingOnStart();
 			}
 
 		}
@@ -76,5 +80,40 @@ void ASwichObjForLight::SwitchingOnAndOff()
 	}
 }
 
+void ASwichObjForLight::DecreaseEnergy()
+{
+	if (aCrackingObjForLight)
+	{
+		//Check if the enegrgy is what
+		if (aCrackingObjForLight->CheckbIsEnergyZero())
+		{
+			aCrackingObjForLight->Energy = 0;
+			bIsLightOn = false;
+			LightingOnStop();
+			//do nothing
+		}
+		else
+		{	//if energy is not zero then decrease. 
+			float  DeductEnergyVal = aCrackingObjForLight->DeductEnergyBy;
+			aCrackingObjForLight->DecreaseEnergyByFloat(DeductEnergyVal);
+		}
+	}
+	
+}
 
+void ASwichObjForLight::IncreaseEnergy()
+{
+	float  AddEnergyVal = aCrackingObjForLight->AddEnergyBy; 
+	aCrackingObjForLight->IncreaseEnergyByFloat(AddEnergyVal);
+}
+
+void ASwichObjForLight::LightingOnStart()
+{
+	GetWorldTimerManager().SetTimer(StartLightingTimerHandle, this, &ASwichObjForLight::DecreaseEnergy, EnergyTimerRate, true);
+}
+
+void ASwichObjForLight::LightingOnStop()
+{
+	GetWorldTimerManager().ClearTimer(StartLightingTimerHandle);
+}
 

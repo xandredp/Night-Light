@@ -12,9 +12,6 @@ UCLASS()
 class NO_BARK_VS_API ACrackingObjForLight : public ABaseInteractable
 {
 	GENERATED_BODY()
-	
-	FTimerHandle StartLightingTimerHandle;
-	FTimerHandle StopLightingTimerHandle;
 
 
 public:
@@ -45,16 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		bool bIsEnergyMaxed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float EnergyTimerRate;
 
-
-	//Energy decreased everysecond using set energy amt 
-	UFUNCTION(BlueprintCallable, Category = "Config")
-		void DecreaseEnergy();
-	//Energy Added on Everny Cracking action using set energy amt 
-	UFUNCTION(BlueprintCallable, Category = "Config")
-		void IncreaseEnergy();
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void DecreaseEnergyByFloat(float deductBy);
@@ -67,11 +55,4 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		bool CheckbIsEnergyMaxed();
-
-	UFUNCTION(BlueprintCallable, Category = "Config")
-		void LightingOnStart();
-
-	UFUNCTION(BlueprintCallable, Category = "Config")
-		void LightingOnStop();
-
 };

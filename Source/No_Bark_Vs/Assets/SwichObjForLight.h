@@ -13,10 +13,13 @@ class NO_BARK_VS_API ASwichObjForLight : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
+
+	FTimerHandle StartLightingTimerHandle;
+	FTimerHandle StopLightingTimerHandle;
+
+
 public:
 	ASwichObjForLight();
-
-
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;
@@ -25,6 +28,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void SwitchingOnAndOff();
+
+	//Energy decreased everysecond using set energy amt 
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void DecreaseEnergy();
+	//Energy Added on Everny Cracking action using set energy amt 
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void IncreaseEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void LightingOnStart();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void LightingOnStop();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		FName ItemID;
@@ -38,5 +54,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		bool bIsLightOn;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float EnergyTimerRate;
 	
 };

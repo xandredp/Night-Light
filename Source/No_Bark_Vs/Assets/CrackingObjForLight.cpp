@@ -17,7 +17,7 @@ ACrackingObjForLight::ACrackingObjForLight()
 	DeductEnergyBy = 1.0f;
 	bIsEnergyZero = false;
 	bIsEnergyMaxed = false;
-	EnergyTimerRate = 0.2f;
+
 }
 
 void ACrackingObjForLight::Interact(APlayerController* playerController)
@@ -27,23 +27,13 @@ void ACrackingObjForLight::Interact(APlayerController* playerController)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Interaction Successed");
 
-		IncreaseEnergy();
+		IncreaseEnergyByFloat(AddEnergyBy);
 	}
 }
 
 void ACrackingObjForLight::DestroyItemOnGround()
 {
 	Destroy();
-}
-
-void ACrackingObjForLight::DecreaseEnergy()
-{
-	DecreaseEnergyByFloat(DeductEnergyBy);
-}
-
-void ACrackingObjForLight::IncreaseEnergy()
-{
-	IncreaseEnergyByFloat(AddEnergyBy);
 }
 
 void ACrackingObjForLight::DecreaseEnergyByFloat(float deductBy)
@@ -88,16 +78,3 @@ bool ACrackingObjForLight::CheckbIsEnergyMaxed()
 	}
 	return bIsEnergyMaxed;
 }
-
-void ACrackingObjForLight::LightingOnStart()
-{
-	GetWorldTimerManager().SetTimer(StartLightingTimerHandle, this, &ACrackingObjForLight::DecreaseEnergy, EnergyTimerRate, true);
-}
-
-void ACrackingObjForLight::LightingOnStop()
-{
-	GetWorldTimerManager().ClearTimer(StartLightingTimerHandle);
-}
-
-
-
