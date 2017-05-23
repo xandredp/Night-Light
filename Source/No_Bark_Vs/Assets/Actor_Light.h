@@ -21,6 +21,9 @@ public:
 		UPointLightComponent *PointLightComp;
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void TogglePointLightComp(bool bislightOn);
+		void TogglePointLightComp(bool blightvisiblity);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
+		bool bIsLightOn;
 };
 

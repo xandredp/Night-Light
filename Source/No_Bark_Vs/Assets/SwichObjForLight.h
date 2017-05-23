@@ -51,9 +51,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		AActor_Light *LightActorComp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
-		bool bIsLightOn;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float EnergyTimerRate;
 	

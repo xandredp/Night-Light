@@ -8,7 +8,8 @@
 AActor_Light::AActor_Light()
 {
 	PointLightComp = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
-	this->SetActorHiddenInGame(false);
+	bIsLightOn = false;
+	this->SetActorHiddenInGame(bIsLightOn);
 }
 
 // Called when the game starts or when spawned

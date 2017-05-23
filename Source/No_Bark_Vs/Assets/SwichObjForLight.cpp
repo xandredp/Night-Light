@@ -10,8 +10,11 @@
 ASwichObjForLight::ASwichObjForLight()
 {
 	ItemID = FName("Please EnterID");
-	bIsLightOn = false;
 	EnergyTimerRate = 0.2f;
+	if (LightActorComp)
+	{
+		LightActorComp->bIsLightOn = false;
+	}
 }
 
 void ASwichObjForLight::Interact(APlayerController* playerController)
@@ -43,7 +46,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 		// If there is no energy left
 		if (aCrackingObjForLight->CheckbIsEnergyZero())
 		{
-			bIsLightOn = false;
+			LightActorComp->bIsLightOn = false;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off :  No EnergyLeft");
 
 			LightActorComp->TogglePointLightComp(false);
@@ -54,9 +57,9 @@ void ASwichObjForLight::SwitchingOnAndOff()
 		else
 		{
 			// Turn off light
-			if (bIsLightOn)
+			if (LightActorComp->bIsLightOn)
 			{
-				bIsLightOn = false;
+				LightActorComp->bIsLightOn = false;
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 
 				LightActorComp->TogglePointLightComp(false);
@@ -66,7 +69,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 			// Turn On light
 			else
 			{
-				bIsLightOn = true;
+				LightActorComp->bIsLightOn = true;
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
 				LightActorComp->TogglePointLightComp(true);
 				LightingOnStart();
@@ -88,7 +91,7 @@ void ASwichObjForLight::DecreaseEnergy()
 		if (aCrackingObjForLight->CheckbIsEnergyZero())
 		{
 			aCrackingObjForLight->Energy = 0;
-			bIsLightOn = false;
+			LightActorComp->bIsLightOn = false;
 			LightingOnStop();
 			//do nothing
 		}
