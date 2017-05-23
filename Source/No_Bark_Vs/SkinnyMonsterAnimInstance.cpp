@@ -15,7 +15,7 @@ void USkinnyMonsterAnimInstance::UpdateAnimationProperties()
 
 
 		// Update if monster can attack or not
-		CanAttack = false;
+		//CanAttack = false;
 
 		// Update if monster is hit
 		IsHit = false;
