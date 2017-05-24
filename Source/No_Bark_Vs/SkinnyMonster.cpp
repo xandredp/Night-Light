@@ -12,9 +12,14 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackRange = 150.0f;
 
 	AttackRangeSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Range Sphere"));
-	//AttackRangeSphere->AttachTo(RootComponent);
+//	AttackRangeSphere->SetRelativeLocation(FVector(0, 0, 0));
+
 	AttackRangeSphere->SetSphereRadius(AttackRange);
+	AttackRangeSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
+	AttackRangeSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	AttackRangeSphere->SetupAttachment(GetCapsuleComponent());
 	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
+	//AttackRangeSphere->IsVisible = true;
 	//AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
 }
 
