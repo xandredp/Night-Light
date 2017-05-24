@@ -312,3 +312,15 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 {
 	return nullptr;
 }
+
+void ABaseWeapon::VisualInstantHit(const FVector & ImpactPoint)
+{
+}
+
+void ABaseWeapon::VisualImpactEffects(const FHitResult & Impact)
+{
+}
+
+void ABaseWeapon::VisualTrailEffects(const FVector & EndPoint)
+{
+}

@@ -158,6 +158,31 @@ public:
 	UAudioComponent* PlayWeaponSound(USoundCue *Sound);
 
 
+private:
+
+	/************************************************************************/
+	/* Visual Handlers                                                      */
+	/************************************************************************/
+
+	void VisualInstantHit(const FVector& ImpactPoint);
+
+	void VisualImpactEffects(const FHitResult& Impact);
+
+	void VisualTrailEffects(const FVector& EndPoint);
+
+	/* Particle FX played when a surface is hit. */
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class ASImpactEffect> ImpactTemplate;
+
+	UPROPERTY(EditDefaultsOnly)
+		FName TrailTargetParam;
+
+	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* TrailFX;
+
+	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* TracerFX;
+
 protected:
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 
