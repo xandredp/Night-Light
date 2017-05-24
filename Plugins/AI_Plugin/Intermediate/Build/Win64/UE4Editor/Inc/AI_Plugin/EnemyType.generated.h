@@ -12,7 +12,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define AI_PLUGIN_EnemyType_generated_h
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID Vertical_Slice_Plugins_AI_Plugin_Source_AI_Plugin_Public_EnemyType_h
+#define CURRENT_FILE_ID Vertical_Slice___Copy_Plugins_AI_Plugin_Source_AI_Plugin_Public_EnemyType_h
 
 
 #define FOREACH_ENUM_EENEMYBEHAVIOURTYPE(op) \
