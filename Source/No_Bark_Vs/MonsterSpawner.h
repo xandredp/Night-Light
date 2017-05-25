@@ -25,10 +25,8 @@ public:
 
 	void SpawnMonster();
 
-	//FORCEINLINE TArray<AActor*> GetAvailableSpawnPoints() { return SpawnPoints; }
 
 protected:
-	//TArray<AActor*> SpawnPoints;
 
 	// Array of spawn points in the level
 	UPROPERTY(EditAnywhere, Category = "Spawning")

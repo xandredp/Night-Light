@@ -28,8 +28,6 @@ void AMonsterSpawner::Tick( float DeltaTime )
 
 void AMonsterSpawner::SpawnMonster()
 {
-	// Get available spawn points
-	//TArray<AActor*> AvailableSpawnPoints = GetAvailableSpawnPoints();
 	// Assign a random index
 	int32 RandomIndex = FMath::RandRange(0, SpawnPoints.Num());
 	// Assign random index as the current spawn point 
