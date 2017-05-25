@@ -129,7 +129,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 	PlayerInputComponent->BindAction("ScondaryWeapon", IE_Pressed, this, &ANBCharacter::EquipSecondaryWeapon);
-
+	PlayerInputComponent->BindAction("Spawn", IE_Pressed, this, &ANBCharacter::Spawn);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
@@ -267,6 +267,14 @@ void ANBCharacter::EquipOthers(int i_SlotNumber)
 	}
 }
 
+
+void ANBCharacter::Spawn()
+{
+	if (Spawner != NULL)
+	{
+		Spawner->SpawnMonster();
+	}
+}
 
 void ANBCharacter::GetEquipment(int index)
 {

@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "MonsterSpawner.h"
 #include "Perception/PawnSensingComponent.h"
 #include "GameFramework/Character.h"
 #include "Engine/DataTable.h"
@@ -47,6 +48,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
 
+	// The class for handling spawning
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+		AMonsterSpawner* Spawner;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	//
@@ -61,7 +66,8 @@ public:
 	void EquipMeleeWeapon();
 	void EquipOthers(int i_SlotNumber);
 
-
+	// Spawn monster function called by input binding
+	void Spawn();
 
 	void GetEquipment(int index);
 
