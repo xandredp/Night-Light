@@ -7,7 +7,13 @@
 // Sets default values
 AActor_Light::AActor_Light()
 {
+	NavMeshModifierSphere = CreateDefaultSubobject<USphereComponent>(TEXT("NavMesh Modifier Sphere"));
 	PointLightComp = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
+
+	RootComponent = NavMeshModifierSphere;
+	NavMeshModifierSphere->SetSphereRadius(200.0f);
+	//NavMeshModifierSphere->SetRelativeLocation(PointLightComp->RelativeLocation - FVector(0.0f, 20.0f, 0.0f));
+	
 	bIsLightOn = false;
 	this->SetActorHiddenInGame(bIsLightOn);
 }
@@ -17,4 +23,3 @@ void AActor_Light::BeginPlay()
 {
 	Super::BeginPlay();
 }
-

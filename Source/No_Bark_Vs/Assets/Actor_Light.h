@@ -18,6 +18,9 @@ public:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		USphereComponent* NavMeshModifierSphere;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UPointLightComponent *PointLightComp;
 
 	UFUNCTION(BlueprintImplementableEvent)
