@@ -3,16 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "NBImpactEffect.generated.h"
+#include "BaseImpactEffect.generated.h"
 
 UCLASS()
-class NO_BARK_VS_API ANBImpactEffect : public AActor
+class NO_BARK_VS_API ABaseImpactEffect : public AActor
 {
 	GENERATED_BODY()
 
 public:
 
-	ANBImpactEffect();
+	ABaseImpactEffect();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

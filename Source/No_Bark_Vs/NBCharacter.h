@@ -57,6 +57,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void EquipPrimaryWeapon();
+	void EquipSecondaryWeapon();
+	void EquipMeleeWeapon();
+	void EquipOthers(int i_SlotNumber);
+
+
 
 	void GetEquipment(int index);
 
@@ -83,6 +88,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	ABaseWeapon *CurrentWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		ABaseWeapon *PreviousWeapon;
 
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
 	UFUNCTION(BlueprintCallable, Category = "Equip")

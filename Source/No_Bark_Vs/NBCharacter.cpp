@@ -128,6 +128,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
 	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
+	PlayerInputComponent->BindAction("ScondaryWeapon", IE_Pressed, this, &ANBCharacter::EquipSecondaryWeapon);
 
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
@@ -182,15 +183,99 @@ void ANBCharacter::EquipPrimaryWeapon()
 	}
 }
 
+void ANBCharacter::EquipSecondaryWeapon()
+{
+	GetEquipment(1);
+
+	if (WeaponClass == NULL)
+	{
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	}
+	else
+	{
+		SpawnWeapon(WeaponClass);
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	}
+}
+void ANBCharacter::EquipMeleeWeapon()
+{
+	APlayController* playController = Cast<APlayController>(GetController());
+	if (playController)
+	{
+		if (playController->FCurrentEquippedMeleeWeapon.CurrentStackNumber>0)
+		{
+			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedMeleeWeapon;
+			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+	}
+
+	if (WeaponClass == NULL)
+	{
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	}
+	else
+	{
+		SpawnWeapon(WeaponClass);
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	}
+}
+
+void ANBCharacter::EquipOthers(int i_SlotNumber)
+{
+	APlayController* playController = Cast<APlayController>(GetController());
+	if (playController)
+	{
+		if (playController->FCurrentEquipment.Num() != 0)
+		{
+			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquipment[i_SlotNumber];
+			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+	}
+
+	if (WeaponClass == NULL)
+	{
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	}
+	else
+	{
+		SpawnWeapon(WeaponClass);
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	}
+}
+
 
 void ANBCharacter::GetEquipment(int index)
 {
 	APlayController* playController = Cast<APlayController>(GetController());
 	if (playController)
 	{
-		if (playController->FCurrentEquippedWeapons.Num() != 0)
+		if (playController->FCurrentEquippedWeapons.Num() >= index)
 		{
-			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedWeapons[0];
+			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedWeapons[index];
 			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
 		}
@@ -206,17 +291,29 @@ void ANBCharacter::GetEquipment(int index)
 }
 
 void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
-{	
+{
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
 	SpawnParams.Instigator = Instigator;
-	CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
-	if (CurrentWeapon)
+	// if current weapon is empty assign current weapon
+	if (CurrentWeapon == nullptr)
 	{
-		AttachEquipmentToHand();
-		CurrentWeapon->SetOwningPawn(this);
+		CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
 	}
+	else
+	{
+		CurrentWeapon->Destroy();
+		CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+
+	}
+
+	AttachEquipmentToHand();
+	CurrentWeapon->SetOwningPawn(this);
+
 }
+	
+
+
 
 
 void ANBCharacter::DecreaseHealth(float decreaseVal)

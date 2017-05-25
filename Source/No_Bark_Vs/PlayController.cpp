@@ -45,7 +45,6 @@ void APlayController::OpenInventory()
 	{
 		if (wInventory) // Check if the Asset is assigned in the blueprint.
 		{
-			
 
 			// Create the widget and store it.
 			MyInventoryWidget = CreateWidget<UUserWidget>(this, wInventory);
