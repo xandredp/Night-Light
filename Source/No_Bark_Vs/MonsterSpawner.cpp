@@ -9,9 +9,7 @@ AMonsterSpawner::AMonsterSpawner()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	// populate array of spawn points
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMonsterSpawnTargetPoint::StaticClass(), SpawnPoints);
+	
 }
 
 // Called when the game starts or when spawned
@@ -33,9 +31,9 @@ void AMonsterSpawner::SpawnMonster()
 	// Get available spawn points
 	//TArray<AActor*> AvailableSpawnPoints = GetAvailableSpawnPoints();
 	// Assign a random index
-	//int32 RandomIndex = FMath::RandRange(0, AvailableSpawnPoints.Num());
+	int32 RandomIndex = FMath::RandRange(0, SpawnPoints.Num());
 	// Assign random index as the current spawn point 
-	//AMonsterSpawnTargetPoint* SpawnPoint = Cast<AMonsterSpawnTargetPoint>(AvailableSpawnPoints[RandomIndex]);
+	AMonsterSpawnTargetPoint* SpawnPoint = Cast<AMonsterSpawnTargetPoint>(SpawnPoints[RandomIndex]);
 
 	if (WhatToSpawn != NULL)
 	{
@@ -51,10 +49,10 @@ void AMonsterSpawner::SpawnMonster()
 			SpawnParams.Instigator = Instigator;
 
 			// Get the spawn location
-			FVector SpawnLocation = SpawnPoint->GetActorLocation();
+			FVector SpawnLocation = SpawnPoints[RandomIndex]->GetActorLocation();
 
 			// Get the spawn rotation
-			FRotator SpawnRotation = SpawnPoint->GetActorRotation();
+			FRotator SpawnRotation = SpawnPoints[RandomIndex]->GetActorRotation();
 
 			World->SpawnActor<ASkinnyMonster>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 		}

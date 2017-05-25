@@ -25,13 +25,14 @@ public:
 
 	void SpawnMonster();
 
-	FORCEINLINE TArray<AActor*> GetAvailableSpawnPoints() { return SpawnPoints; }
+	//FORCEINLINE TArray<AActor*> GetAvailableSpawnPoints() { return SpawnPoints; }
 
 protected:
-	TArray<AActor*> SpawnPoints;
+	//TArray<AActor*> SpawnPoints;
 
+	// Array of spawn points in the level
 	UPROPERTY(EditAnywhere, Category = "Spawning")
-		AMonsterSpawnTargetPoint* SpawnPoint;
+		TArray<AMonsterSpawnTargetPoint*> SpawnPoints;
 
 	// The actor to spawn
 	UPROPERTY(EditAnywhere, Category = "Spawning")
