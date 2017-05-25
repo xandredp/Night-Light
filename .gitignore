@@ -55,6 +55,9 @@ SourceArt/**/*.tga
 Binaries/*
 Plugins/AI_Plugin/Binaries/*
 Plugins/AI_Plugin/Intermediate/*
+/Plugins/AI_Plugin/Binaries
+/Plugins/AI_Plugin/Intermediate
+
 
 # Builds
 Build/*

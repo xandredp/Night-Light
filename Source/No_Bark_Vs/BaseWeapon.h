@@ -172,7 +172,7 @@ private:
 
 	/* Particle FX played when a surface is hit. */
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<class ASImpactEffect> ImpactTemplate;
+		TSubclassOf<class ANBImpactEffect> ImpactTemplate;
 
 	UPROPERTY(EditDefaultsOnly)
 		FName TrailTargetParam;

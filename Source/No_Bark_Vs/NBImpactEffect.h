@@ -31,7 +31,13 @@ public:
 		UParticleSystem* EnemyFleshFX;
 
 	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* ZombieFleshFX;
+
+	UPROPERTY(EditDefaultsOnly)
 		USoundCue* DefaultSound;
+
+	UPROPERTY(EditDefaultsOnly)
+		USoundCue* ZombieFleshSound;
 
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* PlayerFleshSound;
