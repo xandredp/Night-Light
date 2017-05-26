@@ -3,7 +3,7 @@
 #include "No_Bark_Vs.h"
 #include "NBCharacter.h"
 #include "PlayController.h"
-//#include "BaseEnemy.h"
+#include "Items/BaseImpactEffect.h"
 #include "NBDamageType.h"
 #include "Monster.h"
 #include "BaseWeapon.h"
@@ -29,6 +29,9 @@ ABaseWeapon::ABaseWeapon()
 
 	WeaponConfig.WeaponDamage = 20;
 	CurrentState = EWeaponState::Idle;
+
+	MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
+	TrailTargetParam = "EndPoint";
 }
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 {
@@ -119,7 +122,6 @@ void ABaseWeapon::Instant_Fire()
 	FVector AdjustedAimDir = WeaponRandomStream.VRandCone(AimDir, SpreadCone, SpreadCone);
 
 	const FVector EndPos = CameraPos + (AdjustedAimDir *  WeaponConfig.WeaponRange);
-	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
 
 		/* Check for impact by tracing from the camera position */
 	FHitResult Impact = WeaponTrace(CameraPos, EndPos);
@@ -245,25 +247,9 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "What Did you hit!!");
 		}
-
-	
 	}
 
-
-	//ABaseEnemy *Enemy = Cast<ABaseEnemy>(Impact.GetActor());
-	//if (Enemy)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT AN ENEMY!!");
-	//	Enemy->Destroy();
-	//}
-
-	//FPointDamageEvent PointDmg;
-	////PointDmg.DamageTypeClass = DamageType;
-	//PointDmg.HitInfo = Impact;
-	//PointDmg.ShotDirection = ShootDir;
-	//PointDmg.Damage = ActualHitDamage;
-
-	//Impact.GetActor()->TakeDamage(PointDmg.Damage, PointDmg, MyPawn->Controller, this);
+	VisualInstantHit(Impact.ImpactPoint);
 }
 
 void ABaseWeapon::SetOwningPawn(ANBCharacter * NewOwner)
@@ -313,14 +299,83 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 	return nullptr;
 }
 
-void ABaseWeapon::VisualInstantHit(const FVector & ImpactPoint)
+void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 {
+	/* Adjust direction based on desired crosshair impact point and muzzle location */
+	const FVector AimDir = (ImpactPoint - MuzzleOrigin).GetSafeNormal();
+
+	const FVector EndTrace = MuzzleOrigin + (AimDir *WeaponConfig.WeaponRange);
+	const FHitResult Impact = WeaponTrace(MuzzleOrigin, EndTrace);
+
+	if (Impact.bBlockingHit)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
+		//VisualImpactEffects(Impact);
+		//VisualTrailEffects(Impact.ImpactPoint);
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "ELSE Visual InstantHit!");
+	//	VisualTrailEffects(EndTrace);
+	}
 }
 
-void ABaseWeapon::VisualImpactEffects(const FHitResult & Impact)
+
+void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 {
+	if (ImpactTemplate && Impact.bBlockingHit)
+	{
+		// TODO: Possible re-trace to get hit component that is lost during replication.
+
+		/* This function prepares an actor to spawn, but requires another call to finish the actual spawn progress. This allows manipulation of properties before entering into the level */
+		ABaseImpactEffect* EffectActor = GetWorld()->SpawnActorDeferred<ABaseImpactEffect>(ImpactTemplate, FTransform(Impact.ImpactPoint.Rotation(), Impact.ImpactPoint));
+		if (EffectActor)
+		{
+			EffectActor->SurfaceHit = Impact;
+			UGameplayStatics::FinishSpawningActor(EffectActor, FTransform(Impact.ImpactNormal.Rotation(), Impact.ImpactPoint));
+		}
+	}
 }
 
-void ABaseWeapon::VisualTrailEffects(const FVector & EndPoint)
+
+void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 {
+
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TRAILEFFECTWORKING!");
+	// Keep local count for effects
+	BulletsShotCount++;
+	FVector ShootDir = EndPoint - MuzzleOrigin;
+
+	// Only spawn if a minimum distance is satisfied.
+	if (ShootDir.Size() < MinimumProjectileSpawnDistance)
+	{
+		return;
+	}
+
+	if (BulletsShotCount % TracerRoundInterval == 0)
+	{
+		if (TracerFX)
+		{
+			ShootDir.Normalize();
+			UGameplayStatics::SpawnEmitterAtLocation(this, TracerFX, MuzzleOrigin, ShootDir.Rotation());
+		}
+	}
+	else
+	{
+		// Only create trails FX by other players.
+		ANBCharacter* OwningPawn = GetPawnOwner();
+		if (OwningPawn && OwningPawn->IsLocallyControlled())
+		{
+			return;
+		}
+
+		if (TrailFX)
+		{
+			UParticleSystemComponent* TrailPSC = UGameplayStatics::SpawnEmitterAtLocation(this, TrailFX, MuzzleOrigin);
+			if (TrailPSC)
+			{
+				TrailPSC->SetVectorParameter(TrailTargetParam, EndPoint);
+			}
+		}
+	}
 }

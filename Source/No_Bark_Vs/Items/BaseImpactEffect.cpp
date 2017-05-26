@@ -10,23 +10,43 @@ ABaseImpactEffect::ABaseImpactEffect()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	bAutoDestroyWhenFinished = true;
+	DecalLifeSpan = 10.0f;
+	DecalSize = 16.0f;
+
 }
 
-// Called when the game starts or when spawned
-void ABaseImpactEffect::BeginPlay()
+void ABaseImpactEffect::PostInitializeComponents()
 {
-	Super::BeginPlay();
-	
+	Super::PostInitializeComponents();
+
+	/* Figure out what we hit (SurfaceHit is setting during actor instantiation in weapon class) */
+	UPhysicalMaterial* HitPhysMat = SurfaceHit.PhysMaterial.Get();
+	EPhysicalSurface HitSurfaceType = UPhysicalMaterial::DetermineSurfaceType(HitPhysMat);
+
+	UParticleSystem* ImpactFX = GetImpactFX(HitSurfaceType);
+	if (ImpactFX)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, ImpactFX, GetActorLocation(), GetActorRotation());
+	}
+
+	USoundCue* ImpactSound = GetImpactSound(HitSurfaceType);
+	if (ImpactSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
+	}
+
+	if (DecalMaterial)
+	{
+		FRotator RandomDecalRotation = SurfaceHit.ImpactNormal.Rotation();
+		RandomDecalRotation.Roll = FMath::FRandRange(-180.0f, 180.0f);
+
+		UGameplayStatics::SpawnDecalAttached(DecalMaterial, FVector(DecalSize, DecalSize, 1.0f),
+			SurfaceHit.Component.Get(), SurfaceHit.BoneName,
+			SurfaceHit.ImpactPoint, RandomDecalRotation, EAttachLocation::KeepWorldPosition,
+			DecalLifeSpan);
+	}
 }
-
-// Called every frame
-void ABaseImpactEffect::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
-}
-
-
 
 UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) const
 {
@@ -39,7 +59,7 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 	case SURFACE_ENEMYBODY:
 	case SURFACE_ENEMYHEAD:
 	case SURFACE_ENEMYLIMB:
-		return ZombieFleshFX;
+		return EnemyFleshFX;
 	default:
 		return nullptr;
 	}
@@ -57,7 +77,7 @@ USoundCue* ABaseImpactEffect::GetImpactSound(EPhysicalSurface SurfaceType) const
 	case SURFACE_ENEMYBODY:
 	case SURFACE_ENEMYHEAD:
 	case SURFACE_ENEMYLIMB:
-		return ZombieFleshSound;
+		return EnemyFleshSound;
 	default:
 		return nullptr;
 	}

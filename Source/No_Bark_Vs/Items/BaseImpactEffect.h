@@ -14,11 +14,7 @@ public:
 
 	ABaseImpactEffect();
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	// Called every frame
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void PostInitializeComponents() override;
 
 	/* FX spawned on standard materials */
 	UPROPERTY(EditDefaultsOnly)
@@ -31,13 +27,7 @@ public:
 		UParticleSystem* EnemyFleshFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* ZombieFleshFX;
-
-	UPROPERTY(EditDefaultsOnly)
 		USoundCue* DefaultSound;
-
-	UPROPERTY(EditDefaultsOnly)
-		USoundCue* ZombieFleshSound;
 
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* PlayerFleshSound;

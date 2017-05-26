@@ -63,9 +63,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		float WeaponSpread;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ammo)
-		int32 MaxAmmo;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 MaxClip;
 
@@ -127,9 +124,6 @@ public:
 		USoundCue *FireSound;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
-		int32 CurrentAmmo;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 CurrentClip;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
@@ -156,7 +150,8 @@ public:
 	void ReloadAmmo();
 
 	UAudioComponent* PlayWeaponSound(USoundCue *Sound);
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	FVector MuzzleOrigin;
 
 private:
 
@@ -182,6 +177,16 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* TracerFX;
+
+	/* Minimum firing distance before spawning tracers or trails. */
+	UPROPERTY(EditDefaultsOnly)
+		float MinimumProjectileSpawnDistance;
+
+	UPROPERTY(EditDefaultsOnly)
+		int32 TracerRoundInterval;
+
+	/* Keeps track of number of shots fired */
+	int32 BulletsShotCount;
 
 protected:
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
