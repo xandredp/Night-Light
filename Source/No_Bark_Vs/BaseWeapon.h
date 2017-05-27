@@ -150,8 +150,6 @@ public:
 	void ReloadAmmo();
 
 	UAudioComponent* PlayWeaponSound(USoundCue *Sound);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
-	FVector MuzzleOrigin;
 
 private:
 

@@ -29,8 +29,6 @@ ABaseWeapon::ABaseWeapon()
 
 	WeaponConfig.WeaponDamage = 20;
 	CurrentState = EWeaponState::Idle;
-
-	MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
 	TrailTargetParam = "EndPoint";
 }
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
@@ -115,7 +113,7 @@ void ABaseWeapon::Instant_Fire()
 	FRandomStream WeaponRandomStream(RandomSeed);
 	const float CurrentSpread = WeaponConfig.WeaponSpread;
 	const float SpreadCone = FMath::DegreesToRadians(WeaponConfig.WeaponSpread * 0.5);
-
+	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
 	const FVector AimDir = GetAdjustedAim();
 	const FVector CameraPos = GetCameraDamageStartLocation(AimDir);
 	
@@ -302,6 +300,7 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 {
 	/* Adjust direction based on desired crosshair impact point and muzzle location */
+	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
 	const FVector AimDir = (ImpactPoint - MuzzleOrigin).GetSafeNormal();
 
 	const FVector EndTrace = MuzzleOrigin + (AimDir *WeaponConfig.WeaponRange);
@@ -310,7 +309,7 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 	if (Impact.bBlockingHit)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
-		//VisualImpactEffects(Impact);
+		VisualImpactEffects(Impact);
 		//VisualTrailEffects(Impact.ImpactPoint);
 	}
 	else
@@ -323,6 +322,7 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 
 void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
 	if (ImpactTemplate && Impact.bBlockingHit)
 	{
 		// TODO: Possible re-trace to get hit component that is lost during replication.
@@ -340,7 +340,7 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 
 void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 {
-
+	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
 	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TRAILEFFECTWORKING!");
 	// Keep local count for effects
 	BulletsShotCount++;
