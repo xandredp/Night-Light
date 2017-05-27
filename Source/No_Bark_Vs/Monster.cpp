@@ -55,8 +55,18 @@ void AMonster::OnSeePlayer(APawn* Pawn)
 	//Set the seen target on the blackboard
 	if (AIController)
 	{
-		GLog->Log("Seen");
-		AIController->SetSeenTarget(Pawn);
+
+		if (GetDistanceTo(Pawn) < 1900)
+		{
+
+			GLog->Log("Seen");
+			AIController->SetSeenTarget(Pawn);
+		}
+		else
+		{
+			GLog->Log("Out of Seeing range");
+			AIController->ResetSeenTarget();
+		}
 	}
 }
 

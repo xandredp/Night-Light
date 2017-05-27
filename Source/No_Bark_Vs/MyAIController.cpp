@@ -56,3 +56,11 @@ void AMyAIController::SetSeenTarget(APawn* Pawn)
 		BlackboardComp->SetValueAsObject(TargetKey, Pawn);
 	}
 }
+
+void AMyAIController::ResetSeenTarget()
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(TargetKey, nullptr);
+	}
+}
