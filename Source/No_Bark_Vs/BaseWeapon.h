@@ -120,9 +120,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Config")
 		TEnumAsByte<EProjectileType> ProjectileType;
 
-	UPROPERTY(EditDefaultsOnly, Category = Config)
-		USoundCue *FireSound;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 CurrentClip;
 
@@ -143,16 +140,48 @@ public:
 
 	void AttachToPlayer();
 	void DetachFromPlayer();
-
 	void OnEquip();
 	void OnUnEquip();
-
 	void ReloadAmmo();
 
-	UAudioComponent* PlayWeaponSound(USoundCue *Sound);
+protected:
+
+	virtual void SimulateWeaponFire();
+
+	virtual void StopSimulatingWeaponFire();
+
+	FVector GetMuzzleLocation() const;
+
+	FVector GetMuzzleDirection() const;
+
+	UAudioComponent* PlayWeaponSound(USoundCue* SoundToPlay);
+
+	float PlayWeaponAnimation(UAnimMontage* Animation, float InPlayRate = 1.f, FName StartSectionName = NAME_None);
+
+	void StopWeaponAnimation(UAnimMontage* Animation);
 
 private:
 
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+		USoundCue* FireSound;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+		USoundCue* EquipSound;
+
+	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* MuzzleFX;
+
+	UPROPERTY(EditDefaultsOnly)
+		UAnimMontage* EquipAnim;
+
+	UPROPERTY(EditDefaultsOnly)
+		UAnimMontage* FireAnim;
+
+	UPROPERTY(EditDefaultsOnly)
+		FName MuzzleAttachPoint;
+
+	UParticleSystemComponent* MuzzlePSC;
 	/************************************************************************/
 	/* Visual Handlers                                                      */
 	/************************************************************************/
@@ -185,6 +214,8 @@ private:
 
 	/* Keeps track of number of shots fired */
 	int32 BulletsShotCount;
+
+	bool bPlayingFireAnim;
 
 protected:
 	FHitResult WeaponTrace(const FVector &TraceFrom, const FVector &TraceTo) const;

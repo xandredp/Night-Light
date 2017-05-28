@@ -20,12 +20,12 @@ AMyAIController::AMyAIController()
 	TargetKey = "Target";
 }
 
-void AMyAIController::Possess(APawn* Pawn)
+void AMyAIController::Possess(APawn* aPawn)
 {
-	Super::Possess(Pawn);
+	Super::Possess(aPawn);
 
 	//Get the possessed character and check if its my own AI character
-	AMonster* AIChar = Cast<AMonster>(Pawn);
+	AMonster* AIChar = Cast<AMonster>(aPawn);
 
 	if (AIChar)
 	{
@@ -49,11 +49,11 @@ void AMyAIController::SetSensedTarget(APawn* NewTarget)
 	if (BlackboardComp) BlackboardComp->SetValueAsObject(SensedTarget, NewTarget);
 }
 
-void AMyAIController::SetSeenTarget(APawn* Pawn)
+void AMyAIController::SetSeenTarget(APawn* aPawn)
 {
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsObject(TargetKey, Pawn);
+		BlackboardComp->SetValueAsObject(TargetKey, aPawn);
 	}
 }
 

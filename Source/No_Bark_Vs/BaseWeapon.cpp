@@ -30,6 +30,7 @@ ABaseWeapon::ABaseWeapon()
 	WeaponConfig.WeaponDamage = 20;
 	CurrentState = EWeaponState::Idle;
 	TrailTargetParam = "EndPoint";
+	MuzzleAttachPoint = "MuzzleTip";
 }
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 {
@@ -109,11 +110,13 @@ void ABaseWeapon::Fire()
 //}
 void ABaseWeapon::Instant_Fire()
 {
+	SimulateWeaponFire();
+
 	const int32 RandomSeed = FMath::Rand();
 	FRandomStream WeaponRandomStream(RandomSeed);
 	const float CurrentSpread = WeaponConfig.WeaponSpread;
 	const float SpreadCone = FMath::DegreesToRadians(WeaponConfig.WeaponSpread * 0.5);
-	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
+	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation(MuzzleAttachPoint);
 	const FVector AimDir = GetAdjustedAim();
 	const FVector CameraPos = GetCameraDamageStartLocation(AimDir);
 	
@@ -292,15 +295,67 @@ void ABaseWeapon::ReloadAmmo()
 {
 }
 
+void ABaseWeapon::SimulateWeaponFire()
+{
+	if (MuzzleFX)
+	{
+		MuzzlePSC = UGameplayStatics::SpawnEmitterAttached(MuzzleFX, WeaponMesh, MuzzleAttachPoint);
+	}
+
+	if (!bPlayingFireAnim)
+	{
+		PlayWeaponAnimation(FireAnim);
+		bPlayingFireAnim = true;
+	}
+
+	PlayWeaponSound(FireSound);
+}
+
+void ABaseWeapon::StopSimulatingWeaponFire()
+{
+	if (bPlayingFireAnim)
+	{
+		StopWeaponAnimation(FireAnim);
+		bPlayingFireAnim = false;
+	}
+}
+
+FVector ABaseWeapon::GetMuzzleLocation() const
+{
+	return FVector();
+}
+
+FVector ABaseWeapon::GetMuzzleDirection() const
+{
+	return FVector();
+}
+
 UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 {
-	return nullptr;
+	UAudioComponent* WeaponAC = nullptr;
+
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Play Nothing!");
+	if (Sound && MyPawn)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Playsomething");
+		WeaponAC = UGameplayStatics::SpawnSoundAttached(Sound, MyPawn->GetRootComponent());
+	}
+	return WeaponAC;
+}
+
+float ABaseWeapon::PlayWeaponAnimation(UAnimMontage * Animation, float InPlayRate, FName StartSectionName)
+{
+	return 0.0f;
+}
+
+void ABaseWeapon::StopWeaponAnimation(UAnimMontage * Animation)
+{
 }
 
 void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 {
 	/* Adjust direction based on desired crosshair impact point and muzzle location */
-	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
+	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation(MuzzleAttachPoint);
 	const FVector AimDir = (ImpactPoint - MuzzleOrigin).GetSafeNormal();
 
 	const FVector EndTrace = MuzzleOrigin + (AimDir *WeaponConfig.WeaponRange);
@@ -322,9 +377,10 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 
 void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
+	
 	if (ImpactTemplate && Impact.bBlockingHit)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
 		// TODO: Possible re-trace to get hit component that is lost during replication.
 
 		/* This function prepares an actor to spawn, but requires another call to finish the actual spawn progress. This allows manipulation of properties before entering into the level */
@@ -340,7 +396,7 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 
 void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 {
-	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation("MuzzleTip");
+	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation(MuzzleAttachPoint);
 	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TRAILEFFECTWORKING!");
 	// Keep local count for effects
 	BulletsShotCount++;
