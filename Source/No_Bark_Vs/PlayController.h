@@ -107,9 +107,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void MoveItemToInventory(FCurrentInventoryItemInfo iItemFromEqupment, int ItemBIndex);
-
+	/* Items are added to equipment slots on drop on slots */
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemtoAdd, int toIndex);
+	/* Items are added to equipment slots automatically when interacted with an item. This function is used after inventory add*/
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAdd);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void RemoveItemFromEquipment(FCurrentInventoryItemInfo ItemtoRemove);

@@ -239,6 +239,11 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 
 
 	}
+	//if Equipment Weapon is empty
+	//if ()
+	//{
+	//	AddItemtoEquipmentByItem
+	//}
 
 	ReloadInventory();
 }
@@ -387,7 +392,7 @@ void APlayController::MoveItemToInventory(FCurrentInventoryItemInfo iItemFromEqu
 
 void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemtoAdd, int toIndex)
 {
-	int LastAddedEquipmentyIndex = 0;
+	int LastAddedEquipmentIndex = 0;
 	bool bItemAdded = false;
 	bool bItemRemovedinInventory = false;
 	EItemType iItemType = iItemtoAdd.ItemInfo.eItemType;
@@ -403,26 +408,26 @@ void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemto
 
 			if (FCurrentEquippedWeapons.Num() <= 1)
 			{
-				LastAddedEquipmentyIndex = FCurrentEquippedWeapons.Add(iItemtoAdd);
-				FCurrentEquippedWeapons[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+				LastAddedEquipmentIndex = FCurrentEquippedWeapons.Add(iItemtoAdd);
+				FCurrentEquippedWeapons[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
 
 				bItemAdded = true;
 			}
 			else if (toIndex <= 1)
 			{
-				LastAddedEquipmentyIndex = toIndex;
-				iItemRemovedfromEquipment = FCurrentEquippedWeapons[LastAddedEquipmentyIndex];
-				FCurrentEquippedWeapons[LastAddedEquipmentyIndex] = iItemtoAdd;
-				FCurrentEquippedWeapons[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+				LastAddedEquipmentIndex = toIndex;
+				iItemRemovedfromEquipment = FCurrentEquippedWeapons[LastAddedEquipmentIndex];
+				FCurrentEquippedWeapons[LastAddedEquipmentIndex] = iItemtoAdd;
+				FCurrentEquippedWeapons[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
 
 				bItemAdded = true;
 			}
 			else
 			{
-				LastAddedEquipmentyIndex = 1;
-				iItemRemovedfromEquipment = FCurrentEquippedWeapons[LastAddedEquipmentyIndex];
-				FCurrentEquippedWeapons[LastAddedEquipmentyIndex] = iItemtoAdd;
-				FCurrentEquippedWeapons[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+				LastAddedEquipmentIndex = 1;
+				iItemRemovedfromEquipment = FCurrentEquippedWeapons[LastAddedEquipmentIndex];
+				FCurrentEquippedWeapons[LastAddedEquipmentIndex] = iItemtoAdd;
+				FCurrentEquippedWeapons[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
 
 				bItemAdded = true;
 			}
@@ -441,26 +446,26 @@ void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemto
 
 			if (FCurrentEquipment.Num() <= 2)
 			{
-				LastAddedEquipmentyIndex = FCurrentEquipment.Add(iItemtoAdd);
-				FCurrentEquipment[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+				LastAddedEquipmentIndex = FCurrentEquipment.Add(iItemtoAdd);
+				FCurrentEquipment[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
 
 				bItemAdded = true;
 			}
 			else if (toIndex <= 2)
 			{
-				LastAddedEquipmentyIndex = toIndex;
-				iItemRemovedfromEquipment = FCurrentEquipment[LastAddedEquipmentyIndex];
-				FCurrentEquipment[LastAddedEquipmentyIndex] = iItemtoAdd;
-				FCurrentEquipment[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+				LastAddedEquipmentIndex = toIndex;
+				iItemRemovedfromEquipment = FCurrentEquipment[LastAddedEquipmentIndex];
+				FCurrentEquipment[LastAddedEquipmentIndex] = iItemtoAdd;
+				FCurrentEquipment[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
 
 				bItemAdded = true;
 			}
 			else
 			{
-				LastAddedEquipmentyIndex = 2;
-				iItemRemovedfromEquipment = FCurrentEquipment[LastAddedEquipmentyIndex];
-				FCurrentEquipment[LastAddedEquipmentyIndex] = iItemtoAdd;
-				FCurrentEquipment[LastAddedEquipmentyIndex].ItemIndex = LastAddedEquipmentyIndex;
+				LastAddedEquipmentIndex = 2;
+				iItemRemovedfromEquipment = FCurrentEquipment[LastAddedEquipmentIndex];
+				FCurrentEquipment[LastAddedEquipmentIndex] = iItemtoAdd;
+				FCurrentEquipment[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
 
 				bItemAdded = true;
 			}
@@ -471,7 +476,94 @@ void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemto
 
 	ReArrangeItems();
 
-	// Remove Iteam. 
+	// Item is added to Equipment Remove Iteam from inventory. 
+	for (int32 j = 0; j < FCurrentInventory.Num(); j++)
+	{
+		if (FCurrentInventory[j].ItemInfo.ItemID == iItemtoAdd.ItemInfo.ItemID)
+		{
+			if (FCurrentInventory[j].CurrentStackNumber == iItemtoAdd.CurrentStackNumber)
+			{
+				if (bItemRemovedinInventory == false)
+				{
+					FCurrentInventory.RemoveAt(j);
+					bItemRemovedinInventory = true;
+				}
+			}
+		}
+	}
+
+	if (iItemRemovedfromEquipment.CurrentStackNumber > 0)
+	{
+		AddItemtoInventoryByID(iItemRemovedfromEquipment.ItemInfo.ItemID, iItemRemovedfromEquipment.CurrentStackNumber);
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "stacknumber higherthan 0");
+	}
+	ReloadInventory();
+}
+void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAdd)
+{
+	int LastAddedEquipmentIndex = 0;
+	bool bItemAdded = false;
+	bool bItemRemovedinInventory = false;
+	EItemType iItemType = iItemtoAdd.ItemInfo.eItemType;
+	iItemRemovedfromEquipment.CurrentStackNumber = 0;
+	// if inventory item is valid add to inventory. 
+	do // do until the Item is added
+	{
+		if (iItemType == EItemType::None)
+		{
+		}
+		else if (iItemType == EItemType::Weapon)
+		{
+			//if currentequipment is slot 1 or 2 is empty additem
+			if (FCurrentEquippedWeapons.Num() <= 1)
+			{
+				LastAddedEquipmentIndex = FCurrentEquippedWeapons.Add(iItemtoAdd);
+				FCurrentEquippedWeapons[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
+			}
+			// if items are all taken don't do anything
+			// don't equip automatically
+			else
+			{
+
+			}
+			bItemAdded = true;
+		}
+
+		else if (iItemType == EItemType::MeleeWeapon)
+		{
+			//if item already exist don't do anything
+			if (FCurrentEquippedMeleeWeapon.CurrentStackNumber == 1)
+			{
+				
+			}
+			// if item slot is empty then we assign the slot
+			else
+			{
+				FCurrentEquippedMeleeWeapon = iItemtoAdd;
+			}
+
+			bItemAdded = true;
+		}
+		//// if  EItemType::Not Weapon...
+		else
+		{
+
+			if (FCurrentEquipment.Num() <= 2)
+			{
+				LastAddedEquipmentIndex = FCurrentEquipment.Add(iItemtoAdd);
+				FCurrentEquipment[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
+			}		
+			else
+			{
+			}
+			bItemAdded = true;
+		}
+		bItemAdded = true;
+	} while (bItemAdded != true);
+
+	ReArrangeItems();
+
+	// Item is added to Equipment Remove Iteam from inventory. 
 	for (int32 j = 0; j < FCurrentInventory.Num(); j++)
 	{
 		if (FCurrentInventory[j].ItemInfo.ItemID == iItemtoAdd.ItemInfo.ItemID)
