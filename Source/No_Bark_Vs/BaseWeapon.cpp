@@ -300,6 +300,7 @@ void ABaseWeapon::SimulateWeaponFire()
 	if (MuzzleFX)
 	{
 		MuzzlePSC = UGameplayStatics::SpawnEmitterAttached(MuzzleFX, WeaponMesh, MuzzleAttachPoint);
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "FXFXSpwned..");
 	}
 
 	if (!bPlayingFireAnim)
@@ -334,10 +335,8 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 {
 	UAudioComponent* WeaponAC = nullptr;
 
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Play Nothing!");
 	if (Sound && MyPawn)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Playsomething");
 		WeaponAC = UGameplayStatics::SpawnSoundAttached(Sound, MyPawn->GetRootComponent());
 	}
 	return WeaponAC;
