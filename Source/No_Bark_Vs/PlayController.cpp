@@ -176,6 +176,7 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 	CurrentItemToAddInventory.ItemIndex = LastAddedInventoryIndex;
 	bool bItemAdded = false;
 	bIsInventoryFull = bItemAdded;
+	bool bCheckEquipment = false;
 	// if inventory item is valid add to inventory. 
 	if (ItemToADD)
 	{
@@ -187,8 +188,8 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 				FCurrentInventory[LastAddedInventoryIndex].CurrentStackNumber = ItemCurrentStackNumber;
 				FCurrentInventory[LastAddedInventoryIndex].ItemIndex = LastAddedInventoryIndex;
 
-
 				bItemAdded = true;
+				bCheckEquipment = true;
 
 			}
 			else
@@ -196,6 +197,7 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 				// Search all items to check if item already exist, if it does increment current stack number.
 				for (int32 i = 0; i < FCurrentInventory.Num(); i++)
 				{
+					//Check inventory and increase stack number
 					if (FCurrentInventory[i].ItemInfo.ItemID == ItemToADD->ItemID)
 					{
 						if (FCurrentInventory[i].CurrentStackNumber < FCurrentInventory[i].ItemInfo.MaxStackNumber)
@@ -239,12 +241,10 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 
 
 	}
-	//if Equipment Weapon is empty
-	//if ()
-	//{
-	//	AddItemtoEquipmentByItem
-	//}
-
+	if (bCheckEquipment == true)
+	{
+		AutoAddItemtoEquipment(FCurrentInventory[LastAddedInventoryIndex]);
+	}
 	ReloadInventory();
 }
 
@@ -524,7 +524,7 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 			// don't equip automatically
 			else
 			{
-
+				iItemRemovedfromEquipment = iItemtoAdd;
 			}
 			bItemAdded = true;
 		}
@@ -534,7 +534,7 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 			//if item already exist don't do anything
 			if (FCurrentEquippedMeleeWeapon.CurrentStackNumber == 1)
 			{
-				
+				iItemRemovedfromEquipment = iItemtoAdd;
 			}
 			// if item slot is empty then we assign the slot
 			else
@@ -547,16 +547,39 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 		//// if  EItemType::Not Weapon...
 		else
 		{
+			// Search all items to check if item already exist, if it does increment current stack number.
+			for (int32 i = 0; i < FCurrentEquipment.Num(); i++)
+			{
+				if (FCurrentEquipment[i].ItemInfo.ItemID == iItemtoAdd.ItemInfo.ItemID)
+				{
+					if (FCurrentEquipment[i].CurrentStackNumber < FCurrentEquipment[i].ItemInfo.MaxStackNumber)
+					{
+						FCurrentEquipment[i].CurrentStackNumber = FCurrentEquipment[i].CurrentStackNumber + iItemtoAdd.CurrentStackNumber;
 
-			if (FCurrentEquipment.Num() <= 2)
+						FString string;
+						string = "Item has been added CurrentstackNumber of  Equipment :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
+						GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string);
+
+						bItemAdded = true;
+					}
+				}
+			}
+			if (bItemAdded == false)
 			{
-				LastAddedEquipmentIndex = FCurrentEquipment.Add(iItemtoAdd);
-				FCurrentEquipment[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
-			}		
-			else
-			{
+				//add new item on equip
+				if (FCurrentEquipment.Num() <= 2)
+				{
+					LastAddedEquipmentIndex = FCurrentEquipment.Add(iItemtoAdd);
+					FCurrentEquipment[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
+				}
+				//or somethings wrong don't add anything
+				else
+				{
+					iItemRemovedfromEquipment = iItemtoAdd;
+				}
 			}
 			bItemAdded = true;
+
 		}
 		bItemAdded = true;
 	} while (bItemAdded != true);
@@ -582,7 +605,7 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 	if (iItemRemovedfromEquipment.CurrentStackNumber > 0)
 	{
 		AddItemtoInventoryByID(iItemRemovedfromEquipment.ItemInfo.ItemID, iItemRemovedfromEquipment.CurrentStackNumber);
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "stacknumber higherthan 0");
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Not added to equipment back to inventory");
 	}
 	ReloadInventory();
 }
