@@ -72,6 +72,7 @@ public:
 	void GetEquipment(int index);
 
 	void SpawnWeapon(TSubclassOf <class ABaseWeapon> iWeaponClass);
+	void SpawnWeaponOnSlot(TSubclassOf <class ABaseWeapon> iWeaponClass, EInventorySlot Slot);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void AttachEquipmentToHand();
@@ -91,13 +92,23 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
 		TSubclassOf <class ABaseWeapon> WeaponClass;
-
+	//Hand Held Item
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	ABaseWeapon *CurrentWeapon;
-
+	//Primary Weapon Held Item
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *PreviousWeapon;
+		ABaseWeapon *PrimaryWeapon;
+	//Secondary Weapon Held Item
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		ABaseWeapon *SecondaryWeapon;
+	//Melee  Weapon Held Item
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		ABaseWeapon *MeleeWeapon;
+	//Pistol 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		ABaseWeapon *PistolWeapon;
 
+public:
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
 	UFUNCTION(BlueprintCallable, Category = "Equip")
 	FName GetInventoryAttachPoint(EInventorySlot Slot) const;
