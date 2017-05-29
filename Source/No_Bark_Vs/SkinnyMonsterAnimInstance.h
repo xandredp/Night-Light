@@ -20,6 +20,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool IsHit;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool IsAttackFinnished;
+
 protected:
 
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
