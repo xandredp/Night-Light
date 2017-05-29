@@ -171,18 +171,15 @@ void ANBCharacter::EquipPrimaryWeapon()
 	GetEquipment(0);
 	
 	if (WeaponClass == NULL)
-	{	
-		
+	{			
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
 		SpawnWeapon(WeaponClass);
-	
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+		AttachEquipmentToHand();
 	}
 }
-
 void ANBCharacter::EquipSecondaryWeapon()
 {
 	GetEquipment(1);
@@ -204,7 +201,7 @@ void ANBCharacter::EquipMeleeWeapon()
 	APlayController* playController = Cast<APlayController>(GetController());
 	if (playController)
 	{
-		if (playController->FCurrentEquippedMeleeWeapon.CurrentStackNumber>0)
+		if (playController->FCurrentEquippedMeleeWeapon.CurrentStackNumber >0)
 		{
 			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedMeleeWeapon;
 			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
@@ -232,7 +229,6 @@ void ANBCharacter::EquipMeleeWeapon()
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 	}
 }
-
 void ANBCharacter::EquipOthers(int i_SlotNumber)
 {
 	APlayController* playController = Cast<APlayController>(GetController());
@@ -312,18 +308,72 @@ void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
 	{
 		CurrentWeapon->Destroy();
 		CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+	}
+	CurrentWeapon->SetOwningPawn(this);
+}
+
+void ANBCharacter::SpawnWeaponOnSlot(TSubclassOf<class ABaseWeapon> iWeaponClass, EInventorySlot EquipSlot)
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+
+	USkeletalMeshComponent* PawnMesh = GetMesh();
+	// if current weapon is empty assign current weapon
+	if (EquipSlot== EInventorySlot::Primary)
+	{
+		if (PrimaryWeapon == nullptr)
+		{
+			PrimaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+
+			PrimaryWeapon->SetOwningPawn(this);
+			PrimaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, PrimaryAttachPoint);
+
+			//Detach from pawn to equip in hand
+			PrimaryWeapon->WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+			PrimaryWeapon->WeaponMesh->SetHiddenInGame(true);
+			EquipPrimaryWeapon();
+		}
+		else
+		{
+			PrimaryWeapon->Destroy();
+			PrimaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+
+			PrimaryWeapon->SetOwningPawn(this);
+			PrimaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, PrimaryAttachPoint);
+
+		}
+	}
+	else if (EquipSlot == EInventorySlot::Secondary)
+	{
+		if (SecondaryWeapon == nullptr)
+		{
+			SecondaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+			SecondaryWeapon->SetOwningPawn(this);
+			SecondaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SecondaryAttachPoint);
+
+		}
+		else
+		{
+			SecondaryWeapon->Destroy();
+			SecondaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+			SecondaryWeapon->SetOwningPawn(this);
+			SecondaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SecondaryAttachPoint);
+
+		}
+		SecondaryWeapon->SetOwningPawn(this);
+	}
+	else if (EquipSlot == EInventorySlot::Pistol)
+	{
+		
+	}
+	else if (EquipSlot == EInventorySlot::Melee)
+	{
 
 	}
 
-	AttachEquipmentToHand();
-	CurrentWeapon->SetOwningPawn(this);
-
 }
 	
-
-
-
-
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
 	CurrentHealth -= decreaseVal;
@@ -385,8 +435,6 @@ void ANBCharacter::CheckForInteractables()
 	// If we didn't hit anything, or thing we hit was on to a interactable set current interactable nullptr. 
 	playController->CurrentInteractable = nullptr;
 }
-
-
 ABaseInteractable* ANBCharacter::GetInteractableInView()
 {
 	FVector CamLoc;
@@ -419,13 +467,11 @@ void ANBCharacter::TurnAtRate(float Rate)
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
-
 void ANBCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
-
 void ANBCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -439,7 +485,6 @@ void ANBCharacter::MoveForward(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
-
 void ANBCharacter::MoveRight(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -454,7 +499,6 @@ void ANBCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
-
 void ANBCharacter::OnStartSprinting()
 {
 	MoveComp->MaxWalkSpeed = MaxSprintSpeed;
@@ -464,7 +508,6 @@ void ANBCharacter::OnStartSprinting()
 		GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
 	}
 }
-
 void ANBCharacter::OnStopSprinting()
 {
 	MoveComp->MaxWalkSpeed = walkingSpeed;
@@ -476,7 +519,6 @@ void ANBCharacter::OnStopSprinting()
 		GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
 	}
 }
-
 void ANBCharacter::OnCrouchToggle()
 {
 	if (bIsCrouched)
@@ -493,8 +535,6 @@ void ANBCharacter::FireWeapon()
 	if (CurrentWeapon)
 	{
 		CurrentWeapon->Fire();
-		
-	
 	}
 	
 }
