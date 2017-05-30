@@ -56,7 +56,7 @@ void AMonster::OnSeePlayer(APawn* Pawn)
 	if (AIController)
 	{
 
-		if (GetDistanceTo(Pawn) < 1900)
+		if (GetDistanceTo(Pawn) < 1500)
 		{
 
 			GLog->Log("Seen");
