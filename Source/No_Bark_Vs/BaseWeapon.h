@@ -65,6 +65,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 MaxClip;
+	//MaxAmmom Per Clip
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 MaxAmmo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		float TimeBetweenShots;
@@ -92,6 +95,8 @@ class NO_BARK_VS_API ABaseWeapon : public AActor
 
 	//firing between shots
 	FTimerHandle FiringTimerHandle;
+	//ReloadingTimeHandler
+	FTimerHandle RelaodingTimerHandle;
 public:
 	ABaseWeapon();
 
@@ -124,9 +129,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Config")
 		TEnumAsByte<EProjectileType> ProjectileType;
-
+	// number of total ammo you are carrying
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 CurrentClip;
+	//weapon reloaded ammo
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 CurrentAmmo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		EWeaponState CurrentState;
@@ -148,6 +156,7 @@ public:
 	void OnEquip();
 	void OnUnEquip();
 	void ReloadAmmo();
+	void StopReloading();
 
 protected:
 
@@ -190,6 +199,16 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		UAnimMontage* FireAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		float ReloadAnimDuration;
+
+	/* Time to assign on equip when no animation is found */
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		float EquipAnimDuration;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		float FireAnimDuration;
 
 	UPROPERTY(EditDefaultsOnly)
 		FName MuzzleAttachPoint;

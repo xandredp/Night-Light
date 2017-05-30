@@ -219,6 +219,7 @@ protected:
 
 	void FireWeapon();
 	void StopFireWeapon();
+	void ReloadWeapon();
 
 	/************************************************************************/
 	/* Pickups                                                              */
