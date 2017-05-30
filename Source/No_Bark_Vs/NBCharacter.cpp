@@ -146,13 +146,15 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::StopFireWeapon);
+
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::ReloadWeapon);
 	/*PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &ANBCharacter::OnStartTargeting);
 	PlayerInputComponent->BindAction("Targeting", IE_Released, this, &ANBCharacter::OnEndTargeting);
 
 	
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::OnStopFire);
 
-	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::OnReload);
+
 
 	PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, this, &ANBCharacter::OnNextWeapon);
 	PlayerInputComponent->BindAction("PrevWeapon", IE_Pressed, this, &ANBCharacter::OnPrevWeapon);
@@ -552,6 +554,14 @@ void ANBCharacter::StopFireWeapon()
 		CurrentWeapon->StopTimerForFiring();
 	}
 	
+}
+
+void ANBCharacter::ReloadWeapon()
+{
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->ReloadAmmo();
+	}
 }
 
 FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const

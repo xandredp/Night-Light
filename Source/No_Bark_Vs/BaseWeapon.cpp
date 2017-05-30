@@ -31,6 +31,10 @@ ABaseWeapon::ABaseWeapon()
 	CurrentState = EWeaponState::Idle;
 	TrailTargetParam = "EndPoint";
 	MuzzleAttachPoint = "MuzzleTip";
+
+	EquipAnimDuration = 0.5f;
+	FireAnimDuration = 1.5f;
+	ReloadAnimDuration = 1.1f;
 }
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 {
@@ -53,21 +57,21 @@ void ABaseWeapon::Fire()
 
 	if (ProjectileType == EProjectileType::EBullet)
 	{
-		if (CurrentClip > 0)
+		if (CurrentAmmo > 0)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
 			Instant_Fire();
 
-			//CurrentClip -= WeaponConfig.ShotCost;
+			CurrentAmmo -= WeaponConfig.ShotCost;
 		}
 		else
 		{
-			//ReloadAmmo();
+			ReloadAmmo();
 		}
 	}
 	if (ProjectileType == EProjectileType::ESpread)
 	{
-		if (CurrentClip > 0)
+		if (CurrentAmmo > 0)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
 			for (int32 i = 0; i <= WeaponConfig.WeaponSpread; i++)
@@ -75,25 +79,26 @@ void ABaseWeapon::Fire()
 				Instant_Fire();
 			}
 
-			//CurrentClip -= WeaponConfig.ShotCost;
+			
+			CurrentAmmo -= WeaponConfig.ShotCost;
 		}
 		else
 		{
-			//ReloadAmmo();
+			ReloadAmmo();
 		}
 	}
 	if (ProjectileType == EProjectileType::EProjectile)
 	{
-		if (CurrentClip > 0)
+		if (CurrentAmmo > 0)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
 			ProjectileFire();
 
-			//CurrentClip -= WeaponConfig.ShotCost;
+			CurrentAmmo -= WeaponConfig.ShotCost;
 		}
 		else
 		{
-			//ReloadAmmo();
+			ReloadAmmo();
 		}
 	}
 }
@@ -304,8 +309,49 @@ void ABaseWeapon::OnUnEquip()
 
 void ABaseWeapon::ReloadAmmo()
 {
-}
+	if (CurrentAmmo < WeaponConfig.MaxAmmo)
+	{
+		//palyannimation
+		if (ReloadAnimation)
+		{
+			float AnimDuration = PlayWeaponAnimation(ReloadAnimation);
+			if (AnimDuration <= 0.0f)
+			{
+				AnimDuration = ReloadAnimDuration;
+			}
+			GetWorldTimerManager().SetTimer(RelaodingTimerHandle, this, &ABaseWeapon::StopReloading, AnimDuration, false);
+		}
 
+		PlayWeaponSound(ReloadSound);
+
+		// fill up the current ammo
+		float AmmoRemainingInCurrentClip = CurrentAmmo;
+
+		CurrentClip = CurrentClip - WeaponConfig.MaxAmmo + AmmoRemainingInCurrentClip;
+		if (CurrentClip > 0)
+		{
+			CurrentAmmo = WeaponConfig.MaxAmmo;
+		}
+		else
+		{
+			float AmmoRemainginMaxClip = 0;
+			CurrentAmmo = CurrentAmmo + CurrentClip;
+
+			if (CurrentAmmo > WeaponConfig.MaxAmmo)
+			{
+				AmmoRemainginMaxClip = WeaponConfig.MaxAmmo - CurrentAmmo;
+			}
+
+			CurrentClip = AmmoRemainginMaxClip;
+		}
+	}
+	
+}
+void ABaseWeapon::StopReloading()
+{
+	GetWorldTimerManager().ClearTimer(RelaodingTimerHandle);
+	StopWeaponAnimation(ReloadAnimation);
+}
 void ABaseWeapon::SimulateWeaponFire()
 {
 	if (MuzzleFX)
