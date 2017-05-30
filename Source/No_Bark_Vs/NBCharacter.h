@@ -30,9 +30,10 @@ class NO_BARK_VS_API ANBCharacter : public ACharacter
 
 	UCharacterMovementComponent* MoveComp;
 
+	//reduce stamina
 	FTimerHandle StartSprintingTimerHandle;
+	//gain stamina
 	FTimerHandle StopSprintingTimerHandle;
-
 
 
 
@@ -187,7 +188,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName SecondaryAttachPoint;
 
-
+	/* Attachpoint for secondary weapons */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		bool bIsFiring;
 
 protected:
 
@@ -215,6 +218,7 @@ protected:
 	void OnCrouchToggle();
 
 	void FireWeapon();
+	void StopFireWeapon();
 
 	/************************************************************************/
 	/* Pickups                                                              */

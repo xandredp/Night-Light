@@ -37,8 +37,19 @@ class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 	return MyPawn;
 }
 
+void ABaseWeapon::SetTimerForFiring()
+{
+
+	GetWorldTimerManager().SetTimer(FiringTimerHandle, this, &ABaseWeapon::Fire, WeaponConfig.TimeBetweenShots, false);
+}
+void ABaseWeapon::StopTimerForFiring()
+{
+	GetWorldTimerManager().ClearTimer(FiringTimerHandle);
+}
+
 void ABaseWeapon::Fire()
 {
+
 
 	if (ProjectileType == EProjectileType::EBullet)
 	{
@@ -46,7 +57,7 @@ void ABaseWeapon::Fire()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
 			Instant_Fire();
-			//PlayWeaponSound(FireSound);
+
 			//CurrentClip -= WeaponConfig.ShotCost;
 		}
 		else
@@ -63,7 +74,7 @@ void ABaseWeapon::Fire()
 			{
 				Instant_Fire();
 			}
-			//PlayWeaponSound(FireSound);
+
 			//CurrentClip -= WeaponConfig.ShotCost;
 		}
 		else
@@ -77,7 +88,7 @@ void ABaseWeapon::Fire()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
 			ProjectileFire();
-			//PlayWeaponSound(FireSound);
+
 			//CurrentClip -= WeaponConfig.ShotCost;
 		}
 		else
@@ -305,7 +316,7 @@ void ABaseWeapon::SimulateWeaponFire()
 
 	if (!bPlayingFireAnim)
 	{
-		PlayWeaponAnimation(FireAnim);
+		PlayWeaponAnimation(FireAnimation);
 		bPlayingFireAnim = true;
 	}
 
@@ -316,7 +327,7 @@ void ABaseWeapon::StopSimulatingWeaponFire()
 {
 	if (bPlayingFireAnim)
 	{
-		StopWeaponAnimation(FireAnim);
+		StopWeaponAnimation(FireAnimation);
 		bPlayingFireAnim = false;
 	}
 }
@@ -344,11 +355,27 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 
 float ABaseWeapon::PlayWeaponAnimation(UAnimMontage * Animation, float InPlayRate, FName StartSectionName)
 {
-	return 0.0f;
+	float Duration = 0.0f;
+	if (MyPawn)
+	{
+		if (Animation)
+		{
+			Duration = MyPawn->PlayAnimMontage(Animation, InPlayRate, StartSectionName);
+		}
+	}
+
+	return Duration;
 }
 
 void ABaseWeapon::StopWeaponAnimation(UAnimMontage * Animation)
 {
+	if (MyPawn)
+	{
+		if (Animation)
+		{
+			MyPawn->StopAnimMontage(Animation);
+		}
+	}
 }
 
 void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)

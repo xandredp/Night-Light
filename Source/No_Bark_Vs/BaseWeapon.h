@@ -90,7 +90,8 @@ class NO_BARK_VS_API ABaseWeapon : public AActor
 	GENERATED_BODY()
 
 
-
+	//firing between shots
+	FTimerHandle FiringTimerHandle;
 public:
 	ABaseWeapon();
 
@@ -103,6 +104,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 		class UBoxComponent* WeaponCollisionComp;
 
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void SetTimerForFiring();
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void StopTimerForFiring();
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 	void Fire();
@@ -169,14 +174,22 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
 		USoundCue* EquipSound;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+		USoundCue* ReloadSound;
+
+
+
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* MuzzleFX;
 
-	UPROPERTY(EditDefaultsOnly)
-		UAnimMontage* EquipAnim;
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		UAnimMontage* ReloadAnimation;
 
-	UPROPERTY(EditDefaultsOnly)
-		UAnimMontage* FireAnim;
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		UAnimMontage* EquipAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		UAnimMontage* FireAnimation;
 
 	UPROPERTY(EditDefaultsOnly)
 		FName MuzzleAttachPoint;

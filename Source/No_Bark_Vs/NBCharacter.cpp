@@ -84,6 +84,7 @@ ANBCharacter::ANBCharacter()
 	StaminaTimerRate = 0.5f;
 	HealthTimerRate = 1.0f;
 	MagicTimerRate = 1.0f;
+	bIsFiring = false;
 
 	// Item
 
@@ -92,27 +93,22 @@ ANBCharacter::ANBCharacter()
 
 void ANBCharacter::BeginPlay()
 {
-
 	Super::BeginPlay();
 
 	if (WeaponClass != NULL)
 	{
-
 		UWorld* const World = GetWorld();
 		if (World != NULL)
 		{
 
 		}
 	}
-
 }
 
 void ANBCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	CheckForInteractables();
-
-	
 }
 
 void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -125,7 +121,6 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
 	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
 	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 	PlayerInputComponent->BindAction("ScondaryWeapon", IE_Pressed, this, &ANBCharacter::EquipSecondaryWeapon);
@@ -147,6 +142,10 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
 
 	// Weapons
+
+
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
+	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::StopFireWeapon);
 	/*PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &ANBCharacter::OnStartTargeting);
 	PlayerInputComponent->BindAction("Targeting", IE_Released, this, &ANBCharacter::OnEndTargeting);
 
@@ -195,6 +194,7 @@ void ANBCharacter::EquipSecondaryWeapon()
 
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 	}
+	AttachEquipmentToHand();
 }
 void ANBCharacter::EquipMeleeWeapon()
 {
@@ -262,7 +262,6 @@ void ANBCharacter::EquipOthers(int i_SlotNumber)
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 	}
 }
-
 
 void ANBCharacter::Spawn()
 {
@@ -413,7 +412,6 @@ void ANBCharacter::OnResetVR()
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
-
 void ANBCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Jump();
@@ -501,23 +499,30 @@ void ANBCharacter::MoveRight(float Value)
 }
 void ANBCharacter::OnStartSprinting()
 {
-	MoveComp->MaxWalkSpeed = MaxSprintSpeed;
-	if (Role == ROLE_Authority)
+	if (bIsFiring == false)
 	{
-		GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
-		GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
+		MoveComp->MaxWalkSpeed = MaxSprintSpeed;
+		if (Role == ROLE_Authority)
+		{
+			GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
+			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
+		}
 	}
 }
 void ANBCharacter::OnStopSprinting()
 {
-	MoveComp->MaxWalkSpeed = walkingSpeed;
-
-	if (Role == ROLE_Authority)
+	if (bIsFiring == false)
 	{
+		MoveComp->MaxWalkSpeed = walkingSpeed;
 
-		GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
-		GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
+		if (Role == ROLE_Authority)
+		{
+
+			GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
+			GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
+		}
 	}
+
 }
 void ANBCharacter::OnCrouchToggle()
 {
@@ -532,12 +537,23 @@ void ANBCharacter::OnCrouchToggle()
 }
 void ANBCharacter::FireWeapon()
 {
+	bIsFiring = true;
 	if (CurrentWeapon)
 	{
-		CurrentWeapon->Fire();
+		CurrentWeapon->SetTimerForFiring();
 	}
 	
 }
+void ANBCharacter::StopFireWeapon()
+{
+	bIsFiring = false;
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->StopTimerForFiring();
+	}
+	
+}
+
 FName ANBCharacter::GetInventoryAttachPoint(EInventorySlot Slot) const
 {
 	/* Return the socket name for the specified storage slot */
