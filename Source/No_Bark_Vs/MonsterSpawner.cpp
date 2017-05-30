@@ -28,18 +28,19 @@ void AMonsterSpawner::Tick( float DeltaTime )
 
 void AMonsterSpawner::SpawnMonster()
 {
-	// Assign a random index
-	int32 RandomIndex = FMath::RandRange(0, SpawnPoints.Num());
-	// Assign random index as the current spawn point 
-	AMonsterSpawnTargetPoint* SpawnPoint = Cast<AMonsterSpawnTargetPoint>(SpawnPoints[RandomIndex]);
-
 	if (WhatToSpawn != NULL)
 	{
 		// Check for a valid world
 		UWorld* World = GetWorld();
+
 		if (World)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Inside Spawner");
+
+			// Assign a random index
+			int32 RandomIndex = FMath::RandRange(0, SpawnPoints.Num());
+			// Assign random index as the current spawn point 
+			AMonsterSpawnTargetPoint* SpawnPoint = Cast<AMonsterSpawnTargetPoint>(SpawnPoints[RandomIndex]);
 
 			// Set the spawn params
 			FActorSpawnParameters SpawnParams;
