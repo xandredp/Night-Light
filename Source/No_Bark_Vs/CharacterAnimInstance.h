@@ -21,6 +21,6 @@ public:
 		bool IsAiming;
 	
 protected:
-	UFUNCTION(BlueprintCallable, Category = "UpdateAnimationProperties")
+	UFUNCTION(BlueprintCallable, Category = "Update character Animation Properties")
 		void UpdateCharacterAnimationProperties();
 };
