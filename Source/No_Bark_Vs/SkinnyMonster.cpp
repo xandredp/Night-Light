@@ -20,7 +20,7 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackRangeSphere->SetupAttachment(GetCapsuleComponent());
 	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
 	//AttackRangeSphere->IsVisible = true;
-	//AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
+	AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
 }
 
 
@@ -39,16 +39,17 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 	}
 }
 
-//void ASkinnyMonster::OnEndOverlapWithCharacter(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-//{
-//	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
-//	{
-//		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-//
-//		if (AnimInstance)
-//		{
-//			// Set CanAttack in AnimInstance to false
-//			AnimInstance->CanAttack = false;
-//		}
-//	}
-//}
+void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+
+		if (AnimInstance)
+		{
+			// Set CanAttack in AnimInstance to false
+			AnimInstance->IsAttackFinnished = true;
+			AnimInstance->CanAttack = false;
+		}
+	}
+}

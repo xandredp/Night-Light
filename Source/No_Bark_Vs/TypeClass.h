@@ -31,6 +31,8 @@ enum class EInventorySlot : uint8
 	/* For secondary weapons on spine bone */
 	Secondary,
 
+	Pistol,
+
 	/* For Melee weapons on bone */
 	Melee,
 };

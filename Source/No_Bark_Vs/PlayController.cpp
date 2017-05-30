@@ -356,8 +356,9 @@ bool APlayController::GetIsInventoryFull()
 	return bIsInventoryFull;
 }
 
-void APlayController::AttachEquipmenttoCharacter(FCurrentInventoryItemInfo ItemToAttech)
+void APlayController::AttachEquipmenttoCharacter(EInventorySlot EquipmentSlot)
 {
+	
 }
 
 void APlayController::DetachEquipmentfromCharacter(FCurrentInventoryItemInfo ItemToDetach)
@@ -506,19 +507,43 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 	bool bItemRemovedinInventory = false;
 	EItemType iItemType = iItemtoAdd.ItemInfo.eItemType;
 	iItemRemovedfromEquipment.CurrentStackNumber = 0;
+	TSubclassOf <class ABaseWeapon> EquipWeaponClass;
+	ANBCharacter* MyPawn = Cast<ANBCharacter>(GetPawn());
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = MyPawn;
+	SpawnParams.Instigator = Instigator;
 	// if inventory item is valid add to inventory. 
 	do // do until the Item is added
 	{
 		if (iItemType == EItemType::None)
 		{
+			bItemAdded = true;
 		}
 		else if (iItemType == EItemType::Weapon)
 		{
 			//if currentequipment is slot 1 or 2 is empty additem
 			if (FCurrentEquippedWeapons.Num() <= 1)
 			{
+				int Weaponindex = FCurrentEquippedWeapons.Num();				
 				LastAddedEquipmentIndex = FCurrentEquippedWeapons.Add(iItemtoAdd);
 				FCurrentEquippedWeapons[LastAddedEquipmentIndex].ItemIndex = LastAddedEquipmentIndex;
+				if (Weaponindex < 1)
+				{
+					if (MyPawn)
+					{
+						EquipWeaponClass = FCurrentEquippedWeapons[0].ItemInfo.ItemWeaponClass;
+						MyPawn->SpawnWeaponOnSlot(EquipWeaponClass, EInventorySlot::Primary);
+					}
+				}
+				else if (Weaponindex == 1)
+				{
+					if (MyPawn)
+					{
+						EquipWeaponClass = FCurrentEquippedWeapons[1].ItemInfo.ItemWeaponClass;
+						MyPawn->SpawnWeaponOnSlot(EquipWeaponClass, EInventorySlot::Secondary);
+					}
+				}
 			}
 			// if items are all taken don't do anything
 			// don't equip automatically

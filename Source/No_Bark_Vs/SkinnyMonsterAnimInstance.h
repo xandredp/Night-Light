@@ -20,6 +20,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool IsHit;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool IsAttackFinnished;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool CanSeePlayer;
+
+
 protected:
 
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -30,7 +37,4 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "UpdateAnimationProperties")
 		void UpdateAnimationProperties();
-
-
-
 };

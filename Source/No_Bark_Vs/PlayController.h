@@ -100,7 +100,7 @@ public:
 		TArray<FCurrentInventoryItemInfo> FCurrentEquipment;
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void AttachEquipmenttoCharacter(FCurrentInventoryItemInfo ItemToAttech);
+		void AttachEquipmenttoCharacter(EInventorySlot EquipmentSlot);
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void DetachEquipmentfromCharacter(FCurrentInventoryItemInfo ItemToDetach);
