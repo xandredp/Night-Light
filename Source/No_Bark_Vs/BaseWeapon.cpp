@@ -225,7 +225,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	//const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	//const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
 
-	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 500, 10.f);
+	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 1.0f, 0.0f, 1.0f);
 
 //	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
