@@ -19,6 +19,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool IsAiming;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool IsPrimaryEquiped;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool IsSprinting;
 	
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Update character Animation Properties")

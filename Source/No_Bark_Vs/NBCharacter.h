@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "CharacterAnimInstance.h"
 #include "MonsterSpawner.h"
 #include "Perception/PawnSensingComponent.h"
 #include "GameFramework/Character.h"

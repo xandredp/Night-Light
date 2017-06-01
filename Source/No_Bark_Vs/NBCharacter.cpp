@@ -171,12 +171,15 @@ void ANBCharacter::EquipPrimaryWeapon()
 {
 	GetEquipment(0);
 	
+	UCharacterAnimInstance* AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+
 	if (WeaponClass == NULL)
 	{			
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
+		AnimInstance->IsPrimaryEquiped = true;
 		SpawnWeapon(WeaponClass);
 		AttachEquipmentToHand();
 	}
@@ -508,6 +511,8 @@ void ANBCharacter::OnStartSprinting()
 		{
 			GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
 			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
+			UCharacterAnimInstance* AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+			AnimInstance->IsSprinting = true;
 		}
 	}
 }
@@ -522,6 +527,8 @@ void ANBCharacter::OnStopSprinting()
 
 			GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
 			GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
+			UCharacterAnimInstance* AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+			AnimInstance->IsSprinting = false;
 		}
 	}
 
