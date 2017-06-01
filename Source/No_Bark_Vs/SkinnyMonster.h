@@ -17,10 +17,14 @@ class NO_BARK_VS_API ASkinnyMonster : public AMonster
 	
 private:
 	ASkinnyMonster();
+	
+
 
 public:
 	AMonster* Monster;
-	//USkinnyMonsterAnimInstance AnimInstance;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")
+		class UBlendSpace1D* RunToAttackBlendSpace;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackRangeSphere;

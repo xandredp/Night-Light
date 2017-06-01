@@ -56,6 +56,7 @@ enum class EItemType : uint8
 
 
 };
+
 // Struct of things I can Craft. 
 USTRUCT(BlueprintType)
 struct FCraftingInfo : public FTableRowBase
@@ -72,6 +73,19 @@ public:
 		bool bDestroyItemA; // destroy component
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool bDestroyItemB; // destroy product id
+};
+
+
+USTRUCT(BlueprintType)
+struct FWaveStats : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int iNumberOfEnemies;
+
+	
 };
 
 

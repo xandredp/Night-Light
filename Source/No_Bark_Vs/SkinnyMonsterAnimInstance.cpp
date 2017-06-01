@@ -11,18 +11,6 @@ void USkinnyMonsterAnimInstance::UpdateAnimationProperties()
 
 	if (Pawn)
 	{
-		// Update falling property
-
-
-		// Update if monster can attack or not
-		CanAttack = false;
-
-		// Update if monster is hit
-		IsHit = false;
-
-		// Update if monster can see player 
-		CanSeePlayer = false;
-
 		// Update movement speed
 		MovementSpeed = Pawn->GetVelocity().Size();
 	}

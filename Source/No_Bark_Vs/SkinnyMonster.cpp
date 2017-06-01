@@ -30,9 +30,9 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
 		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-		
+
 		if (AnimInstance)
-		{	
+		{
 			// Set CanAttack in AnimInstance to true
 			AnimInstance->CanAttack = true;
 		}
@@ -48,7 +48,7 @@ void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedCo
 		if (AnimInstance)
 		{
 			// Set CanAttack in AnimInstance to false
-			AnimInstance->IsAttackFinnished = true;
+			AnimInstance->IsAttackFinished = true;
 			AnimInstance->CanAttack = false;
 		}
 	}
