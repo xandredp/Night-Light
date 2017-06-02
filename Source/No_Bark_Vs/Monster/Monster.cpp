@@ -49,7 +49,7 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 	//}
 }
 
-void AMonster::OnSeePlayer(APawn* Pawn)
+void AMonster::OnSeePlayer(APawn* aPawn)
 {
 	if (Health <= 0.0)
 	{
@@ -58,7 +58,7 @@ void AMonster::OnSeePlayer(APawn* Pawn)
 	}
 
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-	ANBCharacter* SensedPawn = Cast<ANBCharacter>(Pawn);
+	ANBCharacter* SensedPawn = Cast<ANBCharacter>(aPawn);
 	//Set the seen target on the blackboard
 	if (AIController && SensedPawn)
 	{

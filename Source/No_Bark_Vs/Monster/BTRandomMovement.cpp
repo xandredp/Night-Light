@@ -8,7 +8,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 EBTNodeResult::Type UBTRandomMovement::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {
-
+	
 	AMyAIController* AICon = Cast<AMyAIController>(OwnerComp.GetAIOwner());
 	AMonster* AICharacter = Cast<AMonster>(OwnerComp.GetAIOwner()->GetPawn());
 

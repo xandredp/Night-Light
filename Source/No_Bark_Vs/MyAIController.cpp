@@ -18,7 +18,7 @@ AMyAIController::AMyAIController()
 	LocationToGoKey = "LocationToGo";
 	AIStateKey = "AIState";
 	TargetKey = "Target";
-	LocationVectorKey = "LocationVector"
+
 }
 
 void AMyAIController::Possess(APawn* aPawn)
