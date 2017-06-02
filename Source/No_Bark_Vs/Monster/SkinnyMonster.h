@@ -14,13 +14,14 @@ UCLASS()
 class NO_BARK_VS_API ASkinnyMonster : public AMonster
 {
 	GENERATED_BODY()
-	
-private:
-	ASkinnyMonster();
-	
+
+		/* Timer handle to manage continous melee attacks while in range of a player */
+		FTimerHandle TimerHandle_MeleeAttack;
 
 
 public:
+	ASkinnyMonster();
+
 	AMonster* Monster;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")
@@ -29,9 +30,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackRangeSphere;
 	
+
 	UFUNCTION()
 		void OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
 		void OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+	void TriggerMeleeStrike();
+
+	UFUNCTION()
+		void PerformAttack(AActor* HitActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void DecreaseCharacterHealth();
+
+
 };
