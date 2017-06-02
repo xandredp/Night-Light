@@ -3,6 +3,7 @@
 #include "No_Bark_Vs.h"
 #include "Monster/Monster.h"
 #include "MyAIController.h"
+#include "NBCharacter.h"
 #include "TypeClass.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Perception/PawnSensingComponent.h"
@@ -50,17 +51,21 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 
 void AMonster::OnSeePlayer(APawn* Pawn)
 {
-	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-
-	//Set the seen target on the blackboard
-	if (AIController)
+	if (Health <= 0.0)
 	{
+		bisMonsterDead = false;
+		return;
+	}
 
-		if (GetDistanceTo(Pawn) < 1500)
+	AMyAIController* AIController = Cast<AMyAIController>(GetController());
+	ANBCharacter* SensedPawn = Cast<ANBCharacter>(Pawn);
+	//Set the seen target on the blackboard
+	if (AIController && SensedPawn)
+	{
+		if (GetDistanceTo(SensedPawn) < 1500)
 		{
-
 			GLog->Log("Seen");
-			AIController->SetSeenTarget(Pawn);
+			AIController->SetSeenTarget(SensedPawn);
 		}
 		else
 		{

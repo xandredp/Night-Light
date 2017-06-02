@@ -16,8 +16,9 @@ AMyAIController::AMyAIController()
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
 
 	LocationToGoKey = "LocationToGo";
-
+	AIStateKey = "AIState";
 	TargetKey = "Target";
+	LocationVectorKey = "LocationVector"
 }
 
 void AMyAIController::Possess(APawn* aPawn)
@@ -54,6 +55,41 @@ void AMyAIController::SetSeenTarget(APawn* aPawn)
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsObject(TargetKey, aPawn);
+	}
+}
+
+void AMyAIController::SetBlackboardBotState(EBotBehaviorType NewState)
+{
+	FName CurrentState = "NULL";
+
+	if (NewState == EBotBehaviorType::Neutral)
+	{
+		CurrentState = "Neutral";
+
+	}
+	else if (NewState == EBotBehaviorType::Suspicious)
+	{
+		CurrentState = "Suspicious";
+	}
+	else if (NewState == EBotBehaviorType::Flee)
+	{
+		CurrentState = "Flee";
+	}
+	else if (NewState == EBotBehaviorType::Agression)
+	{
+		CurrentState = "Agression";
+	}
+	else if (NewState == EBotBehaviorType::Charge)
+	{
+		CurrentState = "Charge";
+	}
+	else if (NewState == EBotBehaviorType::Stunned)
+	{
+		CurrentState = "Stunned";
+	}
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
 	}
 }
 

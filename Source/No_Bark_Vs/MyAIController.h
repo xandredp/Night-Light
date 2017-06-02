@@ -5,7 +5,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "TypeClass.h"
 #include "AIController.h"
 #include "MyAIController.generated.h"
 
@@ -36,6 +36,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName TargetKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName AIStateKey;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName LocationVectorKey;
 
 	TArray<AActor*> TargetPoints;
 
@@ -50,7 +55,8 @@ public:
 
 	//Sets the sensed target in the blackboard
 	void SetSeenTarget(APawn* Pawn);
-
+	void SetBlackboardBotState(EBotBehaviorType NewState);
+	
 	void ResetSeenTarget();
 
 	/*Sets the new sensed target value inside our Blackboard values*/
