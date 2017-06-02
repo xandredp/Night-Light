@@ -14,7 +14,7 @@ class NO_BARK_VS_API ATankyMonster : public AMonster
 	GENERATED_BODY()
 	
 
-private:
+public:
 	ATankyMonster();
 
 
