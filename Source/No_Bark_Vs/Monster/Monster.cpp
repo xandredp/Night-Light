@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "No_Bark_Vs.h"
-#include "Monster.h"
+#include "Monster/Monster.h"
 #include "MyAIController.h"
 #include "TypeClass.h"
 #include "BehaviorTree/BehaviorTree.h"

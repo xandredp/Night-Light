@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
-#include "Monster.h"
-#include "SkinnyMonster.h"
+#include "Monster/Monster.h"
+#include "Monster/SkinnyMonster.h"
 #include "MonsterSpawnTargetPoint.h"
 #include "GameFramework/Actor.h"
 #include "MonsterSpawner.generated.h"

@@ -5,7 +5,7 @@
 #include "PlayController.h"
 #include "Items/BaseImpactEffect.h"
 #include "NBDamageType.h"
-#include "Monster.h"
+#include "Monster/Monster.h"
 #include "BaseWeapon.h"
 
 ABaseWeapon::ABaseWeapon()
