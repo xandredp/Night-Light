@@ -157,6 +157,9 @@ public:
 		float walkingSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxSprintSpeed;
+	/* Attachpoint for secondary weapons */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Status")
+		bool bIsDead;
 
 	/* DecreaseStamina, used by timer. */
 	void DecreaseHealth(float decreaseVal);
@@ -192,6 +195,8 @@ private:
 	/* Attachpoint for secondary weapons */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		bool bIsFiring;
+
+
 
 protected:
 

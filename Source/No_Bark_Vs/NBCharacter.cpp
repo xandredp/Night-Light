@@ -95,12 +95,14 @@ void ANBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	bIsDead = true;
+
 	if (WeaponClass != NULL)
 	{
 		UWorld* const World = GetWorld();
 		if (World != NULL)
 		{
-
+			
 		}
 	}
 }
