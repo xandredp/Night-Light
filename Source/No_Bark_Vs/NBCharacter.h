@@ -158,7 +158,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxSprintSpeed;
 	/* Attachpoint for secondary weapons */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Status")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bIsDead;
 
 	/* DecreaseStamina, used by timer. */

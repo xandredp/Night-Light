@@ -95,7 +95,7 @@ void ANBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	bIsDead = true;
+	bIsDead = false;
 
 	if (WeaponClass != NULL)
 	{
