@@ -28,6 +28,7 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 	if (OtherPawn)
 	{
+		GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
 		StoredOtherActor = OtherActor;
 		PerformAttack(OtherActor);
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "OnOverlappWithCharacter");
@@ -35,7 +36,7 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(MeleeStrikeCooldown * 10));
 		/* Set re-trigger timer to re-check overlapping pawns at melee attack rate interval */
 		GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ASkinnyMonster::TriggerMeleeStrike, MeleeStrikeCooldown, true);
-
+		
 		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 
 		if (AnimInstance)
@@ -55,11 +56,13 @@ void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedCo
 
 		if (AnimInstance)
 		{
+			GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
 			// Set CanAttack in AnimInstance to false
 			AnimInstance->IsAttackFinished = true;
 			AnimInstance->CanAttack = false;
 		}
 	}
+	
 }
 
 void ASkinnyMonster::TriggerMeleeStrike()
@@ -71,32 +74,10 @@ void ASkinnyMonster::TriggerMeleeStrike()
 void ASkinnyMonster::PerformAttack(AActor* HitActor)
 {
 	ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
-
-
-	if (LastStrikeTime > GetWorld()->GetTimeSeconds() - MeleeStrikeCooldown)
-	{
-		/* Set timer to start attacking as soon as the cooldown elapses. */
-		if (!TimerHandle_MeleeAttack.IsValid())
-		{
-			// TODO: Set Timer
-		}
-
-		/* Attacked before cooldown expired */
-		return;
-	}
 	if (OtherPawn)
 	{
 		LastStrikeTime = GetWorld()->GetTimeSeconds();
-		
-		ANBCharacter* mainChar = Cast<ANBCharacter>(GWorld->GetFirstPlayerController()->GetPawn());
-		if (mainChar)
-		{
-
-
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
-			DecreaseCharacterHealth();
-			//mainChar->DecreaseHealth(AttackDamage);
-		}
-
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+		DecreaseCharacterHealth();
 	}
 }
