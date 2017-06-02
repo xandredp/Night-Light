@@ -45,5 +45,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void DecreaseCharacterHealth();
 
+private:
+
+	AActor* StoredOtherActor;
+
 
 };

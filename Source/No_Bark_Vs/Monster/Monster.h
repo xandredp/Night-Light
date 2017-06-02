@@ -72,7 +72,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundAttackMelee;
 
-	/* Minimum time between melee attacks */
+	/* Attack Animation time &  Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MeleeStrikeCooldown;
 	/* Minimum time between melee attacks */

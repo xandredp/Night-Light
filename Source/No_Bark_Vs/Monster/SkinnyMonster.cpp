@@ -11,7 +11,7 @@ ASkinnyMonster::ASkinnyMonster()
 	Health = 100.0f;
 	AttackDamage = 20.0f;
 	AttackRange = 150.0f;
-	MeleeStrikeCooldown = 1.0f;
+	MeleeStrikeCooldown = 2.5f;
 
 	AttackRangeSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Range Sphere"));
 	AttackRangeSphere->SetSphereRadius(AttackRange);
@@ -25,17 +25,17 @@ ASkinnyMonster::ASkinnyMonster()
 
 void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	/* Stop any running attack timers */
-	TimerHandle_MeleeAttack.Invalidate();
-
-	PerformAttack(OtherActor);
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "OnOverlappWithCharacter");
-	/* Set re-trigger timer to re-check overlapping pawns at melee attack rate interval */
-	GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ASkinnyMonster::TriggerMeleeStrike, MeleeStrikeCooldown, true);
-
 	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 	if (OtherPawn)
 	{
+		StoredOtherActor = OtherActor;
+		PerformAttack(OtherActor);
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "OnOverlappWithCharacter");
+		
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(MeleeStrikeCooldown * 10));
+		/* Set re-trigger timer to re-check overlapping pawns at melee attack rate interval */
+		GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ASkinnyMonster::TriggerMeleeStrike, MeleeStrikeCooldown, true);
+
 		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 
 		if (AnimInstance)
@@ -64,26 +64,8 @@ void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedCo
 
 void ASkinnyMonster::TriggerMeleeStrike()
 {
-	/* Apply damage to a single random pawn in range. */
-	TArray<AActor*> Overlaps;
-	AttackRangeSphere->GetOverlappingActors(Overlaps, ANBCharacter::StaticClass());
-	
-	for (int32 i = 0; i < Overlaps.Num(); i++)
-	{
-		ANBCharacter* OverlappingPawn = Cast<ANBCharacter>(Overlaps[i]);
-		if (OverlappingPawn)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TriggerMeleeStrike");
-			PerformAttack(OverlappingPawn);
-			//break; /* Uncomment to only attack one pawn maximum */
-		}
-	}
-
-	/* No pawns in range, cancel the retrigger timer */
-	if (Overlaps.Num() == 0)
-	{
-		TimerHandle_MeleeAttack.Invalidate();
-	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TriggerMeleeStrike");
+	PerformAttack(StoredOtherActor);
 }
 
 void ASkinnyMonster::PerformAttack(AActor* HitActor)
