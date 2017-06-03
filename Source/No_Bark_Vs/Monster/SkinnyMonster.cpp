@@ -11,15 +11,28 @@ ASkinnyMonster::ASkinnyMonster()
 	Health = 100.0f;
 	AttackDamage = 20.0f;
 	AttackRange = 150.0f;
-	MeleeStrikeCooldown = 2.5f;
+	MeleeStrikeCooldown = 0.15f;
+	AttackAttachPoint = TEXT("Attack_Socket");
+	LastStrikeTime = 0.0f;
 
 	AttackRangeSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Range Sphere"));
-	AttackRangeSphere->SetSphereRadius(AttackRange);
+	AttackRangeSphere->SetSphereRadius(25);
 	AttackRangeSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	AttackRangeSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	AttackRangeSphere->SetupAttachment(GetCapsuleComponent());
 	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
 	AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
+	AttackRangeSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
+
+
+	AttackAnimTriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("AttackAnim Range Sphere"));
+	AttackAnimTriggerSphere->SetSphereRadius(AttackRange);
+	AttackAnimTriggerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
+	AttackAnimTriggerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	AttackAnimTriggerSphere->SetupAttachment(GetCapsuleComponent());
+	AttackAnimTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapStartAnim);
+	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
+	
 }
 
 
@@ -28,27 +41,41 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 	if (OtherPawn)
 	{
-		GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
 		StoredOtherActor = OtherActor;
-		PerformAttack(OtherActor);
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "OnOverlappWithCharacter");
-		
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(MeleeStrikeCooldown * 10));
-		/* Set re-trigger timer to re-check overlapping pawns at melee attack rate interval */
-		GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ASkinnyMonster::TriggerMeleeStrike, MeleeStrikeCooldown, true);
-		
-		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+		if (GetWorld()->TimeSeconds - LastStrikeTime > MeleeStrikeCooldown)
+		{
+			PerformAttack(OtherActor);
+			LastStrikeTime = GetWorld()->GetTimeSeconds();
+		}
+	}
+}
 
+void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+
+	}
+	
+}
+
+void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+	if (OtherPawn)
+	{
 		if (AnimInstance)
 		{
 			// Set CanAttack in AnimInstance to true
 			AnimInstance->CanAttack = true;
 		}
+
 	}
-	
+
 }
 
-void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
@@ -56,13 +83,12 @@ void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedCo
 
 		if (AnimInstance)
 		{
-			GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
 			// Set CanAttack in AnimInstance to false
 			AnimInstance->IsAttackFinished = true;
 			AnimInstance->CanAttack = false;
 		}
 	}
-	
+
 }
 
 void ASkinnyMonster::TriggerMeleeStrike()

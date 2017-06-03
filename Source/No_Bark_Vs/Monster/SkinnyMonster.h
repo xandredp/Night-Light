@@ -29,6 +29,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackRangeSphere;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* AttackAnimTriggerSphere;
 	
 
 	UFUNCTION()
@@ -36,6 +39,13 @@ public:
 
 	UFUNCTION()
 		void OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+		void OnOverlapStartAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	
 	UFUNCTION()
 	void TriggerMeleeStrike();
 
@@ -48,6 +58,9 @@ public:
 private:
 
 	AActor* StoredOtherActor;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName AttackAttachPoint;
 
 
 };
