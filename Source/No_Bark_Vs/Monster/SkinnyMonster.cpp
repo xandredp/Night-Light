@@ -38,14 +38,17 @@ ASkinnyMonster::ASkinnyMonster()
 
 void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
-	if (OtherPawn)
+	if (GetMonsterDead() == false)
 	{
-		StoredOtherActor = OtherActor;
-		if (GetWorld()->TimeSeconds - LastStrikeTime > MeleeStrikeCooldown)
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+		if (OtherPawn)
 		{
-			PerformAttack(OtherActor);
-			LastStrikeTime = GetWorld()->GetTimeSeconds();
+			StoredOtherActor = OtherActor;
+			if (GetWorld()->TimeSeconds - LastStrikeTime > MeleeStrikeCooldown)
+			{
+				PerformAttack(OtherActor);
+				LastStrikeTime = GetWorld()->GetTimeSeconds();
+			}
 		}
 	}
 }
@@ -61,14 +64,18 @@ void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedCo
 
 void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
-	if (OtherPawn)
+	if (GetMonsterDead() == false)
 	{
-		if (AnimInstance)
+		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+		if (OtherPawn)
 		{
-			// Set CanAttack in AnimInstance to true
-			AnimInstance->CanAttack = true;
+			if (AnimInstance)
+			{
+				// Set CanAttack in AnimInstance to true
+				AnimInstance->CanAttack = true;
+			}
+
 		}
 
 	}
@@ -77,33 +84,37 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 
 void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	
+	if (GetMonsterDead() == false)
 	{
-		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-
-		if (AnimInstance)
+		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 		{
-			// Set CanAttack in AnimInstance to false
-			AnimInstance->IsAttackFinished = true;
-			AnimInstance->CanAttack = false;
+			USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+
+			if (AnimInstance)
+			{
+				// Set CanAttack in AnimInstance to false
+				AnimInstance->IsAttackFinished = true;
+				AnimInstance->CanAttack = false;
+			}
 		}
+
 	}
+	
 
-}
-
-void ASkinnyMonster::TriggerMeleeStrike()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TriggerMeleeStrike");
-	PerformAttack(StoredOtherActor);
 }
 
 void ASkinnyMonster::PerformAttack(AActor* HitActor)
 {
-	ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
-	if (OtherPawn)
+	if (GetMonsterDead() == false)
 	{
-		LastStrikeTime = GetWorld()->GetTimeSeconds();
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
-		DecreaseCharacterHealth();
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
+		if (OtherPawn)
+		{
+			LastStrikeTime = GetWorld()->GetTimeSeconds();
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+			DecreaseCharacterHealth();
+		}
 	}
+	
 }

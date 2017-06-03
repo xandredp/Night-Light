@@ -327,26 +327,23 @@ void ABaseWeapon::ReloadAmmo()
 			PlayWeaponSound(ReloadSound);
 
 			// fill up the current ammo
-			float AmmoRemainingInCurrentClip = CurrentAmmo;
-
-			CurrentClip = CurrentClip - WeaponConfig.MaxAmmo + AmmoRemainingInCurrentClip;
-			if (CurrentClip > 0)
+			float AmmoRemainedInCurrentClip = CurrentAmmo;
+			float AddedClipNumbers;
+			float ResultClip = CurrentClip + AmmoRemainedInCurrentClip;
+			// if there are plenty clips in my gun
+			if (ResultClip > WeaponConfig.MaxAmmo)
 			{
 				CurrentAmmo = WeaponConfig.MaxAmmo;
+				AddedClipNumbers = (CurrentClip - WeaponConfig.MaxAmmo) + AmmoRemainedInCurrentClip;
 			}
+			// if there are no plenty clips in my gun. add all clips into gun
 			else
 			{
-				float AmmoRemainginMaxClip = 0;
-				CurrentAmmo = CurrentAmmo + CurrentClip;
-
-				if (CurrentAmmo > WeaponConfig.MaxAmmo)
-				{
-					AmmoRemainginMaxClip = WeaponConfig.MaxAmmo - CurrentAmmo;
-				}
-
-				CurrentClip = AmmoRemainginMaxClip;
+				CurrentAmmo = CurrentClip + AmmoRemainedInCurrentClip;
+				AddedClipNumbers = CurrentClip; 
 			}
 
+			CurrentClip = CurrentClip - AddedClipNumbers;
 		}
 		
 	}

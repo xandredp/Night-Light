@@ -103,6 +103,16 @@ void AMonster::ReduceHealth(int DamageValue)
 
 bool AMonster::GetMonsterDead()
 {
+	if (Health <= 0)
+	{
+		bisMonsterDead = true;
+		SetRagdollPhysics();
+	}
+	else
+	{
+		bisMonsterDead = false;
+	}
+
 	return bisMonsterDead;
 }
 

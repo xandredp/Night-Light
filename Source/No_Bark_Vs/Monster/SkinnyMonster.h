@@ -45,10 +45,6 @@ public:
 	UFUNCTION()
 		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-	
-	UFUNCTION()
-	void TriggerMeleeStrike();
-
 	UFUNCTION()
 		void PerformAttack(AActor* HitActor);
 
