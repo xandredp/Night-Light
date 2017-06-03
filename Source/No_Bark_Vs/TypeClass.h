@@ -3,6 +3,20 @@
 #include "Engine/DataTable.h"
 #include "TypeClass.generated.h"
 
+
+UENUM()
+enum class EGameModeSoundType : uint8
+{
+	General,
+
+	Alert,
+
+	Combat,
+
+	Death,
+};
+
+
 UENUM()
 enum class EBotBehaviorType : uint8
 {
