@@ -311,39 +311,44 @@ void ABaseWeapon::ReloadAmmo()
 {
 	if (CurrentAmmo < WeaponConfig.MaxAmmo)
 	{
-		//palyannimation
-		if (ReloadAnimation)
-		{
-			float AnimDuration = PlayWeaponAnimation(ReloadAnimation);
-			if (AnimDuration <= 0.0f)
-			{
-				AnimDuration = ReloadAnimDuration;
-			}
-			GetWorldTimerManager().SetTimer(RelaodingTimerHandle, this, &ABaseWeapon::StopReloading, AnimDuration, false);
-		}
-
-		PlayWeaponSound(ReloadSound);
-
-		// fill up the current ammo
-		float AmmoRemainingInCurrentClip = CurrentAmmo;
-
-		CurrentClip = CurrentClip - WeaponConfig.MaxAmmo + AmmoRemainingInCurrentClip;
 		if (CurrentClip > 0)
 		{
-			CurrentAmmo = WeaponConfig.MaxAmmo;
-		}
-		else
-		{
-			float AmmoRemainginMaxClip = 0;
-			CurrentAmmo = CurrentAmmo + CurrentClip;
-
-			if (CurrentAmmo > WeaponConfig.MaxAmmo)
+			//palyannimation
+			if (ReloadAnimation)
 			{
-				AmmoRemainginMaxClip = WeaponConfig.MaxAmmo - CurrentAmmo;
+				float AnimDuration = PlayWeaponAnimation(ReloadAnimation);
+				if (AnimDuration <= 0.0f)
+				{
+					AnimDuration = ReloadAnimDuration;
+				}
+				GetWorldTimerManager().SetTimer(RelaodingTimerHandle, this, &ABaseWeapon::StopReloading, AnimDuration, false);
 			}
 
-			CurrentClip = AmmoRemainginMaxClip;
+			PlayWeaponSound(ReloadSound);
+
+			// fill up the current ammo
+			float AmmoRemainingInCurrentClip = CurrentAmmo;
+
+			CurrentClip = CurrentClip - WeaponConfig.MaxAmmo + AmmoRemainingInCurrentClip;
+			if (CurrentClip > 0)
+			{
+				CurrentAmmo = WeaponConfig.MaxAmmo;
+			}
+			else
+			{
+				float AmmoRemainginMaxClip = 0;
+				CurrentAmmo = CurrentAmmo + CurrentClip;
+
+				if (CurrentAmmo > WeaponConfig.MaxAmmo)
+				{
+					AmmoRemainginMaxClip = WeaponConfig.MaxAmmo - CurrentAmmo;
+				}
+
+				CurrentClip = AmmoRemainginMaxClip;
+			}
+
 		}
+		
 	}
 	
 }

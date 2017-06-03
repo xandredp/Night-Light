@@ -124,7 +124,7 @@ public:
 		virtual void ProjectileFire();
 
 	//WeaponInfo
-	UPROPERTY(EditDefaultsOnly, Category = Config)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		FWeaponData WeaponConfig;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Config")
