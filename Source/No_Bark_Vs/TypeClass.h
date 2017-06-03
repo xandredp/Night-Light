@@ -12,6 +12,8 @@ enum class EBotBehaviorType : uint8
 	Suspicious,
 	//Running towards the player and attacking
 	Agression,
+
+	Charge,
 	// Torches on he is in the light and not moving
 	Stunned,
 	//Move out of the light.

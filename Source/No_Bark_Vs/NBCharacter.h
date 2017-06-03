@@ -162,6 +162,7 @@ public:
 		bool bIsDead;
 
 	/* DecreaseStamina, used by timer. */
+	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseHealth(float decreaseVal);
 	void IncreaseHealth(float increaseVal);
 	void DecreaseStamina();

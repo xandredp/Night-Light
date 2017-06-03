@@ -36,6 +36,7 @@ public:
 
 	//AI seeing, Sensing component
 	UPROPERTY(VisibleAnywhere, Category = "AI")
+
 	class UPawnSensingComponent* PawnSensingComp;
 
 	// The behaviour tree of the character
@@ -44,17 +45,42 @@ public:
 
 
 	/* Properties shared across all derived classes */
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float MovementSpeed;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float Health;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float AttackDamage;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float AttackRange;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundPlayerNoticed;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundHunting;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundIdle;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundWandering;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundAttackMelee;
+
+	/* Attack Animation time &  Minimum time between melee attacks */
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	float MeleeStrikeCooldown;
+	/* Minimum time between melee attacks */
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		float LastStrikeTime;
+	/* Plays the idle, wandering or hunting sound */
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+		UAudioComponent* AudioLoopComp;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")

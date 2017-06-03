@@ -5,7 +5,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
+#include "TypeClass.h"
 #include "AIController.h"
 #include "MyAIController.generated.h"
 
@@ -36,6 +36,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName TargetKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName AIStateKey;
+
 
 	TArray<AActor*> TargetPoints;
 
@@ -46,14 +49,21 @@ public:
 	AMyAIController();
 	
 	//Executes when the controller possess the AI pawn
-	virtual void Possess(APawn* Pawn) override;
+	virtual void Possess(APawn* aPawn) override;
 
 	//Sets the sensed target in the blackboard
-	void SetSeenTarget(APawn* Pawn);
+	// inventory interaction functions
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+	void SetSeenTarget(APawn* aPawn);
 
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+	void SetBlackboardBotState(EBotBehaviorType NewState);
+	
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void ResetSeenTarget();
 
 	/*Sets the new sensed target value inside our Blackboard values*/
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void SetSensedTarget(APawn* NewTarget);
 
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
