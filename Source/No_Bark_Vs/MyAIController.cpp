@@ -50,6 +50,8 @@ void AMyAIController::SetSensedTarget(APawn* NewTarget)
 	if (BlackboardComp) BlackboardComp->SetValueAsObject(SensedTarget, NewTarget);
 }
 
+
+
 void AMyAIController::SetSeenTarget(APawn* aPawn)
 {
 	if (BlackboardComp)
@@ -93,10 +95,27 @@ void AMyAIController::SetBlackboardBotState(EBotBehaviorType NewState)
 	}
 }
 
+void AMyAIController::SetLocationToCharge(FVector LocationVector)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsVector(LocationToCharge, LocationVector);
+	}
+}
+
 void AMyAIController::ResetSeenTarget()
 {
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsObject(TargetKey, nullptr);
 	}
+}
+
+FVector AMyAIController::GetLocationToCharge()
+{
+	if (BlackboardComp)
+	{
+		return BlackboardComp->GetValueAsVector(LocationToCharge);
+	}
+	return(FVector(0, 0, 0));
 }

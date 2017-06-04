@@ -39,6 +39,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName AIStateKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName LocationToCharge;
 
 	TArray<AActor*> TargetPoints;
 
@@ -58,6 +60,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void SetBlackboardBotState(EBotBehaviorType NewState);
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetLocationToCharge(FVector LocationVector);
 	
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void ResetSeenTarget();
@@ -65,6 +70,8 @@ public:
 	/*Sets the new sensed target value inside our Blackboard values*/
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void SetSensedTarget(APawn* NewTarget);
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+	FVector GetLocationToCharge();
 
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 

@@ -14,6 +14,14 @@ class NO_BARK_VS_API ATankyMonster : public ASkinnyMonster
 	GENERATED_BODY()
 	
 	
-	
+public:
+	ATankyMonster();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float UsualSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float ChargingSpeed;
+
+	UCharacterMovementComponent* TankyMoveComp;
 	
 };
