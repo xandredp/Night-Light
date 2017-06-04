@@ -4,11 +4,5 @@
 #include "TankyMonster.h"
 
 
-//AI Wonderting around
 
 
-
-ATankyMonster::ATankyMonster()
-{
-
-}
