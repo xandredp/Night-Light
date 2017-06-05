@@ -48,7 +48,7 @@ public:
 	UFUNCTION()
 		void PerformAttack(AActor* HitActor);
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
 		void DecreaseCharacterHealth();
 
 private:

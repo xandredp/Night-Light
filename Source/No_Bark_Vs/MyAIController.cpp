@@ -18,6 +18,8 @@ AMyAIController::AMyAIController()
 	LocationToGoKey = "LocationToGo";
 	AIStateKey = "AIState";
 	TargetKey = "Target";
+	LocationToCharge = "LocationVector";
+	TargetToChargeKey = "ChargeTarget";
 
 }
 
@@ -57,6 +59,14 @@ void AMyAIController::SetSeenTarget(APawn* aPawn)
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsObject(TargetKey, aPawn);
+	}
+}
+
+void AMyAIController::SetChargeTarget(APawn* aPawn)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(TargetToChargeKey, aPawn);
 	}
 }
 
@@ -110,6 +120,13 @@ void AMyAIController::ResetSeenTarget()
 		BlackboardComp->SetValueAsObject(TargetKey, nullptr);
 	}
 }
+void AMyAIController::ResetChargeTarget()
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(TargetToChargeKey, nullptr);
+	}
+}
 
 FVector AMyAIController::GetLocationToCharge()
 {
@@ -117,5 +134,9 @@ FVector AMyAIController::GetLocationToCharge()
 	{
 		return BlackboardComp->GetValueAsVector(LocationToCharge);
 	}
-	return(FVector(0, 0, 0));
+	else
+	{
+		return(FVector(0, 0, 0));
+	}
+
 }

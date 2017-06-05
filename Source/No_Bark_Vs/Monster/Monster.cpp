@@ -68,8 +68,9 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 			AIController->SetSeenTarget(SensedPawn);
 		}
 		else
-		{
+		{	
 			GLog->Log("Out of Seeing range");
+			MonsterState = EBotBehaviorType::Neutral;
 			AIController->ResetSeenTarget();
 		}
 	}

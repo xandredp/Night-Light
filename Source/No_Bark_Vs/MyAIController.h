@@ -39,6 +39,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName AIStateKey;
 
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName TargetToChargeKey;
+
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName LocationToCharge;
 
@@ -67,9 +71,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void ResetSeenTarget();
 
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void ResetChargeTarget();
+
 	/*Sets the new sensed target value inside our Blackboard values*/
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void SetSensedTarget(APawn* NewTarget);
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetChargeTarget(APawn* aPawn);
+
+
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	FVector GetLocationToCharge();
 
