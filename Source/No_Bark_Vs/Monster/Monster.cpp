@@ -20,7 +20,7 @@ AMonster::AMonster()
 	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
 
 	MonsterState = EBotBehaviorType::Neutral;
-
+	Fleeing = false;
 	bisMonsterDead = false;
 }
 
