@@ -2,6 +2,7 @@
 
 #include "No_Bark_Vs.h"
 #include "NBCharacter.h"
+#include "TypeClass.h"
 #include "PlayGameMode.h"
 
 
@@ -12,5 +13,6 @@ APlayGameMode::APlayGameMode()
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
+		GameModeState = EGameModeSoundType::General;
 	}
 }

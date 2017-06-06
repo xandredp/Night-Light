@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/GameMode.h"
+#include "TypeClass.h"
 #include "PlayGameMode.generated.h"
 
 /**
@@ -16,11 +17,12 @@ public:
 	APlayGameMode();
 	class UDataTable* GetItemDB() const { return ItemDB; }
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
+		EGameModeSoundType GameModeState;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly)
 		class UDataTable* ItemDB;
 
-	
-	
 };
