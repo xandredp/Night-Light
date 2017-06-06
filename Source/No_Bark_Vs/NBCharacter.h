@@ -87,6 +87,19 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
 
+
+	/************************************************************************/
+	/* Anim use                                                           */
+	/************************************************************************/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		UCharacterAnimInstance* AnimInstance;
+	/* Retrieve Pitch/Yaw from current camera */
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+		FRotator GetAimOffsets() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+		bool GetIsCrouched() const;
+
 	/************************************************************************/
 	/* weapon use                                                           */
 	/************************************************************************/

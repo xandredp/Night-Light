@@ -64,6 +64,8 @@ ANBCharacter::ANBCharacter()
 												   // Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 												   // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 												   /* Names as specified in the character skeleton */
+	
+
 
 
 	WeaponAttachPoint = TEXT("Weapon_Socket");
@@ -71,7 +73,7 @@ ANBCharacter::ANBCharacter()
 	PrimaryAttachPoint = TEXT("Spine_Socket");
 	SecondaryAttachPoint = TEXT("Clavicle_Socket");
 
-
+	
 	//Status
 	CurrentHealth = 100.0f;
 	MaxHealth = 100.0f;
@@ -85,7 +87,6 @@ ANBCharacter::ANBCharacter()
 	HealthTimerRate = 1.0f;
 	MagicTimerRate = 1.0f;
 	bIsFiring = false;
-
 	// Item
 
 	MaxInteractDistance = 500.0f;
@@ -95,6 +96,7 @@ void ANBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	bIsDead = false;
 
 	if (WeaponClass != NULL)
@@ -173,8 +175,7 @@ void ANBCharacter::EquipPrimaryWeapon()
 {
 	GetEquipment(0);
 	
-	UCharacterAnimInstance* AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-
+	
 	if (WeaponClass == NULL)
 	{			
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
@@ -605,4 +606,18 @@ void ANBCharacter::ReportNoise(USoundBase* SoundToPlay, float Volume)
 		MakeNoise(Volume, this, GetActorLocation());
 	}
 
+}
+
+FRotator ANBCharacter::GetAimOffsets() const
+{
+	const FVector AimDirWS = GetBaseAimRotation().Vector();
+	const FVector AimDirLS = ActorToWorld().InverseTransformVectorNoScale(AimDirWS);
+	const FRotator AimRotLS = AimDirLS.Rotation();
+
+	return AimRotLS;
+}
+
+bool ANBCharacter::GetIsCrouched() const
+{
+	return bIsCrouched;
 }
