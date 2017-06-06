@@ -99,4 +99,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void SetRagdollPhysics();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool Fleeing;
+
+
 };
