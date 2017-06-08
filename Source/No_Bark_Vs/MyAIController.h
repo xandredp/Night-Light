@@ -85,6 +85,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	FVector GetLocationToCharge();
 
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetAIStateFlee();
+
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 
 	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return TargetPoints; }

@@ -65,12 +65,16 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		if (GetDistanceTo(SensedPawn) < 1500)
 		{
 			GLog->Log("Seen");
+			MonsterState = EBotBehaviorType::Suspicious;
+			AIController->SetBlackboardBotState(MonsterState);
+
 			AIController->SetSeenTarget(SensedPawn);
 		}
 		else
 		{	
 			GLog->Log("Out of Seeing range");
 			MonsterState = EBotBehaviorType::Neutral;
+			AIController->SetBlackboardBotState(MonsterState);
 			AIController->ResetSeenTarget();
 		}
 	}

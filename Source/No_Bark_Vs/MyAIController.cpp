@@ -140,3 +140,15 @@ FVector AMyAIController::GetLocationToCharge()
 	}
 
 }
+
+void AMyAIController::SetAIStateFlee()
+{
+	FName CurrentState = "NULL";
+	
+	CurrentState = "Flee";
+
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+	}
+}
