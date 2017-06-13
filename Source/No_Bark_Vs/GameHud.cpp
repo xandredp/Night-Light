@@ -10,9 +10,9 @@
 
 AGameHud::AGameHud()
 {
-	// Set the crosshair texture
-	static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshiarTexObj(TEXT("/Game/Textures/FirstPersonCrosshair"));
-	CrosshairTex = CrosshiarTexObj.Object;
+	//// Set the crosshair texture
+	//static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshiarTexObj(TEXT("/Game/Textures/FirstPersonCrosshair"));
+	//CrosshairTex = CrosshiarTexObj.Object;
 }
 
 
@@ -20,7 +20,7 @@ void AGameHud::DrawHUD()
 {
 	Super::DrawHUD();
 
-	DrawCrossHair();
+	//DrawCrossHair();
 }
 
 void AGameHud::DrawCrossHair()
