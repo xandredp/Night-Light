@@ -86,9 +86,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 		EBotBehaviorType MonsterState;
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetPlayModeState(EGameModeSoundType ChangeSoundState);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisMonsterDead;
 
+	// inventory interaction functions
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		UAudioComponent* PlayCharacterSound(USoundCue* CueToPlay);
 
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")

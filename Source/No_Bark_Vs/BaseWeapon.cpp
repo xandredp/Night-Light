@@ -225,7 +225,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	//const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
 	//const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
 
-	DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 1.0f, 0.0f, 1.0f);
+	//DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 1.0f, 0.0f, 1.0f);
 
 //	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
@@ -358,7 +358,9 @@ void ABaseWeapon::SimulateWeaponFire()
 {
 	if (MuzzleFX)
 	{
+	
 		MuzzlePSC = UGameplayStatics::SpawnEmitterAttached(MuzzleFX, WeaponMesh, MuzzleAttachPoint);
+		MuzzlePSC->AddWorldRotation(FRotator(0.0f, 90.0f, 0.0f));
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "FXFXSpwned..");
 	}
 

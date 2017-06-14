@@ -7,7 +7,7 @@
 
 ASkinnyMonster::ASkinnyMonster()
 {
-	MovementSpeed = 75.0f;
+	MovementSpeed = 200.0f;
 	Health = 100.0f;
 	AttackDamage = 20.0f;
 	AttackRange = 150.0f;
@@ -106,6 +106,12 @@ void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, 
 
 void ASkinnyMonster::PerformAttack(AActor* HitActor)
 {
+	if (SoundAttackMelee)
+	{
+		PlayCharacterSound(SoundAttackMelee);
+		SetPlayModeState(EGameModeSoundType::Combat);
+	}
+	
 	if (GetMonsterDead() == false)
 	{
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);

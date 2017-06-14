@@ -4,6 +4,7 @@
 #include "Monster/Monster.h"
 #include "MyAIController.h"
 #include "NBCharacter.h"
+#include "GameFramework/GameMode.h"
 #include "TypeClass.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Perception/PawnSensingComponent.h"
@@ -69,13 +70,25 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 			AIController->SetBlackboardBotState(MonsterState);
 
 			AIController->SetSeenTarget(SensedPawn);
+
+			if (SoundPlayerNoticed)
+			{
+				PlayCharacterSound(SoundPlayerNoticed);
+				SetPlayModeState(EGameModeSoundType::Alert);
+			}
 		}
 		else
 		{	
 			GLog->Log("Out of Seeing range");
 			MonsterState = EBotBehaviorType::Neutral;
 			AIController->SetBlackboardBotState(MonsterState);
+			if (SoundIdle)
+			{
+				PlayCharacterSound(SoundIdle);
+				SetPlayModeState(EGameModeSoundType::General);
+			}
 			AIController->ResetSeenTarget();
+
 		}
 	}
 }
@@ -163,4 +176,14 @@ void AMonster::SetRagdollPhysics()
 	{
 		SetLifeSpan(10.0f);
 	}
+}
+UAudioComponent* AMonster::PlayCharacterSound(USoundCue* CueToPlay)
+{
+	if (CueToPlay)
+	{
+		return UGameplayStatics::SpawnSoundAttached(CueToPlay, RootComponent, NAME_None, FVector::ZeroVector, EAttachLocation::SnapToTarget, true);
+	}
+
+	return nullptr;
+
 }
