@@ -24,6 +24,12 @@ public:
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;
 
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	////
+	//// Called every frame
+	//virtual void Tick(float DeltaSeconds) override;
+
 	void DestroyItemOnGround();
 
 	UFUNCTION(BlueprintCallable, Category = "Config")

@@ -7,15 +7,11 @@
 // Sets default values
 AActor_Light::AActor_Light()
 {
-	NavMeshModifierSphere = CreateDefaultSubobject<USphereComponent>(TEXT("NavMesh Modifier Sphere"));
-	PointLightComp = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
+	SpotLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("PointLight"));
+	SpotLightComp->SetupAttachment(RootComponent);
 
-	RootComponent = NavMeshModifierSphere;
-	NavMeshModifierSphere->SetSphereRadius(200.0f);
-	//NavMeshModifierSphere->SetRelativeLocation(PointLightComp->RelativeLocation - FVector(0.0f, 20.0f, 0.0f));
-	
-	bIsLightOn = false;
-	this->SetActorHiddenInGame(bIsLightOn);
+	bIsLightOn = true;
+	//this->SetActorHiddenInGame(bIsLightOn);
 }
 
 // Called when the game starts or when spawned

@@ -10,11 +10,8 @@
 ASwichObjForLight::ASwichObjForLight()
 {
 	ItemID = FName("Please EnterID");
-	EnergyTimerRate = 0.2f;
-	if (LightActorComp)
-	{
-		LightActorComp->bIsLightOn = false;
-	}
+	EnergyTimerRate = 0.2f;	
+
 }
 
 void ASwichObjForLight::Interact(APlayerController* playerController)
@@ -34,6 +31,21 @@ void ASwichObjForLight::Interact(APlayerController* playerController)
 	}
 }
 
+void ASwichObjForLight::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (LightActorComp)
+	{
+		LightActorComp->bIsLightOn = true;
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
+		LightActorComp->ToggleSpotLightComp(true);
+		LightingOnStart();
+	}
+
+
+}
+
 void ASwichObjForLight::DestroyItemOnGround()
 {
 	Destroy();
@@ -49,7 +61,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 			LightActorComp->bIsLightOn = false;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off :  No EnergyLeft");
 
-			LightActorComp->TogglePointLightComp(false);
+			LightActorComp->ToggleSpotLightComp(false);
 			LightingOnStop();
 		}
 
@@ -62,7 +74,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 				LightActorComp->bIsLightOn = false;
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 
-				LightActorComp->TogglePointLightComp(false);
+				LightActorComp->ToggleSpotLightComp(false);
 				LightingOnStop();
 
 			}
@@ -71,7 +83,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 			{
 				LightActorComp->bIsLightOn = true;
 				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
-				LightActorComp->TogglePointLightComp(true);
+				LightActorComp->ToggleSpotLightComp(true);
 				LightingOnStart();
 			}
 
@@ -92,6 +104,7 @@ void ASwichObjForLight::DecreaseEnergy()
 		{
 			aCrackingObjForLight->Energy = 0;
 			LightActorComp->bIsLightOn = false;
+			LightActorComp->ToggleSpotLightComp(LightActorComp->bIsLightOn);
 			LightingOnStop();
 			//do nothing
 		}
@@ -112,11 +125,15 @@ void ASwichObjForLight::IncreaseEnergy()
 
 void ASwichObjForLight::LightingOnStart()
 {
-	GetWorldTimerManager().SetTimer(StartLightingTimerHandle, this, &ASwichObjForLight::DecreaseEnergy, EnergyTimerRate, true);
+	if (LightActorComp->bIsLightOn == true)
+	{
+		GetWorldTimerManager().SetTimer(StartLightingTimerHandle, this, &ASwichObjForLight::DecreaseEnergy, EnergyTimerRate, true);
+	}
 }
 
 void ASwichObjForLight::LightingOnStop()
 {
 	GetWorldTimerManager().ClearTimer(StartLightingTimerHandle);
+	LightActorComp->ToggleSpotLightComp(false);
 }
 
