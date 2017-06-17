@@ -72,6 +72,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundAttackMelee;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundAttackCharge;
+
 	/* Attack Animation time &  Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MeleeStrikeCooldown;
@@ -109,5 +112,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		bool Fleeing;
 
-
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
+		void DecreaseCharacterHealth();
 };

@@ -33,6 +33,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackAnimTriggerSphere;
 	
+	/************************************************************************/
+	/* Overlap functions                                      */
+	/************************************************************************/
 
 	UFUNCTION()
 		void OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -45,11 +48,14 @@ public:
 	UFUNCTION()
 		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	/************************************************************************/
+	/*Attacks				                                                */
+	/************************************************************************/
+
 	UFUNCTION()
 		void PerformAttack(AActor* HitActor);
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
-		void DecreaseCharacterHealth();
+
 
 private:
 

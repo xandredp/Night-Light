@@ -40,6 +40,46 @@ void ATankyMonster::BeginPlay()
 	}
 }
 
+void ATankyMonster::PerformTankyAttack(AActor * HitActor)
+{
+	if (SoundAttackMelee)
+	{
+		PlayCharacterSound(SoundAttackMelee);
+		SetPlayModeState(EGameModeSoundType::Combat);
+	}
+
+	if (GetMonsterDead() == false)
+	{
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
+		if (OtherPawn)
+		{
+			LastStrikeTime = GetWorld()->GetTimeSeconds();
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+			//DamageCharacterHealth();
+		}
+	}
+}
+
+void ATankyMonster::PerformTankyCharge(AActor * HitActor)
+{
+	if (SoundAttackMelee)
+	{
+		PlayCharacterSound(SoundAttackCharge);
+		SetPlayModeState(EGameModeSoundType::Combat);
+	}
+
+	if (GetMonsterDead() == false)
+	{
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
+		if (OtherPawn)
+		{
+			LastStrikeTime = GetWorld()->GetTimeSeconds();
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+			//DamageCharacterHealth();
+		}
+	}
+}
+
 void ATankyMonster::OnSeePlayer(APawn* aPawn)
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
