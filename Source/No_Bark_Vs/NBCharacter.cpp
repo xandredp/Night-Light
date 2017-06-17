@@ -383,7 +383,16 @@ void ANBCharacter::SpawnWeaponOnSlot(TSubclassOf<class ABaseWeapon> iWeaponClass
 	
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
-	CurrentHealth -= decreaseVal;
+	
+	if (CurrentHealth <= 0)
+	{
+		bIsDead = true;
+		DestroyAndBackToMenu();
+	}
+	else
+	{
+		CurrentHealth -= decreaseVal;
+	}
 }
 
 void ANBCharacter::IncreaseHealth(float increaseVal)
@@ -463,6 +472,7 @@ ABaseInteractable* ANBCharacter::GetInteractableInView()
 
 	FHitResult Hit(ForceInit);
 	GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
+	//GetWorld()->LineTraceSingleByObjectType(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
 
 	//DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Blue, false, 1.0f);
 

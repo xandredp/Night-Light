@@ -181,6 +181,10 @@ public:
 	void DecreaseStamina();
 	void IncreaseStamina();
 
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void DestroyAndBackToMenu();
+
 	/************************************************************************/
 	/* Pickups                                                              */
 	/************************************************************************/
