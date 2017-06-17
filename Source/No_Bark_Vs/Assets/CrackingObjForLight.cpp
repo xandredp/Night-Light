@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "No_Bark_Vs.h"
-#include "PlayController.h"
+#include "Core/No_Bark_Vs.h"
+#include "Player/PlayController.h"
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "Engine.h"
-#include "CrackingObjForLight.h"
+#include "Assets/CrackingObjForLight.h"
 
 
 

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "BaseInteractable.h"
+#include "Core/BaseInteractable.h"
 #include "SwichObjForLight.generated.h"
 
 /**
