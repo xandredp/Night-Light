@@ -125,8 +125,6 @@ void ASkinnyMonster::PerformAttack(AActor* HitActor)
 			{
 				PlayDeathAttackSound();
 			}
-
-
 			DecreaseCharacterHealth();
 		}
 	}
