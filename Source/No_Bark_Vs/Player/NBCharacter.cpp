@@ -384,14 +384,14 @@ void ANBCharacter::SpawnWeaponOnSlot(TSubclassOf<class ABaseWeapon> iWeaponClass
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
 	
-	if (CurrentHealth <= 0)
+	if (CurrentHealth > 0)
 	{
-		bIsDead = true;
-		DestroyAndBackToMenu();
+		CurrentHealth -= decreaseVal;	
 	}
 	else
 	{
-		CurrentHealth -= decreaseVal;
+		bIsDead = true;
+		DestroyAndBackToMenu();
 	}
 }
 
