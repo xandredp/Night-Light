@@ -20,9 +20,16 @@ AMonster::AMonster()
 	// Set the peripheral vision angle to 80 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
 
+	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("ZombieLoopedSoundComp"));
+	AudioLoopComp->bAutoActivate = false;
+	AudioLoopComp->bAutoDestroy = false;
+	AudioLoopComp->SetupAttachment(RootComponent);
+
 	MonsterState = EBotBehaviorType::Neutral;
 	Fleeing = false;
 	bisMonsterDead = false;
+	LastIdlePlayTime = 0.0f;
+	IdleSoundCooldown = 1.0f;
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +42,10 @@ void AMonster::BeginPlay()
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AMonster::OnSeePlayer);
 		PawnSensingComp->OnHearNoise.AddDynamic(this, &AMonster::OnHearNoise);
+	}
+	if (SoundIdle)
+	{
+		PlayCharacterSound(SoundIdle);
 	}
 }
 
@@ -52,6 +63,8 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 
 void AMonster::OnSeePlayer(APawn* aPawn)
 {
+	EBotBehaviorType PreMonsterState;
+	PreMonsterState = MonsterState;
 	if (Health <= 0.0)
 	{
 		bisMonsterDead = false;
@@ -71,11 +84,18 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 
 			AIController->SetSeenTarget(SensedPawn);
 
-			if (SoundPlayerNoticed)
+			//When changed to suspicious cry once. 
+			if (PreMonsterState != MonsterState)
 			{
-				PlayCharacterSound(SoundPlayerNoticed);
-				SetPlayModeState(EGameModeSoundType::Alert);
+				if (SoundPlayerNoticed)
+				{
+					//PlayCharacterSound(SoundPlayerNoticed);
+					AudioLoopComp->SetSound(SoundPlayerNoticed);
+					AudioLoopComp->Play();
+					SetPlayModeState(EGameModeSoundType::Alert);
+				}
 			}
+			
 		}
 		else
 		{	
@@ -84,9 +104,23 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 			AIController->SetBlackboardBotState(MonsterState);
 			if (SoundIdle)
 			{
-				PlayCharacterSound(SoundIdle);
+				AudioLoopComp->SetSound(SoundIdle);
+				AudioLoopComp->Play();
+				LastIdlePlayTime = GetWorld()->GetTimeSeconds();
 				SetPlayModeState(EGameModeSoundType::General);
 			}
+			/*if (GetWorld()->TimeSeconds - LastIdlePlayTime > IdleSoundCooldown)
+			{
+				if (SoundIdle)
+				{
+					AudioLoopComp->SetSound(SoundIdle);
+					AudioLoopComp->Play();
+					LastIdlePlayTime = GetWorld()->GetTimeSeconds();
+					SetPlayModeState(EGameModeSoundType::General);
+				}
+			}*/
+
+
 			AIController->ResetSeenTarget();
 
 		}
@@ -175,6 +209,24 @@ void AMonster::SetRagdollPhysics()
 	else
 	{
 		SetLifeSpan(10.0f);
+	}
+}
+void AMonster::PlayAttackSound()
+{
+	if (SoundAttackMelee)
+	{
+		AudioLoopComp->SetSound(SoundAttackMelee);
+		AudioLoopComp->Play();
+		SetPlayModeState(EGameModeSoundType::Combat);
+	}
+}
+void AMonster::PlayDeathAttackSound()
+{
+	if (SoundDeathAttack)
+	{
+		AudioLoopComp->SetSound(SoundDeathAttack);
+		AudioLoopComp->Play();
+		SetPlayModeState(EGameModeSoundType::Death);
 	}
 }
 UAudioComponent* AMonster::PlayCharacterSound(USoundCue* CueToPlay)
