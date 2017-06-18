@@ -86,6 +86,9 @@ public:
 	FVector GetLocationToCharge();
 
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		EBotBehaviorType GetBlackboardBotState();
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 		void SetAIStateFlee();
 
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }

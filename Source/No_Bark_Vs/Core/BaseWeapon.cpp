@@ -35,6 +35,7 @@ ABaseWeapon::ABaseWeapon()
 	EquipAnimDuration = 0.5f;
 	FireAnimDuration = 1.5f;
 	ReloadAnimDuration = 1.1f;
+	WeaponConfig.TimeBetweenShots = 0.1f;
 }
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 {
@@ -44,7 +45,7 @@ class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 void ABaseWeapon::SetTimerForFiring()
 {
 
-	GetWorldTimerManager().SetTimer(FiringTimerHandle, this, &ABaseWeapon::Fire, WeaponConfig.TimeBetweenShots, false);
+	GetWorldTimerManager().SetTimer(FiringTimerHandle, this, &ABaseWeapon::Fire, WeaponConfig.TimeBetweenShots, true);
 }
 void ABaseWeapon::StopTimerForFiring()
 {

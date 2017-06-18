@@ -106,19 +106,25 @@ void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, 
 
 void ASkinnyMonster::PerformAttack(AActor* HitActor)
 {
-	if (SoundAttackMelee)
-	{
-		PlayCharacterSound(SoundAttackMelee);
-		SetPlayModeState(EGameModeSoundType::Combat);
-	}
-	
+
 	if (GetMonsterDead() == false)
 	{
+
+
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
 		if (OtherPawn)
 		{
 			LastStrikeTime = GetWorld()->GetTimeSeconds();
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+			
+			if (OtherPawn->CurrentHealth > 0)
+			{
+				PlayAttackSound();
+			}
+			else
+			{
+				PlayDeathAttackSound();
+			}
 			DecreaseCharacterHealth();
 		}
 	}

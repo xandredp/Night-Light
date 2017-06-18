@@ -105,6 +105,42 @@ void AMyAIController::SetBlackboardBotState(EBotBehaviorType NewState)
 	}
 }
 
+EBotBehaviorType AMyAIController::GetBlackboardBotState()
+{
+	FName CurrentState = "NULL";
+	if (BlackboardComp)
+	{
+		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
+	}
+	if (CurrentState == "Neutral")
+	{
+		return EBotBehaviorType::Neutral;
+	}
+	else if (CurrentState == "Suspicious")
+	{
+		return EBotBehaviorType::Suspicious;
+	}
+	else if (CurrentState == "Flee")
+	{
+		return EBotBehaviorType::Flee;
+	}
+	else if (CurrentState == "Agression")
+	{
+		return EBotBehaviorType::Agression;
+	}
+	else if (CurrentState == "Charge")
+	{
+		return EBotBehaviorType::Charge;
+	}
+	else if (CurrentState == "Stunned")
+	{
+		return EBotBehaviorType::Stunned;
+	}
+	else
+	{
+		return EBotBehaviorType::Neutral;
+	}
+}
 void AMyAIController::SetLocationToCharge(FVector LocationVector)
 {
 	if (BlackboardComp)

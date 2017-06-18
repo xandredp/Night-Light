@@ -71,10 +71,16 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundAttackMelee;
-
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		USoundCue* SoundDeathAttack;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundAttackCharge;
-
+	/* Attack Animation time &  Minimum time between melee attacks */
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		float IdleSoundCooldown;
+	/* Minimum time between melee attacks */
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		float LastIdlePlayTime;
 	/* Attack Animation time &  Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MeleeStrikeCooldown;
@@ -114,4 +120,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
 		void DecreaseCharacterHealth();
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void PlayAttackSound();
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void PlayDeathAttackSound();
 };
