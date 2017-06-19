@@ -33,6 +33,9 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAnimTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapStartAnim);
 	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
 	
+	AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+
+
 }
 
 
@@ -66,7 +69,6 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 {
 	if (GetMonsterDead() == false)
 	{
-		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
@@ -89,8 +91,6 @@ void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, 
 	{
 		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 		{
-			USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-
 			if (AnimInstance)
 			{
 				// Set CanAttack in AnimInstance to false

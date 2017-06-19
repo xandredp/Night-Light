@@ -32,7 +32,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackAnimTriggerSphere;
-	
+
+	USkinnyMonsterAnimInstance* AnimInstance;
 	/************************************************************************/
 	/* Overlap functions                                      */
 	/************************************************************************/
