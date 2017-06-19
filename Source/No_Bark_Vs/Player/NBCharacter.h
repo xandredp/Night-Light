@@ -54,6 +54,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 		AMonsterSpawner* Spawner;
 
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	//
@@ -174,12 +175,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bIsDead;
 
+	/* Attachpoint for secondary weapons */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float CurrentScore;
+
 	/* DecreaseStamina, used by timer. */
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseHealth(float decreaseVal);
 	void IncreaseHealth(float increaseVal);
 	void DecreaseStamina();
 	void IncreaseStamina();
+	void IncreaseScore(float increaseVal);
+	void DecreseaScore(float decreaseVal);
 
 
 	UFUNCTION(BlueprintImplementableEvent)

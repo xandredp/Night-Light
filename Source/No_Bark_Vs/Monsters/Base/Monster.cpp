@@ -30,6 +30,8 @@ AMonster::AMonster()
 	bisMonsterDead = false;
 	LastIdlePlayTime = 0.0f;
 	IdleSoundCooldown = 1.0f;
+	MonsterValue = 100.0f;
+	bisScoreAdded = false;
 }
 
 // Called when the game starts or when spawned
@@ -72,7 +74,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 	}
 
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-	ANBCharacter* SensedPawn = Cast<ANBCharacter>(aPawn);
+	SensedPawn = Cast<ANBCharacter>(aPawn);
 	//Set the seen target on the blackboard
 	if (AIController && SensedPawn)
 	{
@@ -145,6 +147,12 @@ void AMonster::ReduceHealth(int DamageValue)
 		{
 			bisMonsterDead = true;
 			SetRagdollPhysics();
+			if (bisScoreAdded == false)
+			{
+				SensedPawn->IncreaseScore(MonsterValue);
+				bisScoreAdded = true;
+			}
+		
 		}
 		else
 		{

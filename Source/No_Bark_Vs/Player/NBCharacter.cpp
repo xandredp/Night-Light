@@ -398,6 +398,7 @@ void ANBCharacter::DecreaseHealth(float decreaseVal)
 void ANBCharacter::IncreaseHealth(float increaseVal)
 {
 	CurrentHealth += increaseVal;
+	
 }
 
 void ANBCharacter::DecreaseStamina()
@@ -422,6 +423,20 @@ void ANBCharacter::IncreaseStamina()
 	{
 		CurrentStamina = CurrentStamina + StaminaRegenRate;
 	}
+}
+
+void ANBCharacter::IncreaseScore(float increaseVal)
+{
+	CurrentScore += increaseVal;
+	APlayController* playController = Cast<APlayController>(GetController());
+	playController->MyCurrentCurrency = CurrentScore;
+}
+
+void ANBCharacter::DecreseaScore(float decreaseVal)
+{
+	CurrentScore -= decreaseVal;
+	APlayController* playController = Cast<APlayController>(GetController());
+	playController->MyCurrentCurrency = CurrentScore;
 }
 
 void ANBCharacter::OnResetVR()

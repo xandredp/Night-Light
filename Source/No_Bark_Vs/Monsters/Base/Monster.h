@@ -36,13 +36,14 @@ public:
 
 	//AI seeing, Sensing component
 	UPROPERTY(VisibleAnywhere, Category = "AI")
-
 	class UPawnSensingComponent* PawnSensingComp;
 
 	// The behaviour tree of the character
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviorTree;
 
+	UPROPERTY(EditAnywhere, Category = "PlayerCharacter")
+	ANBCharacter* SensedPawn;
 
 	/* Properties shared across all derived classes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
@@ -101,6 +102,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisMonsterDead;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float MonsterValue;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bisScoreAdded;
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		UAudioComponent* PlayCharacterSound(USoundCue* CueToPlay);

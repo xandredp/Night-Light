@@ -175,6 +175,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		UUserWidget* MySkillWidget;
 
+	/************************************************************************/
+	/* Game Skills													         */
+	/************************************************************************/
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<bool> FSkillSets;
+
+	/************************************************************************/
+	/* Game Currency                                                      */
+	/************************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		int MyCurrentCurrency;
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")

@@ -22,6 +22,7 @@ APlayController::APlayController()
 	bShowMouseCursor = false;
 	FCurrentEquippedMeleeWeapon.CurrentStackNumber = 0;
 	FCurrentEquippedMeleeWeapon.ItemInfo.eItemType = EItemType::MeleeWeapon;
+	MyCurrentCurrency = 0.0f;
 }
 
 void APlayController::Interact()
