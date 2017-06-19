@@ -85,10 +85,7 @@ void APlayController::OpenSkillsWindow()
 			MySkillWidget = CreateWidget<UUserWidget>(this, wSkills);
 			if (MySkillWidget)
 			{
-				SetInputModetoGameandUI(true);
-				MySkillWidget->bIsFocusable = true;
-				bShowMouseCursor = true;
-				MySkillWidget->AddToViewport(1);
+				CloseSkills();
 			}
 		}
 
@@ -701,6 +698,14 @@ void APlayController::AttachEquipment(FCurrentInventoryItemInfo iItemInfo)
 
 void APlayController::UnAttachEquipment(FCurrentInventoryItemInfo iItemInfo)
 {
+}
+
+void APlayController::CloseSkills()
+{
+	SetInputModetoGameandUI(true);
+	MySkillWidget->bIsFocusable = true;
+	bShowMouseCursor = true;
+	MySkillWidget->AddToViewport(1);
 }
 
 void APlayController::SetupInputComponent()

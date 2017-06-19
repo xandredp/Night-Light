@@ -179,8 +179,12 @@ public:
 	/* Game Skills													         */
 	/************************************************************************/
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		TArray<bool> FSkillSets;
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void CloseSkills();
+
 
 	/************************************************************************/
 	/* Game Currency                                                      */

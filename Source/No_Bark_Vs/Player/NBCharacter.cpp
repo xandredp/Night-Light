@@ -75,8 +75,9 @@ ANBCharacter::ANBCharacter()
 
 	
 	//Status
-	CurrentHealth = 100.0f;
+	
 	MaxHealth = 100.0f;
+	CurrentHealth = MaxHealth;
 	CurrentStamina = 100.0f;
 	MaxStamina = 100.0f;
 	CurrentMagic = 100.0f;
