@@ -29,6 +29,9 @@ public:
 		void OpenInventory();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void OpenSkillsWindow();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void OpenMap();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
@@ -144,6 +147,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool isMyMapOpen;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool isMySkillsOpen;
+
 	UFUNCTION(BlueprintImplementableEvent)
 		void ReloadInventory();
 
@@ -154,6 +160,8 @@ public:
 		TSubclassOf<class UUserWidget> wEquipment;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		TSubclassOf<class UUserWidget> wMinimap;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wSkills;
 	// Variable to hold the widget After Creating it.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		UUserWidget* MyInventoryWidget;
@@ -163,6 +171,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		UUserWidget* MyMapWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		UUserWidget* MySkillWidget;
 
 protected:
 

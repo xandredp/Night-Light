@@ -17,6 +17,7 @@ APlayController::APlayController()
 	MaxEquipmentSize = 6;
 	LastAddedInventoryIndex = 0;
 	isMyMapOpen = false;
+	isMySkillsOpen = false;
 	isMyInventoryOpen = false;
 	bShowMouseCursor = false;
 	FCurrentEquippedMeleeWeapon.CurrentStackNumber = 0;
@@ -65,6 +66,33 @@ void APlayController::OpenInventory()
 	}
 
 
+}
+
+void APlayController::OpenSkillsWindow()
+{
+	if (isMySkillsOpen == true)
+	{
+		MySkillWidget->RemoveFromParent();
+		SetInputModetoGameandUI(false);
+		bShowMouseCursor = false;
+		isMySkillsOpen = false;
+	}
+	else
+	{
+		if (wSkills) // Check if the Asset is assigned in the blueprint.
+		{
+			MySkillWidget = CreateWidget<UUserWidget>(this, wSkills);
+			if (MySkillWidget)
+			{
+				SetInputModetoGameandUI(true);
+				MySkillWidget->bIsFocusable = true;
+				bShowMouseCursor = true;
+				MySkillWidget->AddToViewport(1);
+			}
+		}
+
+		isMySkillsOpen = true;
+	}
 }
 
 void APlayController::OpenMap()
@@ -681,6 +709,7 @@ void APlayController::SetupInputComponent()
 	InputComponent->BindAction("Use", IE_Pressed, this, &APlayController::Interact);
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &APlayController::OpenInventory);
 	InputComponent->BindAction("OpenMap", IE_Pressed, this, &APlayController::OpenMap);
+	InputComponent->BindAction("Skill", IE_Pressed, this, &APlayController::OpenSkillsWindow);
 
 
 }
