@@ -24,6 +24,9 @@ public:
 		bool CanCharge;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		bool CanChargeAttack;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		bool IsChargeFinished;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
