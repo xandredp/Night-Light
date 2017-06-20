@@ -155,26 +155,22 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 
 void AMonster::ReduceHealth(int DamageValue)
 {
-	if (GetMonsterDead() == false)
+	if (Health <= 0)
 	{
-		
-
-		if (Health <= 0)
+		bisMonsterDead = true;
+		SetRagdollPhysics();
+		if (bisScoreAdded == false)
 		{
-			bisMonsterDead = true;
-			SetRagdollPhysics();
-			if (bisScoreAdded == false)
-			{
-				SensedPawn->IncreaseScore(MonsterValue);
-				bisScoreAdded = true;
-			}
-		
+			SensedPawn->IncreaseScore(MonsterValue);
+			bisScoreAdded = true;
 		}
-		else
-		{
-			Health = Health - DamageValue;
-		}
+	
 	}
+	else
+	{
+		Health = Health - DamageValue;
+	}
+	
 }
 
 bool AMonster::GetMonsterDead()
