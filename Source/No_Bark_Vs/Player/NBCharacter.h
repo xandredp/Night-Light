@@ -182,10 +182,20 @@ public:
 	/* DecreaseStamina, used by timer. */
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseHealth(float decreaseVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void IncreaseHealth(float increaseVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseStamina();
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void IncreaseStamina();
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void IncreaseScore(float increaseVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreseaScore(float decreaseVal);
 
 
