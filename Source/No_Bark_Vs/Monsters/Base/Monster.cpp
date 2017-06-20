@@ -35,7 +35,7 @@ AMonster::AMonster()
 	bisMonsterDead = false;
 	LastIdlePlayTime = 0.0f;
 	IdleSoundCooldown = 1.0f;
-	MonsterValue = 100.0f;
+	MonsterValue = 100;
 	bisScoreAdded = false;
 }
 

@@ -177,7 +177,7 @@ public:
 
 	/* Attachpoint for secondary weapons */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float CurrentScore;
+		int CurrentScore;
 
 	/* DecreaseStamina, used by timer. */
 	UFUNCTION(BlueprintCallable, Category = "Condition")
@@ -193,10 +193,10 @@ public:
 	void IncreaseStamina();
 
 	UFUNCTION(BlueprintCallable, Category = "Condition")
-	void IncreaseScore(float increaseVal);
+	void IncreaseScore(int increaseVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Condition")
-	void DecreseaScore(float decreaseVal);
+	void DecreaseScore(int decreaseVal);
 
 
 	UFUNCTION(BlueprintImplementableEvent)

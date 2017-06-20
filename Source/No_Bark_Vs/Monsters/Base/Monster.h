@@ -103,7 +103,7 @@ public:
 		bool bisMonsterDead;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float MonsterValue;
+		int MonsterValue;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisScoreAdded;
