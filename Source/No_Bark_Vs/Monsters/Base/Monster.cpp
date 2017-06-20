@@ -19,6 +19,9 @@ AMonster::AMonster()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	// Set the peripheral vision angle to 80 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
+	PawnSensingComp->SightRadius = 300;
+	PawnSensingComp->HearingThreshold = 600;
+	PawnSensingComp->LOSHearingThreshold = 1000;
 
 	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("ZombieLoopedSoundComp"));
 	AudioLoopComp->bAutoActivate = false;
@@ -26,6 +29,8 @@ AMonster::AMonster()
 	AudioLoopComp->SetupAttachment(RootComponent);
 
 	MonsterState = EBotBehaviorType::Neutral;
+
+
 	Fleeing = false;
 	bisMonsterDead = false;
 	LastIdlePlayTime = 0.0f;
@@ -49,18 +54,28 @@ void AMonster::BeginPlay()
 	{
 		PlayCharacterSound(SoundIdle);
 	}
+	MonsterState = EBotBehaviorType::Neutral;
+	AMyAIController* AIController = Cast<AMyAIController>(GetController());
+	AIController->SetBlackboardBotState(MonsterState);
 }
 
 void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume)
 {
-	//AMyAIController* Con = Cast<AMyAIController>(GetController());
+	AMyAIController* AIController = Cast<AMyAIController>(GetController());
 
 	//We don't want to hear ourselves
-	//if (Con && PawnInstigator != this)
-	//{
+	if (AIController && PawnInstigator != this)
+	{
 	//	//Updates our target based on what we've heard.
-	//	//Con->SetSensedTarget(PawnInstigator);
-	//}
+		//Con->SetSensedTarget(PawnInstigator);
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
+		APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
+		AIController->SetSensedTarget(aPlayerCharacter);
+
+		MonsterState = EBotBehaviorType::Agression;
+		AIController->SetBlackboardBotState(MonsterState);
+
+	}
 }
 
 void AMonster::OnSeePlayer(APawn* aPawn)

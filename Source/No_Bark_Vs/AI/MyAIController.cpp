@@ -49,7 +49,7 @@ void AMyAIController::Possess(APawn* aPawn)
 void AMyAIController::SetSensedTarget(APawn* NewTarget)
 {
 	//Set a new target to follow
-	if (BlackboardComp) BlackboardComp->SetValueAsObject(SensedTarget, NewTarget);
+	if (BlackboardComp) BlackboardComp->SetValueAsObject(TargetKey, NewTarget);
 }
 
 
