@@ -33,7 +33,7 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAnimTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapStartAnim);
 	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
 	
-	AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	//AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 
 
 }
@@ -43,6 +43,7 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 {
 	if (GetMonsterDead() == false)
 	{
+		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
@@ -69,9 +70,11 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 {
 	if (GetMonsterDead() == false)
 	{
+		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attac range spherek!");
 			if (AnimInstance)
 			{
 				// Set CanAttack in AnimInstance to true
@@ -86,7 +89,9 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 
 void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	
+	USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+
 	if (GetMonsterDead() == false)
 	{
 		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
