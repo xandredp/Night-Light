@@ -118,6 +118,8 @@ public:
 	void Fire();
 	
 	UFUNCTION(BlueprintCallable, Category = "Config")
+		void FireBullets();
+	UFUNCTION(BlueprintCallable, Category = "Config")
 	void Instant_Fire();
 
 	UFUNCTION(BlueprintCallable, Category = "Config")

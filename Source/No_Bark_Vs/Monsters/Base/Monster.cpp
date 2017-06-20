@@ -63,71 +63,62 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
 
-	//We don't want to hear ourselves
-	if (AIController && PawnInstigator != this)
+	if (GetMonsterDead() == false)
 	{
-	//	//Updates our target based on what we've heard.
-		//Con->SetSensedTarget(PawnInstigator);
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
-		APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
-		AIController->SetSensedTarget(aPlayerCharacter);
+		//We don't want to hear ourselves
+		if (AIController && PawnInstigator != this)
+		{
+			//	//Updates our target based on what we've heard.
+			//Con->SetSensedTarget(PawnInstigator);
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
+			APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
+			AIController->SetSensedTarget(aPlayerCharacter);
 
-		MonsterState = EBotBehaviorType::Agression;
-		AIController->SetBlackboardBotState(MonsterState);
+			MonsterState = EBotBehaviorType::Agression;
+			AIController->SetBlackboardBotState(MonsterState);
 
+		}
 	}
 }
 
 void AMonster::OnSeePlayer(APawn* aPawn)
 {
-	EBotBehaviorType PreMonsterState;
-	PreMonsterState = MonsterState;
-	if (Health <= 0.0)
+	if (GetMonsterDead() == false)
 	{
-		bisMonsterDead = false;
-		return;
-	}
+		EBotBehaviorType PreMonsterState;
+		PreMonsterState = MonsterState;
 
-	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-	SensedPawn = Cast<ANBCharacter>(aPawn);
-	//Set the seen target on the blackboard
-	if (AIController && SensedPawn)
-	{
-		if (GetDistanceTo(SensedPawn) < 1500)
+		AMyAIController* AIController = Cast<AMyAIController>(GetController());
+		SensedPawn = Cast<ANBCharacter>(aPawn);
+		//Set the seen target on the blackboard
+		if (AIController && SensedPawn)
 		{
-			GLog->Log("Seen");
-			MonsterState = EBotBehaviorType::Suspicious;
-			AIController->SetBlackboardBotState(MonsterState);
-
-			AIController->SetSeenTarget(SensedPawn);
-
-			//When changed to suspicious cry once. 
-			if (PreMonsterState != MonsterState)
+			if (GetDistanceTo(SensedPawn) < 1500)
 			{
-				if (SoundPlayerNoticed)
+				GLog->Log("Seen");
+				MonsterState = EBotBehaviorType::Suspicious;
+				AIController->SetBlackboardBotState(MonsterState);
+
+				AIController->SetSeenTarget(SensedPawn);
+
+				//When changed to suspicious cry once. 
+				if (PreMonsterState != MonsterState)
 				{
-					//PlayCharacterSound(SoundPlayerNoticed);
-					AudioLoopComp->SetSound(SoundPlayerNoticed);
-					AudioLoopComp->Play();
-					SetPlayModeState(EGameModeSoundType::Alert);
+					if (SoundPlayerNoticed)
+					{
+						//PlayCharacterSound(SoundPlayerNoticed);
+						AudioLoopComp->SetSound(SoundPlayerNoticed);
+						AudioLoopComp->Play();
+						SetPlayModeState(EGameModeSoundType::Alert);
+					}
 				}
+
 			}
-			
-		}
-		else
-		{	
-			GLog->Log("Out of Seeing range");
-			MonsterState = EBotBehaviorType::Neutral;
-			AIController->SetBlackboardBotState(MonsterState);
-			if (SoundIdle)
+			else
 			{
-				AudioLoopComp->SetSound(SoundIdle);
-				AudioLoopComp->Play();
-				LastIdlePlayTime = GetWorld()->GetTimeSeconds();
-				SetPlayModeState(EGameModeSoundType::General);
-			}
-			/*if (GetWorld()->TimeSeconds - LastIdlePlayTime > IdleSoundCooldown)
-			{
+				GLog->Log("Out of Seeing range");
+				MonsterState = EBotBehaviorType::Neutral;
+				AIController->SetBlackboardBotState(MonsterState);
 				if (SoundIdle)
 				{
 					AudioLoopComp->SetSound(SoundIdle);
@@ -135,28 +126,38 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 					LastIdlePlayTime = GetWorld()->GetTimeSeconds();
 					SetPlayModeState(EGameModeSoundType::General);
 				}
-			}*/
+				/*if (GetWorld()->TimeSeconds - LastIdlePlayTime > IdleSoundCooldown)
+				{
+				if (SoundIdle)
+				{
+				AudioLoopComp->SetSound(SoundIdle);
+				AudioLoopComp->Play();
+				LastIdlePlayTime = GetWorld()->GetTimeSeconds();
+				SetPlayModeState(EGameModeSoundType::General);
+				}
+				}*/
 
 
-			AIController->ResetSeenTarget();
+				AIController->ResetSeenTarget();
 
+			}
 		}
 	}
 }
 
 
-// Called every frame
-void AMonster::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
-}
+//// Called every frame
+//void AMonster::Tick( float DeltaTime )
+//{
+//	Super::Tick( DeltaTime );
+//
+//}
 
 void AMonster::ReduceHealth(int DamageValue)
 {
-	if (bisMonsterDead == false)
+	if (GetMonsterDead() == false)
 	{
-		Health = Health - DamageValue;
+		
 
 		if (Health <= 0)
 		{
@@ -171,7 +172,7 @@ void AMonster::ReduceHealth(int DamageValue)
 		}
 		else
 		{
-
+			Health = Health - DamageValue;
 		}
 	}
 }

@@ -429,15 +429,15 @@ void ANBCharacter::IncreaseStamina()
 void ANBCharacter::IncreaseScore(float increaseVal)
 {
 	CurrentScore += increaseVal;
-	APlayController* playController = Cast<APlayController>(GetController());
-	playController->MyCurrentCurrency = CurrentScore;
+	APlayController* playerController = Cast<APlayController>(GetController());
+	playerController->MyCurrentCurrency = CurrentScore;
 }
 
 void ANBCharacter::DecreseaScore(float decreaseVal)
 {
 	CurrentScore -= decreaseVal;
-	APlayController* playController = Cast<APlayController>(GetController());
-	playController->MyCurrentCurrency = CurrentScore;
+	APlayController* playerController = Cast<APlayController>(GetController());
+	playerController->MyCurrentCurrency = CurrentScore;
 }
 
 void ANBCharacter::OnResetVR()

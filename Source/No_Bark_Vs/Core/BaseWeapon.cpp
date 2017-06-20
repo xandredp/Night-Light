@@ -44,31 +44,31 @@ class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 
 void ABaseWeapon::SetTimerForFiring()
 {
-
-	GetWorldTimerManager().SetTimer(FiringTimerHandle, this, &ABaseWeapon::Fire, WeaponConfig.TimeBetweenShots, true);
+	Fire();
 }
 void ABaseWeapon::StopTimerForFiring()
 {
 	GetWorldTimerManager().ClearTimer(FiringTimerHandle);
 }
+void ABaseWeapon::FireBullets()
+{
+	if (CurrentAmmo > 0)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
+		Instant_Fire();
 
+		CurrentAmmo -= WeaponConfig.ShotCost;
+	}
+	else
+	{
+		ReloadAmmo();
+	}
+}
 void ABaseWeapon::Fire()
 {
-
-
 	if (ProjectileType == EProjectileType::EBullet)
 	{
-		if (CurrentAmmo > 0)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
-			Instant_Fire();
-
-			CurrentAmmo -= WeaponConfig.ShotCost;
-		}
-		else
-		{
-			ReloadAmmo();
-		}
+		GetWorldTimerManager().SetTimer(FiringTimerHandle, this, &ABaseWeapon::FireBullets, WeaponConfig.TimeBetweenShots, true);
 	}
 	if (ProjectileType == EProjectileType::ESpread)
 	{
