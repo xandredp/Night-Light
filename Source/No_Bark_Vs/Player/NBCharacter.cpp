@@ -512,7 +512,6 @@ void ANBCharacter::MoveForward(float Value)
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
@@ -573,10 +572,6 @@ void ANBCharacter::OnCrouchToggle()
 	{
 		Crouch();
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual crouch noise!"));
-
-	MakeNoise(100, this, GetActorLocation());
-
 }
 void ANBCharacter::FireWeapon()
 {
