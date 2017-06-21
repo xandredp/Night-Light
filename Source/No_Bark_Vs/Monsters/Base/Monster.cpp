@@ -19,7 +19,7 @@ AMonster::AMonster()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	// Set the peripheral vision angle to 80 degrees
 	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
-	PawnSensingComp->SightRadius = 300;
+	PawnSensingComp->SightRadius = 1300;
 	PawnSensingComp->HearingThreshold = 600;
 	PawnSensingComp->LOSHearingThreshold = 1000;
 
@@ -74,6 +74,8 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 			APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
 			AIController->SetSensedTarget(aPlayerCharacter);
 
+			AIController->StopMovement();
+
 			MonsterState = EBotBehaviorType::Agression;
 			AIController->SetBlackboardBotState(MonsterState);
 
@@ -91,15 +93,19 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		AMyAIController* AIController = Cast<AMyAIController>(GetController());
 		SensedPawn = Cast<ANBCharacter>(aPawn);
 		//Set the seen target on the blackboard
-		if (AIController && SensedPawn)
+		if (AIController && SensedPawn && MonsterState != EBotBehaviorType::Suspicious)
 		{
 			if (GetDistanceTo(SensedPawn) < 1500)
 			{
-				GLog->Log("Seen");
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
+				//GLog->Log("Seen");
 				MonsterState = EBotBehaviorType::Suspicious;
 				AIController->SetBlackboardBotState(MonsterState);
 
 				AIController->SetSeenTarget(SensedPawn);
+				AIController->StopMovement();
+
+
 
 				//When changed to suspicious cry once. 
 				if (PreMonsterState != MonsterState)
