@@ -22,7 +22,9 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackRangeSphere->SetupAttachment(GetCapsuleComponent());
 	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
 	AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
-	AttackRangeSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
+
+	AttackRangeSphere->AttachToComponent(GetMesh(),  FAttachmentTransformRules(EAttachmentRule::KeepRelative, false), AttackAttachPoint);
+	//AttackRangeSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
 
 
 	AttackAnimTriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("AttackAnim Range Sphere"));
@@ -32,7 +34,11 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAnimTriggerSphere->SetupAttachment(GetCapsuleComponent());
 	AttackAnimTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapStartAnim);
 	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
-	
+
+	// try this to fix initialiastion error
+	//AttackAnimTriggerSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
+
+
 	//AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 
 
