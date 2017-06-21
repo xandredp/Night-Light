@@ -22,6 +22,9 @@ class NO_BARK_VS_API ASkinnyMonster : public AMonster
 public:
 	ASkinnyMonster();
 
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	AMonster* Monster;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")

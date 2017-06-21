@@ -25,6 +25,9 @@
 		}
 	],
 	"AdditionalPluginDirectories": [
-		"/../../../Vertical_Slice/Plugins"
+		"/../../../../../../Vertical_Slice/Plugins"
+	],
+	"TargetPlatforms": [
+		"WindowsNoEditor"
 	]
 }
