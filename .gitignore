@@ -76,3 +76,6 @@ Saved/*
 /Intermediate/Build/Win64/UE4Editor/Development/UE4Editor-No_Bark_Vs-1509.dll.response
 /Intermediate
 
+*.pdb
+Plugins/AI_Plugin/Binaries/Win64/UE4Editor-AI_Plugin.pdb
+Plugins/AI_Plugin/Intermediate/Build/Win64/UE4Editor/Development/AI_Plugin/AI_Plugin.generated.cpp.obj.response
