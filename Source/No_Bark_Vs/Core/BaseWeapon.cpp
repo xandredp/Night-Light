@@ -54,7 +54,7 @@ void ABaseWeapon::FireBullets()
 {
 	if (CurrentAmmo > 0)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
 		Instant_Fire();
 
 		CurrentAmmo -= WeaponConfig.ShotCost;
@@ -74,7 +74,7 @@ void ABaseWeapon::Fire()
 	{
 		if (CurrentAmmo > 0)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
+			//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
 			for (int32 i = 0; i <= WeaponConfig.WeaponSpread; i++)
 			{
 				Instant_Fire();
@@ -92,7 +92,7 @@ void ABaseWeapon::Fire()
 	{
 		if (CurrentAmmo > 0)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
+		//	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
 			ProjectileFire();
 
 			CurrentAmmo -= WeaponConfig.ShotCost;
@@ -238,32 +238,32 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 		if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
 			Enemy->ReduceHealth(CurrentDamage);
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
 			Enemy->ReduceHealth(CurrentDamage);
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
 			Enemy->ReduceHealth(CurrentDamage);
 		}
 		else if (PhysMat->SurfaceType == SURFACE_FLESH)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A FLESH!!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A FLESH!!");
 		}
 		else if (PhysMat->SurfaceType == SURFACE_DEFAULT)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A DEFAULT!!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A DEFAULT!!");
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "What Did you hit!!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "What Did you hit!!");
 		}
 	}
 
@@ -362,7 +362,7 @@ void ABaseWeapon::SimulateWeaponFire()
 	
 		MuzzlePSC = UGameplayStatics::SpawnEmitterAttached(MuzzleFX, WeaponMesh, MuzzleAttachPoint);
 		MuzzlePSC->AddWorldRotation(FRotator(0.0f, 90.0f, 0.0f));
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "FXFXSpwned..");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "FXFXSpwned..");
 	}
 
 	if (!bPlayingFireAnim)
@@ -440,13 +440,13 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 
 	if (Impact.bBlockingHit)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
 		VisualImpactEffects(Impact);
 		//VisualTrailEffects(Impact.ImpactPoint);
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "ELSE Visual InstantHit!");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "ELSE Visual InstantHit!");
 	//	VisualTrailEffects(EndTrace);
 	}
 }
@@ -457,7 +457,7 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 	
 	if (ImpactTemplate && Impact.bBlockingHit)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
 		// TODO: Possible re-trace to get hit component that is lost during replication.
 
 		/* This function prepares an actor to spawn, but requires another call to finish the actual spawn progress. This allows manipulation of properties before entering into the level */
@@ -474,7 +474,7 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 {
 	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation(MuzzleAttachPoint);
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TRAILEFFECTWORKING!");
+//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "TRAILEFFECTWORKING!");
 	// Keep local count for effects
 	BulletsShotCount++;
 	FVector ShootDir = EndPoint - MuzzleOrigin;

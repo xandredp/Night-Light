@@ -31,7 +31,7 @@ void APlayController::Interact()
 	{
 
 		CurrentInteractable->Interact(this);
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
 
 	}
 }
@@ -232,7 +232,7 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 
 							FString string;
 							string = "Item has been added CurrentstackNumber :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
-							GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string);
+							//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string);
 
 							bItemAdded = true;
 						}
@@ -244,7 +244,7 @@ void APlayController::AddItemtoInventoryByID(FName ID, int ItemCurrentStackNumbe
 					if (FCurrentInventory.Num() >= MaxInventorySize)
 					{
 						///Todo : Warning Inventory is full and remove the item. 
-						GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "InventoryIsFull");
+					//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "InventoryIsFull");
 						bIsInventoryFull = true;
 
 					}
@@ -522,7 +522,7 @@ void APlayController::AddItemtoEquipmentByItem(FCurrentInventoryItemInfo iItemto
 	if (iItemRemovedfromEquipment.CurrentStackNumber > 0)
 	{
 		AddItemtoInventoryByID(iItemRemovedfromEquipment.ItemInfo.ItemID, iItemRemovedfromEquipment.CurrentStackNumber);
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "stacknumber higherthan 0");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "stacknumber higherthan 0");
 	}
 	ReloadInventory();
 }
@@ -609,7 +609,7 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 
 						FString string;
 						string = "Item has been added CurrentstackNumber of  Equipment :" + FString::FromInt(FCurrentInventory[i].CurrentStackNumber);
-						GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string);
+					//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, string);
 
 						bItemAdded = true;
 					}
@@ -656,7 +656,7 @@ void APlayController::AutoAddItemtoEquipment(FCurrentInventoryItemInfo iItemtoAd
 	if (iItemRemovedfromEquipment.CurrentStackNumber > 0)
 	{
 		AddItemtoInventoryByID(iItemRemovedfromEquipment.ItemInfo.ItemID, iItemRemovedfromEquipment.CurrentStackNumber);
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Not added to equipment back to inventory");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Not added to equipment back to inventory");
 	}
 	ReloadInventory();
 }

@@ -54,7 +54,7 @@ void ATankyMonster::PerformTankyAttack(AActor * HitActor)
 		if (OtherPawn)
 		{
 			LastStrikeTime = GetWorld()->GetTimeSeconds();
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
 			//DamageCharacterHealth();
 		}
 	}
@@ -74,7 +74,7 @@ void ATankyMonster::PerformTankyCharge(AActor * HitActor)
 		if (OtherPawn)
 		{
 			LastStrikeTime = GetWorld()->GetTimeSeconds();
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack!");
 			//DamageCharacterHealth();
 		}
 	}
@@ -83,7 +83,7 @@ void ATankyMonster::PerformTankyCharge(AActor * HitActor)
 void ATankyMonster::OnSeePlayer(APawn* aPawn)
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-	ANBCharacter* SensedPawn = Cast<ANBCharacter>(aPawn);
+	SensedPawn = Cast<ANBCharacter>(aPawn);
 	//Set the seen target on the blackboard
 	if (AIController && SensedPawn)
 	{

@@ -25,7 +25,7 @@ void ASwichObjForLight::Interact(APlayerController* playerController)
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "PointLight Not assigned");
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "PointLight Not assigned");
 		}
 		
 	}
@@ -38,7 +38,7 @@ void ASwichObjForLight::BeginPlay()
 	if (LightActorComp)
 	{
 		LightActorComp->bIsLightOn = true;
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
 		LightActorComp->ToggleSpotLightComp(true);
 		LightingOnStart();
 	}
@@ -59,7 +59,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 		if (aCrackingObjForLight->CheckbIsEnergyZero())
 		{
 			LightActorComp->bIsLightOn = false;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off :  No EnergyLeft");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light off :  No EnergyLeft");
 
 			LightActorComp->ToggleSpotLightComp(false);
 			LightingOnStop();
@@ -72,7 +72,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 			if (LightActorComp->bIsLightOn)
 			{
 				LightActorComp->bIsLightOn = false;
-				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
+			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 
 				LightActorComp->ToggleSpotLightComp(false);
 				LightingOnStop();
@@ -82,7 +82,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 			else
 			{
 				LightActorComp->bIsLightOn = true;
-				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
+			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
 				LightActorComp->ToggleSpotLightComp(true);
 				LightingOnStart();
 			}
@@ -91,7 +91,7 @@ void ASwichObjForLight::SwitchingOnAndOff()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Crackingobj Not assigned");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Crackingobj Not assigned");
 	}
 }
 

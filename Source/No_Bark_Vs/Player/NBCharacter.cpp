@@ -179,7 +179,7 @@ void ANBCharacter::EquipPrimaryWeapon()
 	
 	if (WeaponClass == NULL)
 	{			
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
@@ -195,13 +195,13 @@ void ANBCharacter::EquipSecondaryWeapon()
 	if (WeaponClass == NULL)
 	{
 
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
 		SpawnWeapon(WeaponClass);
 
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 	}
 	AttachEquipmentToHand();
 }
@@ -214,28 +214,28 @@ void ANBCharacter::EquipMeleeWeapon()
 		{
 			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedMeleeWeapon;
 			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
 		}
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
 	}
 
 	if (WeaponClass == NULL)
 	{
 
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
 		SpawnWeapon(WeaponClass);
 
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 	}
 }
 void ANBCharacter::EquipOthers(int i_SlotNumber)
@@ -247,28 +247,28 @@ void ANBCharacter::EquipOthers(int i_SlotNumber)
 		{
 			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquipment[i_SlotNumber];
 			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
 		}
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
 	}
 
 	if (WeaponClass == NULL)
 	{
 
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
 		SpawnWeapon(WeaponClass);
 
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
 	}
 }
 
@@ -289,16 +289,16 @@ void ANBCharacter::GetEquipment(int index)
 		{
 			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedWeapons[index];
 			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
 		}
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
 	}
 }
 
@@ -541,8 +541,8 @@ void ANBCharacter::OnStartSprinting()
 		{
 			GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
 			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
-			UCharacterAnimInstance* AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			AnimInstance->IsSprinting = true;
+			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+			aAnimInstance->IsSprinting = true;
 		}
 	}
 }
@@ -557,8 +557,8 @@ void ANBCharacter::OnStopSprinting()
 
 			GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
 			GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
-			UCharacterAnimInstance* AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			AnimInstance->IsSprinting = false;
+			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+			aAnimInstance->IsSprinting = false;
 		}
 	}
 
@@ -574,7 +574,7 @@ void ANBCharacter::OnCrouchToggle()
 		Crouch();
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual crouch noise!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual crouch noise!"));
 	MakeNoise(100, this, GetActorLocation());
 
 }

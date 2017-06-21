@@ -25,7 +25,7 @@ void ACrackingObjForLight::Interact(APlayerController* playerController)
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Interaction Successed");
+		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Interaction Successed");
 
 		IncreaseEnergyByFloat(AddEnergyBy);
 	}

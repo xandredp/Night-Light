@@ -35,7 +35,7 @@ void AMonsterSpawner::SpawnMonster()
 
 		if (World)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Inside Spawner");
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Inside Spawner");
 
 			// Assign a random index
 			int32 RandomIndex = FMath::RandRange(0, SpawnPoints.Num());
