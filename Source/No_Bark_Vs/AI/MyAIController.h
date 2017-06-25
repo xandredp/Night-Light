@@ -91,6 +91,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 		void SetAIStateFlee();
 
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		bool IsAIStateFlee();
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetAIStateStunned();
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		bool IsAIStateStunned();
+
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 
 	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return TargetPoints; }

@@ -188,3 +188,38 @@ void AMyAIController::SetAIStateFlee()
 		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
 	}
 }
+
+bool AMyAIController::IsAIStateFlee()
+{
+	FName CurrentState = "NULL";
+	if (BlackboardComp)
+	{
+		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
+	}
+	return (CurrentState == "Flee");
+
+}
+
+
+void AMyAIController::SetAIStateStunned()
+{
+	FName CurrentState = "NULL";
+
+	CurrentState = "Stunned";
+
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+	}
+}
+
+bool AMyAIController::IsAIStateStunned()
+{
+	FName CurrentState = "NULL";
+	if (BlackboardComp)
+	{
+		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
+	}
+	return (CurrentState == "Stunned");
+
+}

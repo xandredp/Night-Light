@@ -70,7 +70,7 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 		{
 			//	//Updates our target based on what we've heard.
 			//Con->SetSensedTarget(PawnInstigator);
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
 			APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
 			AIController->SetSensedTarget(aPlayerCharacter);
 
@@ -97,7 +97,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		{
 			if (GetDistanceTo(SensedPawn) < 1500)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
 				//GLog->Log("Seen");
 				MonsterState = EBotBehaviorType::Suspicious;
 				AIController->SetBlackboardBotState(MonsterState);
