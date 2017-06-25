@@ -93,32 +93,39 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		AMyAIController* AIController = Cast<AMyAIController>(GetController());
 		SensedPawn = Cast<ANBCharacter>(aPawn);
 		//Set the seen target on the blackboard
-		if (AIController && SensedPawn && MonsterState != EBotBehaviorType::Suspicious)
+		if (AIController && SensedPawn )
 		{
-			if (GetDistanceTo(SensedPawn) < 1500)
+			if ((GetDistanceTo(SensedPawn) < 1500))
 			{
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
-				//GLog->Log("Seen");
-				MonsterState = EBotBehaviorType::Suspicious;
-				AIController->SetBlackboardBotState(MonsterState);
-
-				AIController->SetSeenTarget(SensedPawn);
-				AIController->StopMovement();
-
-
-
-				//When changed to suspicious cry once. 
-				if (PreMonsterState != MonsterState)
+				if (MonsterState != EBotBehaviorType::Suspicious && MonsterState != EBotBehaviorType::Stunned  )
 				{
-					if (SoundPlayerNoticed)
+					// AI is "blind" if already suspicious or stunned
+					//&& MonsterState != EBotBehaviorType::Flee
+				}
+				else
+				{
+					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
+					//GLog->Log("Seen");
+					MonsterState = EBotBehaviorType::Suspicious;
+					AIController->SetBlackboardBotState(MonsterState);
+
+					AIController->SetSeenTarget(SensedPawn);
+					AIController->StopMovement();
+
+
+
+					//When changed to suspicious cry once. 
+					if (PreMonsterState != MonsterState)
 					{
-						//PlayCharacterSound(SoundPlayerNoticed);
-						AudioLoopComp->SetSound(SoundPlayerNoticed);
-						AudioLoopComp->Play();
-						SetPlayModeState(EGameModeSoundType::Alert);
+						if (SoundPlayerNoticed)
+						{
+							//PlayCharacterSound(SoundPlayerNoticed);
+							AudioLoopComp->SetSound(SoundPlayerNoticed);
+							AudioLoopComp->Play();
+							SetPlayModeState(EGameModeSoundType::Alert);
+						}
 					}
 				}
-
 			}
 			else
 			{

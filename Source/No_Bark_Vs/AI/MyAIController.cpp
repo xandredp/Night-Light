@@ -182,6 +182,8 @@ void AMyAIController::SetAIStateFlee()
 	FName CurrentState = "NULL";
 	
 	CurrentState = "Flee";
+	AMonster* Monster = Cast<AMonster>(GetPawn());
+	Monster->MonsterState = EBotBehaviorType::Flee;
 
 	if (BlackboardComp)
 	{
@@ -206,6 +208,8 @@ void AMyAIController::SetAIStateStunned()
 	FName CurrentState = "NULL";
 
 	CurrentState = "Stunned";
+	AMonster* Monster = Cast<AMonster>(GetPawn());
+	Monster->MonsterState = EBotBehaviorType::Stunned;
 
 	if (BlackboardComp)
 	{
@@ -221,5 +225,30 @@ bool AMyAIController::IsAIStateStunned()
 		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
 	}
 	return (CurrentState == "Stunned");
+
+}
+
+void AMyAIController::SetAIStateNeutral()
+{
+
+	//AMonster* Monster = Cast<AMonster>(GetPawn());
+	//Monster->MonsterState = EBotBehaviorType::Neutral;
+
+	//if (BlackboardComp)
+	//{
+	//	this->SetBlackboardBotState(EBotBehaviorType::Neutral);
+	//}
+
+	FName CurrentState = "Neutral";
+
+	AMonster* Monster = Cast<AMonster>(GetPawn());
+	Monster->MonsterState = EBotBehaviorType::Neutral;
+
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+	}
+	return;
+
 
 }

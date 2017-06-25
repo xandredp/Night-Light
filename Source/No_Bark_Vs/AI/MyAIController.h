@@ -100,6 +100,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 		bool IsAIStateStunned();
 
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetAIStateNeutral();
+
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 
 	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return TargetPoints; }
