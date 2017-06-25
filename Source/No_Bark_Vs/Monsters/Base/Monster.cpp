@@ -97,7 +97,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		{
 			if ((GetDistanceTo(SensedPawn) < 1500))
 			{
-				if (MonsterState != EBotBehaviorType::Suspicious && MonsterState != EBotBehaviorType::Stunned  )
+				if (MonsterState == EBotBehaviorType::Suspicious ||  MonsterState == EBotBehaviorType::Stunned  )
 				{
 					// AI is "blind" if already suspicious or stunned
 					//&& MonsterState != EBotBehaviorType::Flee
