@@ -70,15 +70,31 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 		{
 			//	//Updates our target based on what we've heard.
 			//Con->SetSensedTarget(PawnInstigator);
-			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
-			APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
-			AIController->SetSensedTarget(aPlayerCharacter);
 
-			AIController->StopMovement();
+			float MaxHearingRange = PawnSensingComp->LOSHearingThreshold;
+			float Length = (Location - AIController->GetPawn()->GetActorLocation()).Size();
 
-			MonsterState = EBotBehaviorType::Agression;
-			AIController->SetBlackboardBotState(MonsterState);
+			if (Length > MaxHearingRange)
+			{
+				// outside of max hearing range
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, GetName() + " - Too far to hear sound");
+			}
+			else
+			{
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Hearing test for " + GetName() + " : MaxHearingRange=" + FString::SanitizeFloat(MaxHearingRange) + " Length=" + FString::SanitizeFloat(Length));
 
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!"));
+				APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
+				AIController->SetSensedTarget(aPlayerCharacter);
+
+				AIController->StopMovement();
+
+				MonsterState = EBotBehaviorType::Agression;
+				AIController->SetBlackboardBotState(MonsterState);
+
+				AIController->SetLocationVector(Location);
+				DrawDebugSphere(GetWorld(), Location, 10, 5, FColor::Purple, false, 10, 0, 2);
+			}
 		}
 	}
 }

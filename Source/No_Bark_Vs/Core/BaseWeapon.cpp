@@ -406,6 +406,9 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 	if (Sound && MyPawn)
 	{
 		WeaponAC = UGameplayStatics::SpawnSoundAttached(Sound, MyPawn->GetRootComponent());
+		// Signal a gunshot
+		MakeNoise(100, GetPawnOwner(), GetActorLocation());
+
 	}
 	return WeaponAC;
 }
