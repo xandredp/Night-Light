@@ -44,7 +44,7 @@ protected:
 		FName TargetToChargeKey;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-		FName LocationToCharge;
+		FName LocationVectorKey;
 
 	TArray<AActor*> TargetPoints;
 
@@ -66,7 +66,7 @@ public:
 	void SetBlackboardBotState(EBotBehaviorType NewState);
 
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
-		void SetLocationToCharge(FVector LocationVector);
+		void SetLocationVector(FVector LocationVector);
 	
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 	void ResetSeenTarget();
@@ -83,7 +83,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
-	FVector GetLocationToCharge();
+	FVector GetLocationVector();
 
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 		EBotBehaviorType GetBlackboardBotState();

@@ -97,23 +97,22 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		{
 			if ((GetDistanceTo(SensedPawn) < 1500))
 			{
-				if (MonsterState == EBotBehaviorType::Suspicious ||  MonsterState == EBotBehaviorType::Stunned  )
+				// In seeing range 
+				// In seeing range 
+				// In seeing range 
+
+				switch (MonsterState)
 				{
-					// AI is "blind" if already suspicious or stunned
-					//&& MonsterState != EBotBehaviorType::Flee
-				}
-				else
-				{
-					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
+				case EBotBehaviorType::Neutral:
+				case EBotBehaviorType::Suspicious:
+					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!"));
 					//GLog->Log("Seen");
-					MonsterState = EBotBehaviorType::Suspicious;
+					MonsterState = EBotBehaviorType::Agression;
 					AIController->SetBlackboardBotState(MonsterState);
+					AIController->SetLocationVector(SensedPawn->GetActorLocation());
+					DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 10, FColor::Red, false, 10, 0, 2);
 
-					AIController->SetSeenTarget(SensedPawn);
 					AIController->StopMovement();
-
-
-
 					//When changed to suspicious cry once. 
 					if (PreMonsterState != MonsterState)
 					{
@@ -125,13 +124,39 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 							SetPlayModeState(EGameModeSoundType::Alert);
 						}
 					}
+					break;
+
+				case EBotBehaviorType::Agression:
+					// AI is already Agressive - just update the location
+					AIController->SetLocationVector(SensedPawn->GetActorLocation());
+					DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 10, FColor::Yellow, false, 10, 0, 2);
+					break;
+				case EBotBehaviorType::Charge:
+					// Not used
+					break;
+				case EBotBehaviorType::Stunned:
+					break;
+				case EBotBehaviorType::Flee:
+					break;
+				default:
+					break;
 				}
+
 			}
 			else
 			{
-				GLog->Log("Out of Seeing range");
-				MonsterState = EBotBehaviorType::Neutral;
-				AIController->SetBlackboardBotState(MonsterState);
+				GLog->Log("Detected but Out of Seeing range");
+
+				// Detected but Not in seeing raange
+				// Detected but Not in seeing raange
+				// Detected but Not in seeing raange
+
+
+				//MonsterState = EBotBehaviorType::Neutral;
+				//AIController->SetBlackboardBotState(MonsterState);
+
+
+
 				if (SoundIdle)
 				{
 					AudioLoopComp->SetSound(SoundIdle);
@@ -149,7 +174,6 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 				SetPlayModeState(EGameModeSoundType::General);
 				}
 				}*/
-
 
 				AIController->ResetSeenTarget();
 

@@ -18,7 +18,7 @@ AMyAIController::AMyAIController()
 	LocationToGoKey = "LocationToGo";
 	AIStateKey = "AIState";
 	TargetKey = "Target";
-	LocationToCharge = "LocationVector";
+	LocationVectorKey = "LocationVector";
 	TargetToChargeKey = "ChargeTarget";
 
 }
@@ -141,13 +141,14 @@ EBotBehaviorType AMyAIController::GetBlackboardBotState()
 		return EBotBehaviorType::Neutral;
 	}
 }
-void AMyAIController::SetLocationToCharge(FVector LocationVector)
+void AMyAIController::SetLocationVector(FVector LocationVector)
 {
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsVector(LocationToCharge, LocationVector);
+		BlackboardComp->SetValueAsVector(LocationVectorKey, LocationVector);
 	}
 }
+
 
 void AMyAIController::ResetSeenTarget()
 {
@@ -164,11 +165,11 @@ void AMyAIController::ResetChargeTarget()
 	}
 }
 
-FVector AMyAIController::GetLocationToCharge()
+FVector AMyAIController::GetLocationVector()
 {
 	if (BlackboardComp)
 	{
-		return BlackboardComp->GetValueAsVector(LocationToCharge);
+		return BlackboardComp->GetValueAsVector(LocationVectorKey);
 	}
 	else
 	{
