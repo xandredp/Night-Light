@@ -57,6 +57,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float AttackRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool DebugDrawEnabled;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundPlayerNoticed;
@@ -110,6 +113,9 @@ public:
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		UAudioComponent* PlayCharacterSound(USoundCue* CueToPlay);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+	void SetMonsterDebugDraw(bool deb);
 
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")

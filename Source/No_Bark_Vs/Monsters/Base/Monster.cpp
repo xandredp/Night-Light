@@ -30,6 +30,7 @@ AMonster::AMonster()
 
 	MonsterState = EBotBehaviorType::Neutral;
 
+	DebugDrawEnabled = false;
 
 	Fleeing = false;
 	bisMonsterDead = false;
@@ -310,5 +311,11 @@ UAudioComponent* AMonster::PlayCharacterSound(USoundCue* CueToPlay)
 	}
 
 	return nullptr;
+
+}
+
+void AMonster::SetMonsterDebugDraw(bool deb)
+{
+	DebugDrawEnabled = deb;
 
 }
