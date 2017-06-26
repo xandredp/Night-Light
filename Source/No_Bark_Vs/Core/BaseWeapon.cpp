@@ -82,6 +82,9 @@ void ABaseWeapon::Fire()
 
 			
 			CurrentAmmo -= WeaponConfig.ShotCost;
+
+			// Signal a gunshot
+			MakeNoise(100, GetPawnOwner(), GetActorLocation());
 		}
 		else
 		{
@@ -96,6 +99,9 @@ void ABaseWeapon::Fire()
 			ProjectileFire();
 
 			CurrentAmmo -= WeaponConfig.ShotCost;
+
+			// Signal a gunshot
+			MakeNoise(100, GetPawnOwner(), GetActorLocation());
 		}
 		else
 		{

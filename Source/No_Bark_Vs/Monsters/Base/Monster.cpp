@@ -110,7 +110,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 					MonsterState = EBotBehaviorType::Agression;
 					AIController->SetBlackboardBotState(MonsterState);
 					AIController->SetLocationVector(SensedPawn->GetActorLocation());
-					DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 10, FColor::Red, false, 10, 0, 2);
+					DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Red, false, 10, 0, 2);
 
 					AIController->StopMovement();
 					//When changed to suspicious cry once. 
@@ -129,7 +129,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 				case EBotBehaviorType::Agression:
 					// AI is already Agressive - just update the location
 					AIController->SetLocationVector(SensedPawn->GetActorLocation());
-					DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 10, FColor::Yellow, false, 10, 0, 2);
+					DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Yellow, false, 10, 0, 2);
 					break;
 				case EBotBehaviorType::Charge:
 					// Not used

@@ -253,3 +253,29 @@ void AMyAIController::SetAIStateNeutral()
 
 
 }
+
+
+void AMyAIController::SetAIStateSuspicious()
+{
+
+	//AMonster* Monster = Cast<AMonster>(GetPawn());
+	//Monster->MonsterState = EBotBehaviorType::Neutral;
+
+	//if (BlackboardComp)
+	//{
+	//	this->SetBlackboardBotState(EBotBehaviorType::Neutral);
+	//}
+
+	FName CurrentState = "Suspicious";
+
+	AMonster* Monster = Cast<AMonster>(GetPawn());
+	Monster->MonsterState = EBotBehaviorType::Suspicious;
+
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+	}
+	return;
+
+
+}
