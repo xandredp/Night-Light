@@ -53,7 +53,7 @@ protected:
 public:
 
 	AMyAIController();
-	
+
 	//Executes when the controller possess the AI pawn
 	virtual void Possess(APawn* aPawn) override;
 

@@ -30,6 +30,8 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void Tick(float DeltaSeconds) override;
 	
 	// Called every frame
 //	virtual void Tick( float DeltaSeconds ) override;

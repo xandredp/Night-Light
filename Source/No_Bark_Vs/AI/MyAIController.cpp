@@ -23,6 +23,7 @@ AMyAIController::AMyAIController()
 
 }
 
+
 void AMyAIController::Possess(APawn* aPawn)
 {
 	Super::Possess(aPawn);
