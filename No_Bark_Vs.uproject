@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{2FDD47FF-4D02-2E85-E759-38A2C81C400F}",
+	"EngineAssociation": "4.14",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -14,19 +14,7 @@
 			]
 		}
 	],
-	"Plugins": [
-		{
-			"Name": "Paper2D",
-			"Enabled": false
-		},
-		{
-			"Name": "AI_Plugin",
-			"Enabled": false
-		}
-	],
-	"AdditionalPluginDirectories": [
-		"/../../../../../../Vertical_Slice/Plugins"
-	],
+	
 	"TargetPlatforms": [
 		"WindowsNoEditor"
 	]

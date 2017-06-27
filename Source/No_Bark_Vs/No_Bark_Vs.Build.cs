@@ -15,9 +15,6 @@ public class No_Bark_Vs : ModuleRules
             "UMG",
             "GameplayTasks",
 
-            //plugin
-            "AI_Plugin"
-
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

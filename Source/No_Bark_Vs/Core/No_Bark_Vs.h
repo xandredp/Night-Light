@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Engine.h"
-#include "AI_Plugin.h"
 
 
 // This is NOT included by default in an empty project! It's required for replication and setting of the GetLifetimeReplicatedProps
