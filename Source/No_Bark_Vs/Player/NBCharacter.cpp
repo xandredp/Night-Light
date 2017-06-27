@@ -10,9 +10,31 @@
 
 ANBCharacter::ANBCharacter()
 {
+	CameraAttachPoint = TEXT("Head_Socket");
+	WeaponAttachPoint = TEXT("Weapon_Socket");
+	MeleeAttachPoint = TEXT("Thigh_Socket");
+	PrimaryAttachPoint = TEXT("Spine_Socket");
+	SecondaryAttachPoint = TEXT("Clavicle_Socket");
 
+	//Status
+	MaxInteractDistance = 500.0f;
 	walkingSpeed = 400.0f;
 	MaxSprintSpeed = 600.0f;
+	MaxHealth = 100.0f;
+	CurrentHealth = MaxHealth;
+	CurrentStamina = 100.0f;
+	MaxStamina = 100.0f;
+	CurrentMagic = 100.0f;
+	MaxMagic = 100.0f;
+	StaminaRegenRate = 1.0f;
+	SprintDeductionRate = 1.3f;
+	StaminaTimerRate = 0.5f;
+	HealthTimerRate = 1.0f;
+	MagicTimerRate = 1.0f;
+	bIsFiring = false;
+	// Item
+
+
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
@@ -50,53 +72,26 @@ ANBCharacter::ANBCharacter()
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
 
-	// Create a camera boom (pulls in towards the player if there is a collision)
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character	
-	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+	//CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	////CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
+	//CharacterMesh->SetupAttachment(RootComponent);
 
+	FPSCharacterArmMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSArmMesh"));
+	FPSCharacterArmMesh->SetupAttachment(GetMesh());
 												// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-												   // Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-												   // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
-												   /* Names as specified in the character skeleton */
-	
-
-
-
-	WeaponAttachPoint = TEXT("Weapon_Socket");
-	MeleeAttachPoint = TEXT("Thigh_Socket");
-	PrimaryAttachPoint = TEXT("Spine_Socket");
-	SecondaryAttachPoint = TEXT("Clavicle_Socket");
+	FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
+	FollowCamera->bUsePawnControlRotation = true; // Camera does rotate relative to arm
 
 	
-	//Status
-	
-	MaxHealth = 100.0f;
-	CurrentHealth = MaxHealth;
-	CurrentStamina = 100.0f;
-	MaxStamina = 100.0f;
-	CurrentMagic = 100.0f;
-	MaxMagic = 100.0f;
-	StaminaRegenRate = 1.0f;
-	SprintDeductionRate = 1.3f;
-	StaminaTimerRate = 0.5f;
-	HealthTimerRate = 1.0f;
-	MagicTimerRate = 1.0f;
-	bIsFiring = false;
-	// Item
-
-	MaxInteractDistance = 500.0f;
 }
 
 void ANBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+//	FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), CameraAttachPoint);
 
+	//FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, CameraAttachPoint);
 	AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	bIsDead = false;
 

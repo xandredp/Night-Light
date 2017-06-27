@@ -20,10 +20,16 @@ class NO_BARK_VS_API ANBCharacter : public ACharacter
 {
 	GENERATED_BODY()
 		
-	
-		/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+public:
+	//	/** Camera boom positioning the camera behind the character */
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	//class USpringArmComponent* CameraBoom;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class USkeletalMeshComponent* CharacterMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class USkeletalMeshComponent* FPSCharacterArmMesh;
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -210,6 +216,9 @@ public:
 		float MaxInteractDistance;
 
 private:
+	/* Attachpoint for active weapon/item in hands */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName CameraAttachPoint;
 
 	/* Attachpoint for active weapon/item in hands */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
@@ -276,7 +285,7 @@ protected:
 
 public:
 	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+//	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
