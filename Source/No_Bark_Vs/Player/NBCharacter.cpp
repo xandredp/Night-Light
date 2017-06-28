@@ -538,6 +538,10 @@ void ANBCharacter::OnStartSprinting()
 			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
 			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 			aAnimInstance->IsSprinting = true;
+
+			// Sprinting is noisy
+			MakeNoise(100, this, GetActorLocation());
+
 		}
 	}
 }

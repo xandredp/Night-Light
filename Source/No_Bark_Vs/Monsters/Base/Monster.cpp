@@ -64,13 +64,16 @@ void AMonster::BeginPlay()
 void AMonster::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-	APawn* AIPawn = AIController->GetPawn();
 
-	if (DebugDrawEnabled)
+	if (GetMonsterDead() == false)
 	{
+		AMyAIController* AIController = Cast<AMyAIController>(GetController());
+		APawn* AIPawn = AIController->GetPawn();
+		if (DebugDrawEnabled)
+		{
 			DrawDebugCone(GetWorld(), AIController->GetPawn()->GetActorLocation(), AIPawn->GetActorForwardVector(), this->PawnSensingComp->SightRadius, (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), 40, FColor::Purple, false, 0.05, 1, 0.5);
 			DrawDebugSphere(GetWorld(), AIController->GetPawn()->GetActorLocation(), this->PawnSensingComp->LOSHearingThreshold, 40, FColor::Yellow, false, 0.05, 0, 0.5f);
+		}
 	}
 }
 
@@ -214,13 +217,6 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 	}
 }
 
-
-//// Called every frame
-//void AMonster::Tick( float DeltaTime )
-//{
-//	Super::Tick( DeltaTime );
-//
-//}
 
 void AMonster::ReduceHealth(int DamageValue)
 {
