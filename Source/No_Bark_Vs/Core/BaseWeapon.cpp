@@ -24,6 +24,17 @@ ABaseWeapon::ABaseWeapon()
 	WeaponCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollisionComp"));
 	WeaponCollisionComp->SetupAttachment(WeaponMesh);
 
+	WeaponSpotlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("WeaponSpotlight"));
+	WeaponSpotlight->SetupAttachment(WeaponMesh);
+	WeaponSpotlight->SetVisibility(true);
+
+	WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
+	WeaponSpotlight->SetRelativeLocation(FVector(0, 90, 0));
+
+	WeaponSpotlight->SetIntensity(1000);
+	WeaponSpotlight->SetAttenuationRadius(1000);
+	WeaponSpotlight->SetOuterConeAngle(44);
+
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickGroup = TG_PrePhysics;
 
@@ -37,6 +48,18 @@ ABaseWeapon::ABaseWeapon()
 	ReloadAnimDuration = 1.1f;
 	WeaponConfig.TimeBetweenShots = 0.1f;
 }
+
+void ABaseWeapon::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	WeaponSpotlight;
+
+	GetWorld()->LineTraceTestByChannel();
+
+}
+
+
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 {
 	return MyPawn;

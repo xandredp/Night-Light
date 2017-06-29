@@ -100,6 +100,8 @@ class NO_BARK_VS_API ABaseWeapon : public AActor
 public:
 	ABaseWeapon();
 
+	void Tick(float DeltaSeconds) override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBCharacter* MyPawn;
 
@@ -108,6 +110,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 		class UBoxComponent* WeaponCollisionComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		class USpotLightComponent* WeaponSpotlight;
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void SetTimerForFiring();
