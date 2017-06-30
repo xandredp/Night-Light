@@ -76,11 +76,6 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 	//Object query parameters
 	FCollisionObjectQueryParams ObjectQueryParams;
 	ObjectQueryParams.ObjectTypesToQuery;
-	ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
-
-
-
-
 	//Raycasting in a sphere to detect collisions
 	TArray<FHitResult> HitResults;
 	//Setting up the shape of the raycast
