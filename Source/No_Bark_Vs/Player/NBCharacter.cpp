@@ -141,6 +141,12 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
 
+
+	// Flashlight Torch Controls
+	PlayerInputComponent->BindAction("TorchOn", IE_Pressed, this, &ANBCharacter::TurnOnTorch);
+	PlayerInputComponent->BindAction("TorchOff", IE_Pressed, this, &ANBCharacter::TurnOffTorch);
+
+
 	// Weapons
 
 
@@ -650,4 +656,26 @@ FRotator ANBCharacter::GetAimOffsets() const
 bool ANBCharacter::GetIsCrouched() const
 {
 	return bIsCrouched;
+}
+
+
+void ANBCharacter::TurnOnTorch()
+{
+
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->TurnOnTorch();
+	}
+
+}
+
+
+void ANBCharacter::TurnOffTorch()
+{
+
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->TurnOffTorch();
+	}
+
 }

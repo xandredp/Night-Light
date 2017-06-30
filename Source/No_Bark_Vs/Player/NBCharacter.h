@@ -74,6 +74,9 @@ public:
 	void EquipSecondaryWeapon();
 	void EquipMeleeWeapon();
 	void EquipOthers(int i_SlotNumber);
+	void TurnOnTorch();
+
+	void TurnOffTorch();
 
 	// Spawn monster function called by input binding
 	void Spawn();
@@ -106,6 +109,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		bool GetIsCrouched() const;
+
+
 
 	/************************************************************************/
 	/* weapon use                                                           */

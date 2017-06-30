@@ -164,7 +164,9 @@ public:
 	void OnUnEquip();
 	void ReloadAmmo();
 	void StopReloading();
+	void TurnOnTorch();
 
+	void TurnOffTorch();
 protected:
 
 	virtual void SimulateWeaponFire();
@@ -230,6 +232,8 @@ private:
 	void VisualImpactEffects(const FHitResult& Impact);
 
 	void VisualTrailEffects(const FVector& EndPoint);
+
+
 
 	/* Particle FX played when a surface is hit. */
 	UPROPERTY(EditDefaultsOnly)

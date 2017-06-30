@@ -594,3 +594,15 @@ void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 		}
 	}
 }
+
+
+void ABaseWeapon::TurnOnTorch()
+{
+	WeaponSpotlight->SetVisibility(true);
+}
+
+
+void ABaseWeapon::TurnOffTorch()
+{
+	WeaponSpotlight->SetVisibility(false);
+}
