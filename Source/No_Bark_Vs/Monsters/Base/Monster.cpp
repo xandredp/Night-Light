@@ -118,6 +118,36 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 	}
 }
 
+
+void AMonster::OnFlashed(APawn* aPawn)
+{
+	if (GetMonsterDead() == false)
+	{
+		AMyAIController* AIController = Cast<AMyAIController>(GetController());
+		SensedPawn = Cast<ANBCharacter>(aPawn);
+		//Set the seen target on the blackboard
+		if (AIController && SensedPawn)
+		{
+			// Is the AI State already Stunned
+			if (AIController->IsAIStateStunned()) 
+			{
+				if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI already stunned!")); }
+			}
+			else
+			{
+				AIController->SetAIStateStunned();
+				if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI stunned!")); }
+				MonsterState = EBotBehaviorType::Stunned;
+				AIController->SetBlackboardBotState(MonsterState);
+				AIController->SetLocationVector(SensedPawn->GetActorLocation());
+
+				AIController->StopMovement();
+			}
+		}
+	}
+}
+
+
 void AMonster::OnSeePlayer(APawn* aPawn)
 {
 	if (GetMonsterDead() == false)

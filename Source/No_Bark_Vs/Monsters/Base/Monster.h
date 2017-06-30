@@ -25,6 +25,10 @@ public:
 	UFUNCTION()
 		void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
 
+	/* Flashlight has illuminated the AI*/
+	UFUNCTION()
+	void OnFlashed(APawn * aPawn);
+
 	// Sets default values for this character's properties
 	AMonster();
 

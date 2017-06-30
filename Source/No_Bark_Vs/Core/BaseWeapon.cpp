@@ -69,24 +69,20 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 	TraceParams.bTraceComplex = true;
 
 	FHitResult Hit(ForceInit);
-	//bool FlashlightTrace = GetWorld()->LineTraceTestByChannel(start_trace, end_trace, ECollisionChannel::ECC_Camera, TraceParams);
-	//	LineTraceSingle(Hit, start_trace, end_trace, COLLISION_PROJECTILE, TraceParams);
-	//bool FlashlightTrace = GetWorld()->LineTraceTestByObjectType(start_trace, start_trace,
-	
+		
 	//Object query parameters
 	FCollisionObjectQueryParams ObjectQueryParams;
 	ObjectQueryParams.ObjectTypesToQuery;
 	ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
 
-
-
-
 	//Raycasting in a sphere to detect collisions
 	TArray<FHitResult> HitResults;
+
 	//Setting up the shape of the raycast
 	FCollisionShape CollisionShape;
 	CollisionShape.ShapeType = ECollisionShape::Sphere;
 	CollisionShape.SetSphere(10);
+
 	//Handling ignored actors
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
@@ -102,8 +98,8 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 			{
 				FString aaa;
 				aaa = Char->GetName();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, aaa + TEXT(" - hit by sweep!"));
-
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, aaa + TEXT(" - hit by sweep!"));
+				Char->OnFlashed(GetPawnOwner());
 			}
 			else
 			{
