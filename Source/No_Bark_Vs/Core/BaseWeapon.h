@@ -84,6 +84,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 Priority;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		float MaxUseDistance;
 };
 
 
@@ -113,6 +115,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		class USpotLightComponent* WeaponSpotlight;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float MaxUseDistance;
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void SetTimerForFiring();

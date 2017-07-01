@@ -29,7 +29,7 @@ ABaseWeapon::ABaseWeapon()
 	WeaponSpotlight->SetVisibility(true);
 
 	WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
-	WeaponSpotlight->SetRelativeLocation(FVector(0, 90, 0));
+	WeaponSpotlight->SetRelativeLocation(FVector(0, 30, -10));
 
 	WeaponSpotlight->SetIntensity(1000);
 	WeaponSpotlight->SetAttenuationRadius(1000);
@@ -47,6 +47,8 @@ ABaseWeapon::ABaseWeapon()
 	FireAnimDuration = 1.5f;
 	ReloadAnimDuration = 1.1f;
 	WeaponConfig.TimeBetweenShots = 0.1f;
+
+	MaxUseDistance = 300;
 }
 
 void ABaseWeapon::Tick(float DeltaSeconds)
@@ -54,8 +56,8 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	FVector camLoc;
 	FRotator camRot;
-	WeaponSpotlight;
-	float MaxUseDistance = 1500;
+	
+
 
 	GetPawnOwner()->GetController()->GetPlayerViewPoint(camLoc, camRot);
 
@@ -96,9 +98,9 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 			AMonster* Char = Cast<AMonster>(It->GetActor());
 			if (Char)
 			{
-				FString aaa;
-				aaa = Char->GetName();
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, aaa + TEXT(" - hit by sweep!"));
+				FString monsterName;
+				monsterName = Char->GetName();
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
 				Char->OnFlashed(GetPawnOwner());
 			}
 			else
