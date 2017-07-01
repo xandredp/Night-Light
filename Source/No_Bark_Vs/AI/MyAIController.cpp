@@ -73,69 +73,25 @@ void AMyAIController::SetChargeTarget(APawn* aPawn)
 
 void AMyAIController::SetBlackboardBotState(EBotBehaviorType NewState)
 {
-	FName CurrentState = "NULL";
+	uint8 temp;
 
-	if (NewState == EBotBehaviorType::Neutral)
-	{
-		CurrentState = "Neutral";
-
-	}
-	else if (NewState == EBotBehaviorType::Suspicious)
-	{
-		CurrentState = "Suspicious";
-	}
-	else if (NewState == EBotBehaviorType::Flee)
-	{
-		CurrentState = "Flee";
-	}
-	else if (NewState == EBotBehaviorType::Agression)
-	{
-		CurrentState = "Agression";
-	}
-	else if (NewState == EBotBehaviorType::Charge)
-	{
-		CurrentState = "Charge";
-	}
-	else if (NewState == EBotBehaviorType::Stunned)
-	{
-		CurrentState = "Stunned";
-	}
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+		temp = static_cast<uint8>(NewState);
+		BlackboardComp->SetValueAsEnum(AIStateKey, temp);
 	}
 }
 
 EBotBehaviorType AMyAIController::GetBlackboardBotState()
 {
-	FName CurrentState = "NULL";
+	EBotBehaviorType CurrentState;
+	uint8 temp;
+
 	if (BlackboardComp)
 	{
-		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
-	}
-	if (CurrentState == "Neutral")
-	{
-		return EBotBehaviorType::Neutral;
-	}
-	else if (CurrentState == "Suspicious")
-	{
-		return EBotBehaviorType::Suspicious;
-	}
-	else if (CurrentState == "Flee")
-	{
-		return EBotBehaviorType::Flee;
-	}
-	else if (CurrentState == "Agression")
-	{
-		return EBotBehaviorType::Agression;
-	}
-	else if (CurrentState == "Charge")
-	{
-		return EBotBehaviorType::Charge;
-	}
-	else if (CurrentState == "Stunned")
-	{
-		return EBotBehaviorType::Stunned;
+		temp = BlackboardComp->GetValueAsEnum(AIStateKey);
+		CurrentState = static_cast<EBotBehaviorType>(temp);
+		return CurrentState;
 	}
 	else
 	{
@@ -181,102 +137,68 @@ FVector AMyAIController::GetLocationVector()
 
 void AMyAIController::SetAIStateFlee()
 {
-	FName CurrentState = "NULL";
-	
-	CurrentState = "Flee";
 	AMonster* Monster = Cast<AMonster>(GetPawn());
 	Monster->MonsterState = EBotBehaviorType::Flee;
 
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+		SetBlackboardBotState(Monster->MonsterState);
 	}
 }
 
 bool AMyAIController::IsAIStateFlee()
 {
-	FName CurrentState = "NULL";
 	if (BlackboardComp)
 	{
-		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
+		return (GetBlackboardBotState() == EBotBehaviorType::Flee);
 	}
-	return (CurrentState == "Flee");
-
+	else
+	{
+		return (false);
+	}
 }
 
 
 void AMyAIController::SetAIStateStunned()
 {
-	FName CurrentState = "NULL";
-
-	CurrentState = "Stunned";
 	AMonster* Monster = Cast<AMonster>(GetPawn());
 	Monster->MonsterState = EBotBehaviorType::Stunned;
 
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+		SetBlackboardBotState(Monster->MonsterState);
 	}
 }
 
 bool AMyAIController::IsAIStateStunned()
 {
-	FName CurrentState = "NULL";
 	if (BlackboardComp)
 	{
-		CurrentState = BlackboardComp->GetValueAsName(AIStateKey);
+		return (GetBlackboardBotState() == EBotBehaviorType::Stunned);
 	}
-	return (CurrentState == "Stunned");
-
+	else
+	{
+		return (false);
+	}
 }
 
 void AMyAIController::SetAIStateNeutral()
 {
-
-	//AMonster* Monster = Cast<AMonster>(GetPawn());
-	//Monster->MonsterState = EBotBehaviorType::Neutral;
-
-	//if (BlackboardComp)
-	//{
-	//	this->SetBlackboardBotState(EBotBehaviorType::Neutral);
-	//}
-
-	FName CurrentState = "Neutral";
-
 	AMonster* Monster = Cast<AMonster>(GetPawn());
 	Monster->MonsterState = EBotBehaviorType::Neutral;
-
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+		SetBlackboardBotState(Monster->MonsterState);
 	}
-	return;
-
-
 }
 
 
 void AMyAIController::SetAIStateSuspicious()
 {
-
-	//AMonster* Monster = Cast<AMonster>(GetPawn());
-	//Monster->MonsterState = EBotBehaviorType::Neutral;
-
-	//if (BlackboardComp)
-	//{
-	//	this->SetBlackboardBotState(EBotBehaviorType::Neutral);
-	//}
-
-	FName CurrentState = "Suspicious";
-
 	AMonster* Monster = Cast<AMonster>(GetPawn());
 	Monster->MonsterState = EBotBehaviorType::Suspicious;
-
 	if (BlackboardComp)
 	{
-		BlackboardComp->SetValueAsName(AIStateKey, CurrentState);
+		SetBlackboardBotState(Monster->MonsterState);
 	}
-	return;
-
-
 }
