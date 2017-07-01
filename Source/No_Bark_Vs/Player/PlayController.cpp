@@ -36,6 +36,11 @@ void APlayController::Interact()
 	}
 }
 
+bool APlayController::IsInteract()
+{//ABaseInteractable
+	return (CurrentInteractable != nullptr);
+}
+
 void APlayController::OpenInventory()
 {
 	if (isMyInventoryOpen == true)

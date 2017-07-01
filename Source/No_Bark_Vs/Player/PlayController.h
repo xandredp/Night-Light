@@ -36,6 +36,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void Interact();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+	bool IsInteract();
 	
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
