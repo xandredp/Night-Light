@@ -67,7 +67,10 @@ public:
 		float AttackRange;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-		bool DebugDrawEnabled;
+		bool DebugDrawEnabledAI;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool DebugDrawEnabledAI2;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundPlayerNoticed;
@@ -123,7 +126,10 @@ public:
 		UAudioComponent* PlayCharacterSound(USoundCue* CueToPlay);
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
-	void SetMonsterDebugDraw(bool deb);
+	void SetMonsterDebugDrawAI(bool deb);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void SetMonsterDebugDrawAI2(bool deb);
 
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")

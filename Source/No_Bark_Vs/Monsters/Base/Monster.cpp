@@ -30,7 +30,8 @@ AMonster::AMonster()
 
 	MonsterState = EBotBehaviorType::Neutral;
 
-	DebugDrawEnabled = false;
+	DebugDrawEnabledAI = false;
+	DebugDrawEnabledAI2 = false;
 
 	Fleeing = false;
 	bisMonsterDead = false;
@@ -69,7 +70,7 @@ void AMonster::Tick(float DeltaSeconds)
 	{
 		AMyAIController* AIController = Cast<AMyAIController>(GetController());
 		APawn* AIPawn = AIController->GetPawn();
-		if (DebugDrawEnabled)
+		if (DebugDrawEnabledAI2)
 		{
 			DrawDebugCone(GetWorld(), AIController->GetPawn()->GetActorLocation(), AIPawn->GetActorForwardVector(), this->PawnSensingComp->SightRadius, (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), 40, FColor::Purple, false, 0.05, 1, 0.5);
 			DrawDebugSphere(GetWorld(), AIController->GetPawn()->GetActorLocation(), this->PawnSensingComp->LOSHearingThreshold, 40, FColor::Yellow, false, 0.05, 0, 0.5f);
@@ -96,13 +97,13 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 			if (Length > MaxHearingRange)
 			{
 				// outside of max hearing range
-				if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, GetName() + " - Too far to hear sound"); }
+				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, GetName() + " - Too far to hear sound"); }
 			}
 			else
 			{
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Hearing test for " + GetName() + " : MaxHearingRange=" + FString::SanitizeFloat(MaxHearingRange) + " Length=" + FString::SanitizeFloat(Length));
 
-				if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!")); }
+				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!")); }
 				APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
 				AIController->SetSensedTarget(aPlayerCharacter);
 
@@ -112,7 +113,7 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 				AIController->SetBlackboardBotState(MonsterState);
 
 				AIController->SetLocationVector(Location);
-				if (DebugDrawEnabled) { DrawDebugSphere(GetWorld(), Location, 10, 5, FColor::Purple, false, 10, 0, 2); }
+				if (DebugDrawEnabledAI) { DrawDebugSphere(GetWorld(), Location, 10, 5, FColor::Purple, false, 10, 0, 2); }
 			}
 		}
 	}
@@ -131,12 +132,12 @@ void AMonster::OnFlashed(APawn* aPawn)
 			// Is the AI State already Stunned
 			if (AIController->IsAIStateStunned()) 
 			{
-				if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI already stunned!")); }
+				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI already stunned!")); }
 			}
 			else
 			{
 				AIController->SetAIStateStunned();
-				if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI stunned!")); }
+				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI stunned!")); }
 				MonsterState = EBotBehaviorType::Stunned;
 				AIController->SetBlackboardBotState(MonsterState);
 				AIController->SetLocationVector(SensedPawn->GetActorLocation());
@@ -158,7 +159,7 @@ void AMonster::OnShot(APawn* aPawn)
 		if (AIController && SensedPawn)
 		{
 			AIController->SetAIStateFlee();
-			if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - hit - Agression!")); }
+			if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - hit - Agression!")); }
 			MonsterState = EBotBehaviorType::Agression;
 			AIController->SetBlackboardBotState(MonsterState);
 			AIController->SetLocationVector(SensedPawn->GetActorLocation());
@@ -193,12 +194,12 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 				{
 				case EBotBehaviorType::Neutral:
 				case EBotBehaviorType::Suspicious:
-					if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!")); }
+					if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!")); }
 					//GLog->Log("Seen");
 					MonsterState = EBotBehaviorType::Agression;
 					AIController->SetBlackboardBotState(MonsterState);
 					AIController->SetLocationVector(SensedPawn->GetActorLocation());
-					if (DebugDrawEnabled) { DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Red, false, 10, 0, 2); }
+					if (DebugDrawEnabledAI) { DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Red, false, 10, 0, 2); }
 
 					AIController->StopMovement();
 					//When changed to suspicious cry once. 
@@ -217,7 +218,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 				case EBotBehaviorType::Agression:
 					// AI is already Agressive - just update the location
 					AIController->SetLocationVector(SensedPawn->GetActorLocation());
-					if (DebugDrawEnabled) { DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Yellow, false, 10, 0, 2); }
+					if (DebugDrawEnabledAI) { DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Yellow, false, 10, 0, 2); }
 					break;
 				case EBotBehaviorType::Charge:
 					// Not used
@@ -387,8 +388,14 @@ UAudioComponent* AMonster::PlayCharacterSound(USoundCue* CueToPlay)
 
 }
 
-void AMonster::SetMonsterDebugDraw(bool deb)
+void AMonster::SetMonsterDebugDrawAI(bool deb)
 {
-	DebugDrawEnabled = deb;
+	DebugDrawEnabledAI = deb;
+
+}
+
+void AMonster::SetMonsterDebugDrawAI2(bool deb)
+{
+	DebugDrawEnabledAI2 = deb;
 
 }
