@@ -148,6 +148,29 @@ void AMonster::OnFlashed(APawn* aPawn)
 }
 
 
+void AMonster::OnShot(APawn* aPawn)
+{
+	if (GetMonsterDead() == false)
+	{
+		AMyAIController* AIController = Cast<AMyAIController>(GetController());
+		SensedPawn = Cast<ANBCharacter>(aPawn);
+		//Set the seen target on the blackboard
+		if (AIController && SensedPawn)
+		{
+			AIController->SetAIStateFlee();
+			if (DebugDrawEnabled) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - hit - Agression!")); }
+			MonsterState = EBotBehaviorType::Agression;
+			AIController->SetBlackboardBotState(MonsterState);
+			AIController->SetLocationVector(SensedPawn->GetActorLocation());
+
+			AIController->StopMovement();
+		}
+	}
+}
+
+
+
+
 void AMonster::OnSeePlayer(APawn* aPawn)
 {
 	if (GetMonsterDead() == false)
@@ -274,6 +297,7 @@ bool AMonster::GetMonsterDead()
 	{
 		bisMonsterDead = true;
 		SetRagdollPhysics();
+		PlayDeathAttackSound();
 	}
 	else
 	{
@@ -344,6 +368,14 @@ void AMonster::PlayDeathAttackSound()
 		SetPlayModeState(EGameModeSoundType::Death);
 	}
 }
+
+
+//void AMonster::SetPlayModeState(EGameModeSoundType ChangeSoundState)
+//{
+//
+//}
+
+
 UAudioComponent* AMonster::PlayCharacterSound(USoundCue* CueToPlay)
 {
 	if (CueToPlay)

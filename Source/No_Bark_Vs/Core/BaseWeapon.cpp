@@ -321,18 +321,21 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
 			Enemy->ReduceHealth(CurrentDamage);
+			Enemy->OnShot(GetPawnOwner());
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
 			Enemy->ReduceHealth(CurrentDamage);
+			Enemy->OnShot(GetPawnOwner());
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage;
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
 			Enemy->ReduceHealth(CurrentDamage);
+			Enemy->OnShot(GetPawnOwner());
 		}
 		else if (PhysMat->SurfaceType == SURFACE_FLESH)
 		{
