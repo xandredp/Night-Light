@@ -22,6 +22,7 @@ AMonster::AMonster()
 	PawnSensingComp->SightRadius = 1300;
 	PawnSensingComp->HearingThreshold = 600;
 	PawnSensingComp->LOSHearingThreshold = 1000;
+	MaxVisibleRange = 1500;
 
 	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("ZombieLoopedSoundComp"));
 	AudioLoopComp->bAutoActivate = false;
@@ -39,6 +40,7 @@ AMonster::AMonster()
 	IdleSoundCooldown = 1.0f;
 	MonsterValue = 100;
 	bisScoreAdded = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -61,11 +63,13 @@ void AMonster::BeginPlay()
 	AIController->SetBlackboardBotState(MonsterState);
 }
 
+// 
+//	Tick is mainly present to allow PawnSensingComp to show DrawDebugCone and DrawDebugSphere 
+//
 
 void AMonster::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-
 	if (GetMonsterDead() == false)
 	{
 		AMyAIController* AIController = Cast<AMyAIController>(GetController());
@@ -78,11 +82,13 @@ void AMonster::Tick(float DeltaSeconds)
 	}
 }
 
+//	Hearing -
+//	Hearing - limited to PawnSensingComp->LOSHearingThreshold
+//	Hearing -
 
 void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume)
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-
 	if (GetMonsterDead() == false)
 	{
 		//We don't want to hear ourselves
@@ -90,7 +96,6 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 		{
 			//	//Updates our target based on what we've heard.
 			//Con->SetSensedTarget(PawnInstigator);
-
 			float MaxHearingRange = PawnSensingComp->LOSHearingThreshold;
 			float Length = (Location - AIController->GetPawn()->GetActorLocation()).Size();
 
@@ -102,22 +107,22 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 			else
 			{
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Hearing test for " + GetName() + " : MaxHearingRange=" + FString::SanitizeFloat(MaxHearingRange) + " Length=" + FString::SanitizeFloat(Length));
-
 				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI detected a Noise!")); }
 				APawn* aPlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
 				AIController->SetSensedTarget(aPlayerCharacter);
-
 				AIController->StopMovement();
-
 				MonsterState = EBotBehaviorType::Agression;
 				AIController->SetBlackboardBotState(MonsterState);
-
 				AIController->SetLocationVector(Location);
 				if (DebugDrawEnabledAI) { DrawDebugSphere(GetWorld(), Location, 10, 5, FColor::Purple, false, 10, 0, 2); }
 			}
 		}
 	}
 }
+
+//	Flashed
+//	Flashed - Sets the AI to Stunned
+//	Flashed
 
 
 void AMonster::OnFlashed(APawn* aPawn)
@@ -141,13 +146,16 @@ void AMonster::OnFlashed(APawn* aPawn)
 				MonsterState = EBotBehaviorType::Stunned;
 				AIController->SetBlackboardBotState(MonsterState);
 				AIController->SetLocationVector(SensedPawn->GetActorLocation());
-
 				AIController->StopMovement();
 			}
 		}
 	}
 }
 
+
+//	Shot
+//	Shot - Sets the AI to Agression if hit
+//	Shot
 
 void AMonster::OnShot(APawn* aPawn)
 {
@@ -163,14 +171,14 @@ void AMonster::OnShot(APawn* aPawn)
 			MonsterState = EBotBehaviorType::Agression;
 			AIController->SetBlackboardBotState(MonsterState);
 			AIController->SetLocationVector(SensedPawn->GetActorLocation());
-
 			AIController->StopMovement();
 		}
 	}
 }
 
-
-
+//	Seen
+//	Seen - Updates the AI state if seen - GetDistanceTo(SensedPawn) < MaxVisibleRange)
+//	Seen
 
 void AMonster::OnSeePlayer(APawn* aPawn)
 {
@@ -184,7 +192,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 		//Set the seen target on the blackboard
 		if (AIController && SensedPawn )
 		{
-			if ((GetDistanceTo(SensedPawn) < 1500))
+			if ((GetDistanceTo(SensedPawn) < MaxVisibleRange))
 			{
 				// In seeing range 
 				// In seeing range 
@@ -240,12 +248,6 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 				// Detected but Not in seeing raange
 				// Detected but Not in seeing raange
 
-
-				//MonsterState = EBotBehaviorType::Neutral;
-				//AIController->SetBlackboardBotState(MonsterState);
-
-
-
 				if (SoundIdle)
 				{
 					AudioLoopComp->SetSound(SoundIdle);
@@ -253,19 +255,7 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 					LastIdlePlayTime = GetWorld()->GetTimeSeconds();
 					SetPlayModeState(EGameModeSoundType::General);
 				}
-				/*if (GetWorld()->TimeSeconds - LastIdlePlayTime > IdleSoundCooldown)
-				{
-				if (SoundIdle)
-				{
-				AudioLoopComp->SetSound(SoundIdle);
-				AudioLoopComp->Play();
-				LastIdlePlayTime = GetWorld()->GetTimeSeconds();
-				SetPlayModeState(EGameModeSoundType::General);
-				}
-				}*/
-
 				AIController->ResetSeenTarget();
-
 			}
 		}
 	}
@@ -283,13 +273,11 @@ void AMonster::ReduceHealth(int DamageValue)
 			SensedPawn->IncreaseScore(MonsterValue);
 			bisScoreAdded = true;
 		}
-	
 	}
 	else
 	{
 		Health = Health - DamageValue;
 	}
-	
 }
 
 bool AMonster::GetMonsterDead()
@@ -351,6 +339,7 @@ void AMonster::SetRagdollPhysics()
 		SetLifeSpan(10.0f);
 	}
 }
+
 void AMonster::PlayAttackSound()
 {
 	if (SoundAttackMelee)
@@ -360,6 +349,7 @@ void AMonster::PlayAttackSound()
 		SetPlayModeState(EGameModeSoundType::Combat);
 	}
 }
+
 void AMonster::PlayDeathAttackSound()
 {
 	if (SoundDeathAttack)

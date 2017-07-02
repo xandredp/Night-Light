@@ -65,7 +65,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float AttackRange;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float MaxVisibleRange;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		bool DebugDrawEnabledAI;
 
@@ -86,26 +89,32 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundAttackMelee;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundDeathAttack;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		USoundCue* SoundAttackCharge;
+
 	/* Attack Animation time &  Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		float IdleSoundCooldown;
+
 	/* Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		float LastIdlePlayTime;
+
 	/* Attack Animation time &  Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MeleeStrikeCooldown;
+
 	/* Minimum time between melee attacks */
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 		float LastStrikeTime;
+
 	/* Plays the idle, wandering or hunting sound */
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
 		UAudioComponent* AudioLoopComp;
-
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 		EBotBehaviorType MonsterState;
@@ -121,6 +130,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisScoreAdded;
+
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		UAudioComponent* PlayCharacterSound(USoundCue* CueToPlay);
