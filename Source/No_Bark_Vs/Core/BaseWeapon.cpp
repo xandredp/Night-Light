@@ -143,6 +143,7 @@ void ABaseWeapon::Fire()
 {
 	if (ProjectileType == EProjectileType::EBullet)
 	{
+		FireBullets();
 		GetWorldTimerManager().SetTimer(FiringTimerHandle, this, &ABaseWeapon::FireBullets, WeaponConfig.TimeBetweenShots, true);
 	}
 	if (ProjectileType == EProjectileType::ESpread)
@@ -184,28 +185,6 @@ void ABaseWeapon::Fire()
 		}
 	}
 }
-
-//void ABaseWeapon::Instant_Fire()
-//{
-//	const int32 RandomSeed = FMath::Rand();
-//	FRandomStream WeaponRandomStream(RandomSeed);
-//	const float CurrentSpread = WeaponConfig.WeaponSpread;
-//	const float SpreadCone = FMath::DegreesToRadians(WeaponConfig.WeaponSpread * 0.5);
-//
-//	//Shoot from Gun Muzzle
-////	const FVector AimDir = WeaponMesh->GetSocketRotation("MuzzleTip").Vector();
-//	const FVector StartTrace = WeaponMesh->GetSocketLocation("MuzzleTip");
-//
-//	//Shoot from Gun Muzzle to screen Cross Direction
-//	const FVector AimDir = GetAdjustedAim();
-//
-//	const FVector ShootDir = WeaponRandomStream.VRandCone(AimDir, SpreadCone, SpreadCone);
-//	const FVector EndTrace = StartTrace + ShootDir * WeaponConfig.WeaponRange;
-//	const FHitResult Impact = WeaponTrace(StartTrace, EndTrace);
-//
-//	ProcessInstantHit(Impact, StartTrace, ShootDir, RandomSeed, CurrentSpread);
-//
-//}
 void ABaseWeapon::Instant_Fire()
 {
 	SimulateWeaponFire();
