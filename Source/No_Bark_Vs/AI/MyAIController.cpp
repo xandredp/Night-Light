@@ -39,8 +39,6 @@ void AMyAIController::Possess(APawn* aPawn)
 			BlackboardComp->InitializeBlackboard(*(AIChar->BehaviorTree->BlackboardAsset));
 		}
 
-		//Populate the array of available target points
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APartolTargetPoint::StaticClass(), TargetPoints);
 
 		//Start the behavior tree which corresponds to the specific character
 		BehaviourComp->StartTree(*(AIChar->BehaviorTree));
@@ -201,4 +199,31 @@ void AMyAIController::SetAIStateSuspicious()
 	{
 		SetBlackboardBotState(Monster->MonsterState);
 	}
+}
+
+TArray<AActor*> AMyAIController::GetAvailableTargetPoints(FName WaveTag)
+{
+
+	TArray<AActor*> TargetPointsTag;
+
+	//Populate the array of available target points
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), APartolTargetPoint::StaticClass(), TargetPoints);
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), WaveTag, TargetPoints);
+	for (auto It : TargetPoints)
+	{
+
+		//APartolTargetPoint* ThisTarget = Cast<APartolTargetPoint>(It);
+
+		//if (ThisTarget->ActorHasTag(WaveTag))
+		{
+			// Add this one to the list 
+			TargetPointsTag.Add(It);
+		}
+		//else
+		{
+			// Skip
+		}
+	}
+
+	return TargetPointsTag;
 }

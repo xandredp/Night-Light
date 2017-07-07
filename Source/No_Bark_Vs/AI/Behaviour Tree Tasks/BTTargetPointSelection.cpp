@@ -10,13 +10,17 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 {
 	AMyAIController* AICon = Cast<AMyAIController>(OwnerComp.GetAIOwner());
 
+	FName WaveTag;
+
+	WaveTag = FName(TEXT("Wave1"));
+
 	if (AICon)
 	{
 		UBlackboardComponent* BlackBoardComp = AICon->GetBlackBoardComp();
 
 		APartolTargetPoint* CurrentPoint = Cast<APartolTargetPoint>(BlackBoardComp->GetValueAsObject("LocationGoTo"));
 
-		TArray<AActor*> AvailableTargetPoints = AICon->GetAvailableTargetPoints();
+		TArray<AActor*> AvailableTargetPoints = AICon->GetAvailableTargetPoints(WaveTag);
 
 		// Contains a random index to define the next target point
 		int32 RandomIndex;
@@ -24,13 +28,15 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 		
 
 		//Store the next possible point
-		APartolTargetPoint* NextTargetPoint = nullptr;
+		AActor* NextTargetPoint = nullptr;
 
 		// Find a next point which is different from the current one
 		do
 		{
 			RandomIndex = FMath::RandRange(0, AvailableTargetPoints.Num() - 1);
-			NextTargetPoint = Cast<APartolTargetPoint>(AvailableTargetPoints[RandomIndex]);
+			//NextTargetPoint = Cast<APartolTargetPoint>(AvailableTargetPoints[RandomIndex]);
+			NextTargetPoint = AvailableTargetPoints[RandomIndex];
+
 		} while (CurrentPoint == NextTargetPoint);
 
 		// Update the next location in the blackboard so the AI can move to the next blackboard value

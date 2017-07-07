@@ -5,6 +5,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "AI/PartolTargetPoint.h"
 #include "Core/TypeClass.h"
 #include "AIController.h"
 #include "MyAIController.generated.h"
@@ -108,5 +109,5 @@ public:
 
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const { return BlackboardComp; }
 
-	FORCEINLINE TArray<AActor*> GetAvailableTargetPoints() { return TargetPoints; }
+	TArray<AActor*> GetAvailableTargetPoints(FName WaveTag);
 };
