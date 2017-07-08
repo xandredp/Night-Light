@@ -201,29 +201,42 @@ void AMyAIController::SetAIStateSuspicious()
 	}
 }
 
+
+// Return an Array of TargetPoints - filtered by WaveTag
+
 TArray<AActor*> AMyAIController::GetAvailableTargetPoints(FName WaveTag)
 {
 
 	TArray<AActor*> TargetPointsTag;
 
-	//Populate the array of available target points
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), APartolTargetPoint::StaticClass(), TargetPoints);
-	UGameplayStatics::GetAllActorsWithTag(GetWorld(), WaveTag, TargetPoints);
+	//Populate the array of available target points - using two methods
+
+	//Method 1 - This one succesfully returns all the APartolTargetPoints in the level - BUT the TAGs seem to be empty
+	// ActorHasTag(WaveTag) always fails. And manualy inspecting the TargetPoints array in debug shows empty TAGs
+	//
+	// I want this one fixed - it should be WAY faster than filtering ALL ACTORS by TAG
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APartolTargetPoint::StaticClass(), TargetPoints);
+
+	// Method 2 - This one succesfully returns all the APartolTargetPoints in the level - correctly filtered by TAG
+	// This is really too slow and inefficient - at least it works
+
+	//UGameplayStatics::GetAllActorsWithTag(GetWorld(), WaveTag, TargetPoints);
+
+
+	// Further filter by WaveTag if needed 
 	for (auto It : TargetPoints)
 	{
-
-		//APartolTargetPoint* ThisTarget = Cast<APartolTargetPoint>(It);
-
-		//if (ThisTarget->ActorHasTag(WaveTag))
+		if (It->ActorHasTag(WaveTag))
 		{
-			// Add this one to the list 
+			// Add this one to the filtered list 
 			TargetPointsTag.Add(It);
 		}
 		//else
 		{
-			// Skip
+			// Skip this APartolTargetPoint
 		}
 	}
 
-	return TargetPointsTag;
+	return TargetPointsTag; // Return the filtered list - filtered by WaveTag
 }
