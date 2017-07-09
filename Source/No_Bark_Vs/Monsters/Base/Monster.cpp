@@ -40,7 +40,7 @@ AMonster::AMonster()
 	IdleSoundCooldown = 1.0f;
 	MonsterValue = 100;
 	bisScoreAdded = false;
-
+	AfterDeathAutoDelete = 30; // Seconds
 }
 
 // Called when the game starts or when spawned
@@ -78,6 +78,15 @@ void AMonster::Tick(float DeltaSeconds)
 		{
 			DrawDebugCone(GetWorld(), AIController->GetPawn()->GetActorLocation(), AIPawn->GetActorForwardVector(), this->PawnSensingComp->SightRadius, (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), 40, FColor::Purple, false, 0.05, 1, 0.5);
 			DrawDebugSphere(GetWorld(), AIController->GetPawn()->GetActorLocation(), this->PawnSensingComp->LOSHearingThreshold, 40, FColor::Yellow, false, 0.05, 0, 0.5f);
+		}
+	}
+	else
+	{
+		float DeathTimer = GetLifeSpan();
+		
+		if ((DeathTimer > 0) && (DeathTimer > (AfterDeathAutoDelete-0.05))) {
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Death timer started for " + GetName() + " : GetLifeSpan=" + FString::SanitizeFloat(DeathTimer)); 
+			AudioLoopComp->Stop(); // recently dead - so stop with the infernal moaning PLEASE!!!
 		}
 	}
 }
@@ -282,17 +291,14 @@ void AMonster::ReduceHealth(int DamageValue)
 
 bool AMonster::GetMonsterDead()
 {
-	if (Health <= 0)
+
+	if ((Health <= 0) && (bisMonsterDead == false))
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GetMonsterDead " + GetName() + " : Health=" + FString::SanitizeFloat(Health));
+		GLog->Log("SetLifeSpan(AfterDeathAutoDelete)");
+		SetLifeSpan(AfterDeathAutoDelete);
 		bisMonsterDead = true;
 		SetRagdollPhysics();
-		PlayDeathAttackSound();
-		//here
-		//this->DisableComponentsSimulatePhysics();
-	}
-	else
-	{
-		bisMonsterDead = false;
 	}
 
 	return bisMonsterDead;
@@ -336,10 +342,11 @@ void AMonster::SetRagdollPhysics()
 		SetActorHiddenInGame(true);
 		SetLifeSpan(1.0f);
 	}
-	else
-	{
-		SetLifeSpan(10.0f);
-	}
+	//else
+	//{
+	//	GLog->Log("SetLifeSpan(10.0f)");
+	//	SetLifeSpan(10.0f);
+	//}
 }
 
 void AMonster::PlayAttackSound()
@@ -359,6 +366,7 @@ void AMonster::PlayDeathAttackSound()
 		AudioLoopComp->SetSound(SoundDeathAttack);
 		AudioLoopComp->Play();
 		SetPlayModeState(EGameModeSoundType::Death);
+		AudioLoopComp->Stop();
 	}
 }
 

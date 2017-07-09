@@ -70,6 +70,9 @@ public:
 		float MaxVisibleRange;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float AfterDeathAutoDelete;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		bool DebugDrawEnabledAI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
