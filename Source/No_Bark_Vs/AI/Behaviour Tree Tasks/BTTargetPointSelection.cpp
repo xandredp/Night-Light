@@ -5,15 +5,39 @@
 #include "AI/PartolTargetPoint.h"
 #include "AI/MyAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Core/NBGameInstance.h"
+#include "Engine/GameInstance.h"
 
 EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AMyAIController* AICon = Cast<AMyAIController>(OwnerComp.GetAIOwner());
 
 	FName WaveTag;
-
 	WaveTag = FName(TEXT("Wave1"));
 
+	UNBGameInstance* SGI = Cast<UNBGameInstance>(GetWorld()->GetGameInstance());
+	if (SGI)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - level=") + FString::FromInt(SGI->LevelValue));
+
+		switch (SGI->LevelValue)
+		{
+		case 1:
+			WaveTag = FName(TEXT("Wave1"));
+			break;
+		case 2:
+			WaveTag = FName(TEXT("Wave2"));
+			break;
+		case 3:
+			WaveTag = FName(TEXT("Wave3"));
+			break;		
+		case 4:
+			WaveTag = FName(TEXT("Wave4"));
+			break;
+		default:
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Wave index out of range - in UBTTargetPointSelection");
+		}
+	}
 	if (AICon)
 	{
 		UBlackboardComponent* BlackBoardComp = AICon->GetBlackBoardComp();

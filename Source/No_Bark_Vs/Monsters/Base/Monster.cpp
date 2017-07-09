@@ -287,6 +287,8 @@ bool AMonster::GetMonsterDead()
 		bisMonsterDead = true;
 		SetRagdollPhysics();
 		PlayDeathAttackSound();
+		//here
+		//this->DisableComponentsSimulatePhysics();
 	}
 	else
 	{

@@ -34,10 +34,11 @@ void ATankyMonster::BeginPlay()
 	Super::BeginPlay();
 
 	//Register the function that will be called when the pawn sees the player
-	if (PawnSensingComp)
-	{
-			PawnSensingComp->OnSeePawn.AddDynamic(this, &ATankyMonster::OnSeePlayer);
-	}
+	//if (PawnSensingComp)
+	//{
+	//		PawnSensingComp->OnSeePawn.AddDynamic(this, &ATankyMonster::OnSeePlayer);
+	//} not part of base class
+
 }
 
 void ATankyMonster::PerformTankyAttack(AActor * HitActor)
@@ -80,24 +81,24 @@ void ATankyMonster::PerformTankyCharge(AActor * HitActor)
 	}
 }
 
-void ATankyMonster::OnSeePlayer(APawn* aPawn)
-{
-	AMyAIController* AIController = Cast<AMyAIController>(GetController());
-	SensedPawn = Cast<ANBCharacter>(aPawn);
-	//Set the seen target on the blackboard
-	if (AIController && SensedPawn)
-	{
-		if (GetDistanceTo(SensedPawn) < 1500)
-		{
-			GLog->Log("Seen");
-			AIController->SetSeenTarget(SensedPawn);
-			LineTrace();
-		}
-		else
-		{
-			GLog->Log("Out of Seeing range");
-			MonsterState = EBotBehaviorType::Neutral;
-			AIController->ResetSeenTarget();
-		}
-	}
-}
+//void ATankyMonster::OnSeePlayer(APawn* aPawn)
+//{
+//	AMyAIController* AIController = Cast<AMyAIController>(GetController());
+//	SensedPawn = Cast<ANBCharacter>(aPawn);
+//	//Set the seen target on the blackboard
+//	if (AIController && SensedPawn)
+//	{
+//		if (GetDistanceTo(SensedPawn) < 1500)
+//		{
+//			GLog->Log("Seen");
+//			AIController->SetSeenTarget(SensedPawn);
+//			LineTrace();
+//		}
+//		else
+//		{
+//			GLog->Log("Out of Seeing range");
+//			MonsterState = EBotBehaviorType::Neutral;
+//			AIController->ResetSeenTarget();
+//		}
+//	}
+//}

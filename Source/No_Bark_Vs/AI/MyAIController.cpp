@@ -216,17 +216,18 @@ TArray<AActor*> AMyAIController::GetAvailableTargetPoints(FName WaveTag)
 	//
 	// I want this one fixed - it should be WAY faster than filtering ALL ACTORS by TAG
 
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APartolTargetPoint::StaticClass(), TargetPoints);
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), APartolTargetPoint::StaticClass(), TargetPoints);
 
 	// Method 2 - This one succesfully returns all the APartolTargetPoints in the level - correctly filtered by TAG
 	// This is really too slow and inefficient - at least it works
 
-	//UGameplayStatics::GetAllActorsWithTag(GetWorld(), WaveTag, TargetPoints);
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), WaveTag, TargetPoints);
 
 
 	// Further filter by WaveTag if needed 
 	for (auto It : TargetPoints)
 	{
+
 		if (It->ActorHasTag(WaveTag))
 		{
 			// Add this one to the filtered list 
@@ -238,5 +239,5 @@ TArray<AActor*> AMyAIController::GetAvailableTargetPoints(FName WaveTag)
 		}
 	}
 
-	return TargetPointsTag; // Return the filtered list - filtered by WaveTag
+	return TargetPoints; // Return the filtered list - filtered by WaveTag
 }

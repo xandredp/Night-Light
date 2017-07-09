@@ -236,7 +236,7 @@ void ANBCharacter::EquipMeleeWeapon()
 	{
 		SpawnWeapon(WeaponClass);
 
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is something.");
 	}
 }
 void ANBCharacter::EquipOthers(int i_SlotNumber)
@@ -269,7 +269,7 @@ void ANBCharacter::EquipOthers(int i_SlotNumber)
 	{
 		SpawnWeapon(WeaponClass);
 
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is something.");
 	}
 }
 

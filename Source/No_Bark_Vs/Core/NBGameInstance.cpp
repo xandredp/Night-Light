@@ -6,3 +6,8 @@
 
 
 
+UNBGameInstance::UNBGameInstance(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	LevelValue = 100;
+}

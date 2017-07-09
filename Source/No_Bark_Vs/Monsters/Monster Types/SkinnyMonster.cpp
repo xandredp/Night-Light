@@ -81,7 +81,7 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attac range spherek!");
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack range sphere!");
 			if (AnimInstance)
 			{
 				// Set CanAttack in AnimInstance to true

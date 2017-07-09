@@ -18,8 +18,8 @@ class NO_BARK_VS_API ATankyMonster : public ASkinnyMonster
 	//gain stamina
 	FTimerHandle StopSprintingTimerHandle;
 private:
-	UFUNCTION()
-		void OnSeePlayer(APawn* Pawn);
+	//UFUNCTION()
+	//	void OnSeePlayer(APawn* Pawn);
 public:
 	ATankyMonster();
 
