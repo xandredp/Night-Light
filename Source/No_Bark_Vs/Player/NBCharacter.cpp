@@ -465,7 +465,9 @@ void ANBCharacter::CheckForInteractables()
 		return;
 	}
 	// If we didn't hit anything, or thing we hit was on to a interactable set current interactable nullptr. 
-	playController->CurrentInteractable = nullptr;
+	if (playController) {
+		playController->CurrentInteractable = nullptr;
+	}
 }
 ABaseInteractable* ANBCharacter::GetInteractableInView()
 {

@@ -54,17 +54,20 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 		//Store the next possible point
 		AActor* NextTargetPoint = nullptr;
 
-		// Find a next point which is different from the current one
-		do
-		{
-			RandomIndex = FMath::RandRange(0, AvailableTargetPoints.Num() - 1);
-			//NextTargetPoint = Cast<APartolTargetPoint>(AvailableTargetPoints[RandomIndex]);
-			NextTargetPoint = AvailableTargetPoints[RandomIndex];
+		if (AvailableTargetPoints.Num() > 0) {
 
-		} while (CurrentPoint == NextTargetPoint);
+			// Find a next point which is different from the current one
+			do
+			{
+				RandomIndex = FMath::RandRange(0, AvailableTargetPoints.Num() - 1);
+				//NextTargetPoint = Cast<APartolTargetPoint>(AvailableTargetPoints[RandomIndex]);
+				NextTargetPoint = AvailableTargetPoints[RandomIndex];
 
-		// Update the next location in the blackboard so the AI can move to the next blackboard value
-		BlackBoardComp->SetValueAsObject("LocationToGo", NextTargetPoint);
+			} while (CurrentPoint == NextTargetPoint);
+
+			// Update the next location in the blackboard so the AI can move to the next blackboard value
+			BlackBoardComp->SetValueAsObject("LocationToGo", NextTargetPoint);
+		}
 
 		return EBTNodeResult::Succeeded;
 	}
