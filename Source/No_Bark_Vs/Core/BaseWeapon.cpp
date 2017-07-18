@@ -89,23 +89,31 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
 
-	bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
-	//Checking for possible hits
-	if (bHit)
-	{
-		for (auto It = HitResults.CreateIterator(); It; It++)
-		{
-			AMonster* Char = Cast<AMonster>(It->GetActor());
-			if (Char)
-			{
-				FString monsterName;
-				monsterName = Char->GetName();
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
-				Char->OnFlashed(GetPawnOwner());
-			}
-			else
-			{
+	this->GetName();
 
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("WeaponSpotlight->bVisible:  %d"), WeaponSpotlight->bVisible));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("GetName:  %s"), *this->GetName()));
+
+	if (WeaponSpotlight->bVisible == 1)
+	{ 
+		bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
+		//Checking for possible hits
+		if (bHit)
+		{
+			for (auto It = HitResults.CreateIterator(); It; It++)
+			{
+				AMonster* Char = Cast<AMonster>(It->GetActor());
+				if (Char)
+				{
+					FString monsterName;
+					monsterName = Char->GetName();
+					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
+					Char->OnFlashed(GetPawnOwner());
+				}
+				else
+				{
+
+				}
 			}
 		}
 	}
