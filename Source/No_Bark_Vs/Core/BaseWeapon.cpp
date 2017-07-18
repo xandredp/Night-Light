@@ -57,62 +57,70 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 	FVector camLoc;
 	FRotator camRot;
 	
+	// Dont Tick if the weapon is not picked up
 
+	if (GetPawnOwner()) {
+		if (GetPawnOwner()->GetController()) {
+			GetPawnOwner()->GetController()->GetPlayerViewPoint(camLoc, camRot);
 
-	GetPawnOwner()->GetController()->GetPlayerViewPoint(camLoc, camRot);
+			const FVector start_trace = camLoc;
+			const FVector direction = camRot.Vector();
+			const FVector end_trace = start_trace + (direction * MaxUseDistance);
 
-	const FVector start_trace = camLoc;
-	const FVector direction = camRot.Vector();
-	const FVector end_trace = start_trace + (direction * MaxUseDistance);
+			FCollisionQueryParams TraceParams(FName(TEXT("")), true, this);
+			TraceParams.bTraceAsyncScene = true;
+			TraceParams.bReturnPhysicalMaterial = false;
+			TraceParams.bTraceComplex = true;
 
-	FCollisionQueryParams TraceParams(FName(TEXT("")), true, this);
-	TraceParams.bTraceAsyncScene = true;
-	TraceParams.bReturnPhysicalMaterial = false;
-	TraceParams.bTraceComplex = true;
+			FHitResult Hit(ForceInit);
 
-	FHitResult Hit(ForceInit);
-		
-	//Object query parameters
-	FCollisionObjectQueryParams ObjectQueryParams;
-	ObjectQueryParams.ObjectTypesToQuery;
-	ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
+			//Object query parameters
+			FCollisionObjectQueryParams ObjectQueryParams;
+			ObjectQueryParams.ObjectTypesToQuery;
+			ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
 
-	//Raycasting in a sphere to detect collisions
-	TArray<FHitResult> HitResults;
+			//Raycasting in a sphere to detect collisions
+			TArray<FHitResult> HitResults;
 
-	//Setting up the shape of the raycast
-	FCollisionShape CollisionShape;
-	CollisionShape.ShapeType = ECollisionShape::Sphere;
-	CollisionShape.SetSphere(10);
+			//Setting up the shape of the raycast
+			FCollisionShape CollisionShape;
+			CollisionShape.ShapeType = ECollisionShape::Sphere;
+			CollisionShape.SetSphere(10);
 
-	//Handling ignored actors
-	FCollisionQueryParams QueryParams;
-	QueryParams.AddIgnoredActor(this);
+			//Handling ignored actors
+			FCollisionQueryParams QueryParams;
+			QueryParams.AddIgnoredActor(this);
 
-	this->GetName();
+			this->GetName();
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("WeaponSpotlight->bVisible:  %d"), WeaponSpotlight->bVisible));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("GetName:  %s"), *this->GetName()));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("WeaponSpotlight->bVisible:  %d"), WeaponSpotlight->bVisible));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("GetName:  %s"), *this->GetName()));
 
-	if (WeaponSpotlight->bVisible == 1)
-	{ 
-		bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
-		//Checking for possible hits
-		if (bHit)
-		{
-			for (auto It = HitResults.CreateIterator(); It; It++)
-			{
-				AMonster* Char = Cast<AMonster>(It->GetActor());
-				if (Char)
+			// check if this Weapon object is being carried by the player
+
+			if (GetPawnOwner()->CurrentWeapon == this) {
+				if (WeaponSpotlight->bVisible == 1)
 				{
-					FString monsterName;
-					monsterName = Char->GetName();
-					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
-					Char->OnFlashed(GetPawnOwner());
-				}
-				else
-				{
+					bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
+					//Checking for possible hits
+					if (bHit)
+					{
+						for (auto It = HitResults.CreateIterator(); It; It++)
+						{
+							AMonster* Char = Cast<AMonster>(It->GetActor());
+							if (Char)
+							{
+								FString monsterName;
+								monsterName = Char->GetName();
+								//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
+								Char->OnFlashed(GetPawnOwner());
+							}
+							else
+							{
 
+							}
+						}
+					}
 				}
 			}
 		}
