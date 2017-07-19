@@ -18,7 +18,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 	UNBGameInstance* SGI = Cast<UNBGameInstance>(GetWorld()->GetGameInstance());
 	if (SGI)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - level=") + FString::FromInt(SGI->LevelValue));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - level=") + FString::FromInt(SGI->LevelValue));
 
 		switch (SGI->LevelValue)
 		{

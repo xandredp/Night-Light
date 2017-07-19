@@ -31,6 +31,8 @@ AMonster::AMonster()
 
 	MonsterState = EBotBehaviorType::Neutral;
 
+	
+
 	DebugDrawEnabledAI = false;
 	DebugDrawEnabledAI2 = false;
 
@@ -41,7 +43,8 @@ AMonster::AMonster()
 	MonsterValue = 100;
 	bisScoreAdded = false;
 	AfterDeathAutoDelete = 30; // Seconds
-}
+
+	}
 
 // Called when the game starts or when spawned
 void AMonster::BeginPlay()
@@ -299,6 +302,10 @@ bool AMonster::GetMonsterDead()
 		SetLifeSpan(AfterDeathAutoDelete);
 		bisMonsterDead = true;
 		SetRagdollPhysics();
+
+		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
+
+		this->GetCapsuleComponent()->bNavigationRelevant = 0;
 	}
 
 	return bisMonsterDead;
