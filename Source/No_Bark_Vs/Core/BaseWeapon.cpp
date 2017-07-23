@@ -393,7 +393,7 @@ void ABaseWeapon::ReloadAmmo()
 	{
 		if (CurrentClip > 0)
 		{
-			//palyannimation
+			//playannimation
 			if (ReloadAnimation)
 			{
 				float AnimDuration = PlayWeaponAnimation(ReloadAnimation);
@@ -413,8 +413,8 @@ void ABaseWeapon::ReloadAmmo()
 			// if there are plenty clips in my gun
 			if (ResultClip > WeaponConfig.MaxAmmo)
 			{
+				AddedClipNumbers = WeaponConfig.MaxAmmo - CurrentAmmo; 
 				CurrentAmmo = WeaponConfig.MaxAmmo;
-				AddedClipNumbers = (CurrentClip - WeaponConfig.MaxAmmo) + AmmoRemainedInCurrentClip;
 			}
 			// if there are no plenty clips in my gun. add all clips into gun
 			else
