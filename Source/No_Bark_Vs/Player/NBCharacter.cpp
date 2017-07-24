@@ -72,7 +72,7 @@ ANBCharacter::ANBCharacter()
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
 
-	//CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	////CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
 	//CharacterMesh->SetupAttachment(RootComponent);
 
@@ -80,9 +80,11 @@ ANBCharacter::ANBCharacter()
 	FPSCharacterArmMesh->SetupAttachment(GetMesh());
 												// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
-	FollowCamera->bUsePawnControlRotation = true; // Camera does rotate relative to arm
-
+	//FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
+	//FollowCamera->bUsePawnControlRotation = true; // Camera does rotate relative to arm
+	FollowCamera->SetupAttachment(GetCapsuleComponent());
+	FollowCamera->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
+	FollowCamera->bUsePawnControlRotation = true;
 	
 }
 
@@ -94,6 +96,7 @@ void ANBCharacter::BeginPlay()
 	//FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, CameraAttachPoint);
 	AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	bIsDead = false;
+	CharacterMesh->SetHiddenInGame(true, true);
 
 	if (WeaponClass != NULL)
 	{
@@ -123,7 +126,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
-	PlayerInputComponent->BindAction("ScondaryWeapon", IE_Pressed, this, &ANBCharacter::EquipSecondaryWeapon);
+
 	PlayerInputComponent->BindAction("Spawn", IE_Pressed, this, &ANBCharacter::Spawn);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
@@ -154,21 +157,6 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::StopFireWeapon);
 
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::ReloadWeapon);
-	/*PlayerInputComponent->BindAction("Targeting", IE_Pressed, this, &ANBCharacter::OnStartTargeting);
-	PlayerInputComponent->BindAction("Targeting", IE_Released, this, &ANBCharacter::OnEndTargeting);
-
-	
-	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::OnStopFire);
-
-
-
-	PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, this, &ANBCharacter::OnNextWeapon);
-	PlayerInputComponent->BindAction("PrevWeapon", IE_Pressed, this, &ANBCharacter::OnPrevWeapon);
-
-	PlayerInputComponent->BindAction("EquipPrimaryWeapon", IE_Pressed, this, &ANBCharacter::OnEquipPrimaryWeapon);
-	PlayerInputComponent->BindAction("EquipSecondaryWeapon", IE_Pressed, this, &ANBCharacter::OnEquipSecondaryWeapon);
-*/
-
 
 
 }
@@ -187,89 +175,6 @@ void ANBCharacter::EquipPrimaryWeapon()
 		AnimInstance->IsPrimaryEquiped = true;
 		SpawnWeapon(WeaponClass);
 		AttachEquipmentToHand();
-	}
-}
-void ANBCharacter::EquipSecondaryWeapon()
-{
-	GetEquipment(1);
-
-	if (WeaponClass == NULL)
-	{
-
-		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
-	}
-	else
-	{
-		SpawnWeapon(WeaponClass);
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is somnething.");
-	}
-	AttachEquipmentToHand();
-}
-void ANBCharacter::EquipMeleeWeapon()
-{
-	APlayController* playController = Cast<APlayController>(GetController());
-	if (playController)
-	{
-		if (playController->FCurrentEquippedMeleeWeapon.CurrentStackNumber >0)
-		{
-			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedMeleeWeapon;
-			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
-		}
-		else
-		{
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
-		}
-	}
-	else
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
-	}
-
-	if (WeaponClass == NULL)
-	{
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
-	}
-	else
-	{
-		SpawnWeapon(WeaponClass);
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is something.");
-	}
-}
-void ANBCharacter::EquipOthers(int i_SlotNumber)
-{
-	APlayController* playController = Cast<APlayController>(GetController());
-	if (playController)
-	{
-		if (playController->FCurrentEquipment.Num() != 0)
-		{
-			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquipment[i_SlotNumber];
-			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
-			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
-		}
-		else
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
-		}
-	}
-	else
-	{
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
-	}
-
-	if (WeaponClass == NULL)
-	{
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
-	}
-	else
-	{
-		SpawnWeapon(WeaponClass);
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClass  Is something.");
 	}
 }
 

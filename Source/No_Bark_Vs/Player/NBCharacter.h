@@ -71,9 +71,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void EquipPrimaryWeapon();
-	void EquipSecondaryWeapon();
-	void EquipMeleeWeapon();
-	void EquipOthers(int i_SlotNumber);
+
 	void TurnOnTorch();
 
 	void TurnOffTorch();
