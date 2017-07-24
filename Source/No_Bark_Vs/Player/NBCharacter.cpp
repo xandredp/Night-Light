@@ -76,8 +76,6 @@ ANBCharacter::ANBCharacter()
 	////CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
 	//CharacterMesh->SetupAttachment(RootComponent);
 
-	FPSCharacterArmMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSArmMesh"));
-	FPSCharacterArmMesh->SetupAttachment(GetMesh());
 												// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	//FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
@@ -86,6 +84,14 @@ ANBCharacter::ANBCharacter()
 	FollowCamera->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
 	FollowCamera->bUsePawnControlRotation = true;
 	
+	FPSCharacterArmMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSArmMesh"));
+	FPSCharacterArmMesh->SetOnlyOwnerSee(true);
+	FPSCharacterArmMesh->SetupAttachment(FollowCamera);
+	FPSCharacterArmMesh->bCastDynamicShadow = false;
+	FPSCharacterArmMesh->CastShadow = false;
+	FPSCharacterArmMesh->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
+	FPSCharacterArmMesh->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+
 }
 
 void ANBCharacter::BeginPlay()
