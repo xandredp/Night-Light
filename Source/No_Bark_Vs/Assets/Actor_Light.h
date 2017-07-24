@@ -20,6 +20,9 @@ public:
 	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	//	USphereComponent* NavMeshModifierSphere;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+		UStaticMeshComponent* LightStaticMesh;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		USpotLightComponent *SpotLightComp;
 

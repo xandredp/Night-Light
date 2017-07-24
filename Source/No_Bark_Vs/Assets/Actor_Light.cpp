@@ -7,8 +7,13 @@
 // Sets default values
 AActor_Light::AActor_Light()
 {
+	LightStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("PickupMesh");
+	LightStaticMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
+	LightStaticMesh->SetupAttachment(RootComponent);
+
+
 	SpotLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("PointLight"));
-	SpotLightComp->SetupAttachment(RootComponent);
+	SpotLightComp->SetupAttachment(LightStaticMesh);
 
 	bIsLightOn = true;
 	//this->SetActorHiddenInGame(bIsLightOn);

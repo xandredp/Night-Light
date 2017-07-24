@@ -18,31 +18,30 @@ void ALightsSwitch::Interact(APlayerController* playerController)
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
 	{
-		if (LightActorComp)
+		if (LightActors.Num() != 0)
 		{
 			ToggleSwitchOnAndOff();
 		}
 		else
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "PointLight Not assigned");
+		{	
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Not assigned");
 		}
-
 	}
 }
 
 void ALightsSwitch::BeginPlay()
 {
 	Super::BeginPlay();
+	if (LightActors.Num() != 0)
+	{
+		for (int32 i = 0; i < LightActors.Num(); i++)
+		{
+			LightActors[i]->bIsLightOn = false;
+			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 
-	//if (LightActorComp)
-	//{
-	//	LightActorComp->bIsLightOn = true;
-	//	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
-	//	LightActorComp->ToggleSpotLightComp(true);
-	//	LightingOnStart();
-	//}
-
-
+			LightActors[i]->ToggleSpotLightComp(false);
+		}
+	}
 }
 
 void ALightsSwitch::DestroyItemOnGround()
@@ -52,5 +51,24 @@ void ALightsSwitch::DestroyItemOnGround()
 
 void ALightsSwitch::ToggleSwitchOnAndOff()
 {
+
+	for (int32 i = 0; i < LightActors.Num(); i++)
+	{
+		//Turn Off Light
+		if (LightActors[i]->bIsLightOn)
+		{
+			LightActors[i]->bIsLightOn = false;
+			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
+
+			LightActors[i]->ToggleSpotLightComp(false);
+		}
+		// Turn On light
+		else
+		{
+			LightActors[i]->bIsLightOn = true;
+			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned On");
+			LightActors[i]->ToggleSpotLightComp(true);
+		}
+	}
 }
 
