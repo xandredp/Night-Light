@@ -147,6 +147,7 @@ void ABaseWeapon::FireBullets()
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
 		Instant_Fire();
+		MakeNoise(100, GetPawnOwner(), GetActorLocation());
 
 		CurrentAmmo -= WeaponConfig.ShotCost;
 	}
