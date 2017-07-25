@@ -23,7 +23,7 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//void DestroyItemOnGround();
+	void DestroyItemOnGround();
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void ToggleDoor();
