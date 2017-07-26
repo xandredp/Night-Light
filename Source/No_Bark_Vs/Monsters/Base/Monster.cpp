@@ -18,8 +18,8 @@ AMonster::AMonster()
 	//Initializing the pawn sensing component
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	// Set the peripheral vision angle to 80 degrees
-	PawnSensingComp->SetPeripheralVisionAngle(80.0f);
-	PawnSensingComp->SightRadius = 1300;
+	PawnSensingComp->SetPeripheralVisionAngle(190.0f);
+	PawnSensingComp->SightRadius = 2500;
 	PawnSensingComp->HearingThreshold = 600;
 	PawnSensingComp->LOSHearingThreshold = 1000;
 	MaxVisibleRange = 1500;

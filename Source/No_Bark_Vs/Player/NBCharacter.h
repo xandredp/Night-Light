@@ -76,6 +76,8 @@ public:
 
 	void TurnOffTorch();
 
+	void TorchCrank();
+
 	// Spawn monster function called by input binding
 	void Spawn();
 

@@ -7,7 +7,7 @@
 
 ASkinnyMonster::ASkinnyMonster()
 {
-	MovementSpeed = 200.0f;
+	MovementSpeed = 400.0f;
 	Health = 100.0f;
 	AttackDamage = 20.0f;
 	AttackRange = 150.0f;

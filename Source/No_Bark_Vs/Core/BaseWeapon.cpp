@@ -597,6 +597,7 @@ void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 }
 
 
+
 void ABaseWeapon::TurnOnTorch()
 {
 	WeaponSpotlight->SetVisibility(true);
@@ -606,4 +607,10 @@ void ABaseWeapon::TurnOnTorch()
 void ABaseWeapon::TurnOffTorch()
 {
 	WeaponSpotlight->SetVisibility(false);
+}
+
+void ABaseWeapon::TorchCrank()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT(" Light cranked. Range increased by 100. "));
+	MaxUseDistance = MaxUseDistance + 100;
 }

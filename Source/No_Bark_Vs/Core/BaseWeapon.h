@@ -170,8 +170,9 @@ public:
 	void ReloadAmmo();
 	void StopReloading();
 	void TurnOnTorch();
-
 	void TurnOffTorch();
+	void TorchCrank();
+
 protected:
 
 	virtual void SimulateWeaponFire();

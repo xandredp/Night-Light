@@ -155,7 +155,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("TorchOn", IE_Pressed, this, &ANBCharacter::TurnOnTorch);
 	PlayerInputComponent->BindAction("TorchOff", IE_Pressed, this, &ANBCharacter::TurnOffTorch);
 
-
+	PlayerInputComponent->BindAction("TorchCrank", IE_Pressed, this, &ANBCharacter::TorchCrank);
 	// Weapons
 
 
@@ -589,6 +589,16 @@ void ANBCharacter::TurnOffTorch()
 	if (CurrentWeapon)
 	{
 		CurrentWeapon->TurnOffTorch();
+	}
+
+}
+
+void ANBCharacter::TorchCrank()
+{
+
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->TorchCrank();
 	}
 
 }
