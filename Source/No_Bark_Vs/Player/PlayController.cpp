@@ -705,6 +705,22 @@ void APlayController::UnAttachEquipment(FCurrentInventoryItemInfo iItemInfo)
 {
 }
 
+void APlayController::AddKeytoPossesion(FKeyData aKey)
+{
+	CurrentPossesedKeys.Add(aKey);
+}
+
+void APlayController::RemoveKeyfromPossesion(FKeyData aKey)
+{
+	for (int32 i = 0; i < CurrentPossesedKeys.Num(); i++)
+	{
+		if (CurrentPossesedKeys[i].KeyID == aKey.KeyID)
+		{
+			CurrentPossesedKeys.RemoveAt(i);
+		}
+	}
+}
+
 void APlayController::CloseSkills()
 {
 	SetInputModetoGameandUI(true);

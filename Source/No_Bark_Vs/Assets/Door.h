@@ -31,6 +31,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		FName ItemID;
 
-	
-	
+
 };

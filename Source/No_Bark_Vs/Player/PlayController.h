@@ -5,6 +5,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Player/NBCharacter.h"
 #include "Core/TypeClass.h"
+#include "Assets/KeyForDoor.h"
 #include "PlayController.generated.h"
 
 /**
@@ -141,6 +142,19 @@ public:
 		TSubclassOf<ABaseWeapon> WeaponClass;
 
 	/************************************************************************/
+	/* Keys                                                      */
+	/************************************************************************/
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FKeyData> CurrentPossesedKeys;
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddKeytoPossesion(FKeyData aKey);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void RemoveKeyfromPossesion(FKeyData aKey);
+
+	/************************************************************************/
 	/* Widgets                                                      */
 	/************************************************************************/
 
@@ -152,7 +166,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool isMySkillsOpen;
-
+	
 	UFUNCTION(BlueprintImplementableEvent)
 		void ReloadInventory();
 
