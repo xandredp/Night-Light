@@ -14,11 +14,11 @@ ADoor::ADoor()
 
 void ADoor::Interact(APlayerController* playerController)
 {
-	APlayController* aPlayController = Cast<APlayController>(playerController);
-	if (aPlayController)
-	{
-		ToggleDoor();
-	}
+	//APlayController* aPlayController = Cast<APlayController>(playerController);
+	//if (aPlayController)
+	//{
+	//	ToggleDoor();
+	//}
 }
 
 void ADoor::BeginPlay()
