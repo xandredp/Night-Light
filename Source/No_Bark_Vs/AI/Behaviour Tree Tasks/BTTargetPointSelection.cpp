@@ -35,7 +35,8 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 			WaveTag = FName(TEXT("Wave4"));
 			break;
 		default:
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Wave index out of range - in UBTTargetPointSelection");
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Wave index out of range - in UBTTargetPointSelection");
+			break;
 		}
 	}
 	if (AICon)

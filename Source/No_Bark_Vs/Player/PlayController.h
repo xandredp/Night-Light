@@ -148,6 +148,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		TArray<FKeyData> CurrentPossesedKeys;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		FKeyData CurrentPossesedKey;
+
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddKeytoPossesion(FKeyData aKey);
 
