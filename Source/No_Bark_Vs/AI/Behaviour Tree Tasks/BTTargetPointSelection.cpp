@@ -17,9 +17,9 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 
 	AICon;
 	FName WaveTag;
-	WaveTag = FName(TEXT("Wave1"));
+	WaveTag = FName(TEXT("NoZone"));
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, Mon->GetName());
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, Mon->GetName());
 
 	TArray<FName> WaveTags = Mon->Tags;
 
@@ -72,6 +72,9 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 
 		TArray<AActor*> AvailableTargetPoints = AICon->GetAvailableTargetPoints(WaveTag);
 
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, (Mon->GetName() + FString(TEXT(" is TAGed as ")) + WaveTag.GetPlainNameString() + FString(TEXT("  with ")) + FString::FromInt(AvailableTargetPoints.Num()) + FString(TEXT(" Patrol Areas."))));
+
+
 		// Contains a random index to define the next target point
 		int32 RandomIndex;
 
@@ -81,7 +84,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 		if (AvailableTargetPoints.Num() > 0) {
 
 			// Find a next point which is different from the current one
-			do
+			do 
 			{
 				RandomIndex = FMath::RandRange(0, AvailableTargetPoints.Num() - 1);
 				//NextTargetPoint = Cast<APartolTargetPoint>(AvailableTargetPoints[RandomIndex]);
