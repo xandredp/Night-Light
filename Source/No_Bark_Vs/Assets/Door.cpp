@@ -12,6 +12,7 @@ ADoor::ADoor()
 {
 	ItemID = FName("Please EnterID");
 	IsDoorOpen = false;
+	IsDoorLock = true;
 }
 
 void ADoor::Interact(APlayerController* playerController)
