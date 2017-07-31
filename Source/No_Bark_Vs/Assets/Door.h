@@ -31,5 +31,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		FName ItemID;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsDoorOpen;
+
 
 };

@@ -10,10 +10,13 @@ ABaseInteractable::ABaseInteractable()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	PickupSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("PickupSkeletalMesh");
+	PickupSkeletalMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
+	//PickupSkeletalMesh->SetupAttachment(RootComponent);
 
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>("PickupMesh");
-	PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
-	PickupMesh->SetupAttachment(RootComponent);
+	//PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
+	PickupMesh->SetupAttachment(PickupSkeletalMesh);
 
 	PickupCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("PickupCollisionComp"));
 	PickupCollisionComp->SetupAttachment(PickupMesh);
