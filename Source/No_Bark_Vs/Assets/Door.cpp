@@ -13,6 +13,7 @@ ADoor::ADoor()
 	ItemID = FName("Please EnterID");
 	IsDoorOpen = false;
 	IsDoorLock = true;
+	IsDoubleDoor = false;
 }
 
 void ADoor::Interact(APlayerController* playerController)
@@ -20,6 +21,13 @@ void ADoor::Interact(APlayerController* playerController)
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
 	{
+		if (IsDoubleDoor)
+		{
+			if (AnotherDoor)
+			{
+				AnotherDoor->ToggleDoor();
+			}
+		}
 		ToggleDoor();
 	}
 }

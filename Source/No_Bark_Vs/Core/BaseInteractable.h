@@ -33,9 +33,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
 		FString GetInteractText() const;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Pickup")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
 		FString Name;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Pickup")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
 		FString Action;
 };

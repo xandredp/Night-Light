@@ -37,5 +37,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsDoorOpen;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsDoubleDoor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		ADoor * AnotherDoor;
 };
