@@ -707,11 +707,11 @@ void APlayController::UnAttachEquipment(FCurrentInventoryItemInfo iItemInfo)
 
 void APlayController::AddKeytoPossesion(FKeyData aKey)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
 
 	CurrentPossesedKeys.Add(aKey);
 	CurrentPossesedKey = aKey;
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
 
 }
 
