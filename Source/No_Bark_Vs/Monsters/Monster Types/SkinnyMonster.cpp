@@ -42,10 +42,8 @@ void ASkinnyMonster::BeginPlay()
 {
 	Super::BeginPlay();
 	AttackRangeSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
-	
-
-
 }
+
 void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (GetMonsterDead() == false)
@@ -70,7 +68,6 @@ void ASkinnyMonster::OnEndOverlapWithCharacter(UPrimitiveComponent* OverlappedCo
 	{
 
 	}
-	
 }
 
 void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -87,11 +84,8 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 				// Set CanAttack in AnimInstance to true
 				AnimInstance->CanAttack = true;
 			}
-
 		}
-
 	}
-
 }
 
 void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
@@ -110,19 +104,13 @@ void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, 
 				AnimInstance->CanAttack = false;
 			}
 		}
-
 	}
-	
-
 }
 
 void ASkinnyMonster::PerformAttack(AActor* HitActor)
 {
-
 	if (GetMonsterDead() == false)
 	{
-
-
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(HitActor);
 		if (OtherPawn)
 		{
@@ -140,5 +128,4 @@ void ASkinnyMonster::PerformAttack(AActor* HitActor)
 			DecreaseCharacterHealth();
 		}
 	}
-	
 }

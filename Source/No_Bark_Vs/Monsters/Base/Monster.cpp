@@ -31,8 +31,6 @@ AMonster::AMonster()
 
 	MonsterState = EBotBehaviorType::Neutral;
 
-	
-
 	DebugDrawEnabledAI = false;
 	DebugDrawEnabledAI2 = false;
 
@@ -43,8 +41,7 @@ AMonster::AMonster()
 	MonsterValue = 100;
 	bisScoreAdded = false;
 	AfterDeathAutoDelete = 30; // Seconds
-
-	}
+}
 
 // Called when the game starts or when spawned
 void AMonster::BeginPlay()
@@ -66,10 +63,8 @@ void AMonster::BeginPlay()
 	AIController->SetBlackboardBotState(MonsterState);
 }
 
-// 
-//	Tick is mainly present to allow PawnSensingComp to show DrawDebugCone and DrawDebugSphere 
-//
 
+//	Tick is mainly present to allow PawnSensingComp to show DrawDebugCone and DrawDebugSphere 
 void AMonster::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -94,10 +89,8 @@ void AMonster::Tick(float DeltaSeconds)
 	}
 }
 
-//	Hearing -
-//	Hearing - limited to PawnSensingComp->LOSHearingThreshold
-//	Hearing -
 
+//	Hearing - limited to PawnSensingComp->LOSHearingThreshold
 void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume)
 {
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
@@ -132,11 +125,8 @@ void AMonster::OnHearNoise(APawn* PawnInstigator, const FVector& Location, float
 	}
 }
 
-//	Flashed
+
 //	Flashed - Sets the AI to Stunned
-//	Flashed
-
-
 void AMonster::OnFlashed(APawn* aPawn)
 {
 	if (GetMonsterDead() == false)
@@ -165,10 +155,7 @@ void AMonster::OnFlashed(APawn* aPawn)
 }
 
 
-//	Shot
 //	Shot - Sets the AI to Agression if hit
-//	Shot
-
 void AMonster::OnShot(APawn* aPawn)
 {
 	if (GetMonsterDead() == false)
@@ -188,10 +175,8 @@ void AMonster::OnShot(APawn* aPawn)
 	}
 }
 
-//	Seen
-//	Seen - Updates the AI state if seen - GetDistanceTo(SensedPawn) < MaxVisibleRange)
-//	Seen
 
+//	Seen - Updates the AI state if seen - GetDistanceTo(SensedPawn) < MaxVisibleRange)
 void AMonster::OnSeePlayer(APawn* aPawn)
 {
 	if (GetMonsterDead() == false)
@@ -276,25 +261,27 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 
 void AMonster::ReduceHealth(int DamageValue)
 {
-	if (Health <= 0)
+	if (MonsterState == EBotBehaviorType::Stunned)
 	{
-		bisMonsterDead = true;
-		SetRagdollPhysics();
-		if (bisScoreAdded == false)
+		if (Health <= 0)
 		{
-			SensedPawn->IncreaseScore(MonsterValue);
-			bisScoreAdded = true;
+			bisMonsterDead = true;
+			SetRagdollPhysics();
+			if (bisScoreAdded == false)
+			{
+				SensedPawn->IncreaseScore(MonsterValue);
+				bisScoreAdded = true;
+			}
 		}
-	}
-	else
-	{
-		Health = Health - DamageValue;
+		else
+		{
+			Health = Health - DamageValue;
+		}
 	}
 }
 
 bool AMonster::GetMonsterDead()
 {
-
 	if ((Health <= 0) && (bisMonsterDead == false))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GetMonsterDead " + GetName() + " : Health=" + FString::SanitizeFloat(Health));
@@ -377,32 +364,21 @@ void AMonster::PlayDeathAttackSound()
 	}
 }
 
-
-//void AMonster::SetPlayModeState(EGameModeSoundType ChangeSoundState)
-//{
-//
-//}
-
-
 UAudioComponent* AMonster::PlayCharacterSound(USoundCue* CueToPlay)
 {
 	if (CueToPlay)
 	{
 		return UGameplayStatics::SpawnSoundAttached(CueToPlay, RootComponent, NAME_None, FVector::ZeroVector, EAttachLocation::SnapToTarget, true);
 	}
-
 	return nullptr;
-
 }
 
 void AMonster::SetMonsterDebugDrawAI(bool deb)
 {
 	DebugDrawEnabledAI = deb;
-
 }
 
 void AMonster::SetMonsterDebugDrawAI2(bool deb)
 {
 	DebugDrawEnabledAI2 = deb;
-
 }
