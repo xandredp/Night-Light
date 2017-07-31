@@ -14,6 +14,8 @@ public:
 	// Sets default values for this actor's properties
 	ABaseInteractable();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Colllision")
+		USkeletalMeshComponent* PickupSkeletalMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Colllision")
 		UStaticMeshComponent* PickupMesh;
