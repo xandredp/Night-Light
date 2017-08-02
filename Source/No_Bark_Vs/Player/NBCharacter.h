@@ -42,7 +42,10 @@ public:
 	//gain stamina
 	FTimerHandle StopSprintingTimerHandle;
 
-
+	//reduce stamina
+	FTimerHandle StartHealTimerHandle;
+	//gain stamina
+	FTimerHandle StopHealTimerHandle;
 
 public:
 	// Sets default values for this character's properties
@@ -271,6 +274,10 @@ protected:
 	void OnStartSprinting();
 
 	void OnStopSprinting();
+
+	void OnStartHealing();
+
+	void OnStopHealing();
 
 	void OnCrouchToggle();
 
