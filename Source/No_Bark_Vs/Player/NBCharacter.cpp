@@ -34,8 +34,6 @@ ANBCharacter::ANBCharacter()
 	bIsFiring = false;
 	// Item
 
-
-
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
 	MoveComp = GetCharacterMovement();
@@ -75,7 +73,6 @@ ANBCharacter::ANBCharacter()
 	CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	////CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
 	//CharacterMesh->SetupAttachment(RootComponent);
-
 												// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	//FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
@@ -91,7 +88,6 @@ ANBCharacter::ANBCharacter()
 	FPSCharacterArmMesh->CastShadow = false;
 	FPSCharacterArmMesh->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
 	FPSCharacterArmMesh->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
-
 }
 
 void ANBCharacter::BeginPlay()
@@ -133,8 +129,6 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 
-	PlayerInputComponent->BindAction("Spawn", IE_Pressed, this, &ANBCharacter::Spawn);
-
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
 
@@ -150,7 +144,6 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
 
-
 	// Flashlight Torch Controls
 	PlayerInputComponent->BindAction("TorchOn", IE_Pressed, this, &ANBCharacter::TurnOnTorch);
 	PlayerInputComponent->BindAction("TorchOff", IE_Pressed, this, &ANBCharacter::TurnOffTorch);
@@ -158,13 +151,10 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("TorchCrank", IE_Pressed, this, &ANBCharacter::TorchCrank);
 	// Weapons
 
-
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::StopFireWeapon);
 
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::ReloadWeapon);
-
-
 }
 
 void ANBCharacter::EquipPrimaryWeapon()
@@ -181,14 +171,6 @@ void ANBCharacter::EquipPrimaryWeapon()
 		AnimInstance->IsPrimaryEquiped = true;
 		SpawnWeapon(WeaponClass);
 		AttachEquipmentToHand();
-	}
-}
-
-void ANBCharacter::Spawn()
-{
-	if (Spawner != NULL)
-	{
-		Spawner->SpawnMonster();
 	}
 }
 
@@ -296,7 +278,6 @@ void ANBCharacter::SpawnWeaponOnSlot(TSubclassOf<class ABaseWeapon> iWeaponClass
 	
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
-	
 	if (CurrentHealth > 0)
 	{
 		CurrentHealth -= decreaseVal;	
@@ -366,6 +347,7 @@ void ANBCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	StopJumping();
 }
+
 void ANBCharacter::CheckForInteractables()
 {
 	
@@ -380,6 +362,7 @@ void ANBCharacter::CheckForInteractables()
 		playController->CurrentInteractable = nullptr;
 	}
 }
+
 ABaseInteractable* ANBCharacter::GetInteractableInView()
 {
 	FVector CamLoc;
@@ -408,16 +391,19 @@ ABaseInteractable* ANBCharacter::GetInteractableInView()
 
 	return Cast<ABaseInteractable>(Hit.GetActor());
 }
+
 void ANBCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
+
 void ANBCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
+
 void ANBCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -432,6 +418,7 @@ void ANBCharacter::MoveForward(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+
 void ANBCharacter::MoveRight(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -446,6 +433,7 @@ void ANBCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+
 void ANBCharacter::OnStartSprinting()
 {
 	if (bIsFiring == false)
@@ -464,6 +452,7 @@ void ANBCharacter::OnStartSprinting()
 		}
 	}
 }
+
 void ANBCharacter::OnStopSprinting()
 {
 	if (bIsFiring == false)
@@ -481,6 +470,7 @@ void ANBCharacter::OnStopSprinting()
 	}
 
 }
+
 void ANBCharacter::OnCrouchToggle()
 {
 	if (bIsCrouched)
@@ -496,6 +486,7 @@ void ANBCharacter::OnCrouchToggle()
 	MakeNoise(100, this, GetActorLocation());
 
 }
+
 void ANBCharacter::FireWeapon()
 {
 	bIsFiring = true;
@@ -504,7 +495,16 @@ void ANBCharacter::FireWeapon()
 		CurrentWeapon->SetTimerForFiring();
 	}
 	
+	if (FireAnimation != NULL)
+	{
+		UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+		if (AnimInstance != NULL)
+		{
+			AnimInstance->Montage_Play(FireAnimation, 1.0f);
+		}
+	}
 }
+
 void ANBCharacter::StopFireWeapon()
 {
 	bIsFiring = false;
