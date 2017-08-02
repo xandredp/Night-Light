@@ -481,6 +481,16 @@ void ANBCharacter::OnStopSprinting()
 	}
 
 }
+void ANBCharacter::OnStartHealing()
+{
+
+
+}
+void ANBCharacter::OnStopHealing()
+{
+
+
+}
 void ANBCharacter::OnCrouchToggle()
 {
 	if (bIsCrouched)
