@@ -49,6 +49,7 @@ ABaseWeapon::ABaseWeapon()
 	WeaponConfig.TimeBetweenShots = 0.1f;
 
 	MaxUseDistance = 300;
+	IsEnemyInDark = false;  // Enemy is damageable when in light
 }
 
 void ABaseWeapon::Tick(float DeltaSeconds)
@@ -317,7 +318,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
 			Enemy->ReduceHealth(CurrentDamage);
-			Enemy->OnShot(GetPawnOwner());
+			Enemy->OnShot(GetPawnOwner());			
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
 		{
@@ -325,6 +326,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
 			Enemy->ReduceHealth(CurrentDamage);
 			Enemy->OnShot(GetPawnOwner());
+
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
 		{
@@ -332,13 +334,16 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
 			Enemy->ReduceHealth(CurrentDamage);
 			Enemy->OnShot(GetPawnOwner());
+
 		}
 		else if (PhysMat->SurfaceType == SURFACE_FLESH)
 		{
+
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A FLESH!!");
 		}
 		else if (PhysMat->SurfaceType == SURFACE_DEFAULT)
 		{
+
 		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A DEFAULT!!");
 		}
 		else
@@ -524,8 +529,16 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 	if (Impact.bBlockingHit)
 	{
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
-		VisualImpactEffects(Impact);
-		//VisualTrailEffects(Impact.ImpactPoint);
+
+		if (IsEnemyInDark ==  true)
+		{
+			VisualImpactEffectsInDark(Impact);
+		}
+		else
+		{
+			VisualImpactEffects(Impact);
+			//VisualTrailEffects(Impact.ImpactPoint);
+		}
 	}
 	else
 	{
@@ -553,6 +566,23 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 	}
 }
 
+void ABaseWeapon::VisualImpactEffectsInDark(const FHitResult& Impact)
+{
+
+	if (InDarkmpactTemplate && Impact.bBlockingHit)
+	{
+		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
+		// TODO: Possible re-trace to get hit component that is lost during replication.
+
+		/* This function prepares an actor to spawn, but requires another call to finish the actual spawn progress. This allows manipulation of properties before entering into the level */
+		ABaseImpactEffect* EffectActor = GetWorld()->SpawnActorDeferred<ABaseImpactEffect>(InDarkmpactTemplate, FTransform(Impact.ImpactPoint.Rotation(), Impact.ImpactPoint));
+		if (EffectActor)
+		{
+			EffectActor->SurfaceHit = Impact;
+			UGameplayStatics::FinishSpawningActor(EffectActor, FTransform(Impact.ImpactNormal.Rotation(), Impact.ImpactPoint));
+		}
+	}
+}
 
 void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 {

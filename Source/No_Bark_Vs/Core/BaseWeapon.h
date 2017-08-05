@@ -173,6 +173,9 @@ public:
 	void TurnOffTorch();
 	void TorchCrank();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsEnemyInDark;
+
 protected:
 
 	virtual void SimulateWeaponFire();
@@ -237,6 +240,8 @@ private:
 
 	void VisualImpactEffects(const FHitResult& Impact);
 
+	void VisualImpactEffectsInDark(const FHitResult& Impact);
+
 	void VisualTrailEffects(const FVector& EndPoint);
 
 
@@ -244,6 +249,9 @@ private:
 	/* Particle FX played when a surface is hit. */
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class ABaseImpactEffect> ImpactTemplate;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class ABaseImpactEffect> InDarkmpactTemplate;
 
 	UPROPERTY(EditDefaultsOnly)
 		FName TrailTargetParam;
