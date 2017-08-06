@@ -28,8 +28,10 @@ ABaseWeapon::ABaseWeapon()
 	WeaponSpotlight->SetupAttachment(WeaponMesh);
 	WeaponSpotlight->SetVisibility(true);
 
-	WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
-	WeaponSpotlight->SetRelativeLocation(FVector(0, 30, -10));
+	//WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
+	WeaponSpotlight->SetRelativeRotation(FRotator(90, 0, 90));
+	//WeaponSpotlight->SetRelativeLocation(FVector(0, 30, -10));
+	WeaponSpotlight->SetRelativeLocation(FVector(0, 0, 10));
 
 	WeaponSpotlight->SetIntensity(1000);
 	WeaponSpotlight->SetAttenuationRadius(1000);

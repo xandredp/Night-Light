@@ -72,7 +72,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 
 		TArray<AActor*> AvailableTargetPoints = AICon->GetAvailableTargetPoints(WaveTag);
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, (Mon->GetName() + FString(TEXT(" is TAGed as ")) + WaveTag.GetPlainNameString() + FString(TEXT("  with ")) + FString::FromInt(AvailableTargetPoints.Num()) + FString(TEXT(" Patrol Areas."))));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, (Mon->GetName() + FString(TEXT(" is TAGed as ")) + WaveTag.GetPlainNameString() + FString(TEXT("  with ")) + FString::FromInt(AvailableTargetPoints.Num()) + FString(TEXT(" Patrol Areas."))));
 
 
 		// Contains a random index to define the next target point
