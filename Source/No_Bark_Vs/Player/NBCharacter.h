@@ -42,10 +42,8 @@ public:
 	//gain stamina
 	FTimerHandle StopSprintingTimerHandle;
 
-	//reduce stamina
+	//gain Health
 	FTimerHandle StartHealTimerHandle;
-	//gain stamina
-	FTimerHandle StopHealTimerHandle;
 
 public:
 	// Sets default values for this character's properties
@@ -168,7 +166,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxMagic;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float HealthRegenRate;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float StaminaRegenRate;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -201,6 +200,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void IncreaseHealth(float increaseVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
+		void IncreaseHealthByTime();
 
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseStamina();

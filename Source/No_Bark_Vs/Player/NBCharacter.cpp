@@ -26,6 +26,7 @@ ANBCharacter::ANBCharacter()
 	MaxStamina = 100.0f;
 	CurrentMagic = 100.0f;
 	MaxMagic = 100.0f;
+	HealthRegenRate = 1.0f;
 	StaminaRegenRate = 1.0f;
 	SprintDeductionRate = 1.3f;
 	StaminaTimerRate = 0.5f;
@@ -287,6 +288,8 @@ void ANBCharacter::DecreaseHealth(float decreaseVal)
 		bIsDead = true;
 		DestroyAndBackToMenu();
 	}
+	GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
+
 }
 
 void ANBCharacter::IncreaseHealth(float increaseVal)
@@ -294,7 +297,20 @@ void ANBCharacter::IncreaseHealth(float increaseVal)
 	CurrentHealth += increaseVal;
 	
 }
-
+void ANBCharacter::IncreaseHealthByTime()
+{
+	if (CurrentHealth >= MaxHealth)
+	{
+		//Stops Health Increase
+		GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
+	}
+	else
+	{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IncreaseHealth");
+		CurrentHealth = CurrentHealth + HealthRegenRate;
+	
+	}
+}
 void ANBCharacter::DecreaseStamina()
 {
 	if (CurrentHealth <= 0.0f)
@@ -433,7 +449,7 @@ void ANBCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
-
+//When sprinting the health will not gain and Stamina will decrease.  the effect will stop when firing
 void ANBCharacter::OnStartSprinting()
 {
 	if (bIsFiring == false)
@@ -441,8 +457,12 @@ void ANBCharacter::OnStartSprinting()
 		MoveComp->MaxWalkSpeed = MaxSprintSpeed;
 		if (Role == ROLE_Authority)
 		{
+			//Stamina Decrease
 			GetWorldTimerManager().SetTimer(StartSprintingTimerHandle, this, &ANBCharacter::DecreaseStamina, StaminaTimerRate, true);
+			//Stops Stamina increase
 			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
+			//Stops Health Increase
+			GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
 			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 			aAnimInstance->IsSprinting = true;
 
@@ -452,7 +472,7 @@ void ANBCharacter::OnStartSprinting()
 		}
 	}
 }
-
+// When not sprinting stamina will gain and health will also gain. 
 void ANBCharacter::OnStopSprinting()
 {
 	if (bIsFiring == false)
@@ -461,9 +481,13 @@ void ANBCharacter::OnStopSprinting()
 
 		if (Role == ROLE_Authority)
 		{
-
+			//stamina gain
 			GetWorldTimerManager().SetTimer(StopSprintingTimerHandle, this, &ANBCharacter::IncreaseStamina, StaminaTimerRate, true);
+			//stops decreasing stamina
 			GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
+			//health gain
+			GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
+
 			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 			aAnimInstance->IsSprinting = false;
 		}
