@@ -189,7 +189,9 @@ public:
 	/* Attachpoint for secondary weapons */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bIsDead;
-
+	/* Attachpoint for secondary weapons */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bIs;
 	/* Attachpoint for secondary weapons */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int CurrentScore;
