@@ -21,19 +21,31 @@ public:
 		UParticleSystem* DefaultFX;
 
 	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* MetalFX;
+
+	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* PlayerFleshFX;
 
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* EnemyFleshFX;
 
 	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* EnemySparkFX;
+
+	UPROPERTY(EditDefaultsOnly)
 		USoundCue* DefaultSound;
+
+	UPROPERTY(EditDefaultsOnly)
+		USoundCue* MetalSound;
 
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* PlayerFleshSound;
 
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* EnemyFleshSound;
+
+	UPROPERTY(EditDefaultsOnly)
+		USoundCue* EnemySparkSound;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Decal")
 		UMaterial* DecalMaterial;
@@ -43,6 +55,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Decal")
 		float DecalLifeSpan;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsEnemyInDark;
 
 	FHitResult SurfaceHit;
 

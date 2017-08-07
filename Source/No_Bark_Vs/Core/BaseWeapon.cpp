@@ -52,7 +52,6 @@ ABaseWeapon::ABaseWeapon()
 	WeaponConfig.TimeBetweenShots = 0.1f;
 
 	MaxUseDistance = 300;
-	IsEnemyInDark = false;  // Enemy is damageable when in light
 }
 
 void ABaseWeapon::Tick(float DeltaSeconds)
@@ -312,6 +311,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 //	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
 	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+
 	float CurrentDamage = 0;
 //	if (PhysMat && DmgType)
 	if (PhysMat)
@@ -533,15 +533,8 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 	{
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
 
-		if (IsEnemyInDark ==  true)
-		{
-			VisualImpactEffectsInDark(Impact);
-		}
-		else
-		{
 			VisualImpactEffects(Impact);
 			//VisualTrailEffects(Impact.ImpactPoint);
-		}
 	}
 	else
 	{
@@ -554,6 +547,7 @@ void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
 void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 {
 	
+	
 	if (ImpactTemplate && Impact.bBlockingHit)
 	{
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
@@ -561,6 +555,26 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 
 		/* This function prepares an actor to spawn, but requires another call to finish the actual spawn progress. This allows manipulation of properties before entering into the level */
 		ABaseImpactEffect* EffectActor = GetWorld()->SpawnActorDeferred<ABaseImpactEffect>(ImpactTemplate, FTransform(Impact.ImpactPoint.Rotation(), Impact.ImpactPoint));
+		AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+		if (Enemy)
+		{
+			if (Enemy->bisMonsterInLight)
+			{
+				if (EffectActor)
+				{
+					EffectActor->IsEnemyInDark = false;
+				}			
+			}
+			else
+			{
+				if (EffectActor)
+				{
+					EffectActor->IsEnemyInDark = true;
+				}
+
+			}
+		}
+
 		if (EffectActor)
 		{
 			EffectActor->SurfaceHit = Impact;

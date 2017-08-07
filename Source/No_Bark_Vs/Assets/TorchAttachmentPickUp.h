@@ -31,4 +31,8 @@ public:
 	//ItemID is same to KeyID. Edit Key ID plz. 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		FName ItemID;
+
+	//When This item is interacted door will close
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		class ADoor* DoorToInteract;
 };

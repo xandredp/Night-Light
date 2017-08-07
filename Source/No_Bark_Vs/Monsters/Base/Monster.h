@@ -128,16 +128,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisMonsterDead;
+
+	/************************************************************************/
+	/* Light                                            */
+	/************************************************************************/
+
 	/* Checks If Monster is in Lighth (Generator) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisMonsterInLight;
 	/* Checks If Monster is in Lighth (Generator) This is used on Blueprint For easy Twick*/
 	UFUNCTION(BlueprintImplementableEvent)
 		void MonsterInLight(bool isInLight);
-	/* Checks If Monster is in Lighth (Generator) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		bool bisMonsterKillable;
-
 
 	/************************************************************************/
 	/* Drop Items                                                */

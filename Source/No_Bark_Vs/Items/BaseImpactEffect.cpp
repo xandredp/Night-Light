@@ -59,7 +59,15 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 	case SURFACE_ENEMYBODY:
 	case SURFACE_ENEMYHEAD:
 	case SURFACE_ENEMYLIMB:
-		return EnemyFleshFX;
+		if (IsEnemyInDark)
+		{
+			return EnemySparkFX;
+		}
+		else
+		{
+			return EnemyFleshFX;
+		}
+		
 	default:
 		return nullptr;
 	}
@@ -77,7 +85,15 @@ USoundCue* ABaseImpactEffect::GetImpactSound(EPhysicalSurface SurfaceType) const
 	case SURFACE_ENEMYBODY:
 	case SURFACE_ENEMYHEAD:
 	case SURFACE_ENEMYLIMB:
-		return EnemyFleshSound;
+		if (IsEnemyInDark)
+		{
+			return EnemySparkSound;
+		}
+		else
+		{
+			return EnemyFleshSound;
+		}
+		
 	default:
 		return nullptr;
 	}

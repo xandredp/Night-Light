@@ -2,6 +2,7 @@
 
 #include "Core/No_Bark_Vs.h"
 #include "Player/PlayController.h"
+#include "Door.h"
 #include "TorchAttachmentPickUp.h"
 
 
@@ -18,6 +19,7 @@ void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
 	if (aPlayController)
 	{
 		aPlayController->SetIsTorchOn(true);
+		DoorToInteract->AutoCloseLock();
 		BeginWithTorchOn();
 		DestroyItemOnGround();
 	

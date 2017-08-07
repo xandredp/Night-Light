@@ -41,5 +41,12 @@ public:
 		bool IsDoubleDoor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
-		ADoor * AnotherDoor;
+		class ADoor * AnotherDoor;
+
+	//Does the door close
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsAutoClose;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Action")
+		void AutoCloseLock();
 };

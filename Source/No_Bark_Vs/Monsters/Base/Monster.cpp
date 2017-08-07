@@ -41,7 +41,7 @@ AMonster::AMonster()
 	MonsterValue = 100;
 	bisScoreAdded = false;
 	AfterDeathAutoDelete = 30; // Seconds
-	bisMonsterKillable = false;
+	bisMonsterInLight = false;
 }
 
 // Called when the game starts or when spawned
@@ -71,6 +71,7 @@ void AMonster::BeginPlay()
 void AMonster::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	
 	if (GetMonsterDead() == false)
 	{
 		AMyAIController* AIController = Cast<AMyAIController>(GetController());
@@ -90,6 +91,8 @@ void AMonster::Tick(float DeltaSeconds)
 			AudioLoopComp->Stop(); // recently dead - so stop with the infernal moaning PLEASE!!!
 		}
 	}
+
+
 }
 
 
@@ -288,7 +291,6 @@ void AMonster::DamageHealth(int DamageValue)
 		Health = Health - DamageValue;
 	}
 }
-
 
 bool AMonster::GetMonsterDead()
 {

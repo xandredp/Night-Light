@@ -175,8 +175,7 @@ public:
 	void TurnOffTorch();
 	void TorchCrank();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
-		bool IsEnemyInDark;
+
 
 protected:
 
