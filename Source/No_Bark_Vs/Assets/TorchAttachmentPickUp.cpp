@@ -18,7 +18,9 @@ void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
 	if (aPlayController)
 	{
 		aPlayController->SetIsTorchOn(true);
+		BeginWithTorchOn();
 		DestroyItemOnGround();
+	
 	}
 }
 

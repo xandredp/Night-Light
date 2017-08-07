@@ -75,8 +75,10 @@ public:
 
 	void EquipPrimaryWeapon();
 
+	UFUNCTION(BlueprintCallable, Category = "Torch")
 	void TurnOnTorch();
 
+	UFUNCTION(BlueprintCallable, Category = "Torch")
 	void TurnOffTorch();
 
 	void TorchCrank();

@@ -147,6 +147,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		TSubclassOf <class ABaseInteractable> DropItemOnDeath;
 
+	//Primary Weapon Held Item
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		class AKeyForDoor* DropKeyOnDeath;
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
 		void SpawnDropItems();
 

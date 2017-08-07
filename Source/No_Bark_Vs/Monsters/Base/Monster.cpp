@@ -264,38 +264,29 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 
 void AMonster::ReduceHealth(int DamageValue)
 {
-	if (MonsterState == EBotBehaviorType::Stunned|| bisMonsterInLight)
+	if (MonsterState == EBotBehaviorType::Stunned || bisMonsterInLight)
 	{
-		bisMonsterKillable = true;
-	}
-	else
-	{
-		bisMonsterKillable = false;
+		DamageHealth(DamageValue);
 	}
 
-	DamageHealth(DamageValue);
 }
 
 void AMonster::DamageHealth(int DamageValue)
 {
-	if (bisMonsterKillable)
+	if (Health <= 0)
 	{
-		if (Health <= 0)
+		bisMonsterDead = true;
+		SetRagdollPhysics();
+		if (bisScoreAdded == false)
 		{
-			bisMonsterDead = true;
-			SetRagdollPhysics();
-			if (bisScoreAdded == false)
-			{
-				SensedPawn->IncreaseScore(MonsterValue);
-				bisScoreAdded = true;
-			}
-		}
-		else
-		{
-			Health = Health - DamageValue;
+			SensedPawn->IncreaseScore(MonsterValue);
+			bisScoreAdded = true;
 		}
 	}
-
+	else
+	{
+		Health = Health - DamageValue;
+	}
 }
 
 

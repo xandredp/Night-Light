@@ -24,6 +24,10 @@ public:
 
 	void DestroyItemOnGround();
 
+	// function to turn torch on as torch gets picked up
+	UFUNCTION(BlueprintImplementableEvent)
+		void BeginWithTorchOn();
+
 	//ItemID is same to KeyID. Edit Key ID plz. 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		FName ItemID;
