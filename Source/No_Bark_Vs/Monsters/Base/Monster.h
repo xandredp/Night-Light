@@ -127,7 +127,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisMonsterDead;
-
+	/* Checks If Monster is in Lighth (Generator) */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bisMonsterInLight;
+	/* Checks If Monster is in Lighth (Generator) This is used on Blueprint For easy Twick*/
+	UFUNCTION(BlueprintImplementableEvent)
+		void MonsterInLight(bool isInLight);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int MonsterValue;
 
@@ -147,6 +153,9 @@ public:
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void ReduceHealth(int DamageValue);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void DamageHealth(int DamageValue);
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		bool GetMonsterDead();

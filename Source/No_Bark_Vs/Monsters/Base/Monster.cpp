@@ -61,6 +61,8 @@ void AMonster::BeginPlay()
 	MonsterState = EBotBehaviorType::Neutral;
 	AMyAIController* AIController = Cast<AMyAIController>(GetController());
 	AIController->SetBlackboardBotState(MonsterState);
+
+	// Check if monster is in light every 1 second. 
 }
 
 
@@ -263,22 +265,32 @@ void AMonster::ReduceHealth(int DamageValue)
 {
 	if (MonsterState == EBotBehaviorType::Stunned)
 	{
-		if (Health <= 0)
-		{
-			bisMonsterDead = true;
-			SetRagdollPhysics();
-			if (bisScoreAdded == false)
-			{
-				SensedPawn->IncreaseScore(MonsterValue);
-				bisScoreAdded = true;
-			}
-		}
-		else
-		{
-			Health = Health - DamageValue;
-		}
+		DamageHealth(DamageValue);
+	}
+	else if (bisMonsterInLight)
+	{
+		DamageHealth(DamageValue);
 	}
 }
+
+void AMonster::DamageHealth(int DamageValue)
+{
+	if (Health <= 0)
+	{
+		bisMonsterDead = true;
+		SetRagdollPhysics();
+		if (bisScoreAdded == false)
+		{
+			SensedPawn->IncreaseScore(MonsterValue);
+			bisScoreAdded = true;
+		}
+	}
+	else
+	{
+		Health = Health - DamageValue;
+	}
+}
+
 
 bool AMonster::GetMonsterDead()
 {
