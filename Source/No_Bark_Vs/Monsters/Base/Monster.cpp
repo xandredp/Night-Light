@@ -300,11 +300,13 @@ bool AMonster::GetMonsterDead()
 		GLog->Log("SetLifeSpan(AfterDeathAutoDelete)");
 		SetLifeSpan(AfterDeathAutoDelete);
 		bisMonsterDead = true;
+		SpawnDropItems();
 		SetRagdollPhysics();
 
 		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
 
 		this->GetCapsuleComponent()->bNavigationRelevant = 0;
+		
 	}
 
 	return bisMonsterDead;

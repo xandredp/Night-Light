@@ -5,6 +5,7 @@
 #include "Perception/PawnSensingComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Core/TypeClass.h"
+#include "Core/BaseInteractable.h"
 #include "GameFramework/Character.h"
 #include "Monster.generated.h"
 
@@ -133,6 +134,21 @@ public:
 	/* Checks If Monster is in Lighth (Generator) This is used on Blueprint For easy Twick*/
 	UFUNCTION(BlueprintImplementableEvent)
 		void MonsterInLight(bool isInLight);
+
+
+	/************************************************************************/
+	/* Drop Items                                                */
+	/************************************************************************/
+
+	//Primary Weapon Held Item
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		TSubclassOf <class ABaseInteractable> DropItemOnDeath;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
+		void SpawnDropItems();
+
+
+	/************************************************************************/
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int MonsterValue;
@@ -159,6 +175,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		bool GetMonsterDead();
+
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void SetRagdollPhysics();
