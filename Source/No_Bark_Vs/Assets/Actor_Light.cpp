@@ -11,7 +11,6 @@ AActor_Light::AActor_Light()
 	LightStaticMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
 	LightStaticMesh->SetupAttachment(RootComponent);
 
-
 	SpotLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("PointLight"));
 	SpotLightComp->SetupAttachment(LightStaticMesh);
 

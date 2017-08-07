@@ -23,8 +23,6 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
 	AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
 	
-
-
 	AttackAnimTriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("AttackAnim Range Sphere"));
 	AttackAnimTriggerSphere->SetSphereRadius(AttackRange);
 	AttackAnimTriggerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -34,8 +32,6 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
 	
 	//AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-
-
 }
 
 void ASkinnyMonster::BeginPlay()
