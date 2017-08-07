@@ -621,35 +621,49 @@ bool ANBCharacter::GetIsCrouched() const
 
 void ANBCharacter::TurnOnTorch()
 {
-
-	if (CurrentWeapon)
+	APlayController* playerController = Cast<APlayController>(GetController());
+	if (playerController->IsTorchOn)
 	{
-		CurrentWeapon->TurnOnTorch();
+		if (CurrentWeapon)
+		{
+			CurrentWeapon->TurnOnTorch();
+		}
+
 	}
+
 
 }
 
 
 void ANBCharacter::TurnOffTorch()
 {
-
-	if (CurrentWeapon)
+	APlayController* playerController = Cast<APlayController>(GetController());
+	if (playerController->IsTorchOn)
 	{
-		CurrentWeapon->TurnOffTorch();
+		if (CurrentWeapon)
+		{
+			CurrentWeapon->TurnOffTorch();
+		}
 	}
-
 }
 
 void ANBCharacter::TorchCrank()
 {
+	APlayController* playerController = Cast<APlayController>(GetController());
+
 
 	if (CurrentWeapon)
 	{
-		if (ChargeRatio < 1)
+		if (playerController->IsTorchOn)
 		{
-		ChargeRatio = ChargeRatio + 0.1;
-		CurrentWeapon->TorchCrank();
+
+			if (ChargeRatio < 1)
+			{
+				ChargeRatio = ChargeRatio + 0.1;
+				CurrentWeapon->TorchCrank();
+			}
 		}
+		
 	}
 
 }

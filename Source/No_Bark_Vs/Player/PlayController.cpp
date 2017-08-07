@@ -20,6 +20,7 @@ APlayController::APlayController()
 	isMySkillsOpen = false;
 	isMyInventoryOpen = false;
 	bShowMouseCursor = false;
+	IsTorchOn = false;
 	FCurrentEquippedMeleeWeapon.CurrentStackNumber = 0;
 	FCurrentEquippedMeleeWeapon.ItemInfo.eItemType = EItemType::MeleeWeapon;
 	MyCurrentCurrency = 0.0f;
@@ -724,6 +725,11 @@ void APlayController::RemoveKeyfromPossesion(FKeyData aKey)
 			CurrentPossesedKeys.RemoveAt(i);
 		}
 	}
+}
+
+void APlayController::SetIsTorchOn(bool istorchonValue)
+{
+	IsTorchOn = istorchonValue;
 }
 
 void APlayController::CloseSkills()
