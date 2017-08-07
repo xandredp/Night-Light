@@ -134,6 +134,9 @@ public:
 	/* Checks If Monster is in Lighth (Generator) This is used on Blueprint For easy Twick*/
 	UFUNCTION(BlueprintImplementableEvent)
 		void MonsterInLight(bool isInLight);
+	/* Checks If Monster is in Lighth (Generator) */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bisMonsterKillable;
 
 
 	/************************************************************************/

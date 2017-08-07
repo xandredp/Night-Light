@@ -41,6 +41,7 @@ AMonster::AMonster()
 	MonsterValue = 100;
 	bisScoreAdded = false;
 	AfterDeathAutoDelete = 30; // Seconds
+	bisMonsterKillable = false;
 }
 
 // Called when the game starts or when spawned
@@ -263,32 +264,38 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 
 void AMonster::ReduceHealth(int DamageValue)
 {
-	if (MonsterState == EBotBehaviorType::Stunned)
+	if (MonsterState == EBotBehaviorType::Stunned|| bisMonsterInLight)
 	{
-		DamageHealth(DamageValue);
+		bisMonsterKillable = true;
 	}
-	else if (bisMonsterInLight)
+	else
 	{
-		DamageHealth(DamageValue);
+		bisMonsterKillable = false;
 	}
+
+	DamageHealth(DamageValue);
 }
 
 void AMonster::DamageHealth(int DamageValue)
 {
-	if (Health <= 0)
+	if (bisMonsterKillable)
 	{
-		bisMonsterDead = true;
-		SetRagdollPhysics();
-		if (bisScoreAdded == false)
+		if (Health <= 0)
 		{
-			SensedPawn->IncreaseScore(MonsterValue);
-			bisScoreAdded = true;
+			bisMonsterDead = true;
+			SetRagdollPhysics();
+			if (bisScoreAdded == false)
+			{
+				SensedPawn->IncreaseScore(MonsterValue);
+				bisScoreAdded = true;
+			}
+		}
+		else
+		{
+			Health = Health - DamageValue;
 		}
 	}
-	else
-	{
-		Health = Health - DamageValue;
-	}
+
 }
 
 
