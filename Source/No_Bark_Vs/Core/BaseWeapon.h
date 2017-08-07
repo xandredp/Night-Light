@@ -169,7 +169,9 @@ public:
 	void OnUnEquip();
 	void ReloadAmmo();
 	void StopReloading();
+	bool IsOnTorch();
 	void TurnOnTorch();
+	void SetTorchIntensity(float charge);
 	void TurnOffTorch();
 	void TorchCrank();
 
