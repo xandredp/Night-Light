@@ -27,6 +27,7 @@ ABaseWeapon::ABaseWeapon()
 	WeaponSpotlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("WeaponSpotlight"));
 	WeaponSpotlight->SetupAttachment(WeaponMesh);
 	WeaponSpotlight->SetVisibility(true);
+	WeaponSpotlight->SetVisibility(false);
 
 	//WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
 	WeaponSpotlight->SetRelativeRotation(FRotator(90, 0, 90));
@@ -630,11 +631,28 @@ void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 
 
 
+bool ABaseWeapon::IsOnTorch()
+{
+	return WeaponSpotlight->IsVisible();
+}
+
 void ABaseWeapon::TurnOnTorch()
 {
 	WeaponSpotlight->SetVisibility(true);
 }
 
+
+void ABaseWeapon::SetTorchIntensity(float charge)
+{
+	if (charge > 0.5)
+	{
+		WeaponSpotlight->SetIntensity(1000);
+	}
+	else
+	{
+		WeaponSpotlight->SetIntensity(2000*charge);
+	}
+}
 
 void ABaseWeapon::TurnOffTorch()
 {

@@ -182,6 +182,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MagicTimerRate;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float ChargeRatio;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float walkingSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
