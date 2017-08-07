@@ -513,20 +513,28 @@ void ANBCharacter::OnCrouchToggle()
 
 void ANBCharacter::FireWeapon()
 {
-	bIsFiring = true;
-	if (CurrentWeapon)
-	{
-		CurrentWeapon->SetTimerForFiring();
-	}
 	
-	if (FireAnimation != NULL)
+	if (bIsFiring == false)
 	{
-		UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-		if (AnimInstance != NULL)
+		bIsFiring = true;
+
+		if (CurrentWeapon)
 		{
-			AnimInstance->Montage_Play(FireAnimation, 1.0f);
+			CurrentWeapon->SetTimerForFiring();
+
+			if (FireAnimation != NULL)
+			{
+				UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+				if (AnimInstance != NULL)
+				{
+					AnimInstance->Montage_Play(FireAnimation, 1.0f);
+				}
+			}
 		}
 	}
+	
+	
+
 }
 
 void ANBCharacter::StopFireWeapon()
