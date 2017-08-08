@@ -447,6 +447,9 @@ void ANBCharacter::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
+
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual MoveForward noise!"));
+		MakeNoise(100, this, GetActorLocation());
 	}
 }
 
@@ -462,6 +465,8 @@ void ANBCharacter::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual MoveRight noise!"));
+		MakeNoise(100, this, GetActorLocation());
 	}
 }
 //When sprinting the health will not gain and Stamina will decrease.  the effect will stop when firing
@@ -520,9 +525,6 @@ void ANBCharacter::OnCrouchToggle()
 	{
 		Crouch();
 	}
-
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual crouch noise!"));
-	MakeNoise(100, this, GetActorLocation());
 
 }
 
