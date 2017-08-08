@@ -61,9 +61,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 		AMonsterSpawner* Spawner;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shooting")
-		class UAnimMontage* FireAnimation; 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* ReloadAnimation;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* EquipAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* FireAnimation;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	//

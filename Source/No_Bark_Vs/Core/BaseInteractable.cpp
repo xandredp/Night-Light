@@ -45,7 +45,8 @@ FString ABaseInteractable::GetInteractText() const
 
 	if ((Name > "") && (Action > ""))
 	{
-		RetVal = FString::Printf(TEXT("%s : Press E to %s"), *Name, *Action);
+		//RetVal = FString::Printf(TEXT("%s : Press E to %s"), *Name, *Action);
+		RetVal = FString::Printf(TEXT("%s"), *Action);
 	}
 	else
 	{

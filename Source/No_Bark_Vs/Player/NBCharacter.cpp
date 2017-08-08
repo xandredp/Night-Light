@@ -536,15 +536,37 @@ void ANBCharacter::FireWeapon()
 		if (CurrentWeapon)
 		{
 			CurrentWeapon->SetTimerForFiring();
-
-			if (FireAnimation != NULL)
+			if (CurrentWeapon->CurrentAmmo > 0)
 			{
-				UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-				if (AnimInstance != NULL)
+				//Trigger Fire animation only if there is ammo.
+				//this is where fire animation is triggered
+				if (FireAnimation != NULL)
 				{
-					AnimInstance->Montage_Play(FireAnimation, 1.0f);
+					UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+					if (AnimInstance != NULL)
+					{
+						AnimInstance->Montage_Play(FireAnimation, 1.0f);
+					}
 				}
 			}
+			else // if there is no ammo play reload animation
+			{
+				if (CurrentWeapon->CurrentClip > 0)
+				{
+					//this is where fire animation is triggered
+					if (ReloadAnimation != NULL)
+					{
+						UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+						if (AnimInstance != NULL)
+						{
+							AnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+						}
+					}
+					ReloadWeapon();
+				}
+
+			}
+			
 		}
 	}
 	
