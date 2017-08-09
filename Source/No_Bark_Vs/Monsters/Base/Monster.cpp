@@ -280,6 +280,19 @@ void AMonster::DamageHealth(int DamageValue)
 	{
 		bisMonsterDead = true;
 		SetRagdollPhysics();
+
+		GLog->Log("SetLifeSpan(AfterDeathAutoDelete)");
+		SetLifeSpan(AfterDeathAutoDelete);
+		//SpawnDropItems();
+
+		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
+
+		this->GetCapsuleComponent()->bNavigationRelevant = 0;
+		this->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
+		//this->SetActorEnableCollision(false);
+
+
 		if (bisScoreAdded == false)
 		{
 			SensedPawn->IncreaseScore(MonsterValue);
@@ -294,19 +307,9 @@ void AMonster::DamageHealth(int DamageValue)
 
 bool AMonster::GetMonsterDead()
 {
-	if ((Health <= 0) && (bisMonsterDead == false))
+	if (bisMonsterDead)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GetMonsterDead " + GetName() + " : Health=" + FString::SanitizeFloat(Health));
-		GLog->Log("SetLifeSpan(AfterDeathAutoDelete)");
-		SetLifeSpan(AfterDeathAutoDelete);
-		bisMonsterDead = true;
-		SpawnDropItems();
-		SetRagdollPhysics();
-
-		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
-
-		this->GetCapsuleComponent()->bNavigationRelevant = 0;
-		this->SetActorEnableCollision(false);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GetMonsterDead " + GetName() + " : Health=" + FString::SanitizeFloat(Health));
 	}
 
 	return bisMonsterDead;
@@ -343,13 +346,13 @@ void AMonster::SetRagdollPhysics()
 		CharacterComp->SetComponentTickEnabled(false);
 	}
 
-	if (!bInRagdoll)
-	{
-		// Immediately hide the pawn
-		TurnOff();
-		SetActorHiddenInGame(true);
-		SetLifeSpan(1.0f);
-	}
+	//if (!bInRagdoll)
+	//{
+	//	// Immediately hide the pawn
+	//	TurnOff();
+	//	SetActorHiddenInGame(true);
+	//	SetLifeSpan(1.0f);
+	//}
 	//else
 	//{
 	//	GLog->Log("SetLifeSpan(10.0f)");
