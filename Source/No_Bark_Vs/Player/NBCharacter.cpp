@@ -566,7 +566,7 @@ void ANBCharacter::FireWeapon()
 						if (ArmAnimInstance != NULL)
 						{
 							ArmAnimInstance->Montage_Play(NoClipAnimation, 1.0f);
-							ArmAnimInstance->Montage_Stop
+
 						}
 					}
 
