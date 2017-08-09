@@ -20,4 +20,6 @@
 #define SURFACE_ENEMYBODY			SurfaceType2
 #define SURFACE_ENEMYHEAD			SurfaceType3
 #define SURFACE_ENEMYLIMB			SurfaceType4
-
+#define SURFACE_METAL				SurfaceType5
+#define SURFACE_CONCRETE			SurfaceType6
+#define SURFACE_WOOD				SurfaceType7

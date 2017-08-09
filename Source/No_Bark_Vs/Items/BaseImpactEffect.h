@@ -16,12 +16,19 @@ public:
 
 	virtual void PostInitializeComponents() override;
 
-	/* FX spawned on standard materials */
+
+	/**** BULLET IMPACT EFFECTS ****/
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* DefaultFX;
 
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* MetalFX;
+
+	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* ConcreteFX;
+
+	UPROPERTY(EditDefaultsOnly)
+		UParticleSystem* WoodFX;
 
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* PlayerFleshFX;
@@ -32,11 +39,19 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* EnemySparkFX;
 
+
+	/**** BULLET IMPACT SOUNDS ****/
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* DefaultSound;
 
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* MetalSound;
+
+	UPROPERTY(EditDefaultsOnly)
+		USoundCue* ConcreteSound;
+
+	UPROPERTY(EditDefaultsOnly)
+		USoundCue* WoodSound;
 
 	UPROPERTY(EditDefaultsOnly)
 		USoundCue* PlayerFleshSound;

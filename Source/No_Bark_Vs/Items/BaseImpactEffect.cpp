@@ -54,10 +54,14 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 	{
 	case SURFACE_DEFAULT:
 		return DefaultFX;
+
 	case SURFACE_FLESH:
 		return PlayerFleshFX;
+
 	case SURFACE_ENEMYBODY:
+
 	case SURFACE_ENEMYHEAD:
+
 	case SURFACE_ENEMYLIMB:
 		if (IsEnemyInDark)
 		{
@@ -68,6 +72,15 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 			return EnemyFleshFX;
 		}
 		
+	case SURFACE_METAL:
+		return MetalFX;
+
+	case SURFACE_CONCRETE:
+		return ConcreteFX;
+
+	case SURFACE_WOOD:
+		return WoodFX;
+
 	default:
 		return nullptr;
 	}
@@ -80,10 +93,14 @@ USoundCue* ABaseImpactEffect::GetImpactSound(EPhysicalSurface SurfaceType) const
 	{
 	case SURFACE_DEFAULT:
 		return DefaultSound;
+
 	case SURFACE_FLESH:
 		return PlayerFleshSound;
+
 	case SURFACE_ENEMYBODY:
+
 	case SURFACE_ENEMYHEAD:
+
 	case SURFACE_ENEMYLIMB:
 		if (IsEnemyInDark)
 		{
@@ -94,6 +111,15 @@ USoundCue* ABaseImpactEffect::GetImpactSound(EPhysicalSurface SurfaceType) const
 			return EnemyFleshSound;
 		}
 		
+	case SURFACE_METAL:
+		return MetalSound;
+
+	case SURFACE_CONCRETE:
+		return ConcreteSound;
+
+	case SURFACE_WOOD:
+		return WoodSound;
+
 	default:
 		return nullptr;
 	}
