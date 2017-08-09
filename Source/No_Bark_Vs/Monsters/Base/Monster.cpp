@@ -283,7 +283,7 @@ void AMonster::DamageHealth(int DamageValue)
 
 		GLog->Log("SetLifeSpan(AfterDeathAutoDelete)");
 		SetLifeSpan(AfterDeathAutoDelete);
-		//SpawnDropItems();
+		SpawnDropItems();
 
 		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
 

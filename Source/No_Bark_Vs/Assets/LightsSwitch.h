@@ -42,4 +42,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		TArray<AActor_Light*> LightActors;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsSwitchOn;
 };
