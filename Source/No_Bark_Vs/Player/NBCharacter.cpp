@@ -221,6 +221,15 @@ void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
 	if (CurrentWeapon == nullptr)
 	{
 		CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
+
+		if (DrawingAnimation != NULL)
+		{
+			ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+			if (ArmAnimInstance != NULL)
+			{
+				ArmAnimInstance->Montage_Play(DrawingAnimation, 1.0f);
+			}
+		}
 	}
 	else
 	{
@@ -573,10 +582,10 @@ void ANBCharacter::FireWeapon()
 				}
 
 			}
-			else
+			else if (CurrentAmmoInWeapon > 0)
 			{
-				//Trigger Fire animation only if there is ammo.
-				//this is where fire animation is triggered
+				
+				
 				if (FireAnimation != NULL)
 				{
 					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
@@ -586,6 +595,10 @@ void ANBCharacter::FireWeapon()
 						ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
 					}
 				}
+				
+				//Trigger Fire animation only if there is ammo.
+				//this is where fire animation is triggered
+				
 			}
 		}
 	}
