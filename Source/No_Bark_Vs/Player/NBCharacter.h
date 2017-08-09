@@ -61,6 +61,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 		AMonsterSpawner* Spawner;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		UAnimInstance* ArmAnimInstance;
+
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+		float PlayArmAnimation(UAnimMontage * Animation, float InPlayRate, FName StartSectionName);
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		class UAnimMontage* ReloadAnimation;
 
@@ -69,6 +75,16 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		class UAnimMontage* FireAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* DrawingAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* PickingUpAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* NoClipAnimation;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	//
