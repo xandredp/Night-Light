@@ -21,12 +21,15 @@ void ALightsSwitch::Interact(APlayerController* playerController)
 		if (LightActors.Num() != 0)
 		{
 			ToggleSwitchOnAndOff();
+			InteractionFeedBack();
 		}
 		else
 		{	
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Not assigned");
 		}
 	}
+
+
 }
 
 void ALightsSwitch::BeginPlay()

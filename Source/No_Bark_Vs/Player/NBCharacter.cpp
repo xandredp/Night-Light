@@ -566,6 +566,7 @@ void ANBCharacter::FireWeapon()
 						if (ArmAnimInstance != NULL)
 						{
 							ArmAnimInstance->Montage_Play(NoClipAnimation, 1.0f);
+							ArmAnimInstance->Montage_Stop
 						}
 					}
 
@@ -604,15 +605,19 @@ void ANBCharacter::ReloadWeapon()
 {
 	if (CurrentWeapon)
 	{
-		if (ReloadAnimation != NULL)
+		if (CurrentWeapon->CurrentClip > 0)
 		{
-			ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-			if (ArmAnimInstance != NULL)
+
+			if (ReloadAnimation != NULL)
 			{
-				ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+				ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+				if (ArmAnimInstance != NULL)
+				{
+					ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+				}
 			}
+			CurrentWeapon->ReloadAmmo();
 		}
-		CurrentWeapon->ReloadAmmo();
 	}
 }
 

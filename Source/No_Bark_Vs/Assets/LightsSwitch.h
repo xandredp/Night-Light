@@ -31,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void ToggleSwitchOnAndOff();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Action")
+		void InteractionFeedBack();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		FName ItemID;
 
