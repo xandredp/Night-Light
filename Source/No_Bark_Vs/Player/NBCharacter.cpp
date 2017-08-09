@@ -111,7 +111,7 @@ void ANBCharacter::BeginPlay()
 		}
 	}
 }
-
+		
 void ANBCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -528,9 +528,21 @@ void ANBCharacter::OnCrouchToggle()
 
 }
 
+float ANBCharacter::PlayArmAnimation(UAnimMontage * Animation, float InPlayRate, FName StartSectionName)
+{
+	float Duration = 0.0f;
+
+	if (Animation)
+	{
+		Duration = PlayAnimMontage(Animation, InPlayRate, StartSectionName);
+	}
+	
+	return Duration;
+}
+
 void ANBCharacter::FireWeapon()
 {
-	
+
 	if (bIsFiring == false)
 	{
 		bIsFiring = true;
@@ -538,42 +550,44 @@ void ANBCharacter::FireWeapon()
 		if (CurrentWeapon)
 		{
 			CurrentWeapon->SetTimerForFiring();
-			if (CurrentWeapon->CurrentAmmo > 0)
+			int32 CurrentAmmoInWeapon = CurrentWeapon->CurrentAmmo;
+			int32 CurrentClipInWeapon = CurrentWeapon->CurrentClip;
+			if (CurrentAmmoInWeapon == 0)
+			{
+				if (CurrentClipInWeapon > 0)
+				{
+					ReloadWeapon();
+				}
+				else
+				{
+					if (NoClipAnimation != NULL)
+					{
+						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+						if (ArmAnimInstance != NULL)
+						{
+							ArmAnimInstance->Montage_Play(NoClipAnimation, 1.0f);
+						}
+					}
+
+				}
+
+			}
+			else
 			{
 				//Trigger Fire animation only if there is ammo.
 				//this is where fire animation is triggered
 				if (FireAnimation != NULL)
 				{
-					UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-					if (AnimInstance != NULL)
+					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+					if (ArmAnimInstance != NULL)
 					{
-						AnimInstance->Montage_Play(FireAnimation, 1.0f);
+						ArmAnimInstance->Montage_SetPosition(FireAnimation, 0.19f);
+						ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
 					}
 				}
 			}
-			else // if there is no ammo play reload animation
-			{
-				if (CurrentWeapon->CurrentClip > 0)
-				{
-					//this is where fire animation is triggered
-					if (ReloadAnimation != NULL)
-					{
-						UAnimInstance* AnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-						if (AnimInstance != NULL)
-						{
-							AnimInstance->Montage_Play(ReloadAnimation, 1.0f);
-						}
-					}
-					ReloadWeapon();
-				}
-
-			}
-			
 		}
 	}
-	
-	
-
 }
 
 void ANBCharacter::StopFireWeapon()
@@ -590,6 +604,14 @@ void ANBCharacter::ReloadWeapon()
 {
 	if (CurrentWeapon)
 	{
+		if (ReloadAnimation != NULL)
+		{
+			ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+			if (ArmAnimInstance != NULL)
+			{
+				ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+			}
+		}
 		CurrentWeapon->ReloadAmmo();
 	}
 }
