@@ -34,8 +34,8 @@ ABaseWeapon::ABaseWeapon()
 	//WeaponSpotlight->SetRelativeLocation(FVector(0, 30, -10));
 	WeaponSpotlight->SetRelativeLocation(FVector(0, 0, 10));
 
-	WeaponSpotlight->SetIntensity(1000);
-	WeaponSpotlight->SetAttenuationRadius(1000);
+	WeaponSpotlight->SetIntensity(8000);
+	WeaponSpotlight->SetAttenuationRadius(8000);
 	WeaponSpotlight->SetOuterConeAngle(44);
 
 	PrimaryActorTick.bCanEverTick = true;
@@ -658,13 +658,13 @@ void ABaseWeapon::TurnOnTorch()
 
 void ABaseWeapon::SetTorchIntensity(float charge)
 {
-	if (charge > 0.5)
+	if (charge > 0.9)
 	{
-		WeaponSpotlight->SetIntensity(1000);
+		WeaponSpotlight->SetIntensity(8000);
 	}
 	else
 	{
-		WeaponSpotlight->SetIntensity(2000*charge);
+		WeaponSpotlight->SetIntensity(4000*charge);
 	}
 }
 
