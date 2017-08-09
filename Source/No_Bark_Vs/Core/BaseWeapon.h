@@ -210,14 +210,14 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* MuzzleFX;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Animation")
-		UAnimMontage* ReloadAnimation;
+	//UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	//	UAnimMontage* ReloadAnimation;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Animation")
-		UAnimMontage* EquipAnimation;
+	//UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	//	UAnimMontage* EquipAnimation;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Animation")
-		UAnimMontage* FireAnimation;
+	//UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	//	UAnimMontage* FireAnimation;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		float ReloadAnimDuration;

@@ -403,7 +403,7 @@ void ABaseWeapon::ReloadAmmo()
 		if (CurrentClip > 0)
 		{
 			//playannimation
-			if (ReloadAnimation)
+	/*		if (ReloadAnimation)
 			{
 				float AnimDuration = PlayWeaponAnimation(ReloadAnimation);
 				if (AnimDuration <= 0.0f)
@@ -411,7 +411,7 @@ void ABaseWeapon::ReloadAmmo()
 					AnimDuration = ReloadAnimDuration;
 				}
 				GetWorldTimerManager().SetTimer(RelaodingTimerHandle, this, &ABaseWeapon::StopReloading, AnimDuration, false);
-			}
+			}*/
 
 			PlayWeaponSound(ReloadSound);
 
@@ -441,7 +441,7 @@ void ABaseWeapon::ReloadAmmo()
 void ABaseWeapon::StopReloading()
 {
 	GetWorldTimerManager().ClearTimer(RelaodingTimerHandle);
-	StopWeaponAnimation(ReloadAnimation);
+	/*StopWeaponAnimation(ReloadAnimation);*/
 }
 void ABaseWeapon::SimulateWeaponFire()
 {
@@ -453,11 +453,11 @@ void ABaseWeapon::SimulateWeaponFire()
 		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "FXFXSpwned..");
 	}
 
-	if (!bPlayingFireAnim)
+	/*if (!bPlayingFireAnim)
 	{
 		PlayWeaponAnimation(FireAnimation);
 		bPlayingFireAnim = true;
-	}
+	}*/
 
 	PlayWeaponSound(FireSound);
 }
@@ -466,7 +466,7 @@ void ABaseWeapon::StopSimulatingWeaponFire()
 {
 	if (bPlayingFireAnim)
 	{
-		StopWeaponAnimation(FireAnimation);
+		//StopWeaponAnimation(FireAnimation);
 		bPlayingFireAnim = false;
 	}
 }
