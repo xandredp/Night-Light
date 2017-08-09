@@ -306,7 +306,7 @@ bool AMonster::GetMonsterDead()
 		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
 
 		this->GetCapsuleComponent()->bNavigationRelevant = 0;
-		
+		this->SetActorEnableCollision(false);
 	}
 
 	return bisMonsterDead;
