@@ -1,10 +1,10 @@
 
 #pragma once
-
+#include "CoreMinimal.h"
+#include "GameFramework/Character.h"
 #include "Animation Instances/CharacterAnimInstance.h"
 #include "AI/Spawning/MonsterSpawner.h"
 #include "Perception/PawnSensingComponent.h"
-#include "GameFramework/Character.h"
 #include "Engine/DataTable.h"
 #include "Core/BaseWeapon.h"
 #include "Core/TypeClass.h"
@@ -13,10 +13,10 @@
 
 //GunSkeltal -> bullet spawn point  = MuzzleTip
 
-
+class UInputComponent;
 
 UCLASS(config = Game)
-class NO_BARK_VS_API ANBCharacter : public ACharacter
+class ANBCharacter : public ACharacter
 {
 	GENERATED_BODY()
 		
@@ -288,8 +288,6 @@ protected:
 	/************************************************************************/
 	/* Movement                                                        */
 	/************************************************************************/
-	void OnResetVR();
-
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);

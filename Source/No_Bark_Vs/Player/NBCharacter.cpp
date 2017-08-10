@@ -3,7 +3,11 @@
 #include "Core/No_Bark_Vs.h"
 #include "Core/BaseInteractable.h"
 #include "Player/PlayController.h"
-#include "Kismet/HeadMountedDisplayFunctionLibrary.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
+#include "GameFramework/InputSettings.h"
+#include "HeadMountedDisplayFunctionLibrary.h"
 #include "Engine.h"
 #include "Player/NBCharacter.h"
 
@@ -156,9 +160,6 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ANBCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ANBCharacter::TouchStopped);
-
-	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
 
 	// Flashlight Torch Controls
 	PlayerInputComponent->BindAction("TorchOn", IE_Pressed, this, &ANBCharacter::TurnOnTorch);
@@ -371,11 +372,6 @@ void ANBCharacter::DecreaseScore(int decreaseVal)
 	CurrentScore -= decreaseVal;
 	APlayController* playerController = Cast<APlayController>(GetController());
 	playerController->MyCurrentCurrency = CurrentScore;
-}
-
-void ANBCharacter::OnResetVR()
-{
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
 void ANBCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
