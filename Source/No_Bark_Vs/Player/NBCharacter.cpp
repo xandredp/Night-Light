@@ -158,7 +158,7 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindTouch(IE_Released, this, &ANBCharacter::TouchStopped);
 
 	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
+	//PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ANBCharacter::OnResetVR);
 
 	// Flashlight Torch Controls
 	PlayerInputComponent->BindAction("TorchOn", IE_Pressed, this, &ANBCharacter::TurnOnTorch);
@@ -375,7 +375,7 @@ void ANBCharacter::DecreaseScore(int decreaseVal)
 
 void ANBCharacter::OnResetVR()
 {
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
+	//UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
 void ANBCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
