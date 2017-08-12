@@ -276,7 +276,7 @@ void AMonster::ReduceHealth(int DamageValue)
 
 void AMonster::DamageHealth(int DamageValue)
 {
-	if (Health <= 0)
+	if ((Health <= 0) && !bisMonsterDead)
 	{
 		bisMonsterDead = true;
 		SetRagdollPhysics();
@@ -287,10 +287,32 @@ void AMonster::DamageHealth(int DamageValue)
 
 		// Once the AI is dead - turn off Navigation on the object so everyone can walk through the corpse
 
-		this->GetCapsuleComponent()->bNavigationRelevant = 0;
-		this->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		UCapsuleComponent*	CapCom;
+		CapCom = this->GetCapsuleComponent();
+		ECollisionChannel Chan;
+		Chan = CapCom->GetCollisionObjectType();
+		//CapCom->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
+		FCollisionResponseContainer CollCont = CapCom->GetCollisionResponseToChannels();
 
-		//this->SetActorEnableCollision(false);
+		Chan;
+
+		if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Block)
+		{
+			GLog->Log("Before setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
+			CapCom->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+			
+
+			if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Block)
+			{
+				GLog->Log("After setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
+			}
+			if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Ignore)
+			{
+				GLog->Log("After setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Ignore ");
+			}
+
+		}
+
 
 
 		if (bisScoreAdded == false)

@@ -34,14 +34,16 @@ void AMyAIController::Possess(APawn* aPawn)
 	if (AIChar)
 	{
 		// if the blackboard is valid initialize the blackboard for the corresponding behavior tree
-		if (AIChar->BehaviorTree->BlackboardAsset)
+		if (AIChar->BehaviorTree)
 		{
-			BlackboardComp->InitializeBlackboard(*(AIChar->BehaviorTree->BlackboardAsset));
+			if (AIChar->BehaviorTree->BlackboardAsset)
+			{
+				BlackboardComp->InitializeBlackboard(*(AIChar->BehaviorTree->BlackboardAsset));	
+				//Start the behavior tree which corresponds to the specific character
+				BehaviourComp->StartTree(*(AIChar->BehaviorTree));
+
+			}
 		}
-
-
-		//Start the behavior tree which corresponds to the specific character
-		BehaviourComp->StartTree(*(AIChar->BehaviorTree));
 	}
 }
 
