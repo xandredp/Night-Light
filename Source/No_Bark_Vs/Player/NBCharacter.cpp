@@ -554,7 +554,7 @@ void ANBCharacter::FireWeapon()
 
 		if (CurrentWeapon)
 		{
-			CurrentWeapon->SetTimerForFiring();
+			
 			int32 CurrentAmmoInWeapon = CurrentWeapon->CurrentAmmo;
 			int32 CurrentClipInWeapon = CurrentWeapon->CurrentClip;
 			if (CurrentAmmoInWeapon == 0)
@@ -580,6 +580,7 @@ void ANBCharacter::FireWeapon()
 			}
 			else if (CurrentAmmoInWeapon > 0)
 			{
+				CurrentWeapon->SetTimerForFiring();
 				
 				
 				if (FireAnimation != NULL)
