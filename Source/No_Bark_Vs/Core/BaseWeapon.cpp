@@ -27,16 +27,18 @@ ABaseWeapon::ABaseWeapon()
 	WeaponSpotlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("WeaponSpotlight"));
 	WeaponSpotlight->SetupAttachment(WeaponMesh);
 	WeaponSpotlight->SetVisibility(true);
-	WeaponSpotlight->SetVisibility(false);
+	//WeaponSpotlight->SetVisibility(false);
+	//WeaponSpotlight->SetLightFalloffExponent(0.0f);
 
 	//WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
 	WeaponSpotlight->SetRelativeRotation(FRotator(90, 0, 90));
 	//WeaponSpotlight->SetRelativeLocation(FVector(0, 30, -10));
-	WeaponSpotlight->SetRelativeLocation(FVector(0, 0, 10));
+	WeaponSpotlight->SetRelativeLocation(FVector(0, 10, -30));
 
 	WeaponSpotlight->SetIntensity(8000);
-	WeaponSpotlight->SetAttenuationRadius(8000);
-	WeaponSpotlight->SetOuterConeAngle(44);
+	WeaponSpotlight->SetAttenuationRadius(16000);
+	WeaponSpotlight->SetOuterConeAngle(10);
+
 
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickGroup = TG_PrePhysics;
@@ -51,7 +53,8 @@ ABaseWeapon::ABaseWeapon()
 	ReloadAnimDuration = 1.1f;
 	WeaponConfig.TimeBetweenShots = 0.1f;
 
-	MaxUseDistance = 300;
+	MaxUseDistance =600;
+	CurrentUseDistance = MaxUseDistance;
 }
 
 void ABaseWeapon::Tick(float DeltaSeconds)
@@ -66,9 +69,11 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 		if (GetPawnOwner()->GetController()) {
 			GetPawnOwner()->GetController()->GetPlayerViewPoint(camLoc, camRot);
 
-			const FVector start_trace = camLoc;
+			
+
+			const FVector start_trace = WeaponSpotlight->GetComponentLocation();
 			const FVector direction = camRot.Vector();
-			const FVector end_trace = start_trace + (direction * MaxUseDistance);
+			const FVector end_trace = start_trace + (direction * CurrentUseDistance);
 
 			FCollisionQueryParams TraceParams(FName(TEXT("")), true, this);
 			TraceParams.bTraceAsyncScene = true;
@@ -105,6 +110,7 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 				if (WeaponSpotlight->bVisible == 1)
 				{
 					bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
+					DrawDebugLine(GetWorld(), start_trace, end_trace, FColor::Green, false, -1.0, 0, 0.5f);
 					//Checking for possible hits
 					if (bHit)
 					{
@@ -666,6 +672,7 @@ void ABaseWeapon::SetTorchIntensity(float charge)
 	{
 		WeaponSpotlight->SetIntensity(4000*charge);
 	}
+	CurrentUseDistance = MaxUseDistance * charge;
 }
 
 void ABaseWeapon::TurnOffTorch()
@@ -673,8 +680,14 @@ void ABaseWeapon::TurnOffTorch()
 	WeaponSpotlight->SetVisibility(false);
 }
 
-void ABaseWeapon::TorchCrank()
+void ABaseWeapon::TorchCrank(float charge)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT(" Light cranked. Range increased by 100. "));
-	MaxUseDistance = MaxUseDistance + 100;
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT(" Light cranked."));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(charge));
+	CurrentUseDistance = MaxUseDistance * charge;
+}
+
+float ABaseWeapon::GetCurrentUseDistance()
+{
+	return CurrentUseDistance;
 }

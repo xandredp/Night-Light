@@ -294,23 +294,13 @@ void AMonster::DamageHealth(int DamageValue)
 		//CapCom->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
 		FCollisionResponseContainer CollCont = CapCom->GetCollisionResponseToChannels();
 
-		Chan;
-
 		if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Block)
 		{
-			GLog->Log("Before setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
+			//GLog->Log("Before setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
+			// Assuming the Skinny ECollisionChannel is set to Pawn - once the AI is dea we need to stop the capsule component from blocking movement
+
 			CapCom->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 			
-
-			if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Block)
-			{
-				GLog->Log("After setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
-			}
-			if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Ignore)
-			{
-				GLog->Log("After setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Ignore ");
-			}
-
 		}
 
 

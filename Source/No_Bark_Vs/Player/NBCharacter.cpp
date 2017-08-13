@@ -125,7 +125,7 @@ void ANBCharacter::Tick(float DeltaSeconds)
 	{
 		if (CurrentWeapon->IsOnTorch() && ChargeRatio > 0.0)
 		{
-			ChargeRatio = ChargeRatio - 0.001;
+			ChargeRatio = ChargeRatio - 0.0005;
 			CurrentWeapon->SetTorchIntensity(ChargeRatio);
 		}
 		if (ChargeRatio <= 0)
@@ -721,7 +721,7 @@ void ANBCharacter::TorchCrank()
 			if (ChargeRatio < 1)
 			{
 				ChargeRatio = ChargeRatio + 0.1;
-				CurrentWeapon->TorchCrank();
+				CurrentWeapon->TorchCrank(ChargeRatio);
 			}
 		}
 		

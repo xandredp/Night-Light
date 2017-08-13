@@ -119,6 +119,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		float MaxUseDistance;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float CurrentUseDistance;
+
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void SetTimerForFiring();
 	UFUNCTION(BlueprintCallable, Category = "Config")
@@ -173,7 +176,10 @@ public:
 	void TurnOnTorch();
 	void SetTorchIntensity(float charge);
 	void TurnOffTorch();
-	void TorchCrank();
+	void TorchCrank(float charge);
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	float GetCurrentUseDistance();
 
 
 
