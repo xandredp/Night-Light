@@ -579,23 +579,24 @@ void ANBCharacter::FireWeapon()
 
 			}
 			else if (CurrentAmmoInWeapon > 0)
-			{
-				CurrentWeapon->SetTimerForFiring();
-				
-				
-				if (FireAnimation != NULL)
-				{
-					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-					if (ArmAnimInstance != NULL)
-					{
-						ArmAnimInstance->Montage_SetPosition(FireAnimation, 0.19f);
-						ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
-					}
-				}
-				
+			{		
 				//Trigger Fire animation only if there is ammo.
 				//this is where fire animation is triggered
-				
+				if (IsAnimPlaying != true)
+				{
+					if (FireAnimation != NULL)
+					{
+						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+						if (ArmAnimInstance != NULL)
+						{
+							ArmAnimInstance->Montage_SetPosition(FireAnimation, 0.23f);
+							ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
+							IsAnimPlaying = true;
+
+							CurrentWeapon->SetTimerForFiring();
+						}
+					}
+				}
 			}
 		}
 	}
