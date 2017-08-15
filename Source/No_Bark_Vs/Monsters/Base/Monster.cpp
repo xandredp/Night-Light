@@ -164,18 +164,13 @@ void AMonster::OnFlashed(APawn* aPawn)
 
 				UCapsuleComponent*	CapCom;
 				CapCom = this->GetCapsuleComponent();
-				ECollisionChannel Chan;
-				Chan = CapCom->GetCollisionObjectType();
-				//CapCom->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
-				FCollisionResponseContainer CollCont = CapCom->GetCollisionResponseToChannels();
+				FCollisionResponseContainer CollCont = this->GetMesh()->GetCollisionResponseToChannels();
 
-				if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Block)
+				// Now that we have flashed the Skinny we are allowed to do weapon hits 
+
+//				if (CapCom->GetCollisionResponseToChannels().GetResponse(WEAPON_TRACE) == ECollisionResponse::ECR_Ignore)
 				{
-					//GLog->Log("Before setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
-					// Assuming the Skinny ECollisionChannel is set to Pawn - once the AI is dea we need to stop the capsule component from blocking movement
-
-					CapCom->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
-
+					this->GetMesh()->SetCollisionResponseToChannel(WEAPON_TRACE, ECollisionResponse::ECR_Block);
 				}
 
 			}
