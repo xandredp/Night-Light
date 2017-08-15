@@ -212,9 +212,6 @@ public:
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float ChargeRatio;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float walkingSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxSprintSpeed;

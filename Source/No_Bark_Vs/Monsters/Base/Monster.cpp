@@ -155,6 +155,29 @@ void AMonster::OnFlashed(APawn* aPawn)
 				AIController->SetBlackboardBotState(MonsterState);
 				AIController->SetLocationVector(SensedPawn->GetActorLocation());
 				AIController->StopMovement();
+
+				//Material Path
+				FString matPath = "Material'/Game/Textures/Monster/Mon_M.Mon_M'";
+				//Material Instance
+				UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
+				this->GetMesh()->SetMaterial(0, material);
+
+				UCapsuleComponent*	CapCom;
+				CapCom = this->GetCapsuleComponent();
+				ECollisionChannel Chan;
+				Chan = CapCom->GetCollisionObjectType();
+				//CapCom->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
+				FCollisionResponseContainer CollCont = CapCom->GetCollisionResponseToChannels();
+
+				if (CapCom->GetCollisionResponseToChannels().GetResponse(ECollisionChannel::ECC_Pawn) == ECollisionResponse::ECR_Block)
+				{
+					//GLog->Log("Before setting : " + this->GetName() + "ECollisionChannel::ECC_Pawn  ECR_Block ");
+					// Assuming the Skinny ECollisionChannel is set to Pawn - once the AI is dea we need to stop the capsule component from blocking movement
+
+					CapCom->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+
+				}
+
 			}
 		}
 	}

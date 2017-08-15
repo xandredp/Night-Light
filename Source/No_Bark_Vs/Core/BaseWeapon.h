@@ -176,10 +176,17 @@ public:
 	void TurnOnTorch();
 	void SetTorchIntensity(float charge);
 	void TurnOffTorch();
-	void TorchCrank(float charge);
+	void TorchCrank();
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float ChargeRatio;
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	float GetCurrentUseDistance();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	float GetCharge();
 
 
 

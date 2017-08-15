@@ -37,7 +37,6 @@ ANBCharacter::ANBCharacter()
 	HealthTimerRate = 1.0f;
 	MagicTimerRate = 1.0f;
 	bIsFiring = false;
-	ChargeRatio = 0.0f;
 	// Item
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
@@ -120,20 +119,6 @@ void ANBCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	CheckForInteractables();
-
-	if (CurrentWeapon)
-	{
-		if (CurrentWeapon->IsOnTorch() && ChargeRatio > 0.0)
-		{
-			ChargeRatio = ChargeRatio - 0.0005;
-			CurrentWeapon->SetTorchIntensity(ChargeRatio);
-		}
-		if (ChargeRatio <= 0)
-		{
-			//CurrentWeapon->TurnOffTorch();
-		}
-	}
-
 }
 
 void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -718,12 +703,7 @@ void ANBCharacter::TorchCrank()
 	{
 		if (playerController->IsTorchOn)
 		{
-
-			if (ChargeRatio < 1)
-			{
-				ChargeRatio = ChargeRatio + 0.1;
-				CurrentWeapon->TorchCrank(ChargeRatio);
-			}
+				CurrentWeapon->TorchCrank();
 		}
 		
 	}

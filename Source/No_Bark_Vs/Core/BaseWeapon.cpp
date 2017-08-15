@@ -54,6 +54,7 @@ ABaseWeapon::ABaseWeapon()
 	WeaponConfig.TimeBetweenShots = 0.1f;
 
 	MaxUseDistance =600;
+	ChargeRatio = 1.0;
 	CurrentUseDistance = MaxUseDistance;
 }
 
@@ -68,8 +69,6 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 	if (GetPawnOwner()) {
 		if (GetPawnOwner()->GetController()) {
 			GetPawnOwner()->GetController()->GetPlayerViewPoint(camLoc, camRot);
-
-			
 
 			const FVector start_trace = WeaponSpotlight->GetComponentLocation();
 			const FVector direction = camRot.Vector();
@@ -98,6 +97,18 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 			//Handling ignored actors
 			FCollisionQueryParams QueryParams;
 			QueryParams.AddIgnoredActor(this);
+
+
+			if (this->IsOnTorch() && ChargeRatio > 0.0)
+			{
+				ChargeRatio = ChargeRatio - 0.0005;
+				this->SetTorchIntensity(ChargeRatio);
+			}
+			if (ChargeRatio <= 0)
+			{
+				//CurrentWeapon->TurnOffTorch();
+			}
+
 
 			this->GetName();
 
@@ -680,14 +691,24 @@ void ABaseWeapon::TurnOffTorch()
 	WeaponSpotlight->SetVisibility(false);
 }
 
-void ABaseWeapon::TorchCrank(float charge)
+void ABaseWeapon::TorchCrank()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT(" Light cranked."));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(charge));
-	CurrentUseDistance = MaxUseDistance * charge;
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(ChargeRatio));
+	CurrentUseDistance = MaxUseDistance * ChargeRatio;
+	if (ChargeRatio < 1)
+	{
+		ChargeRatio = ChargeRatio + 0.1;
+	}
+
 }
 
 float ABaseWeapon::GetCurrentUseDistance()
 {
 	return CurrentUseDistance;
+}
+
+float ABaseWeapon::GetCharge()
+{
+	return ChargeRatio;
 }
