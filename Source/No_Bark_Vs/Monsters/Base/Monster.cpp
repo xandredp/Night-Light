@@ -173,6 +173,8 @@ void AMonster::OnFlashed(APawn* aPawn)
 					this->GetMesh()->SetCollisionResponseToChannel(WEAPON_TRACE, ECollisionResponse::ECR_Block);
 				}
 
+
+				GetWorld()->GetTimerManager().SetTimer(FlashTimer, this, &AMonster::SetTranparentMaterial, 5.0, false);
 			}
 		}
 	}
@@ -428,4 +430,16 @@ void AMonster::SetMonsterDebugDrawAI(bool deb)
 void AMonster::SetMonsterDebugDrawAI2(bool deb)
 {
 	DebugDrawEnabledAI2 = deb;
+}
+
+
+void AMonster::SetTranparentMaterial()
+{
+	//Material Path
+	FString matPath = "Material'/Game/Textures/Monster/Mon_M_Darkness.Mon_M_Darkness'";
+	//Material Instance
+	UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
+	this->GetMesh()->SetMaterial(0, material);
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Turning transparent!"));
 }

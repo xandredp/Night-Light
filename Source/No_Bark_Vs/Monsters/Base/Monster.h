@@ -175,6 +175,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void SetMonsterDebugDrawAI2(bool deb);
 
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+	void SetTranparentMaterial();
+
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void ReduceHealth(int DamageValue);
@@ -200,4 +203,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void PlayDeathAttackSound();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		FTimerHandle FlashTimer;
+
 };
