@@ -170,7 +170,11 @@ void ANBCharacter::EquipPrimaryWeapon()
 	}
 	else
 	{
-		AnimInstance->IsPrimaryEquiped = true;
+		if (AnimInstance != NULL)
+		{
+			AnimInstance->IsPrimaryEquiped = true;
+		}
+		
 		SpawnWeapon(WeaponClass);
 		AttachEquipmentToHand();
 	}
@@ -473,8 +477,14 @@ void ANBCharacter::OnStartSprinting()
 			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
 			//Stops Health Increase
 			GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
+
 			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			aAnimInstance->IsSprinting = true;
+			
+			if (aAnimInstance != NULL)
+			{
+				aAnimInstance->IsSprinting = true;
+			}
+		
 
 			// Sprinting is noisy
 			MakeNoise(100, this, GetActorLocation());
