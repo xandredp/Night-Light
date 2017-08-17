@@ -509,7 +509,12 @@ void ANBCharacter::OnStopSprinting()
 			GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
 
 			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			aAnimInstance->IsSprinting = false;
+			if (aAnimInstance != NULL)
+			{
+				aAnimInstance->IsSprinting = false;
+			}
+
+			
 		}
 	}
 
