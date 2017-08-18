@@ -29,6 +29,9 @@ public:
 		class USkeletalMeshComponent* CharacterMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		class USkeletalMeshComponent* CameraMovemetMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 		class USkeletalMeshComponent* FPSCharacterArmMesh;
 
 	/** Follow camera */
