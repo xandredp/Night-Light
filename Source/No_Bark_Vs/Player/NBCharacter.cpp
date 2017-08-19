@@ -87,13 +87,27 @@ ANBCharacter::ANBCharacter()
 	CameraMovemetMesh->bCastDynamicShadow = false;
 	CameraMovemetMesh->CastShadow = false;
 
+
+	// Create a camera boom (pulls in towards the player if there is a collision)
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	CameraBoom->SetupAttachment(RootComponent);
+	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character	
+	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	//FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
-	//FollowCamera->bUsePawnControlRotation = true; // Camera does rotate relative to arm
-	FollowCamera->SetupAttachment(CameraMovemetMesh);
-	FollowCamera->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
-	FollowCamera->bUsePawnControlRotation = true;
-	
+	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
+	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+
+
+	//FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	////FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
+	////FollowCamera->bUsePawnControlRotation = true; // Camera does rotate relative to arm
+	//FollowCamera->SetupAttachment(CameraMovemetMesh);
+	//FollowCamera->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
+	//FollowCamera->bUsePawnControlRotation = true;
+	//
+
 	FPSCharacterArmMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSArmMesh"));
 	FPSCharacterArmMesh->SetOnlyOwnerSee(true);
 	FPSCharacterArmMesh->SetupAttachment(FollowCamera);
