@@ -13,5 +13,11 @@ void USkinnyMonsterAnimInstance::UpdateAnimationProperties()
 	{
 		// Update movement speed
 		MovementSpeed = Pawn->GetVelocity().Size();
+
+		AMyAIController* AIController = Cast<AMyAIController>(Pawn->GetController());
+
+		if (AIController) {
+			CurrentMonsterState = AIController->GetBlackboardBotState();
+		}
 	}
 }

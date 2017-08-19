@@ -468,7 +468,7 @@ void ANBCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual MoveRight noise!"));
-		MakeNoise(100, this, GetActorLocation());
+		//MakeNoise(100, this, GetActorLocation());
 	}
 }
 //When sprinting the health will not gain and Stamina will decrease.  the effect will stop when firing

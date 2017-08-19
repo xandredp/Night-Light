@@ -3,7 +3,9 @@
 #pragma once
 
 #include "Animation/AnimInstance.h"
+#include "AI/MyAIController.h"
 #include "SkinnyMonsterAnimInstance.generated.h"
+
 
 /**
  * 
@@ -38,6 +40,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		bool CanHearPlayer;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		EBotBehaviorType CurrentMonsterState;
 
 protected:
 

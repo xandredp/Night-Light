@@ -89,6 +89,8 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 			//Raycasting in a sphere to detect collisions
 			TArray<FHitResult> HitResults;
 
+			FHitResult SingleHit;
+
 			//Setting up the shape of the raycast
 			FCollisionShape CollisionShape;
 			CollisionShape.ShapeType = ECollisionShape::Sphere;
@@ -120,25 +122,39 @@ void ABaseWeapon::Tick(float DeltaSeconds)
 			if (GetPawnOwner()->CurrentWeapon == this) {
 				if (WeaponSpotlight->bVisible == 1)
 				{
-					bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
+					bool bHit = GetWorld()->SweepSingleByChannel(SingleHit, start_trace, end_trace, FQuat::Identity, ECC_Pawn, CollisionShape, QueryParams);
+
+					//bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
 					DrawDebugLine(GetWorld(), start_trace, end_trace, FColor::Green, false, -1.0, 0, 0.5f);
 					//Checking for possible hits
 					if (bHit)
 					{
-						for (auto It = HitResults.CreateIterator(); It; It++)
-						{
-							AMonster* Char = Cast<AMonster>(It->GetActor());
-							if (Char)
-							{
-								FString monsterName;
-								monsterName = Char->GetName();
-								//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
-								Char->OnFlashed(GetPawnOwner());
-							}
-							else
-							{
+						//for (auto It = HitResults.CreateIterator(); It; It++)
+						//{
+						//	AMonster* Char = Cast<AMonster>(It->GetActor());
+						//	if (Char)
+						//	{
+						//		FString monsterName;
+						//		monsterName = Char->GetName();
+						//		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
+						//		Char->OnFlashed(GetPawnOwner());
+						//	}
+						//	else
+						//	{
 
-							}
+						//	}
+						//}
+						AMonster* Char = Cast<AMonster>(SingleHit.GetActor());
+						if (Char)
+						{
+							FString monsterName;
+							monsterName = Char->GetName();
+							//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
+							Char->OnFlashed(GetPawnOwner());
+						}
+						else
+						{
+
 						}
 					}
 				}
