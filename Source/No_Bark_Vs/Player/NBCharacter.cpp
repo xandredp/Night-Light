@@ -98,16 +98,6 @@ ANBCharacter::ANBCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-
-
-	//FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	////FollowCamera->SetupAttachment(GetMesh(), CameraAttachPoint);
-	////FollowCamera->bUsePawnControlRotation = true; // Camera does rotate relative to arm
-	//FollowCamera->SetupAttachment(CameraMovemetMesh);
-	//FollowCamera->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
-	//FollowCamera->bUsePawnControlRotation = true;
-	//
-
 	FPSCharacterArmMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSArmMesh"));
 	FPSCharacterArmMesh->SetOnlyOwnerSee(true);
 	FPSCharacterArmMesh->SetupAttachment(FollowCamera);
@@ -734,15 +724,69 @@ void ANBCharacter::TurnOffTorch()
 void ANBCharacter::TorchCrank()
 {
 	APlayController* playerController = Cast<APlayController>(GetController());
-
-
+	
+	//To play cranking there are 3 animations start - cranking - end
+	//If no anim montage is playing
+	
 	if (CurrentWeapon)
 	{
 		if (playerController->IsTorchOn)
 		{
-				CurrentWeapon->TorchCrank();
+			// play cranking
+			if (IsAnimPlaying == false && IsTorchCrankerUp == true && IsTorchCrancking == true)
+			{		
+				if (CrankingAnimation != NULL)
+				{
+					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+					if (ArmAnimInstance != NULL)
+					{
+						//ArmAnimInstance->Montage_SetPosition(StartCrankAnimation, 0.23f);
+						ArmAnimInstance->Montage_Play(CrankingAnimation, 1.0f);
+					}
+				}
+				//Where actual cranking enegy bar is going up
+				CurrentWeapon->TorchCrank();				
+			}
+			else if (IsAnimPlaying == false && IsTorchCrankerUp == false)
+			{
+				//play start
+				if (IsTorchCrankerUp == false)
+				{
+					if (StartCrankAnimation != NULL)
+					{
+						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+						if (ArmAnimInstance != NULL)
+						{
+							//ArmAnimInstance->Montage_SetPosition(StartCrankAnimation, 0.23f);
+							ArmAnimInstance->Montage_Play(StartCrankAnimation, 1.0f);
+							IsTorchCrankerUp = true;
+							IsTorchCrancking = true;
+
+						}
+					}
+				}
+			}
+			//play end
+			else if (IsAnimPlaying == false && IsTorchCrankerUp == true && IsTorchCrancking == false)
+			{
+				if (EndCrankAnimation != NULL)
+				{
+					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+					if (ArmAnimInstance != NULL)
+					{
+						//ArmAnimInstance->Montage_SetPosition(StartCrankAnimation, 0.23f);
+						ArmAnimInstance->Montage_Play(EndCrankAnimation, 1.0f);
+					
+					}
+				}
+			}
+			else if (IsTorchCrankerUp == true)
+			{
+				TorchCrank();
+			}
 		}
 		
 	}
 
 }
+

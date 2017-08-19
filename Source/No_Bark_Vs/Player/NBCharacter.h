@@ -80,6 +80,8 @@ public:
 
 	void EquipPrimaryWeapon();
 
+
+
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 	void TurnOnTorch();
 
@@ -145,10 +147,23 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		class UAnimMontage* NoClipAnimation;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* StartCrankAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* CrankingAnimation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+		class UAnimMontage* EndCrankAnimation;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		bool IsAnimPlaying;
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool IsTorchCrancking;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool IsTorchCrankerUp;
 
 	/************************************************************************/
 	/* weapon use                                                           */
