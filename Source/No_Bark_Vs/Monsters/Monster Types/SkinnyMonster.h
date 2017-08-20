@@ -26,9 +26,6 @@ public:
 	virtual void BeginPlay() override;
 
 	AMonster* Monster;
-	
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Anims")
-		class UBlendSpace1D* RunToAttackBlendSpace;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackRangeSphere;
@@ -70,5 +67,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName AttackAttachPoint;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+		UAnimSequence* AttackAnim;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animations")
+		class UBlendSpace1D* RunToAttackBlendSpace;
 };
