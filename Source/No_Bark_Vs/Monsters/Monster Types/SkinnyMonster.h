@@ -58,7 +58,11 @@ public:
 	UFUNCTION()
 		void PerformAttack(AActor* HitActor);
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+		UAnimSequence* AttackAnim;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animations")
+		class UBlendSpace1D* RunToAttackBlendSpace;
 
 private:
 
@@ -67,9 +71,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName AttackAttachPoint;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Animations")
-		UAnimSequence* AttackAnim;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animations")
-		class UBlendSpace1D* RunToAttackBlendSpace;
 };
