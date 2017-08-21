@@ -601,10 +601,9 @@ void ANBCharacter::FireWeapon()
 						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
 						if (ArmAnimInstance != NULL)
 						{
-							ArmAnimInstance->Montage_SetPosition(FireAnimation, 0.23f);
+							ArmAnimInstance->Montage_SetPosition(FireAnimation, 5.0f);
 							ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
 							IsAnimPlaying = true;
-
 							CurrentWeapon->SetTimerForFiring();
 						}
 					}

@@ -64,10 +64,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
 
-	// The class for handling spawning
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
-		AMonsterSpawner* Spawner;
-
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
