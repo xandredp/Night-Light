@@ -3,12 +3,12 @@
 #include "Core/No_Bark_Vs.h"
 #include "Core/BaseInteractable.h"
 #include "Player/PlayController.h"
-#include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Components/InputComponent.h"
-#include "GameFramework/InputSettings.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
-#include "Engine.h"
+//#include "Camera/CameraComponent.h"
+//#include "Components/CapsuleComponent.h"
+//#include "Components/InputComponent.h"
+//#include "GameFramework/InputSettings.h"
+//#include "HeadMountedDisplayFunctionLibrary.h"
+//#include "Engine.h"
 #include "Player/NBCharacter.h"
 
 
@@ -113,7 +113,7 @@ void ANBCharacter::BeginPlay()
 //	FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), CameraAttachPoint);
 
 	//FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, CameraAttachPoint);
-	AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	//AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	bIsDead = false;
 	CharacterMesh->SetHiddenInGame(true, true);
 
@@ -182,10 +182,10 @@ void ANBCharacter::EquipPrimaryWeapon()
 	}
 	else
 	{
-		if (AnimInstance != NULL)
-		{
-			AnimInstance->IsPrimaryEquiped = true;
-		}
+		//if (AnimInstance != NULL)
+		//{
+		//	AnimInstance->IsPrimaryEquiped = true;
+		//}
 		
 		SpawnWeapon(WeaponClass);
 		AttachEquipmentToHand();

@@ -2,9 +2,9 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Animation Instances/CharacterAnimInstance.h"
+//#include "Animation Instances/CharacterAnimInstance.h"
 #include "AI/Spawning/MonsterSpawner.h"
-#include "Perception/PawnSensingComponent.h"
+//#include "Perception/PawnSensingComponent.h"
 #include "Engine/DataTable.h"
 #include "Core/BaseWeapon.h"
 #include "Core/TypeClass.h"
@@ -113,8 +113,8 @@ public:
 	/************************************************************************/
 	/* Anim use                                                           */
 	/************************************************************************/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-		UCharacterAnimInstance* AnimInstance;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	//	UCharacterAnimInstance* AnimInstance;
 	/* Retrieve Pitch/Yaw from current camera */
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		FRotator GetAimOffsets() const;
