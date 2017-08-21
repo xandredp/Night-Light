@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Monsters/Base/Monster.h"
-#include "Animation Instances/SkinnyMonsterAnimInstance.h"
+//#include "Animation Instances/SkinnyMonsterAnimInstance.h"
 #include "SkinnyMonster.generated.h"
 
 
@@ -27,9 +27,17 @@ public:
 
 	AMonster* Monster;
 
+	UAnimInstance* SkinnyMonsterAnimInstance;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+		class USkeletalMeshComponent* SkinnyMonsterSkeletal;
+
+
+	// Sphere component attached to the hand 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackRangeSphere;
 
+	// Sphere component around monster
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackAnimTriggerSphere;
 
@@ -59,10 +67,8 @@ public:
 		void PerformAttack(AActor* HitActor);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
-		UAnimSequence* AttackAnim;
+		class UAnimMontage* AttackAnimMontage;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animations")
-		class UBlendSpace1D* RunToAttackBlendSpace;
 
 private:
 

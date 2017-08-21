@@ -15,6 +15,7 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAttachPoint = TEXT("Attack_Socket");
 	LastStrikeTime = 0.0f;
 
+	// This sphere component is attached to the hand to detect a hit
 	AttackRangeSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Attack Range Sphere"));
 	AttackRangeSphere->SetSphereRadius(25);
 	AttackRangeSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -23,6 +24,7 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackRangeSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapWithCharacter);
 	AttackRangeSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapWithCharacter);
 	
+	// This sphere component surrounds the monster to determine attack range
 	AttackAnimTriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("AttackAnim Range Sphere"));
 	AttackAnimTriggerSphere->SetSphereRadius(AttackRange);
 	AttackAnimTriggerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -31,7 +33,7 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAnimTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ASkinnyMonster::OnOverlapStartAnim);
 	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
 	
-	//AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	SkinnyMonsterSkeletal = GetMesh();
 }
 
 void ASkinnyMonster::BeginPlay()
@@ -44,7 +46,6 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 {
 	if (GetMonsterDead() == false)
 	{
-		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
@@ -70,35 +71,46 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 {
 	if (GetMonsterDead() == false)
 	{
-		USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack range sphere!");
-			if (AnimInstance)
+			if (AttackAnimMontage != NULL)
 			{
-				// Set CanAttack in AnimInstance to true
-				AnimInstance->CanAttack = true;
+				SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
+
+				if (SkinnyMonsterAnimInstance != NULL)
+				{
+					SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+				}
 			}
+
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack range sphere!");
+// 			if (AnimInstance)
+// 			{
+// 				// Set CanAttack in AnimInstance to true
+// 				AnimInstance->CanAttack = true;
+// 			}
 		}
 	}
 }
 
 void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	//USkinnyMonsterAnimInstance* AnimInstance = Cast<USkinnyMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 	ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 
 	if (GetMonsterDead() == false)
 	{
 		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 		{
-			if (AnimInstance)
-			{
-				// Set CanAttack in AnimInstance to false
-				AnimInstance->IsAttackFinished = true;
-				AnimInstance->CanAttack = false;
-			}
+
+
+// 			if (AnimInstance)
+// 			{
+// 				// Set CanAttack in AnimInstance to false
+// 				AnimInstance->IsAttackFinished = true;
+// 				AnimInstance->CanAttack = false;
+// 			}
 		}
 	}
 }
