@@ -1,0 +1,267 @@
+Begin Object Class=/Script/LevelSequence.LevelSequence Name="Matinee_Lever"
+   Begin Object Class=/Script/MovieScene.MovieScene Name="MovieScene_0"
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFadeTrack Name="MovieSceneFadeTrack_0"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFadeSection Name="MovieSceneFadeSection_0"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFadeSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFadeSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatTrack Name="MovieSceneFloatTrack_5"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatSection Name="MovieSceneFloatSection_5"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatTrack Name="MovieSceneFloatTrack_4"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatSection Name="MovieSceneFloatSection_4"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatTrack Name="MovieSceneFloatTrack_3"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatSection Name="MovieSceneFloatSection_3"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatTrack Name="MovieSceneFloatTrack_2"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatSection Name="MovieSceneFloatSection_2"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatTrack Name="MovieSceneFloatTrack_1"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatSection Name="MovieSceneFloatSection_1"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatTrack Name="MovieSceneFloatTrack_0"
+         Begin Object Class=/Script/MovieSceneTracks.MovieSceneFloatSection Name="MovieSceneFloatSection_0"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieSceneFloatSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieScene.MovieSceneFolder Name="MovieSceneFolder_1"
+      End Object
+      Begin Object Class=/Script/MovieSceneTracks.MovieScene3DTransformTrack Name="MovieScene3DTransformTrack_0"
+         Begin Object Class=/Script/MovieSceneTracks.MovieScene3DTransformSection Name="MovieScene3DTransformSection_0"
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseOutFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieScene3DTransformSection:EaseOutFunction'
+            End Object
+            Begin Object Class=/Script/MovieScene.MovieSceneBuiltInEasingFunction Name="EaseInFunction" Archetype=MovieSceneBuiltInEasingFunction'/Script/MovieSceneTracks.Default__MovieScene3DTransformSection:EaseInFunction'
+            End Object
+         End Object
+      End Object
+      Begin Object Class=/Script/MovieScene.MovieSceneFolder Name="MovieSceneFolder_0"
+      End Object
+   End Object
+   Begin Object Name="MovieScene_0"
+      Begin Object Name="MovieSceneFadeTrack_0"
+         Begin Object Name="MovieSceneFadeSection_0"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Value=1.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.004850),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=10.495562),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=11.000000,Value=1.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFadeTrack_0.MovieSceneFadeSection_0.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFadeTrack_0.MovieSceneFadeSection_0.EaseOutFunction')
+            EndTime=11.000000
+            Signature=AD89D63749E767E73B61E8AFE1A976E1
+         End Object
+         Sections(0)=MovieSceneFadeSection'MovieSceneFadeSection_0'
+         Signature=501BA5A84F7AA076E8FE63A98FB8A99B
+      End Object
+      Begin Object Name="MovieSceneFloatTrack_5"
+         Begin Object Name="MovieSceneFloatSection_5"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.300000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.400001,Value=50000.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_5.MovieSceneFloatSection_5.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_5.MovieSceneFloatSection_5.EaseOutFunction')
+            EndTime=8.400001
+            bIsInfinite=True
+            Signature=E78423DB444C006A75C3728B10FB8563
+         End Object
+         UniqueTrackName="Intensity"
+         PropertyName="Intensity"
+         PropertyPath="Intensity"
+         Sections(0)=MovieSceneFloatSection'MovieSceneFloatSection_5'
+         Signature=C6CFB9AA4B469EFB27D59A9C7AEE8A69
+      End Object
+      Begin Object Name="MovieSceneFloatTrack_4"
+         Begin Object Name="MovieSceneFloatSection_4"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.100000,Value=50000.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_4.MovieSceneFloatSection_4.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_4.MovieSceneFloatSection_4.EaseOutFunction')
+            EndTime=8.100000
+            bIsInfinite=True
+            Signature=5E7298834E62E77C69EF63AAA0EF215A
+         End Object
+         UniqueTrackName="Intensity"
+         PropertyName="Intensity"
+         PropertyPath="Intensity"
+         Sections(0)=MovieSceneFloatSection'MovieSceneFloatSection_4'
+         Signature=B8DFE3334942FF2B4D4EF9A72C6E35A9
+      End Object
+      Begin Object Name="MovieSceneFloatTrack_3"
+         Begin Object Name="MovieSceneFloatSection_3"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=7.700000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=7.800000,Value=50000.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_3.MovieSceneFloatSection_3.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_3.MovieSceneFloatSection_3.EaseOutFunction')
+            EndTime=7.800000
+            bIsInfinite=True
+            Signature=4210A24047C7D329831327B6DE736DCC
+         End Object
+         UniqueTrackName="Intensity"
+         PropertyName="Intensity"
+         PropertyPath="Intensity"
+         Sections(0)=MovieSceneFloatSection'MovieSceneFloatSection_3'
+         Signature=D500824C4F163DBF4D6AE18C4B1C3795
+      End Object
+      Begin Object Name="MovieSceneFloatTrack_2"
+         Begin Object Name="MovieSceneFloatSection_2"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=7.400000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=7.500000,Value=50000.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_2.MovieSceneFloatSection_2.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_2.MovieSceneFloatSection_2.EaseOutFunction')
+            EndTime=7.500000
+            bIsInfinite=True
+            Signature=37B401F943B73A0A72BA2F8E64811FEF
+         End Object
+         UniqueTrackName="Intensity"
+         PropertyName="Intensity"
+         PropertyPath="Intensity"
+         Sections(0)=MovieSceneFloatSection'MovieSceneFloatSection_2'
+         Signature=8EC8CED74ED749A258AC7DAC3F34C31C
+      End Object
+      Begin Object Name="MovieSceneFloatTrack_1"
+         Begin Object Name="MovieSceneFloatSection_1"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=6.500000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=6.600000,Value=50000.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_1.MovieSceneFloatSection_1.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_1.MovieSceneFloatSection_1.EaseOutFunction')
+            EndTime=6.600000
+            bIsInfinite=True
+            Signature=8BA2F6B44B2EB7508BC5E0A81718A9AA
+         End Object
+         UniqueTrackName="Intensity"
+         PropertyName="Intensity"
+         PropertyPath="Intensity"
+         Sections(0)=MovieSceneFloatSection'MovieSceneFloatSection_1'
+         Signature=C276BA7A453BAB28842123B231A52E2E
+      End Object
+      Begin Object Name="MovieSceneFloatTrack_0"
+         Begin Object Name="MovieSceneFloatSection_0"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            FloatCurve=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.000000,ArriveTangent=325224.781250,LeaveTangent=325224.781250),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.050000,Value=20000.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.100000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.150000,Value=20000.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.200000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.242700,Value=20000.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.282058),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=1.317728,Value=50000.000000)))
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_0.MovieSceneFloatSection_0.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieSceneFloatTrack_0.MovieSceneFloatSection_0.EaseOutFunction')
+            EndTime=1.317728
+            bIsInfinite=True
+            Signature=B8D11B9A4D6BD6658D54B295466AF8D9
+         End Object
+         UniqueTrackName="Intensity"
+         PropertyName="Intensity"
+         PropertyPath="Intensity"
+         Sections(0)=MovieSceneFloatSection'MovieSceneFloatSection_0'
+         Signature=E88037FF431E8F070FDA7C8236764315
+      End Object
+      Begin Object Name="MovieSceneFolder_1"
+         FolderName="Misc"
+         ChildObjectBindingStrings(0)="7B2FF7AB4350E26471210B8F4C325CCF"
+         ChildObjectBindingStrings(1)="8B3F353A4A93F661D7D7F081EDE940E0"
+         ChildObjectBindingStrings(2)="459D5C3344830B1F16220DBECF0C00C5"
+         ChildObjectBindingStrings(3)="4FCCDE534AAC437A05B6AE85775FFDA4"
+         ChildObjectBindingStrings(4)="8AFD97BA4B02E17BA4E91CA38D3A69AE"
+         ChildObjectBindingStrings(5)="E241D87D467C95D62D0C37B43EA07B3A"
+      End Object
+      Begin Object Name="MovieScene3DTransformTrack_0"
+         Begin Object Name="MovieScene3DTransformSection_0"
+            Begin Object Name="EaseOutFunction"
+            End Object
+            Begin Object Name="EaseInFunction"
+            End Object
+            Translation(0)=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=4.011392,Value=-2310.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.500000,Value=-2398.228516,ArriveTangent=-21.412073,LeaveTangent=-21.412073),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=10.000000,Value=-2438.228516)))
+            Translation(1)=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=4.011392,Value=-2100.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.500000,Value=-2146.302734)))
+            Translation(2)=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=4.011392,Value=330.000000),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.500000,Value=311.625397)))
+            Rotation(0)=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=11.000000,Value=-0.000000)))
+            Rotation(1)=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=4.011392),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.500000,Value=0.200002)))
+            Rotation(2)=(Keys=((InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=4.011392,Value=39.999916),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=8.500000,Value=155.597809,ArriveTangent=10.087124,LeaveTangent=10.087124),(InterpMode=RCIM_Cubic,TangentMode=RCTM_User,Time=10.000000,Value=165.597702)))
+            Scale(0)=(DefaultValue=1.000000)
+            Scale(1)=(DefaultValue=1.000000)
+            Scale(2)=(DefaultValue=1.000000)
+            Easing=(EaseIn=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieScene3DTransformTrack_0.MovieScene3DTransformSection_0.EaseInFunction',EaseOut=MovieSceneBuiltInEasingFunction'Matinee_Lever:MovieScene_0.MovieScene3DTransformTrack_0.MovieScene3DTransformSection_0.EaseOutFunction')
+            EndTime=11.000000
+            bIsInfinite=True
+            Signature=13CFD6D84ED72264132DF688071E68C6
+         End Object
+         Sections(0)=MovieScene3DTransformSection'MovieScene3DTransformSection_0'
+         Signature=909A021D48535C0EA09C3B9ED585C4A5
+      End Object
+      Begin Object Name="MovieSceneFolder_0"
+         FolderName="Cameras"
+         ChildObjectBindingStrings(0)="FC8BF01E4C06A3B49B27038AC07E2492"
+      End Object
+      Possessables(0)=(Guid=FC8BF01E4C06A3B49B27038AC07E2492,Name="Camera_lever",PossessedObjectClass=Class'/Script/Engine.CameraActor')
+      Possessables(1)=(Guid=7B2FF7AB4350E26471210B8F4C325CCF,Name="BP_ActorLight17",PossessedObjectClass=BlueprintGeneratedClass'/Game/BluePrints/Items/Assets/BP_ActorLight.BP_ActorLight_C')
+      Possessables(2)=(Guid=4BF179A847DA25AB6E315E84083EF42A,Name="PointLight",PossessedObjectClass=Class'/Script/Engine.SpotLightComponent')
+      Possessables(3)=(Guid=8B3F353A4A93F661D7D7F081EDE940E0,Name="BP_ActorLight16",PossessedObjectClass=BlueprintGeneratedClass'/Game/BluePrints/Items/Assets/BP_ActorLight.BP_ActorLight_C')
+      Possessables(4)=(Guid=D3CCB00F4752610B81C61AA200BB97B0,Name="PointLight",PossessedObjectClass=Class'/Script/Engine.SpotLightComponent')
+      Possessables(5)=(Guid=459D5C3344830B1F16220DBECF0C00C5,Name="BP_ActorLight15",PossessedObjectClass=BlueprintGeneratedClass'/Game/BluePrints/Items/Assets/BP_ActorLight.BP_ActorLight_C')
+      Possessables(6)=(Guid=81E822974B8A6F019C5934BF6CC54B96,Name="PointLight",PossessedObjectClass=Class'/Script/Engine.SpotLightComponent')
+      Possessables(7)=(Guid=4FCCDE534AAC437A05B6AE85775FFDA4,Name="BP_ActorLight14",PossessedObjectClass=BlueprintGeneratedClass'/Game/BluePrints/Items/Assets/BP_ActorLight.BP_ActorLight_C')
+      Possessables(8)=(Guid=1514D910457F44E1B2BBBF84544278E6,Name="PointLight",PossessedObjectClass=Class'/Script/Engine.SpotLightComponent')
+      Possessables(9)=(Guid=8AFD97BA4B02E17BA4E91CA38D3A69AE,Name="BP_ActorLight18",PossessedObjectClass=BlueprintGeneratedClass'/Game/BluePrints/Items/Assets/BP_ActorLight.BP_ActorLight_C')
+      Possessables(10)=(Guid=13E0DB0D4769C52F9167F1BB3802BE15,Name="PointLight",PossessedObjectClass=Class'/Script/Engine.SpotLightComponent')
+      Possessables(11)=(Guid=E241D87D467C95D62D0C37B43EA07B3A,Name="BP_ActorLight18",PossessedObjectClass=BlueprintGeneratedClass'/Game/BluePrints/Items/Assets/BP_ActorLight.BP_ActorLight_C')
+      ObjectBindings(0)=(ObjectGuid=FC8BF01E4C06A3B49B27038AC07E2492,BindingName="Camera_lever",Tracks=(MovieScene3DTransformTrack'MovieScene3DTransformTrack_0'))
+      ObjectBindings(1)=(ObjectGuid=7B2FF7AB4350E26471210B8F4C325CCF,BindingName="BP_ActorLight17")
+      ObjectBindings(2)=(ObjectGuid=4BF179A847DA25AB6E315E84083EF42A,BindingName="PointLight",Tracks=(MovieSceneFloatTrack'MovieSceneFloatTrack_0'))
+      ObjectBindings(3)=(ObjectGuid=8B3F353A4A93F661D7D7F081EDE940E0,BindingName="BP_ActorLight16")
+      ObjectBindings(4)=(ObjectGuid=D3CCB00F4752610B81C61AA200BB97B0,BindingName="PointLight",Tracks=(MovieSceneFloatTrack'MovieSceneFloatTrack_1'))
+      ObjectBindings(5)=(ObjectGuid=459D5C3344830B1F16220DBECF0C00C5,BindingName="BP_ActorLight15")
+      ObjectBindings(6)=(ObjectGuid=81E822974B8A6F019C5934BF6CC54B96,BindingName="PointLight",Tracks=(MovieSceneFloatTrack'MovieSceneFloatTrack_2'))
+      ObjectBindings(7)=(ObjectGuid=4FCCDE534AAC437A05B6AE85775FFDA4,BindingName="BP_ActorLight14")
+      ObjectBindings(8)=(ObjectGuid=1514D910457F44E1B2BBBF84544278E6,BindingName="PointLight",Tracks=(MovieSceneFloatTrack'MovieSceneFloatTrack_3'))
+      ObjectBindings(9)=(ObjectGuid=8AFD97BA4B02E17BA4E91CA38D3A69AE,BindingName="BP_ActorLight18")
+      ObjectBindings(10)=(ObjectGuid=13E0DB0D4769C52F9167F1BB3802BE15,BindingName="PointLight",Tracks=(MovieSceneFloatTrack'MovieSceneFloatTrack_4',MovieSceneFloatTrack'MovieSceneFloatTrack_5'))
+      ObjectBindings(11)=(ObjectGuid=E241D87D467C95D62D0C37B43EA07B3A,BindingName="BP_ActorLight18")
+      MasterTracks(0)=MovieSceneFadeTrack'MovieSceneFadeTrack_0'
+      PlaybackRange=(LowerBound=(Type=Inclusive),UpperBound=(Type=Inclusive,Value=11.000000))
+      FixedFrameInterval=0.033333
+      EditorData=(ExpansionStates=(("D3CCB00F4752610B81C61AA200BB97B0", ()),("81E822974B8A6F019C5934BF6CC54B96", ()),("1514D910457F44E1B2BBBF84544278E6", ()),("13E0DB0D4769C52F9167F1BB3802BE15", ()),("4BF179A847DA25AB6E315E84083EF42A", ())),WorkingRange=(LowerBound=(Type=Inclusive,Value=-0.500000),UpperBound=(Value=11.074148)),ViewRange=(LowerBound=(Type=Inclusive,Value=-0.500000),UpperBound=(Value=11.074148)))
+      RootFolders(0)=MovieSceneFolder'MovieSceneFolder_0'
+      RootFolders(1)=MovieSceneFolder'MovieSceneFolder_1'
+      Signature=F34AA9434CA35FDBBC9365BCBEC3BA78
+   End Object
+   MovieScene=MovieScene'MovieScene_0'
+   BindingReferences=(BindingIdToReferences=((FC8BF01E4C06A3B49B27038AC07E2492, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.Camera_lever")))),(7B2FF7AB4350E26471210B8F4C325CCF, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight17")))),(4BF179A847DA25AB6E315E84083EF42A, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight17.PointLight")))),(8B3F353A4A93F661D7D7F081EDE940E0, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight16")))),(D3CCB00F4752610B81C61AA200BB97B0, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight16.PointLight")))),(459D5C3344830B1F16220DBECF0C00C5, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight15")))),(81E822974B8A6F019C5934BF6CC54B96, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight15.PointLight")))),(4FCCDE534AAC437A05B6AE85775FFDA4, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight14_128")))),(1514D910457F44E1B2BBBF84544278E6, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight14_128.PointLight")))),(8AFD97BA4B02E17BA4E91CA38D3A69AE, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight18")))),(13E0DB0D4769C52F9167F1BB3802BE15, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight18.PointLight")))),(E241D87D467C95D62D0C37B43EA07B3A, (References=((PackageName="/Game/Map/NewMap",ObjectPath="NewMap:PersistentLevel.BP_ActorLight18"))))))
+   EvaluationTemplate=(CachedSignatures=((Sequence=LevelSequence'Matinee_Lever',CachedSignature=4E72E869416F0EEE26EE5FBA3AE68273)),Tracks=((0, (EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(1, (ObjectBindingID=FC8BF01E4C06A3B49B27038AC07E2492,EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(2, (ObjectBindingID=4BF179A847DA25AB6E315E84083EF42A,EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(3, (ObjectBindingID=D3CCB00F4752610B81C61AA200BB97B0,EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(4, (ObjectBindingID=81E822974B8A6F019C5934BF6CC54B96,EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(5, (ObjectBindingID=1514D910457F44E1B2BBBF84544278E6,EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(6, (ObjectBindingID=13E0DB0D4769C52F9167F1BB3802BE15,EvaluationPriority=1000,Segments=(()),ChildTemplates=(()))),(7, (ObjectBindingID=13E0DB0D4769C52F9167F1BB3802BE15,EvaluationPriority=1000,Segments=(()),ChildTemplates=(())))),EvaluationField=(Ranges=((LowerBound=(Type=Open),UpperBound=(Type=Open))),Groups=((LUTIndices=((NumEvalPtrs=8)),SegmentPtrLUT=((SequenceID=(Value=0),TrackIdentifier=(Value=1)),(SequenceID=(Value=0),TrackIdentifier=(Value=2)),(SequenceID=(Value=0),TrackIdentifier=(Value=3)),(SequenceID=(Value=0),TrackIdentifier=(Value=4)),(SequenceID=(Value=0),TrackIdentifier=(Value=5)),(SequenceID=(Value=0),TrackIdentifier=(Value=6)),(SequenceID=(Value=0),TrackIdentifier=(Value=7)),(SequenceID=(Value=0),TrackIdentifier=(Value=0))))),MetaData=((ActiveSequences=((Value=0)),ActiveEntities=((EvaluationIndex=15),(EvaluationIndex=14),(EvaluationIndex=1),(),(EvaluationIndex=3),(EvaluationIndex=2),(EvaluationIndex=5),(EvaluationIndex=4),(EvaluationIndex=7),(EvaluationIndex=6),(EvaluationIndex=9),(EvaluationIndex=8),(EvaluationIndex=11),(EvaluationIndex=10),(EvaluationIndex=13),(EvaluationIndex=12))))),TemplateLedger=(LastTrackIdentifier=(Value=7),TrackReferenceCounts=(((), 1),((Value=1), 1),((Value=2), 1),((Value=3), 1),((Value=4), 1),((Value=5), 1),((Value=6), 1),((Value=7), 1)),TrackSignatureToTrackIdentifier=((501BA5A84F7AA076E8FE63A98FB8A99B, (Data=((Value=0)))),(909A021D48535C0EA09C3B9ED585C4A5, (Data=((Value=1)))),(E88037FF431E8F070FDA7C8236764315, (Data=((Value=2)))),(C276BA7A453BAB28842123B231A52E2E, (Data=((Value=3)))),(8EC8CED74ED749A258AC7DAC3F34C31C, (Data=((Value=4)))),(D500824C4F163DBF4D6AE18C4B1C3795, (Data=((Value=5)))),(B8DFE3334942FF2B4D4EF9A72C6E35A9, (Data=((Value=6)))),(C6CFB9AA4B469EFB27D59A9C7AEE8A69, (Data=((Value=7)))))))
+   Signature=4E72E869416F0EEE26EE5FBA3AE68273
+End Object
