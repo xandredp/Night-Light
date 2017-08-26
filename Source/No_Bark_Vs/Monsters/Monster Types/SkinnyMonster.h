@@ -66,11 +66,22 @@ public:
 	UFUNCTION()
 		void PerformAttack(AActor* HitActor);
 
+	UFUNCTION()
+		void PerformStunned();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 		class UAnimMontage* AttackAnimMontage;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 		class UAnimMontage* StunAnimMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool IsAttacking;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool StunnedAnimPlaying;
+
+
 
 
 private:

@@ -34,6 +34,7 @@ ASkinnyMonster::ASkinnyMonster()
 	AttackAnimTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ASkinnyMonster::OnEndOverlapStopAnim);
 	
 	SkinnyMonsterSkeletal = GetMesh();
+	IsAttacking = false;
 }
 
 void ASkinnyMonster::BeginPlay()
@@ -52,8 +53,11 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 			StoredOtherActor = OtherActor;
 			if (GetWorld()->TimeSeconds - LastStrikeTime > MeleeStrikeCooldown)
 			{
-				PerformAttack(OtherActor);
-				LastStrikeTime = GetWorld()->GetTimeSeconds();
+				if (IsAttacking)
+				{
+					PerformAttack(OtherActor);
+					LastStrikeTime = GetWorld()->GetTimeSeconds();
+				}
 			}
 		}
 	}
@@ -76,20 +80,18 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 		{
 			if (AttackAnimMontage != NULL)
 			{
-				SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
-
-				if (SkinnyMonsterAnimInstance != NULL)
+				if (IsAttacking != true)
 				{
-					SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+
+					SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
+
+					if (SkinnyMonsterAnimInstance != NULL)
+					{
+						IsAttacking = true;
+						SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+					}
 				}
 			}
-
-			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Attack range sphere!");
-// 			if (AnimInstance)
-// 			{
-// 				// Set CanAttack in AnimInstance to true
-// 				AnimInstance->CanAttack = true;
-// 			}
 		}
 	}
 }
@@ -104,13 +106,6 @@ void ASkinnyMonster::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, 
 		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 		{
 
-
-// 			if (AnimInstance)
-// 			{
-// 				// Set CanAttack in AnimInstance to false
-// 				AnimInstance->IsAttackFinished = true;
-// 				AnimInstance->CanAttack = false;
-// 			}
 		}
 	}
 }
@@ -134,6 +129,24 @@ void ASkinnyMonster::PerformAttack(AActor* HitActor)
 				PlayDeathAttackSound();
 			}
 			DecreaseCharacterHealth();
+		}
+	}
+}
+
+void ASkinnyMonster::PerformStunned()
+{
+	if (StunAnimMontage != NULL)
+	{
+		if (StunnedAnimPlaying != true)
+		{
+
+			SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
+
+			if (SkinnyMonsterAnimInstance != NULL)
+			{
+				StunnedAnimPlaying = true;
+				SkinnyMonsterAnimInstance->Montage_Play(StunAnimMontage, 1.0f);
+			}
 		}
 	}
 }
