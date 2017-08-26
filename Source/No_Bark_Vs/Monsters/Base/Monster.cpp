@@ -87,7 +87,9 @@ void AMonster::Tick(float DeltaSeconds)
 		float DeathTimer = GetLifeSpan();
 		
 		if ((DeathTimer > 0) && (DeathTimer > (AfterDeathAutoDelete-0.05))) {
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Death timer started for " + GetName() + " : GetLifeSpan=" + FString::SanitizeFloat(DeathTimer)); 
+			if (DebugDrawEnabledAI) {
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Death timer started for " + GetName() + " : GetLifeSpan=" + FString::SanitizeFloat(DeathTimer));
+			}
 			AudioLoopComp->Stop(); // recently dead - so stop with the infernal moaning PLEASE!!!
 		}
 	}
@@ -441,5 +443,7 @@ void AMonster::SetTranparentMaterial()
 	UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
 	this->GetMesh()->SetMaterial(0, material);
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Turning transparent!"));
+	if (DebugDrawEnabledAI) {
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Turning transparent!"));
+	}
 }
