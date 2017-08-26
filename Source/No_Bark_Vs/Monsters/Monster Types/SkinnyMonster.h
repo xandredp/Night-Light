@@ -69,6 +69,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Animations")
 		class UAnimMontage* AttackAnimMontage;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+		class UAnimMontage* StunAnimMontage;
+
 
 private:
 
