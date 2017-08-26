@@ -1,12 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
 
 public class No_Bark_Vs : ModuleRules
 {
-	public No_Bark_Vs(TargetInfo Target)
+    public No_Bark_Vs(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] {
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+        PublicDependencyModuleNames.AddRange(new string[]
+        {
             "Core",
             "CoreUObject",
             "Engine",
@@ -14,17 +17,38 @@ public class No_Bark_Vs : ModuleRules
 
             "UMG",
             "GameplayTasks",
-
         });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+        PrivateDependencyModuleNames.AddRange(new string[]
+        {
+            //To Use UMG in C++
+            "Slate",
+            "SlateCore"
+        });
+    }
 
-		// Uncomment if you are using Slate UI
-		 PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+
+ //   public No_Bark_Vs(TargetInfo Target)
+	//{
+	//	PublicDependencyModuleNames.AddRange(new string[] {
+ //           "Core",
+ //           "CoreUObject",
+ //           "Engine",
+ //           "InputCore",
+
+ //           "UMG",
+ //           "GameplayTasks",
+
+ //       });
+
+	//	PrivateDependencyModuleNames.AddRange(new string[] {  });
+
+	//	// Uncomment if you are using Slate UI
+	//	 PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+	//	// Uncomment if you are using online features
+	//	// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
-	}
+	//	// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+	//}
 }

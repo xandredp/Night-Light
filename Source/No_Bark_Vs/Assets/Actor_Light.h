@@ -21,10 +21,10 @@ public:
 	//	USphereComponent* NavMeshModifierSphere;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-		UStaticMeshComponent* LightStaticMesh;
+		class UStaticMeshComponent* LightStaticMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		USpotLightComponent *SpotLightComp;
+		class USpotLightComponent *SpotLightComp;
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void ToggleSpotLightComp(bool blightvisiblity);

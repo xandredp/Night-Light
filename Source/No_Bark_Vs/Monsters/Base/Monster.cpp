@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-#include "Core/No_Bark_Vs.h"
 #include "Monsters/Base/Monster.h"
+#include "Core/No_Bark_Vs.h"
+
 #include "AI/MyAIController.h"
 #include "Player/NBCharacter.h"
 #include "GameFramework/GameMode.h"
@@ -154,9 +154,12 @@ void AMonster::OnFlashed(APawn* aPawn)
 				AIController->SetAIStateStunned();
 				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI stunned!")); }
 				MonsterState = EBotBehaviorType::Stunned;
+				//playStunAnimation
+				PerformStunned();
 				AIController->SetBlackboardBotState(MonsterState);
 				AIController->SetLocationVector(SensedPawn->GetActorLocation());
 				AIController->StopMovement();
+				
 
 				//Material Path
 				FString matPath = "Material'/Game/Textures/Monster/Mon_M.Mon_M'";
@@ -445,5 +448,24 @@ void AMonster::SetTranparentMaterial()
 
 	if (DebugDrawEnabledAI) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Turning transparent!"));
+	}
+}
+
+
+void AMonster::PerformStunned()
+{
+	if (StunAnimMontage != NULL)
+	{
+		if (StunnedAnimPlaying != true)
+		{
+
+			UAnimInstance* MonsterAnimInstance = GetMesh()->GetAnimInstance();
+
+			if (MonsterAnimInstance != NULL)
+			{
+				StunnedAnimPlaying = true;
+				MonsterAnimInstance->Montage_Play(StunAnimMontage, 1.0f);
+			}
+		}
 	}
 }

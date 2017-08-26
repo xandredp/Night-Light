@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+#include "Core/PlayGameMode.h"
 #include "Core/No_Bark_Vs.h"
 #include "Player/NBCharacter.h"
 #include "Core/TypeClass.h"
-#include "Core/PlayGameMode.h"
+
 
 
 APlayGameMode::APlayGameMode()

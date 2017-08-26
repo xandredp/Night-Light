@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+#include "Player/NBCharacter.h"
 #include "Core/No_Bark_Vs.h"
 #include "Core/BaseInteractable.h"
 #include "Player/PlayController.h"
@@ -9,7 +9,7 @@
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
 //#include "Engine.h"
-#include "Player/NBCharacter.h"
+
 
 
 ANBCharacter::ANBCharacter()

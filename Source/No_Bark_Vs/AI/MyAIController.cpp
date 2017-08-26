@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-#include "Core/No_Bark_Vs.h"
 #include "AI/MyAIController.h"
+#include "Core/No_Bark_Vs.h"
+
 #include "Monsters/Base/Monster.h"
 #include "AI/PartolTargetPoint.h"
 #include "BehaviorTree/BlackboardComponent.h"

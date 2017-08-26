@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Monsters/Monster Types/SkinnyMonster.h"
 #include "Core/No_Bark_Vs.h"
 #include "Player/NBCharacter.h"
-#include "Monsters/Monster Types/SkinnyMonster.h"
+
 
 
 ASkinnyMonster::ASkinnyMonster()
@@ -78,20 +79,28 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
-			if (AttackAnimMontage != NULL)
+			//Check if it is not being stunned
+			if (StunnedAnimPlaying != true)
 			{
-				if (IsAttacking != true)
+				//Check if anim exist
+				if (AttackAnimMontage != NULL)
 				{
-
-					SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
-
-					if (SkinnyMonsterAnimInstance != NULL)
+					// check if it isn't attacking
+					if (IsAttacking != true)
 					{
-						IsAttacking = true;
-						SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+
+						SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
+
+						if (SkinnyMonsterAnimInstance != NULL)
+						{
+							IsAttacking = true;
+							SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+						}
 					}
 				}
+
 			}
+			
 		}
 	}
 }
@@ -129,24 +138,6 @@ void ASkinnyMonster::PerformAttack(AActor* HitActor)
 				PlayDeathAttackSound();
 			}
 			DecreaseCharacterHealth();
-		}
-	}
-}
-
-void ASkinnyMonster::PerformStunned()
-{
-	if (StunAnimMontage != NULL)
-	{
-		if (StunnedAnimPlaying != true)
-		{
-
-			SkinnyMonsterAnimInstance = SkinnyMonsterSkeletal->GetAnimInstance();
-
-			if (SkinnyMonsterAnimInstance != NULL)
-			{
-				StunnedAnimPlaying = true;
-				SkinnyMonsterAnimInstance->Montage_Play(StunAnimMontage, 1.0f);
-			}
 		}
 	}
 }

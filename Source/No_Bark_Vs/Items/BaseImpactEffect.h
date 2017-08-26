@@ -19,51 +19,51 @@ public:
 
 	/**** BULLET IMPACT EFFECTS ****/
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* DefaultFX;
+		class UParticleSystem* DefaultFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* MetalFX;
+		class UParticleSystem* MetalFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* ConcreteFX;
+		class UParticleSystem* ConcreteFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* WoodFX;
+		class UParticleSystem* WoodFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* PlayerFleshFX;
+		class UParticleSystem* PlayerFleshFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* EnemyFleshFX;
+		class UParticleSystem* EnemyFleshFX;
 
 	UPROPERTY(EditDefaultsOnly)
-		UParticleSystem* EnemySparkFX;
+		class UParticleSystem* EnemySparkFX;
 
 
 	/**** BULLET IMPACT SOUNDS ****/
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* DefaultSound;
+		class USoundCue* DefaultSound;
 
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* MetalSound;
+		class USoundCue* MetalSound;
 
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* ConcreteSound;
+		class USoundCue* ConcreteSound;
 
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* WoodSound;
+		class USoundCue* WoodSound;
 
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* PlayerFleshSound;
+		class USoundCue* PlayerFleshSound;
 
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* EnemyFleshSound;
+		class USoundCue* EnemyFleshSound;
 
 	UPROPERTY(EditDefaultsOnly)
-		USoundCue* EnemySparkSound;
+		class USoundCue* EnemySparkSound;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Decal")
-		UMaterial* DecalMaterial;
+		class UMaterial* DecalMaterial;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Decal")
 		float DecalSize;
@@ -78,7 +78,7 @@ public:
 
 protected:
 
-	UParticleSystem* GetImpactFX(EPhysicalSurface SurfaceType) const;
+	class UParticleSystem* GetImpactFX(EPhysicalSurface SurfaceType) const;
 
-	USoundCue* GetImpactSound(EPhysicalSurface SurfaceType) const;
+	class USoundCue* GetImpactSound(EPhysicalSurface SurfaceType) const;
 };
