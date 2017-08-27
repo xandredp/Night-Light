@@ -206,10 +206,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		FTimerHandle FlashTimer;
-	/************************************************************************/
-	/*StunAnimation				                                                */
-	/************************************************************************/
 
+
+	/************************************************************************/
+	/*StunAnimation				                                            */
+	/************************************************************************/
 	UFUNCTION()
 		void PerformStunned();
 
@@ -219,4 +220,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		bool StunnedAnimPlaying;
 
+
+	/************************************************************************/
+	/*ReactAnimation				                                            */
+	/************************************************************************/
+	UFUNCTION()
+		void PerformReact();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+		class UAnimMontage* ReactAnimMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool ReactAnimPlaying;
 };

@@ -154,11 +154,13 @@ void AMonster::OnFlashed(APawn* aPawn)
 				AIController->SetAIStateStunned();
 				if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - AI stunned!")); }
 				MonsterState = EBotBehaviorType::Stunned;
+
 				//playStunAnimation
 				PerformStunned();
+
 				AIController->SetBlackboardBotState(MonsterState);
 				AIController->SetLocationVector(SensedPawn->GetActorLocation());
-				AIController->StopMovement();
+				//AIController->StopMovement();
 				
 
 				//Material Path
@@ -223,19 +225,26 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 			if ((GetDistanceTo(SensedPawn) < MaxVisibleRange))
 			{
 				// In seeing range 
-				// In seeing range 
-				// In seeing range 
 
 				switch (MonsterState)
 				{
 				case EBotBehaviorType::Neutral:
+					break;
+
 				case EBotBehaviorType::Suspicious:
-					if (DebugDrawEnabledAI) { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!")); }
+					if (DebugDrawEnabledAI) 
+					{ 
+						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, this->GetName() + TEXT(" - saw me!")); 
+					}
+
 					//GLog->Log("Seen");
 					MonsterState = EBotBehaviorType::Agression;
 					AIController->SetBlackboardBotState(MonsterState);
 					AIController->SetLocationVector(SensedPawn->GetActorLocation());
-					if (DebugDrawEnabledAI) { DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Red, false, 10, 0, 2); }
+					if (DebugDrawEnabledAI) 
+					{ 
+						DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Red, false, 10, 0, 2); 
+					}
 
 					AIController->StopMovement();
 					//When changed to suspicious cry once. 
@@ -254,15 +263,23 @@ void AMonster::OnSeePlayer(APawn* aPawn)
 				case EBotBehaviorType::Agression:
 					// AI is already Agressive - just update the location
 					AIController->SetLocationVector(SensedPawn->GetActorLocation());
-					if (DebugDrawEnabledAI) { DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Yellow, false, 10, 0, 2); }
+					PerformReact();
+					if (DebugDrawEnabledAI) 
+					{ 
+						DrawDebugSphere(GetWorld(), SensedPawn->GetActorLocation(), 10, 5, FColor::Yellow, false, 10, 0, 2); 
+					}
 					break;
+
 				case EBotBehaviorType::Charge:
 					// Not used
 					break;
+
 				case EBotBehaviorType::Stunned:
 					break;
+
 				case EBotBehaviorType::Flee:
 					break;
+
 				default:
 					break;
 				}
@@ -458,13 +475,30 @@ void AMonster::PerformStunned()
 	{
 		if (StunnedAnimPlaying != true)
 		{
-
 			UAnimInstance* MonsterAnimInstance = GetMesh()->GetAnimInstance();
 
 			if (MonsterAnimInstance != NULL)
 			{
 				StunnedAnimPlaying = true;
 				MonsterAnimInstance->Montage_Play(StunAnimMontage, 1.0f);
+			}
+		}
+	}
+}
+
+
+void AMonster::PerformReact()
+{
+	if (ReactAnimMontage != NULL)
+	{
+		if (ReactAnimPlaying != true)
+		{
+			UAnimInstance* MonsterAnimInstance = GetMesh()->GetAnimInstance();
+
+			if (MonsterAnimInstance != NULL)
+			{
+				ReactAnimPlaying = true;
+				MonsterAnimInstance->Montage_Play(ReactAnimMontage, 1.0f);
 			}
 		}
 	}
