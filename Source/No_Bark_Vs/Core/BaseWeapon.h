@@ -166,17 +166,33 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		class ANBCharacter* GetPawnOwner() const;
 
+
+
 	void AttachToPlayer();
 	void DetachFromPlayer();
 	void OnEquip();
 	void OnUnEquip();
 	void ReloadAmmo();
 	void StopReloading();
+
+	/************************************************************************/
+	/* Torch                                                    */
+	/************************************************************************/
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void ActivateTorch();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void DrainTorch();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void TorchCrank();
+
 	bool IsOnTorch();
 	void TurnOnTorch();
 	void SetTorchIntensity(float charge);
 	void TurnOffTorch();
-	void TorchCrank();
+
+
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -218,19 +234,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
 		USoundCue* ReloadSound;
 
-
-
 	UPROPERTY(EditDefaultsOnly)
 		UParticleSystem* MuzzleFX;
-
-	//UPROPERTY(EditDefaultsOnly, Category = "Animation")
-	//	UAnimMontage* ReloadAnimation;
-
-	//UPROPERTY(EditDefaultsOnly, Category = "Animation")
-	//	UAnimMontage* EquipAnimation;
-
-	//UPROPERTY(EditDefaultsOnly, Category = "Animation")
-	//	UAnimMontage* FireAnimation;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		float ReloadAnimDuration;
