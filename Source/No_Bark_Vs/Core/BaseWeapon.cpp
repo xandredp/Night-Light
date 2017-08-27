@@ -476,6 +476,12 @@ void ABaseWeapon::StopReloading()
 	GetWorldTimerManager().ClearTimer(RelaodingTimerHandle);
 	/*StopWeaponAnimation(ReloadAnimation);*/
 }
+void ABaseWeapon::ActivateTorch()
+{
+}
+void ABaseWeapon::DrainTorch()
+{
+}
 void ABaseWeapon::SimulateWeaponFire()
 {
 	if (MuzzleFX)
@@ -709,8 +715,6 @@ void ABaseWeapon::TurnOffTorch()
 
 void ABaseWeapon::TorchCrank()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT(" Light cranked."));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(ChargeRatio));
 	CurrentUseDistance = MaxUseDistance * ChargeRatio;
 	if (ChargeRatio < 1)
 	{
