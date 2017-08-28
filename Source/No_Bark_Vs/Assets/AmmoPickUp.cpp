@@ -2,6 +2,7 @@
 #include "AmmoPickUp.h"
 #include "Core/No_Bark_Vs.h"
 #include "Player/PlayController.h"
+#include "Player/NBCharacter.h"
 
 
 
@@ -23,15 +24,7 @@ void AAmmoPickUp::Interact(APlayerController* playerController)
 		ANBCharacter* MyPawn = Cast<ANBCharacter>(aPlayController->GetPawn());
 		if (MyPawn)
 		{
-			if (MyPawn->PickingUpAnimation != NULL)
-			{
-				MyPawn->ArmAnimInstance = MyPawn->FPSCharacterArmMesh->GetAnimInstance();
-				if (MyPawn->ArmAnimInstance != NULL)
-				{
-					MyPawn->ArmAnimInstance->Montage_Play(MyPawn->PickingUpAnimation, 1.0f);
-				}
-			}
-
+			MyPawn->PlayPickUpAnimation();
 		}
 		PickupClips();
 	}

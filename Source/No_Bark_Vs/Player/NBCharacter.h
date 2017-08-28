@@ -118,6 +118,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		bool GetIsCrouched() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Pickup")
+		void PlayPickUpAnimation();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		UAnimInstance* ArmAnimInstance;
