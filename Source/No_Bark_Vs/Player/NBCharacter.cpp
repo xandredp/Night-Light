@@ -610,8 +610,7 @@ void ANBCharacter::FireWeapon()
 						if (ArmAnimInstance != NULL)
 						{
 							ArmAnimInstance->Montage_SetPosition(FireAnimation, 5.0f);
-							ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
-							IsAnimPlaying = true;
+							ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);	
 							CurrentWeapon->SetTimerForFiring();
 						}
 					}
