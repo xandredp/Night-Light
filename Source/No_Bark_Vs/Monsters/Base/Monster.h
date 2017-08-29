@@ -56,6 +56,9 @@ public:
 
 	/* Properties shared across all derived classes */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool SprinterMonster;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
