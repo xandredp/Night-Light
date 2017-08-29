@@ -37,6 +37,7 @@ ANBCharacter::ANBCharacter()
 	HealthTimerRate = 1.0f;
 	MagicTimerRate = 1.0f;
 	bIsFiring = false;
+	IsTorchCrankerUp = false;
 	// Item
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
@@ -490,12 +491,12 @@ void ANBCharacter::OnStartSprinting()
 			//Stops Health Increase
 			GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
 
-			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			
-			if (aAnimInstance != NULL)
-			{
-				aAnimInstance->IsSprinting = true;
-			}
+			//UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+			//
+			//if (aAnimInstance != NULL)
+			//{
+			//	aAnimInstance->IsSprinting = true;
+			//}
 		
 
 			// Sprinting is noisy
@@ -520,11 +521,11 @@ void ANBCharacter::OnStopSprinting()
 			//health gain
 			GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
 
-			UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			if (aAnimInstance != NULL)
-			{
-				aAnimInstance->IsSprinting = false;
-			}
+			//UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+			//if (aAnimInstance != NULL)
+			//{
+			//	aAnimInstance->IsSprinting = false;
+			//}
 
 			
 		}
@@ -579,12 +580,19 @@ void ANBCharacter::FireWeapon()
 				{
 					if (NoClipAnimation != NULL)
 					{
-						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-						if (ArmAnimInstance != NULL)
+						if (IsAnimPlaying != true)
 						{
-							ArmAnimInstance->Montage_Play(NoClipAnimation, 1.0f);
+							ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+							if (ArmAnimInstance != NULL)
+							{
+								ArmAnimInstance->Montage_Play(NoClipAnimation, 1.0f);
+
+							}
 
 						}
+
+
+					
 					}
 
 				}
@@ -602,8 +610,7 @@ void ANBCharacter::FireWeapon()
 						if (ArmAnimInstance != NULL)
 						{
 							ArmAnimInstance->Montage_SetPosition(FireAnimation, 5.0f);
-							ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);
-							IsAnimPlaying = true;
+							ArmAnimInstance->Montage_Play(FireAnimation, 1.0f);	
 							CurrentWeapon->SetTimerForFiring();
 						}
 					}
@@ -629,16 +636,18 @@ void ANBCharacter::ReloadWeapon()
 	{
 		if (CurrentWeapon->CurrentClip > 0)
 		{
-
-			if (ReloadAnimation != NULL)
+			if (IsAnimPlaying == false)
 			{
-				ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-				if (ArmAnimInstance != NULL)
+				if (ReloadAnimation != NULL)
 				{
-					ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+					if (ArmAnimInstance != NULL)
+					{
+						ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+					}
 				}
+				CurrentWeapon->ReloadAmmo();
 			}
-			CurrentWeapon->ReloadAmmo();
 		}
 	}
 }
@@ -719,7 +728,21 @@ void ANBCharacter::TurnOffTorch()
 		}
 	}
 }
+void ANBCharacter::PlayPickUpAnimation()
+{
+	if (IsAnimPlaying == false)
+	{
+		if (PickingUpAnimation != NULL)
+		{
+			ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+			if (ArmAnimInstance != NULL)
+			{
+				ArmAnimInstance->Montage_Play(PickingUpAnimation, 1.0f);
+			}
+		}
+	}
 
+}
 void ANBCharacter::TorchCrank()
 {
 	APlayController* playerController = Cast<APlayController>(GetController());
