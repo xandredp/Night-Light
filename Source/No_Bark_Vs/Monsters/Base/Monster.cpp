@@ -34,6 +34,7 @@ AMonster::AMonster()
 	DebugDrawEnabledAI = false;
 	DebugDrawEnabledAI2 = false;
 
+	SprinterMonster = false;
 	Fleeing = false;
 	bisMonsterDead = false;
 	LastIdlePlayTime = 0.0f;
