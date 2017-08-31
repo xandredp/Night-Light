@@ -59,8 +59,26 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 		return PlayerFleshFX;
 
 	case SURFACE_ENEMYBODY:
+		if (IsEnemyInDark)
+		{
+			return EnemySparkFX;
+		}
+		else
+		{
+			return EnemyFleshFX;
+		}
+
 
 	case SURFACE_ENEMYHEAD:
+		if (IsEnemyInDark)
+		{
+			return EnemySparkFX;
+		}
+		else
+		{
+			return EnemyFleshFX;
+		}
+
 
 	case SURFACE_ENEMYLIMB:
 		if (IsEnemyInDark)
@@ -98,9 +116,23 @@ USoundCue* ABaseImpactEffect::GetImpactSound(EPhysicalSurface SurfaceType) const
 		return PlayerFleshSound;
 
 	case SURFACE_ENEMYBODY:
-
+		if (IsEnemyInDark)
+		{
+			return EnemySparkSound;
+		}
+		else
+		{
+			return EnemyFleshSound;
+		}
 	case SURFACE_ENEMYHEAD:
-
+		if (IsEnemyInDark)
+		{
+			return EnemySparkSound;
+		}
+		else
+		{
+			return EnemyFleshSound;
+		}
 	case SURFACE_ENEMYLIMB:
 		if (IsEnemyInDark)
 		{

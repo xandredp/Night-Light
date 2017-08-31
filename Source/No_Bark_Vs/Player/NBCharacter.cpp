@@ -743,6 +743,7 @@ void ANBCharacter::PlayPickUpAnimation()
 	}
 
 }
+
 void ANBCharacter::TorchCrank()
 {
 	APlayController* playerController = Cast<APlayController>(GetController());
@@ -754,9 +755,9 @@ void ANBCharacter::TorchCrank()
 	{
 		if (playerController->IsTorchOn)
 		{
-			// play cranking
-			if (IsAnimPlaying == false && IsTorchCrankerUp == true && IsTorchCrancking == true)
-			{		
+
+			if (IsTorchCrankerUp == true)
+			{
 				if (CrankingAnimation != NULL)
 				{
 					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
@@ -767,45 +768,28 @@ void ANBCharacter::TorchCrank()
 					}
 				}
 				//Where actual cranking enegy bar is going up
-				CurrentWeapon->TorchCrank();				
+				CurrentWeapon->TorchCrank();
 			}
-			else if (IsAnimPlaying == false && IsTorchCrankerUp == false)
+			else if (IsTorchCrankerUp == false)
 			{
-				//play start
-				if (IsTorchCrankerUp == false)
-				{
-					if (StartCrankAnimation != NULL)
-					{
-						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-						if (ArmAnimInstance != NULL)
-						{
-							//ArmAnimInstance->Montage_SetPosition(StartCrankAnimation, 0.23f);
-							ArmAnimInstance->Montage_Play(StartCrankAnimation, 1.0f);
-							IsTorchCrankerUp = true;
-							IsTorchCrancking = true;
-
-						}
-					}
-				}
-			}
-			//play end
-			else if (IsAnimPlaying == false && IsTorchCrankerUp == true && IsTorchCrancking == false)
-			{
-				if (EndCrankAnimation != NULL)
+				if (StartCrankAnimation != NULL)
 				{
 					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
 					if (ArmAnimInstance != NULL)
 					{
 						//ArmAnimInstance->Montage_SetPosition(StartCrankAnimation, 0.23f);
-						ArmAnimInstance->Montage_Play(EndCrankAnimation, 1.0f);
-					
+						IsTorchCrankerUp = true;
+						IsTorchCrancking = true;
+						ArmAnimInstance->Montage_Play(StartCrankAnimation, 1.0f);
+
+
 					}
 				}
+			
 			}
-			else if (IsTorchCrankerUp == true)
-			{
-				TorchCrank();
-			}
+			
+			//end animation played using animation blueprint
+			//play end inside animation blueprint using notify
 		}
 		
 	}
