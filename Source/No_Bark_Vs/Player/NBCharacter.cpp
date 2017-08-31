@@ -38,6 +38,7 @@ ANBCharacter::ANBCharacter()
 	MagicTimerRate = 1.0f;
 	bIsFiring = false;
 	IsTorchCrankerUp = false;
+	HitBlur = 0;
 	// Item
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
@@ -131,7 +132,11 @@ void ANBCharacter::BeginPlay()
 void ANBCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	CheckForInteractables();
+	CheckForInteractables(); 
+	if (HitBlur > 0)
+	{
+		HitBlur--;
+	}
 }
 
 void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -309,6 +314,8 @@ void ANBCharacter::DecreaseHealth(float decreaseVal)
 	if (CurrentHealth > 0)
 	{
 		CurrentHealth -= decreaseVal;	
+		HitBlur = 10;
+
 	}
 	else
 	{

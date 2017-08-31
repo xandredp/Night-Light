@@ -197,6 +197,8 @@ public:
 	/************************************************************************/
 
 	/**  */
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float CurrentHealth;
 
@@ -270,6 +272,11 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void DestroyAndBackToMenu();
+
+	//HitBlur******************************************************/
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float HitBlur;
 
 	/************************************************************************/
 	/* Pickups                                                              */
