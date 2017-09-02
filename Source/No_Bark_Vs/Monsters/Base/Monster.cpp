@@ -43,6 +43,10 @@ AMonster::AMonster()
 	bisScoreAdded = false;
 	AfterDeathAutoDelete = 30; // Seconds
 	bisMonsterInLight = false;
+
+
+	InDarkMovementSpeed = 100;  // Speed when in Dark 
+	InLightMovementSpeed = 50;  // Speed when in Light
 }
 
 // Called when the game starts or when spawned

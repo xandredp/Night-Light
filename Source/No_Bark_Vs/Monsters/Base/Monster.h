@@ -62,6 +62,12 @@ public:
 		float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float InDarkMovementSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float InLightMovementSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
