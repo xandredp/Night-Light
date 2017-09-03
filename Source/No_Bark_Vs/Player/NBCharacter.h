@@ -196,8 +196,9 @@ public:
 	/* Status																*/
 	/************************************************************************/
 
-	/**  */
-
+	/**LockMovement  **/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool LockMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float CurrentHealth;

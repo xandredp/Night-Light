@@ -107,6 +107,7 @@ ANBCharacter::ANBCharacter()
 	FPSCharacterArmMesh->CastShadow = false;
 	FPSCharacterArmMesh->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
 	FPSCharacterArmMesh->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+	LockMovement = false;
 }
 
 void ANBCharacter::BeginPlay()
@@ -143,23 +144,26 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
-	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
+	if (LockMovement == false)
+	{
+		PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+		PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
-	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
+		PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
+		PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
+		PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
+		PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &ANBCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &ANBCharacter::LookUpAtRate);
+		PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
+		PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
 
+		PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+		PlayerInputComponent->BindAxis("TurnRate", this, &ANBCharacter::TurnAtRate);
+		PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+		PlayerInputComponent->BindAxis("LookUpRate", this, &ANBCharacter::LookUpAtRate);
+	}
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ANBCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ANBCharacter::TouchStopped);
