@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		class ADoor * AnotherDoor;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sounds")
+		USoundCue* DoorOpen;
+
 	//Does the door close
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsAutoClose;
