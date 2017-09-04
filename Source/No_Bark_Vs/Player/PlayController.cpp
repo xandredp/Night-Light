@@ -6,6 +6,7 @@
 #include "Player/NBCharacter.h"
 #include "Core/TypeClass.h"
 #include "Core/PlayGameMode.h"
+#include "Core/BaseTorch.h"
 #include "Blueprint/UserWidget.h"
 
 
@@ -733,6 +734,14 @@ void APlayController::SetIsTorchOn(bool istorchonValue)
 	IsTorchOn = istorchonValue;
 }
 
+void APlayController::PowerUpTorch()
+{
+}
+
+void APlayController::ChargeTorch()
+{
+}
+
 void APlayController::CloseSkills()
 {
 	SetInputModetoGameandUI(true);
@@ -749,6 +758,7 @@ void APlayController::SetupInputComponent()
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &APlayController::OpenInventory);
 	InputComponent->BindAction("OpenMap", IE_Pressed, this, &APlayController::OpenMap);
 	InputComponent->BindAction("Skill", IE_Pressed, this, &APlayController::OpenSkillsWindow);
-
+	InputComponent->BindAction("TorchPower", IE_Pressed, this, &APlayController::PowerUpTorch);
+	InputComponent->BindAction("ChargeTorch", IE_Pressed, this, &APlayController::ChargeTorch);
 
 }

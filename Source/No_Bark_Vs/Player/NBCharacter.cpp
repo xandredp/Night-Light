@@ -3,9 +3,9 @@
 #include "Core/No_Bark_Vs.h"
 #include "Core/BaseInteractable.h"
 #include "Player/PlayController.h"
-//#include "Camera/CameraComponent.h"
-//#include "Components/CapsuleComponent.h"
-//#include "Components/InputComponent.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
 //#include "Engine.h"
@@ -22,8 +22,8 @@ ANBCharacter::ANBCharacter()
 
 	//Status
 	MaxInteractDistance = 500.0f;
-	walkingSpeed = 400.0f;
-	MaxSprintSpeed = 600.0f;
+	walkingSpeed = 200.0f;
+	MaxSprintSpeed = 400.0f;
 	MaxHealth = 100.0f;
 	CurrentHealth = MaxHealth;
 	CurrentStamina = 100.0f;
@@ -222,6 +222,21 @@ void ANBCharacter::GetEquipment(int index)
 	{
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
 	}
+}
+
+void ANBCharacter::SpawnTorch()
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+	// if current weapon is empty assign current weapon
+	if (CurrentTorch == nullptr)
+	{
+		CurrentTorch = GetWorld()->SpawnActor<ABaseTorch>(TorchClass, SpawnParams);
+	}
+	CurrentTorch->SetOwningPawn(this);
+
+	AttachTorchToHead();
 }
 
 void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
