@@ -22,7 +22,7 @@ ANBCharacter::ANBCharacter()
 
 	//Status
 	MaxInteractDistance = 500.0f;
-	walkingSpeed = 200.0f;
+	walkingSpeed = 250.0f;
 	MaxSprintSpeed = 400.0f;
 	MaxHealth = 100.0f;
 	CurrentHealth = MaxHealth;
@@ -173,6 +173,9 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("TorchOff", IE_Pressed, this, &ANBCharacter::TurnOffTorch);
 
 	PlayerInputComponent->BindAction("TorchCrank", IE_Pressed, this, &ANBCharacter::TorchCrank);
+
+	PlayerInputComponent->BindAction("TorchPower", IE_Pressed, this, &ANBCharacter::PowerUpTorch);
+
 	// Weapons
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
@@ -359,7 +362,6 @@ void ANBCharacter::IncreaseHealthByTime()
 	}
 	else
 	{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IncreaseHealth");
 		CurrentHealth = CurrentHealth + HealthRegenRate;
 	
 	}
@@ -752,6 +754,11 @@ void ANBCharacter::TurnOffTorch()
 		{
 			CurrentWeapon->TurnOffTorch();
 		}
+
+		if (CurrentTorch)
+		{
+			//CurrentTorch->turnoffto
+		}
 	}
 }
 void ANBCharacter::PlayPickUpAnimation()
@@ -820,5 +827,9 @@ void ANBCharacter::TorchCrank()
 		
 	}
 
+}
+
+void ANBCharacter::PowerUpTorch()
+{
 }
 

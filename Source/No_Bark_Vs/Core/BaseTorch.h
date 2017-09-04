@@ -20,14 +20,28 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	//// Called every frame
+	//virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		class USpotLightComponent* TorchSpotlight;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
-		class USkeletalMeshComponent* TorchMesh;
+	//gain Health
+	FTimerHandle StartReducingEnergyTimerHandle;
+
+
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float MaxEnergy;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float CurrentEnergy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float EnergyReductionRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		float ReductionTimerRate;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		float MaxUseDistance;
@@ -35,22 +49,41 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		float CurrentUseDistance;
 
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void ActivateTorch();
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float EnergyReductionOnPowerUse;
 
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void DrainTorch();
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float EnergyIncreaseOnCrank;
 
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void TorchCrank();
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
+		class ANBCharacter* MyPawn;
 
-	void SetTorchIntensity(float charge);
 
 	/* Set the Torch's owning pawn */
 	void SetOwningPawn(class ANBCharacter* NewOwner);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
-		class ANBCharacter* MyPawn;
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void DrainTorchEnergy();
+	
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void ActivateTorch();
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
+		void DecreaseEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Condition")
+		void IncreaseEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void TorchCrank();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void TorchOnOff(bool bOnOrOff);
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void SetTorchIntensity();
+
 
 
 };

@@ -77,8 +77,9 @@ public:
 
 	void EquipPrimaryWeapon();
 
-
-
+	/************************************************************************/
+	/* Anim use                                                           */
+	/************************************************************************/
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 	void TurnOnTorch();
 
@@ -86,6 +87,10 @@ public:
 	void TurnOffTorch();
 
 	void TorchCrank();
+
+	void PowerUpTorch();
+
+
 
 	// Spawn monster function called by input binding
 	void Spawn();
