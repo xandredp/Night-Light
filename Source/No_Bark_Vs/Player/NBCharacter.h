@@ -7,6 +7,7 @@
 //#include "Perception/PawnSensingComponent.h"
 #include "Engine/DataTable.h"
 #include "Core/BaseWeapon.h"
+#include "Core/BaseTorch.h"
 #include "Core/TypeClass.h"
 #include "NBCharacter.generated.h"
 
@@ -97,6 +98,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void AttachEquipmentToHand();
 
+
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseTurnRate;
@@ -186,6 +189,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		ABaseWeapon *PistolWeapon;
 
+	/************************************************************************/
+	/* Torch use                                                           */
+	/************************************************************************/
+
+	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
+		TSubclassOf <class ABaseTorch> TorchClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		ABaseTorch *CurrentTorch;
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void SpawnTorch();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void AttachTorchToHead();
+
 public:
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
 	UFUNCTION(BlueprintCallable, Category = "Equip")
@@ -196,8 +216,9 @@ public:
 	/* Status																*/
 	/************************************************************************/
 
-	/**  */
-
+	/**LockMovement  **/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool LockMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float CurrentHealth;
