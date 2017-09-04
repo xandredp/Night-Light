@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "BaseInteractable.h"
+#include "Components/SceneComponent.h"
 #include "Core/No_Bark_Vs.h"
 
 
@@ -12,8 +13,8 @@ ABaseInteractable::ABaseInteractable()
 
 	PickupSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("PickupSkeletalMesh");
 	PickupSkeletalMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
-	//PickupSkeletalMesh->SetupAttachment(RootComponent);
-
+	PickupSkeletalMesh->SetupAttachment(RootComponent);
+	//SetRootComponent(PickupSkeletalMesh);
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>("PickupMesh");
 	//PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
 	PickupMesh->SetupAttachment(PickupSkeletalMesh);

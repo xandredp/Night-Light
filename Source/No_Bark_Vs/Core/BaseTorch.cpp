@@ -6,6 +6,7 @@
 #include "Player/PlayController.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SpotLightComponent.h"
+#include "Components/SceneComponent.h"
 #include "Monsters/Base/Monster.h"
 
 
@@ -17,6 +18,7 @@ ABaseTorch::ABaseTorch()
 
 	TorchSpotlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("WeaponSpotlight"));
 	TorchSpotlight->SetupAttachment(RootComponent);
+	//SetRootComponent(TorchSpotlight);
 	TorchSpotlight->SetRelativeRotation(FRotator(0, 0, 0));
 	TorchSpotlight->SetRelativeLocation(FVector(0, 0, -0));
 
