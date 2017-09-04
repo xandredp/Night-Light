@@ -164,6 +164,10 @@ public:
 		bool IsTorchOn;
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void SetIsTorchOn(bool istorchonValue);
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void PowerUpTorch();
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void ChargeTorch();
 	/************************************************************************/
 	/* Widgets                                                      */
 	/************************************************************************/
