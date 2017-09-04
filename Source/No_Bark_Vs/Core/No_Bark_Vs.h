@@ -10,7 +10,7 @@
 
 
 #define WEAPON_TRACE				ECC_GameTraceChannel1
-
+#define TORCH_TRACE					ECC_GameTraceChannel2
 
 
 /** when you modify this, please note that this information can be saved with instances

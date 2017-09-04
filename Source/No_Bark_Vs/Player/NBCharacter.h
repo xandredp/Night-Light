@@ -314,6 +314,11 @@ public:
 private:
 	/* Attachpoint for active weapon/item in hands */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName TorchAttachPoint;
+
+
+	/* Attachpoint for active weapon/item in hands */
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName CameraAttachPoint;
 
 	/* Attachpoint for active weapon/item in hands */

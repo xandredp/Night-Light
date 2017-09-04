@@ -20,8 +20,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	//// Called every frame
-	//virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		class USpotLightComponent* TorchSpotlight;
@@ -29,30 +27,34 @@ public:
 	//gain Health
 	FTimerHandle StartReducingEnergyTimerHandle;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		float StunIntensity;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		float MaxIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float MaxEnergy;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float CurrentEnergy;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyReductionRate;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float ReductionTimerRate;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float MaxUseDistance;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float CurrentUseDistance;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyReductionOnPowerUse;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyIncreaseOnCrank;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
@@ -66,14 +68,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void DrainTorchEnergy();
 	
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void ActivateTorch();
 
-	UFUNCTION(BlueprintCallable, Category = "Condition")
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void DecreaseEnergy();
 
-	UFUNCTION(BlueprintCallable, Category = "Condition")
+	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void IncreaseEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void ActivateTorch();
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void TorchCrank();
@@ -83,6 +87,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void SetTorchIntensity();
+
+protected:
+	FHitResult TorchLightTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
+	void ProcessInstantHit(const FHitResult &Impact);
+
+
 
 
 

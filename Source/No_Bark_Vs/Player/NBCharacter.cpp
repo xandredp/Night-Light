@@ -14,6 +14,7 @@
 
 ANBCharacter::ANBCharacter()
 {
+	TorchAttachPoint = TEXT("Light_Socket");
 	CameraAttachPoint = TEXT("Head_Socket");
 	WeaponAttachPoint = TEXT("Weapon_Socket");
 	MeleeAttachPoint = TEXT("Thigh_Socket");
@@ -734,11 +735,14 @@ void ANBCharacter::TurnOnTorch()
 	APlayController* playerController = Cast<APlayController>(GetController());
 	if (playerController->IsTorchOn)
 	{
-		if (CurrentWeapon)
+		//if (CurrentWeapon)
+		//{
+		//	CurrentWeapon->TurnOnTorch();
+		//}
+		if (CurrentTorch)
 		{
-			CurrentWeapon->TurnOnTorch();
+			CurrentTorch->TorchOnOff(true);
 		}
-
 	}
 
 
@@ -757,7 +761,7 @@ void ANBCharacter::TurnOffTorch()
 
 		if (CurrentTorch)
 		{
-			//CurrentTorch->turnoffto
+			CurrentTorch->TorchOnOff(false);
 		}
 	}
 }
@@ -802,6 +806,11 @@ void ANBCharacter::TorchCrank()
 				}
 				//Where actual cranking enegy bar is going up
 				CurrentWeapon->TorchCrank();
+				if (CurrentTorch)
+				{
+					CurrentTorch->TorchCrank();
+				}
+
 			}
 			else if (IsTorchCrankerUp == false)
 			{
@@ -831,5 +840,10 @@ void ANBCharacter::TorchCrank()
 
 void ANBCharacter::PowerUpTorch()
 {
+	if (CurrentTorch)
+	{
+		CurrentTorch->ActivateTorch();
+	}
+
 }
 
