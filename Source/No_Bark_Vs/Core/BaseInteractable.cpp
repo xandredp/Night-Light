@@ -13,7 +13,7 @@ ABaseInteractable::ABaseInteractable()
 
 	PickupSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("PickupSkeletalMesh");
 	PickupSkeletalMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
-	PickupSkeletalMesh->SetupAttachment(RootComponent);
+	//PickupSkeletalMesh->SetupAttachment(RootComponent);
 	//SetRootComponent(PickupSkeletalMesh);
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>("PickupMesh");
 	//PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));

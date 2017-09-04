@@ -11,7 +11,7 @@
 ABaseWeapon::ABaseWeapon()
 {
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
-	WeaponMesh->SetupAttachment(RootComponent);
+//	WeaponMesh->SetupAttachment(RootComponent);
 	WeaponMesh->SetVisibility(true);
 	WeaponMesh->MeshComponentUpdateFlag = EMeshComponentUpdateFlag::OnlyTickPoseWhenRendered;
 	WeaponMesh->bReceivesDecals = true;

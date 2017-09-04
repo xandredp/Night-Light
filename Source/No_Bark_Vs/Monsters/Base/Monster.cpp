@@ -169,7 +169,7 @@ void AMonster::OnFlashed(APawn* aPawn)
 				
 
 				//Material Path
-				FString matPath = "Material'/Game/Textures/Monster/Mon_M.Mon_M'";
+				FString matPath = "Material'/Game/Textures/Monster/Mon_M.uasset'";
 				//Material Instance
 				UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
 				this->GetMesh()->SetMaterial(0, material);
@@ -463,7 +463,7 @@ void AMonster::SetMonsterDebugDrawAI2(bool deb)
 void AMonster::SetTranparentMaterial()
 {
 	//Material Path
-	FString matPath = "Material'/Game/Textures/Monster/Mon_M_Darkness.Mon_M_Darkness'";
+	FString matPath = "Material'/Game/Textures/Monster/Mon_M_Darkness.uasset'";
 	//Material Instance
 	UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
 	this->GetMesh()->SetMaterial(0, material);
