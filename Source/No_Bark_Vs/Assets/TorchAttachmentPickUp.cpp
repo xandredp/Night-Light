@@ -23,6 +23,7 @@ void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
 		if (MyPawn)
 		{
 			MyPawn->PlayPickUpAnimation();
+			MyPawn->SpawnTorch();
 		}
 
 		aPlayController->SetIsTorchOn(true);

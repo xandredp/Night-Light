@@ -6,6 +6,7 @@
 #include "Player/NBCharacter.h"
 #include "Core/TypeClass.h"
 #include "Core/PlayGameMode.h"
+#include "Core/BaseTorch.h"
 #include "Blueprint/UserWidget.h"
 
 
@@ -749,6 +750,5 @@ void APlayController::SetupInputComponent()
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &APlayController::OpenInventory);
 	InputComponent->BindAction("OpenMap", IE_Pressed, this, &APlayController::OpenMap);
 	InputComponent->BindAction("Skill", IE_Pressed, this, &APlayController::OpenSkillsWindow);
-
 
 }

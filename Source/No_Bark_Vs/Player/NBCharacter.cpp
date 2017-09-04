@@ -3,9 +3,9 @@
 #include "Core/No_Bark_Vs.h"
 #include "Core/BaseInteractable.h"
 #include "Player/PlayController.h"
-//#include "Camera/CameraComponent.h"
-//#include "Components/CapsuleComponent.h"
-//#include "Components/InputComponent.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
 //#include "Engine.h"
@@ -22,8 +22,8 @@ ANBCharacter::ANBCharacter()
 
 	//Status
 	MaxInteractDistance = 500.0f;
-	walkingSpeed = 400.0f;
-	MaxSprintSpeed = 600.0f;
+	walkingSpeed = 250.0f;
+	MaxSprintSpeed = 400.0f;
 	MaxHealth = 100.0f;
 	CurrentHealth = MaxHealth;
 	CurrentStamina = 100.0f;
@@ -107,6 +107,7 @@ ANBCharacter::ANBCharacter()
 	FPSCharacterArmMesh->CastShadow = false;
 	FPSCharacterArmMesh->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
 	FPSCharacterArmMesh->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+	LockMovement = false;
 }
 
 void ANBCharacter::BeginPlay()
@@ -143,23 +144,26 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
-	PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
+	if (LockMovement == false)
+	{
+		PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+		PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
-	PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
+		PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
+		PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
+		PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
+		PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &ANBCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &ANBCharacter::LookUpAtRate);
+		PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
+		PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
 
+		PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+		PlayerInputComponent->BindAxis("TurnRate", this, &ANBCharacter::TurnAtRate);
+		PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+		PlayerInputComponent->BindAxis("LookUpRate", this, &ANBCharacter::LookUpAtRate);
+	}
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ANBCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ANBCharacter::TouchStopped);
@@ -169,6 +173,9 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("TorchOff", IE_Pressed, this, &ANBCharacter::TurnOffTorch);
 
 	PlayerInputComponent->BindAction("TorchCrank", IE_Pressed, this, &ANBCharacter::TorchCrank);
+
+	PlayerInputComponent->BindAction("TorchPower", IE_Pressed, this, &ANBCharacter::PowerUpTorch);
+
 	// Weapons
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
@@ -218,6 +225,21 @@ void ANBCharacter::GetEquipment(int index)
 	{
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
 	}
+}
+
+void ANBCharacter::SpawnTorch()
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+	// if current weapon is empty assign current weapon
+	if (CurrentTorch == nullptr)
+	{
+		CurrentTorch = GetWorld()->SpawnActor<ABaseTorch>(TorchClass, SpawnParams);
+	}
+	CurrentTorch->SetOwningPawn(this);
+
+	AttachTorchToHead();
 }
 
 void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
@@ -340,7 +362,6 @@ void ANBCharacter::IncreaseHealthByTime()
 	}
 	else
 	{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IncreaseHealth");
 		CurrentHealth = CurrentHealth + HealthRegenRate;
 	
 	}
@@ -733,6 +754,11 @@ void ANBCharacter::TurnOffTorch()
 		{
 			CurrentWeapon->TurnOffTorch();
 		}
+
+		if (CurrentTorch)
+		{
+			//CurrentTorch->turnoffto
+		}
 	}
 }
 void ANBCharacter::PlayPickUpAnimation()
@@ -801,5 +827,9 @@ void ANBCharacter::TorchCrank()
 		
 	}
 
+}
+
+void ANBCharacter::PowerUpTorch()
+{
 }
 

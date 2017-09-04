@@ -164,6 +164,7 @@ public:
 		bool IsTorchOn;
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void SetIsTorchOn(bool istorchonValue);
+
 	/************************************************************************/
 	/* Widgets                                                      */
 	/************************************************************************/
