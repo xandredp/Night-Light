@@ -102,7 +102,7 @@ class NO_BARK_VS_API ABaseWeapon : public AActor
 public:
 	ABaseWeapon();
 
-	void Tick(float DeltaSeconds) override;
+	//void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBCharacter* MyPawn;
