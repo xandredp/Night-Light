@@ -23,3 +23,4 @@
 #define SURFACE_METAL				SurfaceType5
 #define SURFACE_CONCRETE			SurfaceType6
 #define SURFACE_WOOD				SurfaceType7
+#define SURFACE_FLOOR				SurfaceType8

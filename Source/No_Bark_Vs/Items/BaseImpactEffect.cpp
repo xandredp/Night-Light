@@ -52,11 +52,12 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 {
 	switch (SurfaceType)
 	{
-	case SURFACE_DEFAULT:
-		return DefaultFX;
+// 	case SURFACE_DEFAULT:
+// 		return DefaultFX;
 
 	case SURFACE_FLESH:
 		return PlayerFleshFX;
+		break;
 
 	case SURFACE_ENEMYBODY:
 		if (IsEnemyInDark)
@@ -67,7 +68,7 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 		{
 			return EnemyFleshFX;
 		}
-
+		break;
 
 	case SURFACE_ENEMYHEAD:
 		if (IsEnemyInDark)
@@ -78,7 +79,7 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 		{
 			return EnemyFleshFX;
 		}
-
+		break;
 
 	case SURFACE_ENEMYLIMB:
 		if (IsEnemyInDark)
@@ -89,18 +90,24 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 		{
 			return EnemyFleshFX;
 		}
-		
+		break;
+
 	case SURFACE_METAL:
 		return MetalFX;
+		break;
 
 	case SURFACE_CONCRETE:
 		return ConcreteFX;
+		break;
 
 	case SURFACE_WOOD:
 		return WoodFX;
+		break;
 
 	default:
-		return nullptr;
+		return DefaultFX;
+		break;
+
 	}
 }
 
