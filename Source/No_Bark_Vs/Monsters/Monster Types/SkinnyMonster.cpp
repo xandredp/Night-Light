@@ -56,8 +56,9 @@ void ASkinnyMonster::Tick(float DeltaSeconds)
 			float ElapsedTimeSinceStrike = GetWorld()->TimeSeconds - LastStrikeTime;
 			if (ElapsedTimeSinceStrike > MeleeStrikeCooldown)
 			{
-				PerformAttack(StoredOtherActor);
 				SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+				PerformAttack(StoredOtherActor);
+
 				LastStrikeTime = GetWorld()->GetTimeSeconds();
 			}
 			else
