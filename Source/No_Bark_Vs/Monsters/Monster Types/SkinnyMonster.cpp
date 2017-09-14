@@ -12,7 +12,7 @@ ASkinnyMonster::ASkinnyMonster()
 	Health = 100.0f;
 	AttackDamage = 20.0f;
 	AttackRange = 150.0f;
-	MeleeStrikeCooldown = 0.15f;
+	MeleeStrikeCooldown = 5.0f;
 	AttackAttachPoint = TEXT("Attack_Socket");
 	LastStrikeTime = 0.0f;
 
@@ -44,6 +44,33 @@ void ASkinnyMonster::BeginPlay()
 	AttackRangeSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
 }
 
+
+void ASkinnyMonster::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (IsAttacking)
+	{
+		if (StoredOtherActor)
+		{			
+			float ElapsedTimeSinceStrike = GetWorld()->TimeSeconds - LastStrikeTime;
+			if (ElapsedTimeSinceStrike > MeleeStrikeCooldown)
+			{
+				SkinnyMonsterAnimInstance->Montage_Play(AttackAnimMontage, 1.0f);
+				PerformAttack(StoredOtherActor);
+
+				LastStrikeTime = GetWorld()->GetTimeSeconds();
+			}
+			else
+			{
+				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Cooldown :::      " + FString::SanitizeFloat(ElapsedTimeSinceStrike));
+			}
+		}
+	}
+}
+
+
+
 void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (GetMonsterDead() == false)
@@ -51,7 +78,7 @@ void ASkinnyMonster::OnOverlapWithCharacter(UPrimitiveComponent* OverlappedComp,
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
-			StoredOtherActor = OtherActor;
+			StoredOtherActor = OtherPawn;
 			if (GetWorld()->TimeSeconds - LastStrikeTime > MeleeStrikeCooldown)
 			{
 				if (IsAttacking)
@@ -79,6 +106,7 @@ void ASkinnyMonster::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AA
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
+			//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Overlap!");
 			//Check if it is not being stunned
 			if (StunnedAnimPlaying != true)
 			{
