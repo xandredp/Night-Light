@@ -45,8 +45,12 @@ AMonster::AMonster()
 	bisMonsterInLight = false;
 
 
+
 	InDarkMovementSpeed = 100;  // Speed when in Dark 
 	InLightMovementSpeed = 50;  // Speed when in Light
+
+	ReactAnimPlaying = false;
+	StunnedAnimPlaying = false;
 }
 
 // Called when the game starts or when spawned
