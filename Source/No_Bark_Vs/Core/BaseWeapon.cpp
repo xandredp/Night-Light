@@ -24,22 +24,6 @@ ABaseWeapon::ABaseWeapon()
 	WeaponCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollisionComp"));
 	WeaponCollisionComp->SetupAttachment(WeaponMesh);
 
-	WeaponSpotlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("WeaponSpotlight"));
-	WeaponSpotlight->SetupAttachment(WeaponMesh);
-	WeaponSpotlight->SetVisibility(true);
-	//WeaponSpotlight->SetVisibility(false);
-	//WeaponSpotlight->SetLightFalloffExponent(0.0f);
-
-	//WeaponSpotlight->SetRelativeRotation(FRotator(0, 90, 0));
-	WeaponSpotlight->SetRelativeRotation(FRotator(90, 0, 90));
-	//WeaponSpotlight->SetRelativeLocation(FVector(0, 30, -10));
-	WeaponSpotlight->SetRelativeLocation(FVector(0, 10, -30));
-
-	WeaponSpotlight->SetIntensity(8000);
-	WeaponSpotlight->SetAttenuationRadius(16000);
-	WeaponSpotlight->SetOuterConeAngle(10);
-
-
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickGroup = TG_PrePhysics;
 
@@ -54,115 +38,8 @@ ABaseWeapon::ABaseWeapon()
 	WeaponConfig.TimeBetweenShots = 0.1f;
 
 	MaxUseDistance =600;
-	ChargeRatio = 1.0;
 	CurrentUseDistance = MaxUseDistance;
 }
-//
-//void ABaseWeapon::Tick(float DeltaSeconds)
-//{
-//	Super::Tick(DeltaSeconds);
-//	FVector camLoc;
-//	FRotator camRot;
-//	
-//	// Dont Tick if the weapon is not picked up
-//
-//	if (GetPawnOwner()) {
-//		if (GetPawnOwner()->GetController()) {
-//			GetPawnOwner()->GetController()->GetPlayerViewPoint(camLoc, camRot);
-//
-//			const FVector start_trace = WeaponSpotlight->GetComponentLocation();
-//			const FVector direction = camRot.Vector();
-//			const FVector end_trace = start_trace + (direction * CurrentUseDistance);
-//
-//			FCollisionQueryParams TraceParams(FName(TEXT("")), true, this);
-//			TraceParams.bTraceAsyncScene = true;
-//			TraceParams.bReturnPhysicalMaterial = false;
-//			TraceParams.bTraceComplex = true;
-//
-//			FHitResult Hit(ForceInit);
-//
-//			//Object query parameters
-//			FCollisionObjectQueryParams ObjectQueryParams;
-//			ObjectQueryParams.ObjectTypesToQuery;
-//			ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
-//
-//			//Raycasting in a sphere to detect collisions
-//			TArray<FHitResult> HitResults;
-//
-//			FHitResult SingleHit;
-//
-//			//Setting up the shape of the raycast
-//			FCollisionShape CollisionShape;
-//			CollisionShape.ShapeType = ECollisionShape::Sphere;
-//			CollisionShape.SetSphere(10);
-//
-//			//Handling ignored actors
-//			FCollisionQueryParams QueryParams;
-//			QueryParams.AddIgnoredActor(this);
-//
-//
-//			if (this->IsOnTorch() && ChargeRatio > 0.0)
-//			{
-//				ChargeRatio = ChargeRatio - 0.0005;
-//				this->SetTorchIntensity(ChargeRatio);
-//			}
-//			if (ChargeRatio <= 0)
-//			{
-//				//CurrentWeapon->TurnOffTorch();
-//			}
-//
-//
-//			this->GetName();
-//
-//			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("WeaponSpotlight->bVisible:  %d"), WeaponSpotlight->bVisible));
-//			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("GetName:  %s"), *this->GetName()));
-//
-//			// check if this Weapon object is being carried by the player
-//
-//			if (GetPawnOwner()->CurrentWeapon == this) {
-//				if (WeaponSpotlight->bVisible == 1)
-//				{
-//					bool bHit = GetWorld()->SweepSingleByChannel(SingleHit, start_trace, end_trace, FQuat::Identity, ECC_Pawn, CollisionShape, QueryParams);
-//
-//					//bool bHit = GetWorld()->SweepMultiByObjectType(HitResults, start_trace, end_trace, FQuat::Identity, ObjectQueryParams, CollisionShape, QueryParams);
-//					DrawDebugLine(GetWorld(), start_trace, end_trace, FColor::Green, false, -1.0, 0, 0.5f);
-//					//Checking for possible hits
-//					if (bHit)
-//					{
-//						//for (auto It = HitResults.CreateIterator(); It; It++)
-//						//{
-//						//	AMonster* Char = Cast<AMonster>(It->GetActor());
-//						//	if (Char)
-//						//	{
-//						//		FString monsterName;
-//						//		monsterName = Char->GetName();
-//						//		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
-//						//		Char->OnFlashed(GetPawnOwner());
-//						//	}
-//						//	else
-//						//	{
-//
-//						//	}
-//						//}
-//						AMonster* Char = Cast<AMonster>(SingleHit.GetActor());
-//						if (Char)
-//						{
-//							FString monsterName;
-//							monsterName = Char->GetName();
-//							//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, monsterName + TEXT(" - hit by sweep!"));
-//							Char->OnFlashed(GetPawnOwner());
-//						}
-//						else
-//						{
-//
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-//}
-
 
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
 {
@@ -476,12 +353,7 @@ void ABaseWeapon::StopReloading()
 	GetWorldTimerManager().ClearTimer(RelaodingTimerHandle);
 	/*StopWeaponAnimation(ReloadAnimation);*/
 }
-void ABaseWeapon::ActivateTorch()
-{
-}
-void ABaseWeapon::DrainTorch()
-{
-}
+
 void ABaseWeapon::SimulateWeaponFire()
 {
 	if (MuzzleFX)
@@ -682,53 +554,3 @@ void ABaseWeapon::VisualTrailEffects(const FVector& EndPoint)
 	}
 }
 
-
-
-bool ABaseWeapon::IsOnTorch()
-{
-	return WeaponSpotlight->IsVisible();
-}
-
-void ABaseWeapon::TurnOnTorch()
-{
-	WeaponSpotlight->SetVisibility(true);
-}
-
-
-void ABaseWeapon::SetTorchIntensity(float charge)
-{
-	if (charge > 0.9)
-	{
-		WeaponSpotlight->SetIntensity(8000);
-	}
-	else
-	{
-		WeaponSpotlight->SetIntensity(4000*charge);
-	}
-	CurrentUseDistance = MaxUseDistance * charge;
-}
-
-void ABaseWeapon::TurnOffTorch()
-{
-	WeaponSpotlight->SetVisibility(false);
-}
-
-void ABaseWeapon::TorchCrank()
-{
-	CurrentUseDistance = MaxUseDistance * ChargeRatio;
-	if (ChargeRatio < 1)
-	{
-		ChargeRatio = ChargeRatio + 0.1;
-	}
-
-}
-
-float ABaseWeapon::GetCurrentUseDistance()
-{
-	return CurrentUseDistance;
-}
-
-float ABaseWeapon::GetCharge()
-{
-	return ChargeRatio;
-}

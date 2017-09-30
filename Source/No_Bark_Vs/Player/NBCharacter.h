@@ -91,14 +91,7 @@ public:
 	void PowerUpTorch();
 
 
-
-	// Spawn monster function called by input binding
-	void Spawn();
-
-	void GetEquipment(int index);
-
 	void SpawnWeapon(TSubclassOf <class ABaseWeapon> iWeaponClass);
-	void SpawnWeaponOnSlot(TSubclassOf <class ABaseWeapon> iWeaponClass, EInventorySlot Slot);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void AttachEquipmentToHand();
@@ -180,17 +173,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	ABaseWeapon *CurrentWeapon;
 	//Primary Weapon Held Item
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *PrimaryWeapon;
-	//Secondary Weapon Held Item
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *SecondaryWeapon;
-	//Melee  Weapon Held Item
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *MeleeWeapon;
-	//Pistol 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *PistolWeapon;
 
 	/************************************************************************/
 	/* Torch use                                                           */
@@ -236,14 +218,11 @@ public:
 		float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float CurrentMagic;
+		float HealthRegenRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float MaxMagic;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float HealthRegenRate;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float StaminaRegenRate;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float SprintDeductionRate;
 
@@ -254,20 +233,16 @@ public:
 		float HealthTimerRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float MagicTimerRate;
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float walkingSpeed;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxSprintSpeed;
+
 	/* Attachpoint for secondary weapons */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bIsDead;
-	/* Attachpoint for secondary weapons */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		bool bIs;
-	/* Attachpoint for secondary weapons */
+
+	/* scorecounter*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int CurrentScore;
 

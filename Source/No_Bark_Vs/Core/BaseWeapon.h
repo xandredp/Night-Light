@@ -20,16 +20,6 @@ enum class EWeaponState : uint8
 	Equipping,
 	Reloading
 };
-UENUM()
-enum class EAttackType : uint8
-{
-	/* For currently equipped items/weapons */
-	EMelee,
-
-	/* For primary weapons on spine bone */
-	ERanged,
-
-};
 
 UENUM(BlueprintType)
 enum EProjectileType
@@ -48,8 +38,6 @@ struct FWeaponData
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		EAttackType eAttackType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		float WeaponDamage;
@@ -114,9 +102,6 @@ public:
 		class UBoxComponent* WeaponCollisionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
-		class USpotLightComponent* WeaponSpotlight;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		float MaxUseDistance;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
@@ -175,34 +160,6 @@ public:
 	void ReloadAmmo();
 	void StopReloading();
 
-	/************************************************************************/
-	/* Torch                                                    */
-	/************************************************************************/
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void ActivateTorch();
-
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void DrainTorch();
-
-	UFUNCTION(BlueprintCallable, Category = "Torch")
-		void TorchCrank();
-
-	bool IsOnTorch();
-	void TurnOnTorch();
-	void SetTorchIntensity(float charge);
-	void TurnOffTorch();
-
-
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float ChargeRatio;
-
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	float GetCurrentUseDistance();
-
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	float GetCharge();
 
 
 
