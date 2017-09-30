@@ -182,7 +182,7 @@ void ANBCharacter::EquipPrimaryWeapon()
 	
 	if (WeaponClass == NULL)
 	{			
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
@@ -327,7 +327,8 @@ void ANBCharacter::CheckForInteractables()
 		return;
 	}
 	// If we didn't hit anything, or thing we hit was on to a interactable set current interactable nullptr. 
-	if (playController) {
+	else
+	{
 		playController->CurrentInteractable = nullptr;
 	}
 }
@@ -637,10 +638,6 @@ void ANBCharacter::TurnOnTorch()
 	APlayController* playerController = Cast<APlayController>(GetController());
 	if (playerController->IsTorchOn)
 	{
-		//if (CurrentWeapon)
-		//{
-		//	CurrentWeapon->TurnOnTorch();
-		//}
 		if (CurrentTorch)
 		{
 			CurrentTorch->TorchOnOff(true);

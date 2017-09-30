@@ -27,7 +27,7 @@ void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
 		}
 
 		aPlayController->SetIsTorchOn(true);
-		DoorToInteract->AutoCloseLock();
+		//DoorToInteract->AutoCloseLock();
 		BeginWithTorchOn();
 		DestroyItemOnGround();
 	
