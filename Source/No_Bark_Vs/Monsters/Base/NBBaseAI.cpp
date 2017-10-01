@@ -24,11 +24,3 @@ void ANBBaseAI::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
-// Called to bind functionality to input
-void ANBBaseAI::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
