@@ -161,6 +161,8 @@ public:
 	void StopReloading();
 
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void OnShotAtAI(ANBBaseAI *BaseAI);
 
 
 protected:
@@ -219,7 +221,6 @@ private:
 	void VisualImpactEffectsInDark(const FHitResult& Impact);
 
 	void VisualTrailEffects(const FVector& EndPoint);
-
 
 
 	/* Particle FX played when a surface is hit. */

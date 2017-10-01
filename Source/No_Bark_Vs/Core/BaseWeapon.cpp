@@ -3,10 +3,11 @@
 #include "Core/No_Bark_Vs.h"
 #include "Player/NBCharacter.h"
 #include "Player/PlayController.h"
+#include "GameFramework/Actor.h"
 #include "Items/BaseImpactEffect.h"
 #include "NBDamageType.h"
 #include "Monsters/Base/Monster.h"
-
+#include "Monsters/Base/NBBaseAI.h"
 
 ABaseWeapon::ABaseWeapon()
 {
@@ -213,30 +214,37 @@ FHitResult ABaseWeapon::WeaponTrace(const FVector & TraceFrom, const FVector & T
 void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & Origin, const FVector & ShootDir, int32 RandomSeed, float ReticleSpread)
 {
 	float ActualHitDamage = WeaponConfig.WeaponDamage;
-	//const FVector EndTrace = Origin + ShootDir * WeaponConfig.WeaponRange;
-	//const FVector EndPoint = Impact.GetActor() ? Impact.ImpactPoint : EndTrace;
-
-	//DrawDebugLine(this->GetWorld(), Origin, Impact.TraceEnd, FColor::Red, true, 1.0f, 0.0f, 1.0f);
-
-//	UNBDamageType* DmgType = Cast<UNBDamageType>(DamageType->GetDefaultObject());
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
+	AActor *AI = Cast<ANBBaseAI>(Impact.GetActor());
 	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+	float Damage = 10.0f;
 
+	APlayController* const PC = Instigator ? Cast<APlayController>(Instigator->Controller) : nullptr;
 	float CurrentDamage = 0;
 //	if (PhysMat && DmgType)
-	if (PhysMat)
+	if (AI)
 	{
+		
+			ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
+			OnShotAtAI(BaseAI);
+			UGameplayStatics::ApplyPointDamage(AI, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
+
+	}
+	if (PhysMat && Enemy)
+	{
+		
 		if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
 		{
+			
 			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
 			Enemy->ReduceHealth(CurrentDamage);
 			Enemy->OnShot(GetPawnOwner());			
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
 			Enemy->ReduceHealth(CurrentDamage);
 			Enemy->OnShot(GetPawnOwner());
 
@@ -244,7 +252,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage;
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
 			Enemy->ReduceHealth(CurrentDamage);
 			Enemy->OnShot(GetPawnOwner());
 
