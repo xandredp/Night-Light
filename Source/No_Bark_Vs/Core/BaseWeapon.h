@@ -50,6 +50,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		float WeaponSpread;
+	//when spreading how many time would it loop
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		float BulletSplits;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 MaxClip;
@@ -159,11 +162,6 @@ public:
 	void OnUnEquip();
 	void ReloadAmmo();
 	void StopReloading();
-
-
-	UFUNCTION(BlueprintImplementableEvent)
-		void OnShotAtAI(ANBBaseAI *BaseAI);
-
 
 protected:
 

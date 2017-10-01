@@ -29,6 +29,7 @@ ABaseWeapon::ABaseWeapon()
 	PrimaryActorTick.TickGroup = TG_PrePhysics;
 
 	WeaponConfig.WeaponDamage = 20;
+	WeaponConfig.BulletSplits = 5;
 	CurrentState = EWeaponState::Idle;
 	TrailTargetParam = "EndPoint";
 	MuzzleAttachPoint = "MuzzleTip";
@@ -82,7 +83,7 @@ void ABaseWeapon::Fire()
 		if (CurrentAmmo > 0)
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
-			for (int32 i = 0; i <= WeaponConfig.WeaponSpread; i++)
+			for (int32 i = 0; i <= WeaponConfig.BulletSplits; i++)
 			{
 				Instant_Fire();
 			}
@@ -226,11 +227,10 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	{
 		
 			ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
-			OnShotAtAI(BaseAI);
 			UGameplayStatics::ApplyPointDamage(AI, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
 
 	}
-	if (PhysMat && Enemy)
+	if (PhysMat)
 	{
 		
 		if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
@@ -238,23 +238,23 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 			
 			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
-			Enemy->ReduceHealth(CurrentDamage);
-			Enemy->OnShot(GetPawnOwner());			
+	/*		Enemy->ReduceHealth(CurrentDamage);
+			Enemy->OnShot(GetPawnOwner());			*/
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
-			Enemy->ReduceHealth(CurrentDamage);
+	/*		Enemy->ReduceHealth(CurrentDamage);
 			Enemy->OnShot(GetPawnOwner());
-
+*/
 		}
 		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
 		{
 			CurrentDamage = WeaponConfig.WeaponDamage;
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
-			Enemy->ReduceHealth(CurrentDamage);
-			Enemy->OnShot(GetPawnOwner());
+			//Enemy->ReduceHealth(CurrentDamage);
+			//Enemy->OnShot(GetPawnOwner());
 
 		}
 		else if (PhysMat->SurfaceType == SURFACE_FLESH)
