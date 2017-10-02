@@ -4,7 +4,6 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-//#include "Engine/EngineTypes.h"
 
 
 // Sets default values
@@ -47,14 +46,3 @@ void ANBBaseAI::SetRagdollPhysics()
 
 }
 
-void ANBBaseAI::EnableCollisionCapsuleCollision(bool bEnableCollision)
-{
-	if (bEnableCollision == true)
-	{
-		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	}
-	else
-	{
-		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	}
-}

@@ -4,29 +4,17 @@
 
 
 
-
-
+// Sets default values
 ANBSkinnyAI::ANBSkinnyAI()
 {
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
 }
+
+// Called when the game starts or when spawned
 void ANBSkinnyAI::BeginPlay()
 {
-
+	Super::BeginPlay();
 }
 
-void ANBSkinnyAI::Tick(float DeltaTime)
-{
-
-	/*if (IsAnimPlaying == false)
-	{
-		if (ReloadAnimation != NULL)
-		{
-			ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-			if (ArmAnimInstance != NULL)
-			{
-				ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
-			}
-		}
-		CurrentWeapon->ReloadAmmo();
-	}*/
-}

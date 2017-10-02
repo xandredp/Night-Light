@@ -16,15 +16,12 @@ class NO_BARK_VS_API ANBSkinnyAI : public ANBBaseAI
 	
 	
 public:
-	// Sets default values for this character's properties
 	ANBSkinnyAI();
 
-protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	//void Tick(float DeltaSeconds) override;
 
+	
 };

@@ -26,8 +26,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Physics")
 		void SetRagdollPhysics();
 
-	UFUNCTION(BlueprintCallable, Category = "Physics")
-		void EnableCollisionCapsuleCollision(bool bEnableCollision);
-
 
 };
