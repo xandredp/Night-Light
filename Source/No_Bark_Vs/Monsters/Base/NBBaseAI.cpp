@@ -3,7 +3,9 @@
 #include "NBBaseAI.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
+#include "Sound/SoundCue.h"
+//#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
@@ -11,6 +13,11 @@ ANBBaseAI::ANBBaseAI()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("MonsterLoopedSoundComp"));
+	AudioLoopComp->bAutoActivate = false;
+	AudioLoopComp->bAutoDestroy = false;
+	AudioLoopComp->SetupAttachment(RootComponent);
 
 }
 
@@ -44,5 +51,19 @@ void ANBBaseAI::SetRagdollPhysics()
 		CharacterComp->SetComponentTickEnabled(false);
 	}
 
+}
+
+void ANBBaseAI::PlaySound(class USoundCue * SoundToPlay)
+{
+	if (SoundToPlay)
+	{
+		AudioLoopComp->SetSound(SoundToPlay);
+		AudioLoopComp->Play();
+	}
+}
+
+void ANBBaseAI::PlayAnimation(UAnimMontage * AnimMontageToPlay)
+{
+	PlayAnimMontage(AnimMontageToPlay);
 }
 

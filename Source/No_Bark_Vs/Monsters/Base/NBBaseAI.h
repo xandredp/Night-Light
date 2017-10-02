@@ -15,6 +15,10 @@ public:
 	// Sets default values for this character's properties
 	ANBBaseAI();
 
+	/* Plays the idle, wandering or hunting sound */
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+		UAudioComponent* AudioLoopComp;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,5 +30,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Physics")
 		void SetRagdollPhysics();
 
+	UFUNCTION(BlueprintCallable, Category = "Physics")
+		void PlaySound(class USoundCue* SoundToPlay);
+
+	UFUNCTION(BlueprintCallable, Category = "Physics")
+		void PlayAnimation(class UAnimMontage* AnimMontageToPlay);
 
 };

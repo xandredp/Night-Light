@@ -18,3 +18,8 @@ void ANBSkinnyAI::BeginPlay()
 	Super::BeginPlay();
 }
 
+void ANBSkinnyAI::SimulateMeleeStrike()
+{
+	PlayAnimation(AttackAnimation);
+	PlaySound(SoundIdle);
+}
