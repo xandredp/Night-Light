@@ -41,6 +41,7 @@ ASkinnyMonster::ASkinnyMonster()
 void ASkinnyMonster::BeginPlay()
 {
 	Super::BeginPlay();
+
 	AttackRangeSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttackAttachPoint);
 }
 

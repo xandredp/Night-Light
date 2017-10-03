@@ -73,6 +73,10 @@ public:
 	UFUNCTION()
 		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+private:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName AttackAttachPoint;
 
 	
 };
