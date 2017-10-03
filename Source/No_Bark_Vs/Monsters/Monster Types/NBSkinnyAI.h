@@ -25,8 +25,15 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+
+
+
+	/************************************************************************/
+	/* Animation & Sounds with Animation                                    */
+	/************************************************************************/
+
 	//void Tick(float DeltaSeconds) override;
-	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 		class USoundCue* SoundIdle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
@@ -36,6 +43,36 @@ public:
 		bool IsAnimPlaying;
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
-	void SimulateMeleeStrike();
+		void SimulateMeleeStrike();
+
+	/* UPROPERTY(EditDefaultsOnly, Category = "Anims")
+	USkinnyMonsterAnimInstance* AnimInstance; */
+	/************************************************************************/
+	/* Overlap functions                                      */
+	/************************************************************************/
+
+	// Sphere component attached to the hand 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* AttackRangeAnimationTriggerSphere;
+
+	// Sphere component around monster
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* StrikePlayerSphere;
+
+
+
+	UFUNCTION()
+		void OnOverlapStrikeCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void OnEndOverlapStrikeCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION()
+		void OnOverlapStartAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
 	
 };
