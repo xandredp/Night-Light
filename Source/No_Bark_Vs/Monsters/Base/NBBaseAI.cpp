@@ -35,23 +35,34 @@ void ANBBaseAI::Tick(float DeltaTime)
 
 }
 
-void ANBBaseAI::SetRagdollPhysics()
+
+void ANBBaseAI::SetRagdollPhysics(const FName & boneName, float PhysicsBlendWeight, bool bNewSimulate, bool bRecover, bool bMeshDead)
 {
 	USkeletalMeshComponent* Mesh3P = GetMesh();
 
-	const FName& boneName = "skeleton";
-		Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, true, true);
-		Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, 1.0, false, true);
-
-	UCharacterMovementComponent* CharacterComp = Cast<UCharacterMovementComponent>(GetMovementComponent());
-	if (CharacterComp)
+	if (bRecover == true)
 	{
-		CharacterComp->StopMovementImmediately();
-		CharacterComp->DisableMovement();
-		CharacterComp->SetComponentTickEnabled(false);
+		Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, bNewSimulate, true);
+		Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, PhysicsBlendWeight, false, true);
 	}
-
+	else
+	{
+		Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, PhysicsBlendWeight, false, true);
+		Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, bNewSimulate, true);
+	
+		if (bMeshDead == true)
+		{
+			UCharacterMovementComponent* CharacterComp = Cast<UCharacterMovementComponent>(GetMovementComponent());
+			if (CharacterComp)
+			{
+				CharacterComp->StopMovementImmediately();
+				CharacterComp->DisableMovement();
+				CharacterComp->SetComponentTickEnabled(false);
+			}
+		}
+	}
 }
+
 
 void ANBBaseAI::PlaySound(class USoundCue * SoundToPlay)
 {

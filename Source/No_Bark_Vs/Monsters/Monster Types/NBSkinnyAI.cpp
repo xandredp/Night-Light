@@ -4,7 +4,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
-//#include "GameFramework/Actor.h"
+#include "Player/NBCharacter.h"
 #include "Public/TimerManager.h"
 
 
@@ -21,7 +21,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 	// This sphere component is attached to the hand to detect a hit
 	RightHandStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("RightHandStrikePlayerSphere"));
-	RightHandStrikePlayerSphere->SetSphereRadius(25);
+	RightHandStrikePlayerSphere->SetSphereRadius(15);
 	RightHandStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	RightHandStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	RightHandStrikePlayerSphere->SetupAttachment(GetCapsuleComponent());
@@ -30,7 +30,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 	// This sphere component is attached to the hand to detect a hit
 	LeftHandStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("LeftHandStrikePlayerSphere"));
-	LeftHandStrikePlayerSphere->SetSphereRadius(25);
+	LeftHandStrikePlayerSphere->SetSphereRadius(15);
 	LeftHandStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	LeftHandStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	LeftHandStrikePlayerSphere->SetupAttachment(GetCapsuleComponent());
@@ -39,7 +39,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 	// This sphere component is attached to the hand to detect a hit
 	HeadStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("HeadStrikePlayerSphere"));
-	HeadStrikePlayerSphere->SetSphereRadius(25);
+	HeadStrikePlayerSphere->SetSphereRadius(15);
 	HeadStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	HeadStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	HeadStrikePlayerSphere->SetupAttachment(GetCapsuleComponent());
@@ -82,7 +82,11 @@ void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp,
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+		if (OtherPawn)
+		{
+			//health decrease of other pawn. 
+		}
 	}
 }
 
@@ -98,10 +102,8 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-		//Stamina Decrease
-		//SimulateMeleeStrike();
+		//Settimeto start for animation and sound of melleestrike. 
 		GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
-		//
 	}
 	
 }

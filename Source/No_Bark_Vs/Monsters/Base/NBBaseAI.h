@@ -27,8 +27,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//ragdoll physics
+
 	UFUNCTION(BlueprintCallable, Category = "Physics")
-		void SetRagdollPhysics();
+		void SetRagdollPhysics(const FName& InBoneName, float PhysicsBlendWeight, bool bNewSimulate, bool bRecover, bool bMeshDead);
 
 	UFUNCTION(BlueprintCallable, Category = "Physics")
 		void PlaySound(class USoundCue* SoundToPlay);
