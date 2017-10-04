@@ -16,7 +16,7 @@ class NO_BARK_VS_API ANBSkinnyAI : public ANBBaseAI
 	
 		
 	/* Timer handle to manage continous melee attacks while in range of a player */
-	FTimerHandle TimerHandle_MeleeAttack;
+		FTimerHandle TimerHandle_MeleeAttack;
 
 	
 public:
@@ -51,15 +51,21 @@ public:
 	/* Overlap functions                                      */
 	/************************************************************************/
 
-	// Sphere component attached to the hand 
+	// Sphere component around monster this triggers attack animation
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USphereComponent* AttackRangeAnimationTriggerSphere;
 
-	// Sphere component around monster
+	// Sphere component attached to the hand 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class USphereComponent* StrikePlayerSphere;
+		class USphereComponent* HeadStrikePlayerSphere;
 
+	// Sphere component attached to the hand 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* LeftHandStrikePlayerSphere;
 
+	// Sphere component attached to the hand 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* RightHandStrikePlayerSphere;
 
 	UFUNCTION()
 		void OnOverlapStrikeCharacter(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -76,7 +82,11 @@ public:
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
-		FName AttackAttachPoint;
+		FName RightHandSocket;
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName LeftHandSocket;
+	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
+		FName HeadSocket;
 
 	
 };
