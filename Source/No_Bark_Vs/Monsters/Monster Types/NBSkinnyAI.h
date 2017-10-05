@@ -9,6 +9,16 @@
 /**
  * 
  */
+
+UENUM()
+enum EAttackValue
+{
+	LHand,
+	RHand,
+	Head
+};
+
+
 UCLASS()
 class NO_BARK_VS_API ANBSkinnyAI : public ANBBaseAI
 {
@@ -25,6 +35,7 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void OnStun() override;
 
 
 
@@ -37,13 +48,26 @@ public:
 		class USoundCue* SoundIdle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
-		class UAnimMontage* AttackAnimation;
+		class UAnimMontage* AttackWithRightHandAnimation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+		class UAnimMontage* AttackWithLeftHandAnimation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+		class UAnimMontage* AttackWithHeadAnimation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+		class UAnimMontage* ReactAnimation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+		class UAnimMontage* StunAnimation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		bool IsAnimPlaying;
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		void SimulateMeleeStrike();
+
 
 	/* UPROPERTY(EditDefaultsOnly, Category = "Anims")
 	USkinnyMonsterAnimInstance* AnimInstance; */
@@ -79,6 +103,13 @@ public:
 	UFUNCTION()
 		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	/************************************************************************/
+	/* Status Change Functions             */
+	/************************************************************************/
+
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void SetTranparentMaterial();
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
@@ -88,5 +119,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName HeadSocket;
 
+
+protected:
+	//get correct attack animation using Eattackvalue
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+		UAnimMontage* GetAttackAnim(EAttackValue AttackType);
 	
 };

@@ -6,6 +6,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Player/NBCharacter.h"
 #include "Public/TimerManager.h"
+#include "Materials/MaterialInstanceConstant.h"
 
 
 // Sets default values
@@ -68,15 +69,26 @@ void ANBSkinnyAI::BeginPlay()
 
 }
 
-void ANBSkinnyAI::SimulateMeleeStrike()
+void ANBSkinnyAI::OnStun()
 {
 	if (IsAnimPlaying != true)
 	{
+		PlayAnimation(StunAnimation);
+	}
+}
+
+void ANBSkinnyAI::SimulateMeleeStrike()
+{
+	EAttackValue AttackType = static_cast<EAttackValue>(FMath::RandRange(0, 2));
+	UAnimMontage* AttackAnimation = GetAttackAnim(AttackType);
+	if (IsAnimPlaying != true)
+	{
 		PlayAnimation(AttackAnimation);
-		PlaySound(SoundIdle);
+		//PlaySound(SoundIdle);
 	}
 
 }
+
 
 void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -86,6 +98,7 @@ void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp,
 		if (OtherPawn)
 		{
 			//health decrease of other pawn. 
+			
 		}
 	}
 }
@@ -114,5 +127,30 @@ void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AAc
 	{
 		//Stops Stamina increase
 		GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
+	}
+}
+
+void ANBSkinnyAI::SetTranparentMaterial()
+{
+	//Material Path
+	FString matPath = "Material'/Game/Textures/Monster/Mon_M_Darkness.uasset'";
+	//Material Instance
+	UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
+	this->GetMesh()->SetMaterial(0, material);
+}
+UAnimMontage* ANBSkinnyAI::GetAttackAnim(EAttackValue AttackType)
+{
+	switch (AttackType)
+	{
+	case LHand:
+		return AttackWithRightHandAnimation;
+
+	case RHand:
+		return AttackWithLeftHandAnimation;
+
+	case Head:
+		return AttackWithHeadAnimation;
+	default:
+		return nullptr;
 	}
 }

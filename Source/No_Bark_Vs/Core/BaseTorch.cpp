@@ -8,6 +8,7 @@
 #include "Components/SpotLightComponent.h"
 //#include "Components/SceneComponent.h"
 #include "Monsters/Base/Monster.h"
+#include "Monsters/Base/NBBaseAI.h"
 
 
 // Sets default values
@@ -201,10 +202,13 @@ void ABaseTorch::ProcessInstantHit(const FHitResult & Impact)
 {
 
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
-	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+	ANBBaseAI *Enemy = Cast<ANBBaseAI>(Impact.GetActor());
+	//AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+	
 	if (Enemy)
 	{
-		Enemy->OnFlashed(MyPawn);
+		//Enemy->OnFlashed(MyPawn);
+		Enemy->OnStun();
 	}
 }
 

@@ -5,7 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
-//#include "Components/CapsuleComponent.h"
+#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
@@ -35,30 +35,79 @@ void ANBBaseAI::Tick(float DeltaTime)
 
 }
 
+//OnDeath function sets ragdoll and stops the sound. 
+void ANBBaseAI::OnDeath()
+{
+	if (Health <= 0.0f)
+	{	//play sound
+		//AudioLoopComp->SetSound(SoundDeathAttack);
+		AudioLoopComp->Play();
+
+		DetachFromControllerPendingDestroy();
+		/* Disable all collision on capsule */
+		UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+		USkeletalMeshComponent* Mesh3P = GetMesh();
+		if (Mesh3P)
+		{
+			Mesh3P->SetCollisionProfileName(TEXT("Ragdoll"));
+		}
+		SetActorEnableCollision(true);
+
+		SetRagdollPhysics("skeleton", 1.0, false, false, true);
+
+		//stop sound
+		AudioLoopComp->Stop();
+	}
+}
+void ANBBaseAI::OnStun()
+{
+}
+void ANBBaseAI::ReduceHealth(int DamageValue)
+{
+	if (Health <= 0.0f)
+	{
+		OnDeath();
+	}
+	else
+	{
+		Health -= DamageValue;
+	}
+}
 
 void ANBBaseAI::SetRagdollPhysics(const FName & boneName, float PhysicsBlendWeight, bool bNewSimulate, bool bRecover, bool bMeshDead)
 {
 	USkeletalMeshComponent* Mesh3P = GetMesh();
-
-	if (bRecover == true)
+	if (bMeshDead == true)
 	{
-		Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, bNewSimulate, true);
-		Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, PhysicsBlendWeight, false, true);
+
+		Mesh3P->SetAllBodiesSimulatePhysics(true);
+		Mesh3P->SetSimulatePhysics(true);
+		Mesh3P->WakeAllRigidBodies();
+		Mesh3P->bBlendPhysics = true;
+
+		UCharacterMovementComponent* CharacterComp = Cast<UCharacterMovementComponent>(GetMovementComponent());
+		if (CharacterComp)
+		{
+			CharacterComp->StopMovementImmediately();
+			CharacterComp->DisableMovement();
+			CharacterComp->SetComponentTickEnabled(false);
+		}
+		SetLifeSpan(10.0f);
 	}
 	else
 	{
-		Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, PhysicsBlendWeight, false, true);
-		Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, bNewSimulate, true);
-	
-		if (bMeshDead == true)
+		if (bRecover == true)
 		{
-			UCharacterMovementComponent* CharacterComp = Cast<UCharacterMovementComponent>(GetMovementComponent());
-			if (CharacterComp)
-			{
-				CharacterComp->StopMovementImmediately();
-				CharacterComp->DisableMovement();
-				CharacterComp->SetComponentTickEnabled(false);
-			}
+			Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, bNewSimulate, true);
+			Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, PhysicsBlendWeight, false, true);
+		}
+		if (bRecover == false)
+		{
+			Mesh3P->SetAllBodiesBelowPhysicsBlendWeight(boneName, PhysicsBlendWeight, false, true);
+			Mesh3P->SetAllBodiesBelowSimulatePhysics(boneName, bNewSimulate, true);
 		}
 	}
 }
