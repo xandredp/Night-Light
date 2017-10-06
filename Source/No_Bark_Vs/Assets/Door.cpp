@@ -4,10 +4,6 @@
 #include "Player/PlayController.h"
 
 
-
-
-
-
 ADoor::ADoor()
 {
 	ItemID = FName("Please EnterID");
