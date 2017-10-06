@@ -37,6 +37,13 @@ public:
 
 	virtual void OnStun() override;
 
+	UFUNCTION()
+		virtual void OnSeePlayer(APawn* Pawn);
+
+	UFUNCTION()
+		virtual void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
+
+
 
 
 	/************************************************************************/

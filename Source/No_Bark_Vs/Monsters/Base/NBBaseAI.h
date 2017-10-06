@@ -24,15 +24,32 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
 		UAudioComponent* AudioLoopComp;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//AI seeing, Sensing component
+	UPROPERTY(VisibleAnywhere, Category = "AI")
+		class UPawnSensingComponent* PawnSensingComp;
 
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void OnStun();
+
+	/* Triggered by pawn sensing component when a pawn is spotted */
+	/* When using functions as delegates they need to be marked with UFUNCTION(). We assign this function to FSeePawnDelegate */
+	UFUNCTION()
+		virtual void OnSeePlayer(APawn* Pawn);
+
+	UFUNCTION()
+		virtual void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
+
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+
+public:	
+
+
 
 	UFUNCTION(BlueprintCallable, Category = "Status")
 		void OnDeath();

@@ -67,6 +67,11 @@ void ANBSkinnyAI::BeginPlay()
 	LeftHandStrikePlayerSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, LeftHandSocket);
 	HeadStrikePlayerSphere->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, HeadSocket);
 
+	if (PawnSensingComp)
+	{
+		PawnSensingComp->OnSeePawn.AddDynamic(this, &ANBSkinnyAI::OnSeePlayer);
+		PawnSensingComp->OnHearNoise.AddDynamic(this, &ANBSkinnyAI::OnHearNoise);
+	}
 }
 
 void ANBSkinnyAI::OnStun()
@@ -75,6 +80,16 @@ void ANBSkinnyAI::OnStun()
 	{
 		PlayAnimation(StunAnimation);
 	}
+}
+
+void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Seeing you!");
+}
+
+void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Hearing Noise!");
 }
 
 void ANBSkinnyAI::SimulateMeleeStrike()

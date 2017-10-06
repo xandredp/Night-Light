@@ -19,6 +19,14 @@ ANBBaseAI::ANBBaseAI()
 	AudioLoopComp->bAutoDestroy = false;
 	AudioLoopComp->SetupAttachment(RootComponent);
 
+	/* Our sensing component to detect players by visibility and noise checks. */
+	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
+	PawnSensingComp->SetPeripheralVisionAngle(60.0f);
+	PawnSensingComp->SightRadius = 2000;
+	PawnSensingComp->HearingThreshold = 600;
+	PawnSensingComp->LOSHearingThreshold = 1200;
+
+
 }
 
 // Called when the game starts or when spawned
@@ -26,6 +34,7 @@ void ANBBaseAI::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
 }
 
 // Called every frame
@@ -63,6 +72,12 @@ void ANBBaseAI::OnDeath()
 	}
 }
 void ANBBaseAI::OnStun()
+{
+}
+void ANBBaseAI::OnSeePlayer(APawn * Pawn)
+{
+}
+void ANBBaseAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
 {
 }
 void ANBBaseAI::ReduceHealth(int DamageValue)
