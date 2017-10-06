@@ -103,7 +103,7 @@ void ABaseTorch::DrainTorchEnergy()
 	}
 	else
 	{
-		CurrentEnergy = CurrentEnergy - EnergyReductionRate;
+		//CurrentEnergy = CurrentEnergy - EnergyReductionRate;
 	}
 	SetTorchIntensity();
 }
