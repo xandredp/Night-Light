@@ -13,13 +13,14 @@ class NO_BARK_VS_API APlayerSensingPawn : public APawn
 {
 	GENERATED_BODY()
 
+
 public:
 	// Sets default values for this pawn's properties
 	APlayerSensingPawn();
 
 	//Set Owner
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
-		class ANBCharacter* OwnerPawn;
+		class ANBCharacter* NBCharacter;
 
 protected:
 	// Called when the game starts or when spawned

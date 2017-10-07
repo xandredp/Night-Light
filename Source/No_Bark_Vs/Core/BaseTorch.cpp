@@ -195,6 +195,13 @@ void ABaseTorch::TorchOnOff(bool bSpotLightVisiblity)
 	{
 		GetWorldTimerManager().ClearTimer(StartReducingEnergyTimerHandle);
 	}
+
+	IsTorchOn = bSpotLightVisiblity;
+}
+
+bool ABaseTorch::GetTorchOnOff()
+{
+	return IsTorchOn;
 }
 
 

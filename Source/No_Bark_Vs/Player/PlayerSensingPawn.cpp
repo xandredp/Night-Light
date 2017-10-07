@@ -24,29 +24,39 @@ void APlayerSensingPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//PlayPickupAnimation
-	ANBCharacter* NBCharacter = Cast<ANBCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (NBCharacter)
-	{
-		OwnerPawn = NBCharacter;
-		if (NBCharacter->SensingComponentPawn == nullptr)
-		{
-			NBCharacter->SensingComponentPawn = this;
-		}
-	}
-
 	if (PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &APlayerSensingPawn::OnSeeEnemy);
 		//	PawnSensingComp->OnHearNoise.AddDynamic(this, &ANBCharacter::OnHearNoise);
 	}
+	//Set owning player. and assign sensing component pawn. When Assigned this will be attached to gun when torch is attached.
+	ANBCharacter* OwnerPawn = Cast<ANBCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	if (OwnerPawn)
+	{
+		NBCharacter = OwnerPawn;
+		if (OwnerPawn->SensingComponentPawn == nullptr)
+		{
+			OwnerPawn->SensingComponentPawn = this;
+		}
+	}
+
+
 	
 }
 void APlayerSensingPawn::OnSeeEnemy(APawn * Pawn)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, Pawn->GetName());
-	SpawnParticleEffect(Pawn);
-	//ANBBaseAI *Enemy = Cast<ANBBaseAI>(Pawn);
+	if (NBCharacter->CurrentTorch)
+	{
+		if (NBCharacter->CurrentTorch->GetTorchOnOff())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, Pawn->GetName());
+			SpawnParticleEffect(Pawn);
+
+		}
+
+	}
+	
+		//ANBBaseAI *Enemy = Cast<ANBBaseAI>(Pawn);
 	//if (Enemy)
 	//{
 	//	Enemy->OnStun();
