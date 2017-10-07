@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Perception/PawnSensingComponent.h"
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
 //#include "Engine.h"
@@ -40,6 +41,7 @@ ANBCharacter::ANBCharacter()
 	// Item
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
+
 
 	MoveComp = GetCharacterMovement();
 	// Adjust jump to make it less floaty
@@ -121,6 +123,8 @@ void ANBCharacter::BeginPlay()
 			
 		}
 	}
+
+
 }
 		
 void ANBCharacter::Tick(float DeltaSeconds)
@@ -177,6 +181,15 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::ReloadWeapon);
 }
 
+void ANBCharacter::OnSeeEnemy(APawn * Pawn)
+{
+	if (CurrentTorch != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "You Seean an Enemy!");
+	}
+
+}
+
 void ANBCharacter::EquipPrimaryWeapon()
 {
 	
@@ -200,10 +213,16 @@ void ANBCharacter::SpawnTorch()
 	if (CurrentTorch == nullptr)
 	{
 		CurrentTorch = GetWorld()->SpawnActor<ABaseTorch>(TorchClass, SpawnParams);
-	}
+	} 
 	CurrentTorch->SetOwningPawn(this);
 
-	AttachTorchToHead();
+	//Attach Sensing component This is used as Torch collision component
+	if (SensingComponentPawn)
+	{
+		SensingComponentPawn->AttachToComponent(FPSCharacterArmMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, "Sense_Socket");
+	}
+
+	AttachTorchToGun();
 }
 
 void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)

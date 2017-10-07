@@ -24,7 +24,7 @@ ABaseTorch::ABaseTorch()
 	TorchSpotlight->SetRelativeLocation(FVector(0, 0, -0));
 
 	TorchSpotlight->SetIntensity(8000);
-	TorchSpotlight->SetAttenuationRadius(7000);
+	TorchSpotlight->SetAttenuationRadius(2000);
 	TorchSpotlight->SetOuterConeAngle(33.0);
 	TorchSpotlight->SetInnerConeAngle(22.0);
 

@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 //#include "Animation Instances/CharacterAnimInstance.h"
 #include "AI/Spawning/MonsterSpawner.h"
+#include "PlayerSensingPawn.h"
 //#include "Perception/PawnSensingComponent.h"
 #include "Engine/DataTable.h"
 #include "Core/BaseWeapon.h"
@@ -38,6 +39,7 @@ public:
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class USpringArmComponent* CameraBoom;
+
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -74,6 +76,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION()
+		 void OnSeeEnemy(APawn* Pawn);
 
 	void EquipPrimaryWeapon();
 
@@ -185,11 +190,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		ABaseTorch *CurrentTorch;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		APlayerSensingPawn *SensingComponentPawn;
+
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void SpawnTorch();
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void AttachTorchToHead();
+		void AttachTorchToGun();
 
 public:
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
