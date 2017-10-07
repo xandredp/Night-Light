@@ -211,30 +211,3 @@ void ABaseTorch::ProcessInstantHit(const FHitResult & Impact)
 		Enemy->OnStun();
 	}
 }
-
-//	VisualInstantHit(Impact.ImpactPoint);
-//}
-//
-//
-//void ABaseWeapon::VisualInstantHit(const FVector& ImpactPoint)
-//{
-//	/* Adjust direction based on desired crosshair impact point and muzzle location */
-//	const FVector MuzzleOrigin = WeaponMesh->GetSocketLocation(MuzzleAttachPoint);
-//	const FVector AimDir = (ImpactPoint - MuzzleOrigin).GetSafeNormal();
-//
-//	const FVector EndTrace = MuzzleOrigin + (AimDir *WeaponConfig.WeaponRange);
-//	const FHitResult Impact = WeaponTrace(MuzzleOrigin, EndTrace);
-//
-//	if (Impact.bBlockingHit)
-//	{
-//		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "IF Visual InstantHit!");
-//
-//		VisualImpactEffects(Impact);
-//		//VisualTrailEffects(Impact.ImpactPoint);
-//	}
-//	else
-//	{
-//		//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "ELSE Visual InstantHit!");
-//		//	VisualTrailEffects(EndTrace);
-//	}
-//}

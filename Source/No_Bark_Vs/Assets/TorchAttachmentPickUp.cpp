@@ -24,9 +24,6 @@ void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
 			MyPawn->PlayPickUpAnimation();
 			MyPawn->SpawnTorch();
 		}
-
-		aPlayController->SetIsTorchOn(true);
-		//DoorToInteract->AutoCloseLock();
 		BeginWithTorchOn();
 		DestroyItemOnGround();
 	

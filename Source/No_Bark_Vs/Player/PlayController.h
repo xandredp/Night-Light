@@ -64,14 +64,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void RemoveKeyfromPossesion(FKeyData aKey);
 
-	/************************************************************************/
-	/* TorchPossesion                                                      */
-	/************************************************************************/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		bool IsTorchOn;
-	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void SetIsTorchOn(bool istorchonValue);
-
 
 	/************************************************************************/
 	/* Game Currency                                                      */

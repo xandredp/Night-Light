@@ -654,28 +654,18 @@ bool ANBCharacter::GetIsCrouched() const
 
 void ANBCharacter::TurnOnTorch()
 {
-	APlayController* playerController = Cast<APlayController>(GetController());
-	if (playerController->IsTorchOn)
+	if (CurrentTorch)
 	{
-		if (CurrentTorch)
-		{
-			CurrentTorch->TorchOnOff(true);
-		}
+		CurrentTorch->TorchOnOff(true);
 	}
-
-
 }
 
 
 void ANBCharacter::TurnOffTorch()
 {
-	APlayController* playerController = Cast<APlayController>(GetController());
-	if (playerController->IsTorchOn)
+	if (CurrentTorch)
 	{
-		if (CurrentTorch)
-		{
-			CurrentTorch->TorchOnOff(false);
-		}
+		CurrentTorch->TorchOnOff(false);
 	}
 }
 void ANBCharacter::PlayPickUpAnimation()
@@ -703,7 +693,7 @@ void ANBCharacter::TorchCrank()
 	
 	if (CurrentWeapon)
 	{
-		if (playerController->IsTorchOn)
+		if (CurrentTorch!=nullptr)
 		{
 
 			if (IsTorchCrankerUp == true)
@@ -718,10 +708,7 @@ void ANBCharacter::TorchCrank()
 					}
 				}
 
-				if (CurrentTorch)
-				{
-					CurrentTorch->TorchCrank();
-				}
+				CurrentTorch->TorchCrank();
 
 			}
 			else if (IsTorchCrankerUp == false)

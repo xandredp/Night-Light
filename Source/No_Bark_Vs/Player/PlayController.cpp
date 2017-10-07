@@ -16,7 +16,6 @@
 APlayController::APlayController()
 {
 	bShowMouseCursor = false;
-	IsTorchOn = false;
 	MyCurrentCurrency = 0.0f;
 }
 
@@ -67,12 +66,6 @@ void APlayController::RemoveKeyfromPossesion(FKeyData aKey)
 		}
 	}
 }
-
-void APlayController::SetIsTorchOn(bool istorchonValue)
-{
-	IsTorchOn = istorchonValue;
-}
-
 
 void APlayController::SetupInputComponent()
 {

@@ -17,6 +17,10 @@ public:
 	// Sets default values for this pawn's properties
 	APlayerSensingPawn();
 
+	//Set Owner
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
+		class ANBCharacter* OwnerPawn;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,7 +30,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "AI")
 		class UPawnSensingComponent* PawnSensingComp;
 
-
 	UFUNCTION()
 		void OnSeeEnemy(APawn* Pawn);
+	//When enemy is stuned spawn particle effect
+	UFUNCTION(BlueprintImplementableEvent)
+		void SpawnParticleEffect(APawn* Pawn);
 };

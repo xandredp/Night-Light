@@ -25,12 +25,13 @@ void APlayerSensingPawn::BeginPlay()
 	Super::BeginPlay();
 
 	//PlayPickupAnimation
-	ANBCharacter* MyPawn = Cast<ANBCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (MyPawn)
+	ANBCharacter* NBCharacter = Cast<ANBCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	if (NBCharacter)
 	{
-		if (MyPawn->SensingComponentPawn == nullptr)
+		OwnerPawn = NBCharacter;
+		if (NBCharacter->SensingComponentPawn == nullptr)
 		{
-			MyPawn->SensingComponentPawn = this;
+			NBCharacter->SensingComponentPawn = this;
 		}
 	}
 
@@ -39,8 +40,15 @@ void APlayerSensingPawn::BeginPlay()
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &APlayerSensingPawn::OnSeeEnemy);
 		//	PawnSensingComp->OnHearNoise.AddDynamic(this, &ANBCharacter::OnHearNoise);
 	}
+	
 }
 void APlayerSensingPawn::OnSeeEnemy(APawn * Pawn)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, Pawn->GetName());
+	SpawnParticleEffect(Pawn);
+	//ANBBaseAI *Enemy = Cast<ANBBaseAI>(Pawn);
+	//if (Enemy)
+	//{
+	//	Enemy->OnStun();
+	//}
 }
