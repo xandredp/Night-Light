@@ -14,8 +14,10 @@ ANBAIController::ANBAIController()
 	BehaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
 
+	TargetKeyName = "Target";
 	MoveToLocationKeyName = "MoveToLocation";
-	AIStateKeyName = "AIState";
+	AIStateKeyName= "AIState";
+	LastDetectedLocationKeyName = "LastDetectedLocation";
 }
 
 void ANBAIController::Possess(APawn * aPawn)
@@ -50,6 +52,24 @@ void ANBAIController::UnPossess()
 	BehaviorComp->StopTree();
 }
 
+void ANBAIController::SetTargetKey(APawn* NewTarget)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(TargetKeyName, NewTarget);
+	}
+}
+void ANBAIController::SetAIStateKey(EBotBehaviorType NewState)
+{
+	uint8 temp;
+
+	if (BlackboardComp)
+	{
+		temp = static_cast<uint8>(NewState);
+		BlackboardComp->SetValueAsEnum(AIStateKeyName, temp);
+	}
+}
+
 void ANBAIController::SetMoveToLocationKey(FVector LocationVector)
 {
 	if (BlackboardComp)
@@ -58,13 +78,22 @@ void ANBAIController::SetMoveToLocationKey(FVector LocationVector)
 	}
 }
 
-void ANBAIController::SetCurrentAIState(EBotBehaviorType NewState)
+void ANBAIController::SetLastDetectedLocationKey(FVector LocationVector)
 {
-	uint8 temp;
-
 	if (BlackboardComp)
 	{
-		temp = static_cast<uint8>(NewState);
-		BlackboardComp->SetValueAsEnum(AIStateKeyName, temp);
+		BlackboardComp->SetValueAsVector(LastDetectedLocationKeyName, LocationVector);
+	}
+}
+
+FVector ANBAIController::GetLastDetectedLocationKey()
+{
+	if (BlackboardComp)
+	{
+		return BlackboardComp->GetValueAsVector(LastDetectedLocationKeyName);
+	}
+	else
+	{
+		return(FVector(0, 0, 0));
 	}
 }

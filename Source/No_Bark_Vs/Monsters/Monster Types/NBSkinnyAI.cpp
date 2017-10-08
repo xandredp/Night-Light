@@ -7,6 +7,8 @@
 #include "Player/NBCharacter.h"
 #include "Public/TimerManager.h"
 #include "Materials/MaterialInstanceConstant.h"
+#include "../AI/NBAIController.h"
+#include "Perception/PawnSensingComponent.h"
 
 
 // Sets default values
@@ -57,6 +59,19 @@ ANBSkinnyAI::ANBSkinnyAI()
 	AttackRangeAnimationTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ANBSkinnyAI::OnOverlapStartAnim);
 	AttackRangeAnimationTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ANBSkinnyAI::OnEndOverlapStopAnim);
 
+	/* Our sensing component to detect players by visibility and noise checks. */
+	PawnSensingComp->SetPeripheralVisionAngle(60.0f);
+	PawnSensingComp->SightRadius = 2000;
+	PawnSensingComp->HearingThreshold = 200;
+	PawnSensingComp->LOSHearingThreshold = 300;
+
+	NeutralWalkSpeed = 100;
+	SuspiciousWalkSpeed = 100;
+	AggressionWalkSpeed = 100;
+	ChargeWalkSpeed = 100;
+	StunnedWalkSpeed = 0;
+	FleeWalkSpeed = 100;
+	
 }
 
 // Called when the game starts or when spawned
@@ -72,6 +87,8 @@ void ANBSkinnyAI::BeginPlay()
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &ANBSkinnyAI::OnSeePlayer);
 		PawnSensingComp->OnHearNoise.AddDynamic(this, &ANBSkinnyAI::OnHearNoise);
 	}
+
+	SetAIState(EBotBehaviorType::Neutral);
 }
 
 void ANBSkinnyAI::OnStun()
@@ -84,12 +101,43 @@ void ANBSkinnyAI::OnStun()
 
 void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Seeing you!");
+	ANBAIController* AIController = Cast<ANBAIController>(GetController());
+	ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(Pawn);
+	/* if sensed pawn is the player*/
+	if (NBCharacterPawn && AIController)
+	{
+		AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+		/*if the monster detect the player for first  time*/
+		if (bIsSuspicious == false)
+		{
+			FirstDetectedTime = GetWorld()->GetTimeSeconds();
+			bIsSuspicious = true;
+			SetAIState(EBotBehaviorType::Suspicious);
+		}
+		/*When the monster has already seen you few seconds ago*/
+		else
+		{
+			//continue updating Last SeenTime.
+			LastDetectedTime = GetWorld()->GetTimeSeconds();
+
+
+			//if the last time seen is bigger than maximun duration
+			if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
+			{
+			//	SetAIState(EBotBehaviorType::Agression);
+			}
+		}
+
+		
+	}
+
+	
 }
 
 void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Hearing Noise!");
+	FString TheFloatStr = FString::SanitizeFloat(Volume);
+	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Hearing Noise!"+ TheFloatStr);
 }
 
 void ANBSkinnyAI::SimulateMeleeStrike()
@@ -153,6 +201,7 @@ void ANBSkinnyAI::SetTranparentMaterial()
 	UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
 	this->GetMesh()->SetMaterial(0, material);
 }
+
 UAnimMontage* ANBSkinnyAI::GetAttackAnim(EAttackValue AttackType)
 {
 	switch (AttackType)
@@ -168,4 +217,43 @@ UAnimMontage* ANBSkinnyAI::GetAttackAnim(EAttackValue AttackType)
 	default:
 		return nullptr;
 	}
+}
+
+void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
+{
+	ANBAIController* AIController = Cast<ANBAIController>(GetController());
+	if (AIController)
+	{
+		switch (AIState)
+		{
+		case EBotBehaviorType::Neutral:
+			AIController->SetAIStateKey(EBotBehaviorType::Neutral);
+			SetWalkSpeed(NeutralWalkSpeed);
+			break;
+		case EBotBehaviorType::Suspicious:
+			AIController->SetAIStateKey(EBotBehaviorType::Suspicious);
+			SetWalkSpeed(SuspiciousWalkSpeed);
+			break;
+		case EBotBehaviorType::Agression:
+			AIController->SetAIStateKey(EBotBehaviorType::Agression);
+			SetWalkSpeed(AggressionWalkSpeed);
+			break;
+		case EBotBehaviorType::Charge:
+			AIController->SetAIStateKey(EBotBehaviorType::Charge);
+			SetWalkSpeed(ChargeWalkSpeed);
+			break;
+		case EBotBehaviorType::Stunned:
+			AIController->SetAIStateKey(EBotBehaviorType::Stunned);
+			SetWalkSpeed(StunnedWalkSpeed);
+			break;
+		case EBotBehaviorType::Flee:
+			AIController->SetAIStateKey(EBotBehaviorType::Flee);
+			SetWalkSpeed(FleeWalkSpeed);
+			break;
+		default:
+			break;
+		}	// passive patrolling mode
+	}
+	
+	
 }

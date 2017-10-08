@@ -276,6 +276,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseScore(int decreaseVal);
 
+	/*This value is used in Enemy to detect the player 1.0 will take longer and 0.0 will be immediate detection formular
+	PawnSeenValue * DetectionMaxTime*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Condition")
+		float ValToMakePawnUnDetected;
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void DestroyAndBackToMenu();

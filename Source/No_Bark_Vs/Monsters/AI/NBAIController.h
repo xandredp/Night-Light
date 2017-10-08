@@ -29,21 +29,38 @@ class NO_BARK_VS_API ANBAIController : public AAIController
 	class UBlackboardComponent* BlackboardComp;
 
 	//Blackboard keys
+
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-		FName MoveToLocationKeyName;
+		FName TargetKeyName;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName AIStateKeyName;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName MoveToLocationKeyName;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName LastDetectedLocationKeyName;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName SelfActorKeyName;
 public:
+	//sets keys in the blackboard
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetTargetKey(APawn* NewTarget);
 
 	//sets keys in the blackboard
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
-		void SetCurrentAIState(EBotBehaviorType NewState);
+		void SetAIStateKey(EBotBehaviorType NewState);
 
-	//sets keys in the blackboard
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 		void SetMoveToLocationKey(FVector LocationVector);
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		void SetLastDetectedLocationKey(FVector LocationVector);
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		FVector GetLastDetectedLocationKey();
 
 	/** Returns BehaviorComp subobject **/
 	FORCEINLINE UBehaviorTreeComponent* GetBehaviorComp() const { return BehaviorComp; }

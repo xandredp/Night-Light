@@ -111,12 +111,26 @@ public:
 		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	/************************************************************************/
-	/* Status Change Functions             */
+	/* Status Change variables & Functions          */
 	/************************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float NeutralWalkSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float SuspiciousWalkSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float AggressionWalkSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float ChargeWalkSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float StunnedWalkSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float FleeWalkSpeed;
 
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void SetTranparentMaterial();
+
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
@@ -131,5 +145,9 @@ protected:
 	//get correct attack animation using Eattackvalue
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		UAnimMontage* GetAttackAnim(EAttackValue AttackType);
+
+	//Set AI State  using EBotBehaviorType
+	UFUNCTION(BlueprintCallable, Category = "AI")
+		void SetAIState(EBotBehaviorType AIState);
 	
 };

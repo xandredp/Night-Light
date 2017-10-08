@@ -46,6 +46,28 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/* Bool to Check in Onseeplayer when player is seen this used to gether with first seen time variable
+	to un suspect the monster*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool bIsSuspicious;
+
+	/* Bool to get time LastSeenTime - FirstSeenTime (during thhis period) to get the SeenTime
+	This is used to detect how hard it is to detect the player*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float FirstDetectedTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float LastDetectedTime;
+
+	/* Maximum Timetaken to detect player This decides how fast enemy is Seen */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float DetectionMaxTime;
+
+	/* Time-out value to clear the suspision
+	Should be higher than Sense interval in the PawnSense component not never miss sense ticks.
+	Once detectected duration of this much will be following the player*/
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		float SenseTimeOut;
+
 
 public:	
 
@@ -80,6 +102,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Physics")
 		void SetRagdollPhysics(const FName& InBoneName, float PhysicsBlendWeight, bool bNewSimulate, bool bRecover, bool bMeshDead);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void SetWalkSpeed(float desiredWalkSpeed);
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		void PlaySound(class USoundCue* SoundToPlay);

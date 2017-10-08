@@ -6,6 +6,8 @@
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
 #include "Components/CapsuleComponent.h"
+#include "Perception/PawnSensingComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 // Sets default values
@@ -26,6 +28,8 @@ ANBBaseAI::ANBBaseAI()
 	PawnSensingComp->HearingThreshold = 600;
 	PawnSensingComp->LOSHearingThreshold = 1200;
 
+	bIsSuspicious = false;
+
 
 }
 
@@ -34,6 +38,9 @@ void ANBBaseAI::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	/*To give smooth rotation*/
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 }
 
@@ -126,7 +133,10 @@ void ANBBaseAI::SetRagdollPhysics(const FName & boneName, float PhysicsBlendWeig
 		}
 	}
 }
-
+void ANBBaseAI::SetWalkSpeed(float desiredWalkSpeed)
+{
+	GetCharacterMovement()->MaxWalkSpeed = desiredWalkSpeed;
+}
 
 void ANBBaseAI::PlaySound(class USoundCue * SoundToPlay)
 {
