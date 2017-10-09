@@ -9,7 +9,7 @@
 #include "Materials/MaterialInstanceConstant.h"
 #include "../AI/NBAIController.h"
 #include "Perception/PawnSensingComponent.h"
-
+#include "../../Player/PlayerSensingPawn.h"
 
 // Sets default values
 ANBSkinnyAI::ANBSkinnyAI()
@@ -66,11 +66,13 @@ ANBSkinnyAI::ANBSkinnyAI()
 	PawnSensingComp->LOSHearingThreshold = 300;
 
 	NeutralWalkSpeed = 100;
-	SuspiciousWalkSpeed = 100;
-	AggressionWalkSpeed = 100;
+	SuspiciousWalkSpeed = 150;
+	AggressionWalkSpeed = 200;
 	ChargeWalkSpeed = 100;
 	StunnedWalkSpeed = 0;
 	FleeWalkSpeed = 100;
+	SenseTimeOut = 10.0;
+	DetectionMaxTime = 10.0f;
 	
 }
 
@@ -93,9 +95,14 @@ void ANBSkinnyAI::BeginPlay()
 
 void ANBSkinnyAI::OnStun()
 {
+	SetAIState(EBotBehaviorType::Stunned);
+}
+
+void ANBSkinnyAI::OnReact()
+{
 	if (IsAnimPlaying != true)
 	{
-		PlayAnimation(StunAnimation);
+		PlayAnimation(ReactAnimation);
 	}
 }
 
@@ -111,6 +118,7 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 		if (bIsSuspicious == false)
 		{
 			FirstDetectedTime = GetWorld()->GetTimeSeconds();
+			LastDetectedTime = GetWorld()->GetTimeSeconds();
 			bIsSuspicious = true;
 			SetAIState(EBotBehaviorType::Suspicious);
 		}
@@ -120,12 +128,16 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 			//continue updating Last SeenTime.
 			LastDetectedTime = GetWorld()->GetTimeSeconds();
 
-
-			//if the last time seen is bigger than maximun duration
-			if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
+			if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
 			{
-			//	SetAIState(EBotBehaviorType::Agression);
+				//if the last time seen is bigger than maximun duration
+				if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
+				{
+					AIController->SetTargetKey(NBCharacterPawn);
+					SetAIState(EBotBehaviorType::Agression);
+				}
 			}
+	
 		}
 
 		
@@ -136,10 +148,48 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 
 void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
 {
-	FString TheFloatStr = FString::SanitizeFloat(Volume);
-	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Hearing Noise!"+ TheFloatStr);
-}
+	ANBAIController* AIController = Cast<ANBAIController>(GetController());
+	ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
+	/* if sensed pawn is the player*/
+	if (NBCharacterPawn && AIController)
+	{
+		AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+		/*if the monster detect the player for first  time*/
+		if (bIsSuspicious == false)
+		{
+			FirstDetectedTime = GetWorld()->GetTimeSeconds();
+			LastDetectedTime = GetWorld()->GetTimeSeconds();
+			bIsSuspicious = true;
+			SetAIState(EBotBehaviorType::Suspicious);
+		}
+		/*When the monster has already seen you few seconds ago*/
+		else
+		{
+			//continue updating Last DetectedTime.
+			LastDetectedTime = GetWorld()->GetTimeSeconds();
+		}
 
+	}
+}
+void ANBSkinnyAI::CountingPlayerUndetectedTime()
+{
+	//if player has not been seen bigger amount than the sense time out
+	/*Currenttime - last detected time > SenseTime out*/
+	if (bIsSuspicious)
+	{
+		//FString TheFloatStr = FString::SanitizeFloat(GetWorld()->TimeSeconds - LastDetectedTime);
+		//FString TheFloatStr1 = FString::SanitizeFloat(SenseTimeOut);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TheFloatStr);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TheFloatStr1);
+		if (GetWorld()->TimeSeconds - LastDetectedTime > SenseTimeOut)
+		{
+			//set back the monster to neutral 
+			SetAIState(EBotBehaviorType::Neutral);
+
+		}
+	}
+
+}
 void ANBSkinnyAI::SimulateMeleeStrike()
 {
 	EAttackValue AttackType = static_cast<EAttackValue>(FMath::RandRange(0, 2));
@@ -202,6 +252,8 @@ void ANBSkinnyAI::SetTranparentMaterial()
 	this->GetMesh()->SetMaterial(0, material);
 }
 
+
+
 UAnimMontage* ANBSkinnyAI::GetAttackAnim(EAttackValue AttackType)
 {
 	switch (AttackType)
@@ -228,15 +280,24 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 		{
 		case EBotBehaviorType::Neutral:
 			AIController->SetAIStateKey(EBotBehaviorType::Neutral);
+			bIsSuspicious = false;
+			//Stops Stamina increase
+
 			SetWalkSpeed(NeutralWalkSpeed);
+			GetWorldTimerManager().ClearTimer(TimerHandle_CountUnSeenTime);
 			break;
 		case EBotBehaviorType::Suspicious:
 			AIController->SetAIStateKey(EBotBehaviorType::Suspicious);
 			SetWalkSpeed(SuspiciousWalkSpeed);
+			//Settimeto start for animation and sound of melleestrike. 
+			GetWorldTimerManager().SetTimer(TimerHandle_CountUnSeenTime, this, &ANBSkinnyAI::CountingPlayerUndetectedTime, 1.0, true, 0.0f);
+
 			break;
 		case EBotBehaviorType::Agression:
-			AIController->SetAIStateKey(EBotBehaviorType::Agression);
 			SetWalkSpeed(AggressionWalkSpeed);
+			OnReact();
+			AIController->SetAIStateKey(EBotBehaviorType::Agression);
+			
 			break;
 		case EBotBehaviorType::Charge:
 			AIController->SetAIStateKey(EBotBehaviorType::Charge);
@@ -245,6 +306,11 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 		case EBotBehaviorType::Stunned:
 			AIController->SetAIStateKey(EBotBehaviorType::Stunned);
 			SetWalkSpeed(StunnedWalkSpeed);
+			if (IsAnimPlaying != true)
+			{
+				PlayAnimation(StunAnimation);
+			}
+			
 			break;
 		case EBotBehaviorType::Flee:
 			AIController->SetAIStateKey(EBotBehaviorType::Flee);

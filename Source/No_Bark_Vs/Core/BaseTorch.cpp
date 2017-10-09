@@ -7,9 +7,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SpotLightComponent.h"
 //#include "Components/SceneComponent.h"
-#include "Monsters/Base/Monster.h"
 #include "Monsters/Base/NBBaseAI.h"
-
+#include "Monsters/Monster Types/NBSkinnyAI.h"
 
 // Sets default values
 ABaseTorch::ABaseTorch()
@@ -39,6 +38,7 @@ ABaseTorch::ABaseTorch()
 	ReductionTimerRate = 0.5f;
 	EnergyReductionOnPowerUse = 20.0f;
 	EnergyIncreaseOnCrank = 5.0;
+	IsEnemySeen = false;
 
 
 }
@@ -129,49 +129,27 @@ void ABaseTorch::IncreaseEnergy()
 
 void ABaseTorch::ActivateTorch()
 {
-	//if we have enough power
-	if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
+	if (IsEnemySeen)
 	{
-		// 1. Change Intensity
+		if (EnemyPawn)
+		{
+			//there is eneough energy
+			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
+			{
+				EnemyPawn->OnStun();
+				DecreaseEnergy();
+			}
+
+			// if we don't have energy 
+			else
+			{
+				// say warning. 
+			}
+		}
 		
-		// 2. RayCasting
 
-		const FVector start_trace = TorchSpotlight->GetComponentLocation();
-		//Get AimDirection
-		APlayController* const PC = Instigator ? Cast<APlayController>(Instigator->Controller) : nullptr;
-		FVector FinalAim = FVector::ZeroVector;
-
-		if (PC)
-		{
-			FVector CamLoc;
-			FRotator CamRot;
-			PC->GetPlayerViewPoint(CamLoc, CamRot);
-
-			FinalAim = CamRot.Vector();
-		}
-		else if (Instigator)
-		{
-			FinalAim = Instigator->GetBaseAimRotation().Vector();
-		}
-		const FVector AimDir = FinalAim;
-		const FVector end_trace = start_trace + (AimDir * CurrentUseDistance);
-
-		/* Check for impact by tracing from the camera position */
-		FHitResult Impact = TorchLightTrace(start_trace, end_trace);
-		DrawDebugLine(GetWorld(), start_trace, end_trace, FColor::Green, false, 10.0, 0, 0.5f);
-		// 3. StunEnemy
-		ProcessInstantHit(Impact);
-
-		// 3. blueprintimplementable effect In blueprint it will do spawn effect
-		//4. DecreaseEnergy
-		DecreaseEnergy();
 	}
-
-	// if we don't have energy 
-	else
-	{
-		// say warning. 
-	}
+	
 	TorchOnOff(true);
 }
 
@@ -202,19 +180,4 @@ void ABaseTorch::TorchOnOff(bool bSpotLightVisiblity)
 bool ABaseTorch::GetTorchOnOff()
 {
 	return IsTorchOn;
-}
-
-
-void ABaseTorch::ProcessInstantHit(const FHitResult & Impact)
-{
-
-	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
-	ANBBaseAI *Enemy = Cast<ANBBaseAI>(Impact.GetActor());
-	//AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
-	
-	if (Enemy)
-	{
-		//Enemy->OnFlashed(MyPawn);
-		Enemy->OnStun();
-	}
 }

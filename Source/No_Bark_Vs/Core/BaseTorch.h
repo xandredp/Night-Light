@@ -60,9 +60,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyIncreaseOnCrank;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsEnemySeen;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBCharacter* MyPawn;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
+		class ANBSkinnyAI* EnemyPawn;
 
 	/* Set the Torch's owning pawn */
 	void SetOwningPawn(class ANBCharacter* NewOwner);
@@ -99,11 +104,7 @@ protected:
 	UPROPERTY()
 		bool IsTorchOn;
 
+
 	FHitResult TorchLightTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
-	
-	void ProcessInstantHit(const FHitResult &Impact);
-
-
-
 
 };

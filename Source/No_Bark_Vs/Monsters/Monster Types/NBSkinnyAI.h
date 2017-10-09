@@ -28,6 +28,8 @@ class NO_BARK_VS_API ANBSkinnyAI : public ANBBaseAI
 	/* Timer handle to manage continous melee attacks while in range of a player */
 		FTimerHandle TimerHandle_MeleeAttack;
 
+	/* Timer handle to manage seen time ticks to get player unseen*/
+	FTimerHandle TimerHandle_CountUnSeenTime;
 	
 public:
 	ANBSkinnyAI();
@@ -37,14 +39,17 @@ public:
 
 	virtual void OnStun() override;
 
+	virtual void OnReact() override;
+
 	UFUNCTION()
 		virtual void OnSeePlayer(APawn* Pawn);
 
 	UFUNCTION()
 		virtual void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
 
-
-
+	/*counting howlong the player has been undetected for if long calms the monster*/
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void CountingPlayerUndetectedTime();
 
 	/************************************************************************/
 	/* Animation & Sounds with Animation                                    */
@@ -130,6 +135,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void SetTranparentMaterial();
+
 
 private:
 

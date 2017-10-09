@@ -30,6 +30,8 @@ class NO_BARK_VS_API ANBAIController : public AAIController
 
 	//Blackboard keys
 
+	EBotBehaviorType CurrentAiState;
+
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName TargetKeyName;
 
@@ -61,6 +63,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
 		FVector GetLastDetectedLocationKey();
+
+	UFUNCTION(BlueprintCallable, Category = "BlackBoard")
+		EBotBehaviorType GetAIStateKey();
+
 
 	/** Returns BehaviorComp subobject **/
 	FORCEINLINE UBehaviorTreeComponent* GetBehaviorComp() const { return BehaviorComp; }

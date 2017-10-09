@@ -3,6 +3,7 @@
 #include "PlayerSensingPawn.h"
 #include "Player/PlayController.h"
 #include "Perception/PawnSensingComponent.h"
+#include "../Monsters/Monster Types/NBSkinnyAI.h"
 
 // Sets default values
 APlayerSensingPawn::APlayerSensingPawn()
@@ -45,20 +46,16 @@ void APlayerSensingPawn::BeginPlay()
 }
 void APlayerSensingPawn::OnSeeEnemy(APawn * Pawn)
 {
+	//check if torch is not null
 	if (NBCharacter->CurrentTorch)
-	{
-		if (NBCharacter->CurrentTorch->GetTorchOnOff())
+	{	//when torch is activated
+
+		ANBSkinnyAI *Enemy = Cast<ANBSkinnyAI>(Pawn);
+		if (Enemy)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, Pawn->GetName());
-			SpawnParticleEffect(Pawn);
-
+			NBCharacter->CurrentTorch->IsEnemySeen = true;
+			NBCharacter->CurrentTorch->EnemyPawn = Enemy;
+			//SpawnParticleEffect(Pawn);
 		}
-
 	}
-	
-		//ANBBaseAI *Enemy = Cast<ANBBaseAI>(Pawn);
-	//if (Enemy)
-	//{
-	//	Enemy->OnStun();
-	//}
 }

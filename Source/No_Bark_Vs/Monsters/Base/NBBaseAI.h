@@ -11,6 +11,7 @@ class NO_BARK_VS_API ANBBaseAI : public ACharacter
 {
 	GENERATED_BODY()
 
+
 public:
 	// Sets default values for this character's properties
 	ANBBaseAI();
@@ -32,6 +33,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void OnStun();
+	//Action Just before Aggression
+	virtual void OnReact();
 
 	/* Triggered by pawn sensing component when a pawn is spotted */
 	/* When using functions as delegates they need to be marked with UFUNCTION(). We assign this function to FSeePawnDelegate */

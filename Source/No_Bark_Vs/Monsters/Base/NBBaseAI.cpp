@@ -81,6 +81,9 @@ void ANBBaseAI::OnDeath()
 void ANBBaseAI::OnStun()
 {
 }
+void ANBBaseAI::OnReact()
+{
+}
 void ANBBaseAI::OnSeePlayer(APawn * Pawn)
 {
 }

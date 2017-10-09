@@ -62,12 +62,16 @@ void ANBAIController::SetTargetKey(APawn* NewTarget)
 void ANBAIController::SetAIStateKey(EBotBehaviorType NewState)
 {
 	uint8 temp;
-
+	CurrentAiState = NewState;
 	if (BlackboardComp)
 	{
 		temp = static_cast<uint8>(NewState);
 		BlackboardComp->SetValueAsEnum(AIStateKeyName, temp);
 	}
+}
+EBotBehaviorType ANBAIController::GetAIStateKey()
+{
+	return CurrentAiState;
 }
 
 void ANBAIController::SetMoveToLocationKey(FVector LocationVector)
