@@ -304,6 +304,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float HitBlur;
 
+	UPROPERTY(EditDefaultsOnly, Category = Effects)
+		TSubclassOf<UCameraShake> HitCameraShake;
+
 	/************************************************************************/
 	/* Pickups                                                              */
 	/************************************************************************/
