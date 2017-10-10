@@ -10,6 +10,9 @@ UCLASS()
 class NO_BARK_VS_API ABaseTorch : public AActor
 {
 	GENERATED_BODY()
+
+
+
 	
 public:	
 	// Sets default values for this actor's properties
@@ -57,9 +60,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyIncreaseOnCrank;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool IsEnemySeen;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBCharacter* MyPawn;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
+		class ANBSkinnyAI* EnemyPawn;
 
 	/* Set the Torch's owning pawn */
 	void SetOwningPawn(class ANBCharacter* NewOwner);
@@ -86,14 +94,17 @@ public:
 		void TorchOnOff(bool bOnOrOff);
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
+		bool GetTorchOnOff();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void SetTorchIntensity();
 
 protected:
+
+	UPROPERTY()
+		bool IsTorchOn;
+
+
 	FHitResult TorchLightTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
-	void ProcessInstantHit(const FHitResult &Impact);
-
-
-
-
 
 };

@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+//#include "Perception/PawnSensingComponent.h"
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
 //#include "Engine.h"
@@ -29,20 +30,18 @@ ANBCharacter::ANBCharacter()
 	CurrentHealth = MaxHealth;
 	CurrentStamina = 100.0f;
 	MaxStamina = 100.0f;
-	CurrentMagic = 100.0f;
-	MaxMagic = 100.0f;
 	HealthRegenRate = 1.0f;
 	StaminaRegenRate = 1.0f;
 	SprintDeductionRate = 1.3f;
 	StaminaTimerRate = 0.5f;
 	HealthTimerRate = 1.0f;
-	MagicTimerRate = 1.0f;
 	bIsFiring = false;
 	IsTorchCrankerUp = false;
 	HitBlur = 0;
 	// Item
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
+
 
 	MoveComp = GetCharacterMovement();
 	// Adjust jump to make it less floaty
@@ -55,10 +54,6 @@ ANBCharacter::ANBCharacter()
 	// Enable movements
 	MoveComp->GetNavAgentPropertiesRef().bCanCrouch = true;
 	MoveComp->GetNavAgentPropertiesRef().bCanFly = true;
-
-	ABaseWeapon* aBaseWeapon = Cast<ABaseWeapon>(WeaponClass);
-	WeaponClass->IsChildOf(ABaseWeapon::StaticClass());
-	WeaponClass = ABaseWeapon::StaticClass();
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -89,7 +84,6 @@ ANBCharacter::ANBCharacter()
 	CameraMovemetMesh->SetupAttachment(GetCapsuleComponent());
 	CameraMovemetMesh->bCastDynamicShadow = false;
 	CameraMovemetMesh->CastShadow = false;
-
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -129,6 +123,8 @@ void ANBCharacter::BeginPlay()
 			
 		}
 	}
+
+
 }
 		
 void ANBCharacter::Tick(float DeltaSeconds)
@@ -185,46 +181,26 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::ReloadWeapon);
 }
 
+void ANBCharacter::OnSeeEnemy(APawn * Pawn)
+{
+	if (CurrentTorch != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "You Seean an Enemy!");
+	}
+
+}
+
 void ANBCharacter::EquipPrimaryWeapon()
 {
-	GetEquipment(0);
-	
 	
 	if (WeaponClass == NULL)
 	{			
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
 	}
 	else
 	{
-		//if (AnimInstance != NULL)
-		//{
-		//	AnimInstance->IsPrimaryEquiped = true;
-		//}
-		
 		SpawnWeapon(WeaponClass);
 		AttachEquipmentToHand();
-	}
-}
-
-void ANBCharacter::GetEquipment(int index)
-{
-	APlayController* playController = Cast<APlayController>(GetController());
-	if (playController)
-	{
-		if (playController->FCurrentEquippedWeapons.Num() >= index)
-		{
-			FCurrentInventoryItemInfo WeaponToEquipData = playController->FCurrentEquippedWeapons[index];
-			WeaponClass = WeaponToEquipData.ItemInfo.ItemWeaponClass;
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "wehavesomethingto Assign");
-		}
-		else
-		{
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Fail");
-		}
-	}
-	else
-	{
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "Failusingplayercontrooller");
 	}
 }
 
@@ -237,10 +213,16 @@ void ANBCharacter::SpawnTorch()
 	if (CurrentTorch == nullptr)
 	{
 		CurrentTorch = GetWorld()->SpawnActor<ABaseTorch>(TorchClass, SpawnParams);
-	}
+	} 
 	CurrentTorch->SetOwningPawn(this);
 
-	AttachTorchToHead();
+	//Attach Sensing component This is used as Torch collision component
+	if (SensingComponentPawn)
+	{
+		SensingComponentPawn->AttachToComponent(FPSCharacterArmMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, "Sense_Socket");
+	}
+
+	AttachTorchToGun();
 }
 
 void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
@@ -270,67 +252,6 @@ void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
 	CurrentWeapon->SetOwningPawn(this);
 }
 
-void ANBCharacter::SpawnWeaponOnSlot(TSubclassOf<class ABaseWeapon> iWeaponClass, EInventorySlot EquipSlot)
-{
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.Instigator = Instigator;
-
-	USkeletalMeshComponent* PawnMesh = GetMesh();
-	// if current weapon is empty assign current weapon
-	if (EquipSlot== EInventorySlot::Primary)
-	{
-		if (PrimaryWeapon == nullptr)
-		{
-			PrimaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
-
-			PrimaryWeapon->SetOwningPawn(this);
-			PrimaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, PrimaryAttachPoint);
-
-			//Detach from pawn to equip in hand
-			PrimaryWeapon->WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-			PrimaryWeapon->WeaponMesh->SetHiddenInGame(true);
-			EquipPrimaryWeapon();
-		}
-		else
-		{
-			PrimaryWeapon->Destroy();
-			PrimaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
-
-			PrimaryWeapon->SetOwningPawn(this);
-			PrimaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, PrimaryAttachPoint);
-
-		}
-	}
-	else if (EquipSlot == EInventorySlot::Secondary)
-	{
-		if (SecondaryWeapon == nullptr)
-		{
-			SecondaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
-			SecondaryWeapon->SetOwningPawn(this);
-			SecondaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SecondaryAttachPoint);
-
-		}
-		else
-		{
-			SecondaryWeapon->Destroy();
-			SecondaryWeapon = GetWorld()->SpawnActor<ABaseWeapon>(iWeaponClass, SpawnParams);
-			SecondaryWeapon->SetOwningPawn(this);
-			SecondaryWeapon->WeaponMesh->AttachToComponent(PawnMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SecondaryAttachPoint);
-
-		}
-		SecondaryWeapon->SetOwningPawn(this);
-	}
-	else if (EquipSlot == EInventorySlot::Pistol)
-	{
-		
-	}
-	else if (EquipSlot == EInventorySlot::Melee)
-	{
-
-	}
-
-}
 	
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
@@ -428,7 +349,8 @@ void ANBCharacter::CheckForInteractables()
 		return;
 	}
 	// If we didn't hit anything, or thing we hit was on to a interactable set current interactable nullptr. 
-	if (playController) {
+	else
+	{
 		playController->CurrentInteractable = nullptr;
 	}
 }
@@ -735,37 +657,18 @@ bool ANBCharacter::GetIsCrouched() const
 
 void ANBCharacter::TurnOnTorch()
 {
-	APlayController* playerController = Cast<APlayController>(GetController());
-	if (playerController->IsTorchOn)
+	if (CurrentTorch)
 	{
-		//if (CurrentWeapon)
-		//{
-		//	CurrentWeapon->TurnOnTorch();
-		//}
-		if (CurrentTorch)
-		{
-			CurrentTorch->TorchOnOff(true);
-		}
+		CurrentTorch->TorchOnOff(true);
 	}
-
-
 }
 
 
 void ANBCharacter::TurnOffTorch()
 {
-	APlayController* playerController = Cast<APlayController>(GetController());
-	if (playerController->IsTorchOn)
+	if (CurrentTorch)
 	{
-		if (CurrentWeapon)
-		{
-			CurrentWeapon->TurnOffTorch();
-		}
-
-		if (CurrentTorch)
-		{
-			CurrentTorch->TorchOnOff(false);
-		}
+		CurrentTorch->TorchOnOff(false);
 	}
 }
 void ANBCharacter::PlayPickUpAnimation()
@@ -793,7 +696,7 @@ void ANBCharacter::TorchCrank()
 	
 	if (CurrentWeapon)
 	{
-		if (playerController->IsTorchOn)
+		if (CurrentTorch!=nullptr)
 		{
 
 			if (IsTorchCrankerUp == true)
@@ -807,12 +710,8 @@ void ANBCharacter::TorchCrank()
 						ArmAnimInstance->Montage_Play(CrankingAnimation, 1.0f);
 					}
 				}
-				//Where actual cranking enegy bar is going up
-				CurrentWeapon->TorchCrank();
-				if (CurrentTorch)
-				{
-					CurrentTorch->TorchCrank();
-				}
+
+				CurrentTorch->TorchCrank();
 
 			}
 			else if (IsTorchCrankerUp == false)

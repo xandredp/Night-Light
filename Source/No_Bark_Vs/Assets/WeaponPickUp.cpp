@@ -1,18 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#include "TorchAttachmentPickUp.h"
+
+#include "WeaponPickUp.h"
 #include "Player/PlayController.h"
 
-
-
-
-
-
-ATorchAttachmentPickUp::ATorchAttachmentPickUp()
+AWeaponPickUp::AWeaponPickUp()
 {
 	ItemID = FName("Please EnterID");
 }
 
-void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
+
+void AWeaponPickUp::Interact(APlayerController * playerController)
 {
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
@@ -21,21 +18,24 @@ void ATorchAttachmentPickUp::Interact(APlayerController* playerController)
 		ANBCharacter* MyPawn = Cast<ANBCharacter>(aPlayController->GetPawn());
 		if (MyPawn)
 		{
-			MyPawn->PlayPickUpAnimation();
-			MyPawn->SpawnTorch();
+			if (MyPawn->CurrentWeapon == NULL)
+			{
+				MyPawn->PlayPickUpAnimation();
+				MyPawn->EquipPrimaryWeapon();
+			}
+
 		}
-		BeginWithTorchOn();
 		DestroyItemOnGround();
-	
 	}
 }
 
-void ATorchAttachmentPickUp::BeginPlay()
+void AWeaponPickUp::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
-void ATorchAttachmentPickUp::DestroyItemOnGround()
+void AWeaponPickUp::DestroyItemOnGround()
 {
 	Destroy();
 }

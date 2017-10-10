@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 //#include "Animation Instances/CharacterAnimInstance.h"
 #include "AI/Spawning/MonsterSpawner.h"
+#include "PlayerSensingPawn.h"
 //#include "Perception/PawnSensingComponent.h"
 #include "Engine/DataTable.h"
 #include "Core/BaseWeapon.h"
@@ -38,6 +39,7 @@ public:
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class USpringArmComponent* CameraBoom;
+
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -75,10 +77,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
+		 void OnSeeEnemy(APawn* Pawn);
+
 	void EquipPrimaryWeapon();
 
 	/************************************************************************/
-	/* Anim use                                                           */
+	/* Torch*/
 	/************************************************************************/
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 	void TurnOnTorch();
@@ -91,19 +96,10 @@ public:
 	void PowerUpTorch();
 
 
-
-	// Spawn monster function called by input binding
-	void Spawn();
-
-	void GetEquipment(int index);
-
 	void SpawnWeapon(TSubclassOf <class ABaseWeapon> iWeaponClass);
-	void SpawnWeaponOnSlot(TSubclassOf <class ABaseWeapon> iWeaponClass, EInventorySlot Slot);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void AttachEquipmentToHand();
-
-
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -182,17 +178,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	ABaseWeapon *CurrentWeapon;
 	//Primary Weapon Held Item
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *PrimaryWeapon;
-	//Secondary Weapon Held Item
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *SecondaryWeapon;
-	//Melee  Weapon Held Item
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *MeleeWeapon;
-	//Pistol 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseWeapon *PistolWeapon;
 
 	/************************************************************************/
 	/* Torch use                                                           */
@@ -205,11 +190,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		ABaseTorch *CurrentTorch;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		APlayerSensingPawn *SensingComponentPawn;
+
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void SpawnTorch();
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void AttachTorchToHead();
+		void AttachTorchToGun();
 
 public:
 	/* Return socket name for attachments (to match the socket in the character skeleton) */
@@ -238,14 +226,11 @@ public:
 		float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float CurrentMagic;
+		float HealthRegenRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float MaxMagic;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float HealthRegenRate;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float StaminaRegenRate;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float SprintDeductionRate;
 
@@ -256,20 +241,16 @@ public:
 		float HealthTimerRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		float MagicTimerRate;
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float walkingSpeed;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxSprintSpeed;
+
 	/* Attachpoint for secondary weapons */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bIsDead;
-	/* Attachpoint for secondary weapons */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		bool bIs;
-	/* Attachpoint for secondary weapons */
+
+	/* scorecounter*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int CurrentScore;
 
@@ -295,6 +276,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseScore(int decreaseVal);
 
+	/*This value is used in Enemy to detect the player 1.0 will take longer and 0.0 will be immediate detection formular
+	PawnSeenValue * DetectionMaxTime*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Condition")
+		float ValToMakePawnUnDetected;
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void DestroyAndBackToMenu();
