@@ -260,6 +260,9 @@ void ANBCharacter::DecreaseHealth(float decreaseVal)
 		CurrentHealth -= decreaseVal;	
 		HitBlur = 10;
 
+		APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+		PC->ClientPlayCameraShake(HitCameraShake, 1, ECameraAnimPlaySpace::CameraLocal, FRotator(0, 0, 0));
+
 	}
 	else
 	{
