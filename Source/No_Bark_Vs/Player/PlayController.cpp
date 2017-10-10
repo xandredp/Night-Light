@@ -27,6 +27,10 @@ APlayController::APlayController()
 	FCurrentEquippedMeleeWeapon.ItemInfo.eItemType = EItemType::MeleeWeapon;
 	MyCurrentCurrency = 0.0f;
 }
+bool APlayController::IsInteract()
+{//ABaseInteractable
+	return (CurrentInteractable != nullptr);
+}
 
 void APlayController::Interact()
 {//ABaseInteractable
@@ -39,10 +43,6 @@ void APlayController::Interact()
 	}
 }
 
-bool APlayController::IsInteract()
-{//ABaseInteractable
-	return (CurrentInteractable != nullptr);
-}
 
 void APlayController::OpenInventory()
 {

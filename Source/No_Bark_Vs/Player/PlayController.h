@@ -36,11 +36,10 @@ public:
 		void OpenMap();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-		void Interact();
+		bool IsInteract();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
-	bool IsInteract();
-	
+		void Interact();
 	// inventory interaction functions
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void UseItem(FCurrentInventoryItemInfo iItemInfo);
