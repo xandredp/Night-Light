@@ -9,10 +9,6 @@
 #include "Core/BaseTorch.h"
 #include "Blueprint/UserWidget.h"
 
-
-
-
-
 APlayController::APlayController()
 {
 	bShowMouseCursor = false;
@@ -29,8 +25,11 @@ void APlayController::Interact()
 
 	}
 }
+bool APlayController::IsInteract()
+{//ABaseInteractable
+	return (CurrentInteractable != nullptr);
+}
 
-//private?
 void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 {
 	FInputModeGameAndUI InputMode;

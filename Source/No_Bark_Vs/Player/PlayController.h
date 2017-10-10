@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void Interact();
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		bool IsInteract();
+
 	/************************************************************************/
 	/* Inventory                                                      */
 	/************************************************************************/
