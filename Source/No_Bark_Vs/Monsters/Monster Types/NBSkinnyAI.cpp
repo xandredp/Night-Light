@@ -218,9 +218,21 @@ void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp,
 		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 		if (OtherPawn)
 		{
-			//health decrease of other pawn. 
-			OtherPawn->DecreaseHealth(CurrentAttackDamage);
-			
+			if (OtherPawn->IsBeingAttacked == false)
+			{
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "true");
+				OtherPawn->IsBeingAttacked = true;
+				//health decrease of other pawn. 
+				OtherPawn->DecreaseHealth(CurrentAttackDamage);
+			}
+			else
+			{
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "false");
+			}
+	
+
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(OtherPawn->CurrentHealth));
+		
 		}
 	}
 }
@@ -229,7 +241,12 @@ void ANBSkinnyAI::OnEndOverlapStrikeCharacter(UPrimitiveComponent * OverlappedCo
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-
+		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+		if (OtherPawn)
+		{
+			OtherPawn->IsBeingAttacked = false;
+		}
+	
 	}
 }
 
