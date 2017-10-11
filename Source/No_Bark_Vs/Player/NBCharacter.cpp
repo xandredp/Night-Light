@@ -103,6 +103,7 @@ ANBCharacter::ANBCharacter()
 	FPSCharacterArmMesh->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
 	FPSCharacterArmMesh->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
 	LockMovement = false;
+	IsBeingAttacked = false;
 }
 
 void ANBCharacter::BeginPlay()

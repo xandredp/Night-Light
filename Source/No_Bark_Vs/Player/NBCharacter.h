@@ -299,6 +299,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxInteractDistance;
 
+	/************************************************************************/
+	/* Enemy Attacking                                                       */
+	/************************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool IsBeingAttacked;
+
 private:
 	/* Attachpoint for active weapon/item in hands */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
