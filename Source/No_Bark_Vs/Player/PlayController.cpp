@@ -19,10 +19,8 @@ void APlayController::Interact()
 {//ABaseInteractable
 	if (CurrentInteractable)
 	{
-
 		CurrentInteractable->Interact(this);
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
-
 	}
 }
 bool APlayController::IsInteract()

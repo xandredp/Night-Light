@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Perception/PawnSensingComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -29,7 +30,8 @@ ANBBaseAI::ANBBaseAI()
 	PawnSensingComp->LOSHearingThreshold = 1200;
 
 	bIsSuspicious = false;
-
+	MaxHealth = 100.0f;
+	Health = MaxHealth;
 
 }
 
@@ -61,9 +63,9 @@ void ANBBaseAI::OnDeath()
 
 		DetachFromControllerPendingDestroy();
 		/* Disable all collision on capsule */
-		UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
-		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+		//UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+		//GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		//GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 
 		USkeletalMeshComponent* Mesh3P = GetMesh();
 		if (Mesh3P)
@@ -90,6 +92,33 @@ void ANBBaseAI::OnSeePlayer(APawn * Pawn)
 void ANBBaseAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
 {
 }
+void ANBBaseAI::OnShotAt()
+{
+}
+bool ANBBaseAI::GetMonsterDead()
+{
+	if (Health <= 0.0f)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
+
+}
+void ANBBaseAI::ApplyDamage(AActor * DamagedActor, float BaseDamage, FVector const & HitFromDirection, FHitResult const & HitInfo, AController * EventInstigator, AActor * DamageCauser, TSubclassOf<UDamageType> DamageTypeClass)
+{
+	if (Health <= 0.0f)
+	{
+		
+	}
+	else
+	{
+		UGameplayStatics::ApplyPointDamage(DamagedActor, BaseDamage, HitFromDirection, HitInfo, EventInstigator, DamageCauser, DamageTypeClass);
+	}
+}
+
 void ANBBaseAI::ReduceHealth(int DamageValue)
 {
 	if (Health <= 0.0f)
@@ -98,6 +127,7 @@ void ANBBaseAI::ReduceHealth(int DamageValue)
 	}
 	else
 	{
+			
 		Health -= DamageValue;
 	}
 }

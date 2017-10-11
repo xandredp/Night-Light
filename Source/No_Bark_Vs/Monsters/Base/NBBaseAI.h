@@ -43,6 +43,9 @@ public:
 
 	UFUNCTION()
 		virtual void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
+	
+	UFUNCTION()
+		virtual void OnShotAt();
 
 
 protected:
@@ -104,9 +107,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float MaxHealth;
 
-
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		bool GetMonsterDead();
 
 	// inventory interaction functions
+	UFUNCTION(BlueprintCallable, Category = "Monster")
+		void ApplyDamage(AActor* DamagedActor, float BaseDamage,
+			FVector const& HitFromDirection,
+			FHitResult const& HitInfo, AController* EventInstigator,
+			AActor* DamageCauser,
+			TSubclassOf<UDamageType> DamageTypeClass);
+	
+
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void ReduceHealth(int DamageValue);
 
@@ -121,5 +133,18 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		void PlayAnimation(class UAnimMontage* AnimMontageToPlay);
+
+
+	/************************************************************************/
+	/* Light                                            */
+	/************************************************************************/
+
+	/* Checks If Monster is in Lighth (Generator) */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bisMonsterInLight;
+	/* Checks If Monster is in Lighth (Generator) This is used on Blueprint For easy Twick*/
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Status")
+		void MonsterInLight(bool isinLight);
 
 };

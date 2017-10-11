@@ -99,6 +99,14 @@ void ANBSkinnyAI::BeginPlay()
 	}
 
 	SetAIState(EBotBehaviorType::Neutral);
+	ANBAIController* AIController = Cast<ANBAIController>(GetController());
+	ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(GetController()->GetControlledPawn());
+	if (NBCharacterPawn && AIController)
+	{
+		AIController->SetTargetKey(NBCharacterPawn);
+		NBPlayerCharacter = NBCharacterPawn;
+	}
+
 }
 
 void ANBSkinnyAI::OnStun()
@@ -113,42 +121,46 @@ void ANBSkinnyAI::OnReact()
 		PlayAnimation(ReactAnimation);
 	}
 }
-
 void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 {
-	ANBAIController* AIController = Cast<ANBAIController>(GetController());
-	ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(Pawn);
-	/* if sensed pawn is the player*/
-	if (NBCharacterPawn && AIController)
+	if (GetMonsterDead() == false)
 	{
-		AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
-		/*if the monster detect the player for first  time*/
-		if (bIsSuspicious == false)
-		{
-			FirstDetectedTime = GetWorld()->GetTimeSeconds();
-			LastDetectedTime = GetWorld()->GetTimeSeconds();
-			bIsSuspicious = true;
-			SetAIState(EBotBehaviorType::Suspicious);
-		}
-		/*When the monster has already seen you few seconds ago*/
-		else
-		{
-			//continue updating Last SeenTime.
-			LastDetectedTime = GetWorld()->GetTimeSeconds();
 
-			if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(Pawn);
+		/* if sensed pawn is the player*/
+		if (NBCharacterPawn && AIController)
+		{
+
+			AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+			/*if the monster detect the player for first  time*/
+			if (bIsSuspicious == false)
 			{
-				//if the last time seen is bigger than maximun duration
-				if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
-				{
-					AIController->SetTargetKey(NBCharacterPawn);
-					SetAIState(EBotBehaviorType::Agression);
-				}
+				FirstDetectedTime = GetWorld()->GetTimeSeconds();
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				bIsSuspicious = true;
+				SetAIState(EBotBehaviorType::Suspicious);
 			}
-	
-		}
+			/*When the monster has already seen you few seconds ago*/
+			else
+			{
+				//continue updating Last SeenTime.
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
 
-		
+				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
+				{
+					//if the last time seen is bigger than maximun duration
+					if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
+					{
+
+						SetAIState(EBotBehaviorType::Agression);
+					}
+				}
+
+			}
+
+
+		}
 	}
 
 	
@@ -156,27 +168,56 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 
 void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
 {
-	ANBAIController* AIController = Cast<ANBAIController>(GetController());
-	ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
-	/* if sensed pawn is the player*/
-	if (NBCharacterPawn && AIController)
+	if (GetMonsterDead() == false)
 	{
-		AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
-		/*if the monster detect the player for first  time*/
-		if (bIsSuspicious == false)
-		{
-			FirstDetectedTime = GetWorld()->GetTimeSeconds();
-			LastDetectedTime = GetWorld()->GetTimeSeconds();
-			bIsSuspicious = true;
-			SetAIState(EBotBehaviorType::Suspicious);
-		}
-		/*When the monster has already seen you few seconds ago*/
-		else
-		{
-			//continue updating Last DetectedTime.
-			LastDetectedTime = GetWorld()->GetTimeSeconds();
-		}
 
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
+		/* if sensed pawn is the player*/
+		if (NBCharacterPawn && AIController)
+		{
+			AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+			/*if the monster detect the player for first  time*/
+			if (bIsSuspicious == false)
+			{
+				FirstDetectedTime = GetWorld()->GetTimeSeconds();
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				bIsSuspicious = true;
+				SetAIState(EBotBehaviorType::Suspicious);
+			}
+			/*When the monster has already seen you few seconds ago*/
+			else
+			{
+				//continue updating Last DetectedTime.
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+			}
+
+		}
+	}
+}
+
+void ANBSkinnyAI::OnShotAt()
+{
+	if (GetMonsterDead() == false)
+	{
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		/* if sensed pawn is the player*/
+		if (AIController)
+		{
+			if (NBPlayerCharacter != nullptr)
+			{
+				AIController->SetLastDetectedLocationKey(NBPlayerCharacter->GetActorLocation());
+			}
+			/*if the monster detect the player for first  time*/
+			if (bIsSuspicious == false)
+			{
+				FirstDetectedTime = GetWorld()->GetTimeSeconds();
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				bIsSuspicious = true;
+				SetAIState(EBotBehaviorType::Suspicious);
+			}
+
+		}
 	}
 }
 void ANBSkinnyAI::CountingPlayerUndetectedTime()
@@ -200,41 +241,44 @@ void ANBSkinnyAI::CountingPlayerUndetectedTime()
 }
 void ANBSkinnyAI::SimulateMeleeStrike()
 {
-	EAttackValue AttackType = static_cast<EAttackValue>(FMath::RandRange(0, 2));
-	UAnimMontage* AttackAnimation = GetAttackAnim(AttackType);
-	if (IsAnimPlaying != true)
+	if (GetMonsterDead() == false)
 	{
-		PlayAnimation(AttackAnimation);
-		//PlaySound(SoundIdle);
-	}
+		EAttackValue AttackType = static_cast<EAttackValue>(FMath::RandRange(0, 2));
+		UAnimMontage* AttackAnimation = GetAttackAnim(AttackType);
+		if (IsAnimPlaying != true)
+		{
+			PlayAnimation(AttackAnimation);
+			//PlaySound(SoundIdle);
+		}
 
+	}
 }
 
 
 void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	if (GetMonsterDead() == false)
 	{
-		ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
-		if (OtherPawn)
+		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 		{
-			if (OtherPawn->IsBeingAttacked == false)
+			ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
+			if (OtherPawn)
 			{
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "true");
-				OtherPawn->IsBeingAttacked = true;
-				//health decrease of other pawn. 
-				OtherPawn->DecreaseHealth(CurrentAttackDamage);
+				if (OtherPawn->IsBeingAttacked == false)
+				{
+					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "true");
+					OtherPawn->IsBeingAttacked = true;
+					//health decrease of other pawn. 
+					OtherPawn->DecreaseHealth(CurrentAttackDamage);
+				}
+				else
+				{
+					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "false");
+				}
 			}
-			else
-			{
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "false");
-			}
-	
-
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(OtherPawn->CurrentHealth));
-		
 		}
 	}
+	
 }
 
 void ANBSkinnyAI::OnEndOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
@@ -252,31 +296,35 @@ void ANBSkinnyAI::OnEndOverlapStrikeCharacter(UPrimitiveComponent * OverlappedCo
 
 void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	if (GetMonsterDead() == false)
 	{
 
-		ANBAIController* AIController = Cast<ANBAIController>(GetController());
-		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(OtherActor);
-		/* if sensed pawn is the player*/
-		if (NBCharacterPawn && AIController)
+		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 		{
-			AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+
+			ANBAIController* AIController = Cast<ANBAIController>(GetController());
+			ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(OtherActor);
+			/* if sensed pawn is the player*/
+			if (NBCharacterPawn && AIController)
+			{
+				AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+			}
+			if (bIsSuspicious == false)
+			{
+				FirstDetectedTime = GetWorld()->GetTimeSeconds();
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				bIsSuspicious = true;
+				SetAIState(EBotBehaviorType::Suspicious);
+			}
+			/*When the monster has already seen you few seconds ago*/
+			else
+			{
+				SetAIState(EBotBehaviorType::Agression);
+			}
+
+			//Settimeto start for animation and sound of melleestrike. 
+			GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
 		}
-		if (bIsSuspicious == false)
-		{
-			FirstDetectedTime = GetWorld()->GetTimeSeconds();
-			LastDetectedTime = GetWorld()->GetTimeSeconds();
-			bIsSuspicious = true;
-			SetAIState(EBotBehaviorType::Suspicious);
-		}
-		/*When the monster has already seen you few seconds ago*/
-		else
-		{
-			SetAIState(EBotBehaviorType::Agression);
-		}
-		
-		//Settimeto start for animation and sound of melleestrike. 
-		GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
 	}
 	
 }
@@ -292,11 +340,14 @@ void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AAc
 
 void ANBSkinnyAI::SetTranparentMaterial()
 {
-	//Material Path
-	FString matPath = "Material'/Game/Textures/Monster/Mon_M_Darkness.uasset'";
-	//Material Instance
-	UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
-	this->GetMesh()->SetMaterial(0, material);
+	if (GetMonsterDead() == false)
+	{
+		//Material Path
+		FString matPath = "Material'/Game/Textures/Monster/Mon_M_Darkness.uasset'";
+		//Material Instance
+		UMaterialInstanceConstant* material = Cast<UMaterialInstanceConstant>(StaticLoadObject(UMaterialInstanceConstant::StaticClass(), nullptr, *(matPath)));
+		this->GetMesh()->SetMaterial(0, material);
+	}
 }
 
 

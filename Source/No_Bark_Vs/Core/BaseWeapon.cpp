@@ -215,64 +215,63 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 {
 	float ActualHitDamage = WeaponConfig.WeaponDamage;
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
-	AActor *AI = Cast<ANBBaseAI>(Impact.GetActor());
-	AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+	
+	ANBBaseAI *Enemy = Cast<ANBBaseAI>(Impact.GetActor());
+	//AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
 	float Damage = 10.0f;
 
 	APlayController* const PC = Instigator ? Cast<APlayController>(Instigator->Controller) : nullptr;
 	float CurrentDamage = 0;
 //	if (PhysMat && DmgType)
-	if (AI)
-	{
-		
-			ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
-			UGameplayStatics::ApplyPointDamage(AI, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
+	if (Enemy!= nullptr)
+	{	
+		ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
+		Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
 
+		//UGameplayStatics::ApplyPointDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
+		if (PhysMat)
+		{
+
+			if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
+			{
+
+				CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
+				Enemy->ReduceHealth(CurrentDamage);
+				Enemy->OnShotAt();
+			}
+			else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
+			{
+				CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
+				Enemy->ReduceHealth(CurrentDamage);
+				Enemy->OnShotAt();
+			}
+			else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
+			{
+				CurrentDamage = WeaponConfig.WeaponDamage;
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
+				Enemy->ReduceHealth(CurrentDamage);
+				Enemy->OnShotAt();
+			}
+			else if (PhysMat->SurfaceType == SURFACE_FLESH)
+			{
+
+				//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A FLESH!!");
+			}
+			else if (PhysMat->SurfaceType == SURFACE_DEFAULT)
+			{
+
+				//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A DEFAULT!!");
+			}
+			else
+			{
+
+			}
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::SanitizeFloat(Enemy->Health));
 	}
-	if (PhysMat && Enemy)
-	{
-		
-		if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
-		{
-			
-			CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
-			Enemy->ReduceHealth(CurrentDamage);
-			Enemy->OnShot(GetPawnOwner());			
-		}
-		else if (PhysMat->SurfaceType == SURFACE_ENEMYLIMB)
-		{
-			CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
-			Enemy->ReduceHealth(CurrentDamage);
-			Enemy->OnShot(GetPawnOwner());
-
-		}
-		else if (PhysMat->SurfaceType == SURFACE_ENEMYBODY)
-		{
-			CurrentDamage = WeaponConfig.WeaponDamage;
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
-			Enemy->ReduceHealth(CurrentDamage);
-			Enemy->OnShot(GetPawnOwner());
-
-		}
-		else if (PhysMat->SurfaceType == SURFACE_FLESH)
-		{
-
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A FLESH!!");
-		}
-		else if (PhysMat->SurfaceType == SURFACE_DEFAULT)
-		{
-
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A DEFAULT!!");
-		}
-		else
-		{
-		//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "What Did you hit!!");
-		}
-	}
-
-	VisualInstantHit(Impact.ImpactPoint);
+		VisualInstantHit(Impact.ImpactPoint);
 }
 
 void ABaseWeapon::SetOwningPawn(ANBCharacter * NewOwner)
@@ -473,10 +472,11 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 
 		/* This function prepares an actor to spawn, but requires another call to finish the actual spawn progress. This allows manipulation of properties before entering into the level */
 		ABaseImpactEffect* EffectActor = GetWorld()->SpawnActorDeferred<ABaseImpactEffect>(ImpactTemplate, FTransform(Impact.ImpactPoint.Rotation(), Impact.ImpactPoint));
-		AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+		ANBBaseAI *Enemy = Cast<ANBBaseAI>(Impact.GetActor());
 		if (Enemy)
 		{
-			if (Enemy->bisMonsterInLight)
+			EffectActor->IsEnemyInDark = false;
+	/*		if (Enemy->bisMonsterInLight)
 			{
 				if (EffectActor)
 				{
@@ -490,7 +490,7 @@ void ABaseWeapon::VisualImpactEffects(const FHitResult& Impact)
 					EffectActor->IsEnemyInDark = true;
 				}
 
-			}
+			}*/
 		}
 
 		if (EffectActor)

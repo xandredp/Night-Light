@@ -47,6 +47,9 @@ public:
 	UFUNCTION()
 		virtual void OnHearNoise(APawn* PawnInstigator, const FVector& Location, float Volume);
 
+	UFUNCTION()
+		virtual void OnShotAt();
+
 	/*counting howlong the player has been undetected for if long calms the monster*/
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void CountingPlayerUndetectedTime();
@@ -131,6 +134,9 @@ public:
 		float StunnedWalkSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		float FleeWalkSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+		class ANBCharacter* NBPlayerCharacter;
 
 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
