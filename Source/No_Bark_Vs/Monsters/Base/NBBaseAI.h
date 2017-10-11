@@ -94,8 +94,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float InLightAttackDamage;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float CurrentAttackDamage;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float MaxHealth;
 
 
 

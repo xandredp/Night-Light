@@ -71,8 +71,16 @@ ANBSkinnyAI::ANBSkinnyAI()
 	ChargeWalkSpeed = 100;
 	StunnedWalkSpeed = 0;
 	FleeWalkSpeed = 100;
-	SenseTimeOut = 10.0;
+	SenseTimeOut = 2.5;
 	DetectionMaxTime = 10.0f;
+	//BaseMonster Variables
+	CurrentAttackDamage = 20.0f;
+	InLightAttackDamage = 10.0f;
+	InDarkAttackDamage = 30.0f;
+	InLightMovementSpeed = 0.8f;
+	InDarkMovementSpeed = 1.5f;
+	MaxHealth = 100.0f;
+	Health = MaxHealth;
 	
 }
 
@@ -211,6 +219,7 @@ void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp,
 		if (OtherPawn)
 		{
 			//health decrease of other pawn. 
+			OtherPawn->DecreaseHealth(CurrentAttackDamage);
 			
 		}
 	}
@@ -228,6 +237,27 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
+
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(OtherActor);
+		/* if sensed pawn is the player*/
+		if (NBCharacterPawn && AIController)
+		{
+			AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+		}
+		if (bIsSuspicious == false)
+		{
+			FirstDetectedTime = GetWorld()->GetTimeSeconds();
+			LastDetectedTime = GetWorld()->GetTimeSeconds();
+			bIsSuspicious = true;
+			SetAIState(EBotBehaviorType::Suspicious);
+		}
+		/*When the monster has already seen you few seconds ago*/
+		else
+		{
+			SetAIState(EBotBehaviorType::Agression);
+		}
+		
 		//Settimeto start for animation and sound of melleestrike. 
 		GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
 	}
