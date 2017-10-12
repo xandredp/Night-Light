@@ -81,6 +81,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	InDarkMovementSpeed = 1.5f;
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
+	MinAgressiveDistant = 500.0f;
 	
 }
 
@@ -99,13 +100,6 @@ void ANBSkinnyAI::BeginPlay()
 	}
 
 	SetAIState(EBotBehaviorType::Neutral);
-	ANBAIController* AIController = Cast<ANBAIController>(GetController());
-	ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(GetController()->GetControlledPawn());
-	if (NBCharacterPawn && AIController)
-	{
-		AIController->SetTargetKey(NBCharacterPawn);
-		NBPlayerCharacter = NBCharacterPawn;
-	}
 
 }
 
@@ -125,14 +119,19 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 {
 	if (GetMonsterDead() == false)
 	{
-
 		ANBAIController* AIController = Cast<ANBAIController>(GetController());
 		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(Pawn);
+
 		/* if sensed pawn is the player*/
 		if (NBCharacterPawn && AIController)
 		{
 
-			AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+			if (NBPlayerCharacter == nullptr)
+			{
+				NBPlayerCharacter = NBCharacterPawn;
+				AIController->SetTargetKey(NBPlayerCharacter);
+			}
+
 			/*if the monster detect the player for first  time*/
 			if (bIsSuspicious == false)
 			{
@@ -141,23 +140,37 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 				bIsSuspicious = true;
 				SetAIState(EBotBehaviorType::Suspicious);
 			}
-			/*When the monster has already seen you few seconds ago*/
-			else
-			{
-				//continue updating Last SeenTime.
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
 
+			//if player is further away than MinAgressiveDistant 
+			if (GetDistanceTo(NBCharacterPawn) > MinAgressiveDistant)
+			{				
+				/*When the monster has already seen you few seconds ago*/		
 				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
 				{
+					//continue updating Last SeenTime.
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+
 					//if the last time seen is bigger than maximun duration
 					if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
 					{
-
+						
 						SetAIState(EBotBehaviorType::Agression);
 					}
 				}
 
+				
 			}
+			//if player is closer
+			else
+			{
+				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
+				{
+					//continue updating Last SeenTime.
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+					SetAIState(EBotBehaviorType::Agression);
+				}		
+			}
+			
 
 
 		}
@@ -176,22 +189,28 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 		/* if sensed pawn is the player*/
 		if (NBCharacterPawn && AIController)
 		{
-			AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
-			/*if the monster detect the player for first  time*/
-			if (bIsSuspicious == false)
+			//if player is further away than MinAgressiveDistant 
+			if (GetDistanceTo(NBCharacterPawn) > MinAgressiveDistant)
 			{
-				FirstDetectedTime = GetWorld()->GetTimeSeconds();
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
-				bIsSuspicious = true;
-				SetAIState(EBotBehaviorType::Suspicious);
+				//do nothing
 			}
-			/*When the monster has already seen you few seconds ago*/
 			else
 			{
-				//continue updating Last DetectedTime.
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+				/*if the monster detect the player for first  time*/
+				if (bIsSuspicious == false)
+				{
+					FirstDetectedTime = GetWorld()->GetTimeSeconds();
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+					bIsSuspicious = true;
+					SetAIState(EBotBehaviorType::Suspicious);
+				}
+				/*When the monster has already seen you few seconds ago*/
+				else
+				{	//continue updating Last DetectedTime.
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+				}
 			}
-
 		}
 	}
 }
@@ -308,22 +327,24 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 			if (NBCharacterPawn && AIController)
 			{
 				AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
-			}
-			if (bIsSuspicious == false)
-			{
-				FirstDetectedTime = GetWorld()->GetTimeSeconds();
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
-				bIsSuspicious = true;
-				SetAIState(EBotBehaviorType::Suspicious);
-			}
-			/*When the monster has already seen you few seconds ago*/
-			else
-			{
-				SetAIState(EBotBehaviorType::Agression);
+
+				if (bIsSuspicious == false)
+				{
+					FirstDetectedTime = GetWorld()->GetTimeSeconds();
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+					bIsSuspicious = true;
+					SetAIState(EBotBehaviorType::Suspicious);
+				}
+				/*When the monster has already seen you few seconds ago*/
+				else
+				{
+					SetAIState(EBotBehaviorType::Agression);
+				}
+
+				//Settimeto start for animation and sound of melleestrike. 
+				GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
 			}
 
-			//Settimeto start for animation and sound of melleestrike. 
-			GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
 		}
 	}
 	

@@ -134,6 +134,8 @@ public:
 		float StunnedWalkSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		float FleeWalkSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		float MinAgressiveDistant;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
 		class ANBCharacter* NBPlayerCharacter;
