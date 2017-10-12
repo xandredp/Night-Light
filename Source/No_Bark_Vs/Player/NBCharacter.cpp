@@ -38,6 +38,7 @@ ANBCharacter::ANBCharacter()
 	bIsFiring = false;
 	IsTorchCrankerUp = false;
 	HitBlur = 0;
+	ValToMakePawnUnDetected = 1.0;
 	// Item
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
