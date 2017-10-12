@@ -81,7 +81,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	InDarkMovementSpeed = 1.5f;
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
-	MinAgressiveDistant = 200.0f;
+	MinAgressiveDistant = 500.0f;
 	
 }
 
@@ -131,41 +131,44 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 				NBPlayerCharacter = NBCharacterPawn;
 				AIController->SetTargetKey(NBPlayerCharacter);
 			}
+
+			/*if the monster detect the player for first  time*/
+			if (bIsSuspicious == false)
+			{
+				FirstDetectedTime = GetWorld()->GetTimeSeconds();
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				bIsSuspicious = true;
+				SetAIState(EBotBehaviorType::Suspicious);
+			}
+
 			//if player is further away than MinAgressiveDistant 
 			if (GetDistanceTo(NBCharacterPawn) > MinAgressiveDistant)
-			{
-				/*if the monster detect the player for first  time*/
-				if (bIsSuspicious == false)
-				{
-					FirstDetectedTime = GetWorld()->GetTimeSeconds();
-					LastDetectedTime = GetWorld()->GetTimeSeconds();
-					bIsSuspicious = true;
-					SetAIState(EBotBehaviorType::Suspicious);
-				}
-				/*When the monster has already seen you few seconds ago*/
-				else
+			{				
+				/*When the monster has already seen you few seconds ago*/		
+				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
 				{
 					//continue updating Last SeenTime.
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 
-					if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
+					//if the last time seen is bigger than maximun duration
+					if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
 					{
-						//if the last time seen is bigger than maximun duration
-						if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
-						{
-
-							SetAIState(EBotBehaviorType::Agression);
-						}
+						
+						SetAIState(EBotBehaviorType::Agression);
 					}
-
 				}
+
+				
 			}
 			//if player is closer
 			else
 			{
-				//continue updating Last SeenTime.
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
-				SetAIState(EBotBehaviorType::Agression);
+				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
+				{
+					//continue updating Last SeenTime.
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+					SetAIState(EBotBehaviorType::Agression);
+				}		
 			}
 			
 
@@ -204,8 +207,7 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 				}
 				/*When the monster has already seen you few seconds ago*/
 				else
-				{
-					//continue updating Last DetectedTime.
+				{	//continue updating Last DetectedTime.
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 				}
 			}

@@ -30,6 +30,7 @@ ANBBaseAI::ANBBaseAI()
 	PawnSensingComp->LOSHearingThreshold = 1200;
 
 	bIsSuspicious = false;
+	
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
 
