@@ -55,6 +55,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	AttackRangeAnimationTriggerSphere->SetSphereRadius(150);
 	AttackRangeAnimationTriggerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	AttackRangeAnimationTriggerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	AttackRangeAnimationTriggerSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	AttackRangeAnimationTriggerSphere->SetupAttachment(GetCapsuleComponent());
 	AttackRangeAnimationTriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &ANBSkinnyAI::OnOverlapStartAnim);
 	AttackRangeAnimationTriggerSphere->OnComponentEndOverlap.AddDynamic(this, &ANBSkinnyAI::OnEndOverlapStopAnim);
@@ -83,6 +84,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	Health = MaxHealth;
 	MinAgressiveDistant = 500.0f;
 	
+
 }
 
 // Called when the game starts or when spawned
@@ -318,9 +320,6 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 	if (GetMonsterDead() == false)
 	{
 
-		if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
-		{
-
 			ANBAIController* AIController = Cast<ANBAIController>(GetController());
 			ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(OtherActor);
 			/* if sensed pawn is the player*/
@@ -345,7 +344,7 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 				GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
 			}
 
-		}
+		
 	}
 	
 }

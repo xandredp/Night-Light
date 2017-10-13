@@ -61,7 +61,8 @@ void ANBBaseAI::OnDeath()
 	{	//play sound
 		//AudioLoopComp->SetSound(SoundDeathAttack);
 		AudioLoopComp->Play();
-
+		SpawnDropItems();
+		
 		DetachFromControllerPendingDestroy();
 		/* Disable all collision on capsule */
 		//UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
@@ -79,6 +80,8 @@ void ANBBaseAI::OnDeath()
 
 		//stop sound
 		AudioLoopComp->Stop();
+
+		
 	}
 }
 void ANBBaseAI::OnStun()

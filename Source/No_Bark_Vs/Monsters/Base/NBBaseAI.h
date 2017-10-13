@@ -147,4 +147,20 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Status")
 		void MonsterInLight(bool isinLight);
 
+	/************************************************************************/
+	/* Drop Items                                                */
+	/************************************************************************/
+
+	//Primary Weapon Held Item
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		TSubclassOf <class ABaseInteractable> DropItemOnDeath;
+
+	//Primary Weapon Held Item
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		class AKeyForDoor* DropKeyOnDeath;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
+		void SpawnDropItems();
+
+
 };
