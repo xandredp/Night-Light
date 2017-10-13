@@ -90,6 +90,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float InLightMovementSpeed;
+	//debug get movement speed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		float CurrentMovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		float InDarkAttackDamage;

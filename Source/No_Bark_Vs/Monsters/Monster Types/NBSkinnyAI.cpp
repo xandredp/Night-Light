@@ -155,7 +155,7 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 					//if the last time seen is bigger than maximun duration
 					if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
 					{
-						
+						OnReact();
 						SetAIState(EBotBehaviorType::Agression);
 					}
 				}
@@ -167,10 +167,12 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 			{
 				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
 				{
+					OnReact();
 					//continue updating Last SeenTime.
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 					SetAIState(EBotBehaviorType::Agression);
-				}		
+				}
+
 			}
 			
 
@@ -413,7 +415,7 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 			break;
 		case EBotBehaviorType::Agression:
 			SetWalkSpeed(AggressionWalkSpeed);
-			OnReact();
+		
 			AIController->SetAIStateKey(EBotBehaviorType::Agression);
 			
 			break;

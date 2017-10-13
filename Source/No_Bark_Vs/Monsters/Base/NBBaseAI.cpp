@@ -65,9 +65,9 @@ void ANBBaseAI::OnDeath()
 		
 		DetachFromControllerPendingDestroy();
 		/* Disable all collision on capsule */
-		//UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
-		//GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		//GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+		UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 
 		USkeletalMeshComponent* Mesh3P = GetMesh();
 		if (Mesh3P)
@@ -172,7 +172,14 @@ void ANBBaseAI::SetRagdollPhysics(const FName & boneName, float PhysicsBlendWeig
 }
 void ANBBaseAI::SetWalkSpeed(float desiredWalkSpeed)
 {
-	GetCharacterMovement()->MaxWalkSpeed = desiredWalkSpeed;
+	if (bisMonsterInLight)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = desiredWalkSpeed * InLightMovementSpeed ;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = desiredWalkSpeed * InDarkMovementSpeed;
+	}
 }
 
 void ANBBaseAI::PlaySound(class USoundCue * SoundToPlay)
