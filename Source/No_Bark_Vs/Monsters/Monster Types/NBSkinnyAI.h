@@ -163,5 +163,6 @@ protected:
 	//Set AI State  using EBotBehaviorType
 	UFUNCTION(BlueprintCallable, Category = "AI")
 		void SetAIState(EBotBehaviorType AIState);
-	
+	UFUNCTION(BlueprintCallable, Category = "AI")
+		void SetWalkSpeedbyCurrentStatus();
 };

@@ -396,14 +396,13 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 	ANBAIController* AIController = Cast<ANBAIController>(GetController());
 	if (AIController)
 	{
+		SetWalkSpeedbyCurrentStatus();
 		switch (AIState)
 		{
 		case EBotBehaviorType::Neutral:
 			AIController->SetAIStateKey(EBotBehaviorType::Neutral);
 			bIsSuspicious = false;
 			//Stops Stamina increase
-
-			SetWalkSpeed(NeutralWalkSpeed);
 			GetWorldTimerManager().ClearTimer(TimerHandle_CountUnSeenTime);
 			break;
 		case EBotBehaviorType::Suspicious:
@@ -411,29 +410,56 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 			SetWalkSpeed(SuspiciousWalkSpeed);
 			//Settimeto start for animation and sound of melleestrike. 
 			GetWorldTimerManager().SetTimer(TimerHandle_CountUnSeenTime, this, &ANBSkinnyAI::CountingPlayerUndetectedTime, 1.0, true, 0.0f);
-
 			break;
-		case EBotBehaviorType::Agression:
-			SetWalkSpeed(AggressionWalkSpeed);
-		
+		case EBotBehaviorType::Agression:		
 			AIController->SetAIStateKey(EBotBehaviorType::Agression);
-			
 			break;
 		case EBotBehaviorType::Charge:
 			AIController->SetAIStateKey(EBotBehaviorType::Charge);
-			SetWalkSpeed(ChargeWalkSpeed);
 			break;
 		case EBotBehaviorType::Stunned:
 			AIController->SetAIStateKey(EBotBehaviorType::Stunned);
-			SetWalkSpeed(StunnedWalkSpeed);
 			if (IsAnimPlaying != true)
 			{
 				PlayAnimation(StunAnimation);
 			}
-			
 			break;
 		case EBotBehaviorType::Flee:
 			AIController->SetAIStateKey(EBotBehaviorType::Flee);
+			break;
+		default:
+			break;
+		}	// passive patrolling mode
+	}
+	
+	
+}
+
+void ANBSkinnyAI::SetWalkSpeedbyCurrentStatus()
+{
+	ANBAIController* AIController = Cast<ANBAIController>(GetController());
+	if (AIController)
+	{
+		EBotBehaviorType AIState = AIController->GetAIStateKey();
+
+		switch (AIState)
+		{
+		case EBotBehaviorType::Neutral:
+			SetWalkSpeed(NeutralWalkSpeed);
+			break;
+		case EBotBehaviorType::Suspicious:
+			SetWalkSpeed(SuspiciousWalkSpeed);
+			break;
+		case EBotBehaviorType::Agression:
+			SetWalkSpeed(AggressionWalkSpeed);
+			break;
+		case EBotBehaviorType::Charge:
+			SetWalkSpeed(ChargeWalkSpeed);
+			break;
+		case EBotBehaviorType::Stunned:
+			SetWalkSpeed(StunnedWalkSpeed);
+			break;
+		case EBotBehaviorType::Flee:
 			SetWalkSpeed(FleeWalkSpeed);
 			break;
 		default:
