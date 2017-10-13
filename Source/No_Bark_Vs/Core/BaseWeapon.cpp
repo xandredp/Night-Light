@@ -227,9 +227,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	{	
 		ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
 		Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
-
-		//UGameplayStatics::ApplyPointDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
-		if (PhysMat)
+	if (PhysMat)
 		{
 
 			if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)

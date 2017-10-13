@@ -73,6 +73,7 @@ void ANBBaseAI::OnDeath()
 		if (Mesh3P)
 		{
 			Mesh3P->SetCollisionProfileName(TEXT("Ragdoll"));
+		
 		}
 		SetActorEnableCollision(true);
 
@@ -113,21 +114,14 @@ bool ANBBaseAI::GetMonsterDead()
 }
 void ANBBaseAI::ApplyDamage(AActor * DamagedActor, float BaseDamage, FVector const & HitFromDirection, FHitResult const & HitInfo, AController * EventInstigator, AActor * DamageCauser, TSubclassOf<UDamageType> DamageTypeClass)
 {
-	if (Health <= 0.0f)
-	{
-		
-	}
-	else
-	{
-		UGameplayStatics::ApplyPointDamage(DamagedActor, BaseDamage, HitFromDirection, HitInfo, EventInstigator, DamageCauser, DamageTypeClass);
-	}
+	UGameplayStatics::ApplyPointDamage(DamagedActor, BaseDamage, HitFromDirection, HitInfo, EventInstigator, DamageCauser, DamageTypeClass);
 }
 
 void ANBBaseAI::ReduceHealth(int DamageValue)
 {
 	if (Health <= 0.0f)
 	{
-		OnDeath();
+	//	OnDeath();
 	}
 	else
 	{
