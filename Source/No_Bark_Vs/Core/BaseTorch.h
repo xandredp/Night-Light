@@ -4,24 +4,31 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Player/NBCharacter.h"
 #include "BaseTorch.generated.h"
 
 UCLASS()
 class NO_BARK_VS_API ABaseTorch : public AActor
 {
 	GENERATED_BODY()
-
-
-
 	
 public:	
 	// Sets default values for this actor's properties
 	ABaseTorch();
+	
+	virtual void Tick(float DeltaSeconds) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		class ANBCharacter* GetPawnOwner() const;
+
+	/* Set the Torch's owning pawn */
+	void SetOwningPawn(class ANBCharacter* NewOwner);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	
 public:	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
@@ -63,20 +70,27 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsEnemySeen;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool isFlashed;
+
+	UPROPERTY(EditAnywhere, Category = "Config | Sound")
+		USoundCue* StunSound;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBCharacter* MyPawn;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBSkinnyAI* EnemyPawn;
 
-	/* Set the Torch's owning pawn */
-	void SetOwningPawn(class ANBCharacter* NewOwner);
-
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void DrainTorchEnergy();
 	
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		UAudioComponent* PlayStunSound(USoundCue* SoundToPlay);
 
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void Play2DSound(USoundCue* SoundToPlay);
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void DecreaseEnergy();
@@ -103,7 +117,6 @@ protected:
 
 	UPROPERTY()
 		bool IsTorchOn;
-
 
 	FHitResult TorchLightTrace(const FVector &TraceFrom, const FVector &TraceTo) const;
 

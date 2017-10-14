@@ -39,8 +39,21 @@ ABaseTorch::ABaseTorch()
 	EnergyReductionOnPowerUse = 20.0f;
 	EnergyIncreaseOnCrank = 5.0;
 	IsEnemySeen = false;
+	isFlashed = false;
+}
 
+//Called every frame
+void ABaseTorch::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 
+	if (isFlashed)
+	{
+		TorchSpotlight->SetIntensity(8000);
+		TorchSpotlight->SetAttenuationRadius(2000);
+		TorchSpotlight->SetOuterConeAngle(33.0);
+		isFlashed = false;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -50,7 +63,13 @@ void ABaseTorch::BeginPlay()
 
 	TorchOnOff(true);	
 }
-void ABaseTorch::SetOwningPawn(class ANBCharacter* NewOwner)
+
+class ANBCharacter * ABaseTorch::GetPawnOwner() const
+{
+	return MyPawn;
+}
+
+void ABaseTorch::SetOwningPawn(ANBCharacter* NewOwner)
 {
 	if (MyPawn != NewOwner)
 	{
@@ -58,6 +77,7 @@ void ABaseTorch::SetOwningPawn(class ANBCharacter* NewOwner)
 		MyPawn = NewOwner;
 	}
 }
+
 void ABaseTorch::SetTorchIntensity()
 {
 	float EnergyRatio = CurrentEnergy / 100;
@@ -109,6 +129,24 @@ void ABaseTorch::DrainTorchEnergy()
 	SetTorchIntensity();
 }
 
+UAudioComponent * ABaseTorch::PlayStunSound(USoundCue* SoundToPlay)
+{
+	UAudioComponent* TorchStunAC = nullptr;
+
+ 	if (SoundToPlay && MyPawn)
+ 	{
+		TorchStunAC = UGameplayStatics::SpawnSoundAttached(SoundToPlay, MyPawn->GetRootComponent());
+		MakeNoise(100, GetPawnOwner(), GetActorLocation());
+	}
+
+	return TorchStunAC;
+}
+
+void ABaseTorch::Play2DSound(USoundCue * SoundToPlay)
+{
+	UGameplayStatics::PlaySound2D(GetWorld(), SoundToPlay);
+}
+
 void ABaseTorch::DecreaseEnergy()
 {
 	if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
@@ -133,9 +171,18 @@ void ABaseTorch::ActivateTorch()
 	{
 		if (EnemyPawn)
 		{
-			//there is eneough energy
+			//there is enough energy
 			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
 			{
+				if (isFlashed == false)
+				{
+					isFlashed = true;
+					PlayStunSound(StunSound);
+					TorchSpotlight->SetIntensity(1800);
+					TorchSpotlight->SetAttenuationRadius(5000);
+					TorchSpotlight->SetOuterConeAngle(50.0);
+				}
+
 				EnemyPawn->OnStun();
 				DecreaseEnergy();
 			}
@@ -146,8 +193,6 @@ void ABaseTorch::ActivateTorch()
 				// say warning. 
 			}
 		}
-		
-
 	}
 	
 	TorchOnOff(true);
@@ -160,6 +205,7 @@ void ABaseTorch::TorchCrank()
 	IncreaseEnergy();
 	
 }
+
 void ABaseTorch::TorchOnOff(bool bSpotLightVisiblity)
 {
 	TorchSpotlight->SetVisibility(bSpotLightVisiblity);
