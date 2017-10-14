@@ -121,7 +121,7 @@ void ANBBaseAI::ReduceHealth(int DamageValue)
 {
 	if (Health <= 0.0f)
 	{
-		OnDeath();
+	//	OnDeath();
 	}
 	else
 	{
