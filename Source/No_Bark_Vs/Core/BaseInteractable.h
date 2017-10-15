@@ -29,6 +29,10 @@ public:
 
 	//UFUNCTION(BlueprintImplementableEvent)
 	virtual void Interact(APlayerController* playerController);
+	
+	//by putting blueprintImplementableEvent gives freedom to non coding designers
+	UFUNCTION(BlueprintImplementableEvent)
+	void InteractEvent();
 
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
 		FString GetInteractText() const;

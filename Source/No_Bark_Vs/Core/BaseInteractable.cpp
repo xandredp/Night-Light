@@ -37,7 +37,7 @@ void ABaseInteractable::BeginPlay()
 
 void ABaseInteractable::Interact(APlayerController * playerController)
 {
-
+	InteractEvent();
 }
 
 FString ABaseInteractable::GetInteractText() const

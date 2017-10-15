@@ -36,21 +36,31 @@ public:
 	/************************************************************************/
 	/* Inventory                                                      */
 	/************************************************************************/
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void SetInputModetoGameandUI(bool bHideCursor);
-	
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-		int MaxEquipmentSize;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
-		FCurrentInventoryItemInfo iItemRemovedfromEquipment;
-	
+		
 	/* Class to add to SpawnLocation when picked up */
 	UPROPERTY(EditDefaultsOnly, Category = "WeaponClass")
 		TSubclassOf<ABaseWeapon> WeaponClass;
 
+	/************************************************************************/
+	/* Widgets                                                      */
+	/************************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool isBookWidgetOpen;
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void OpenBookWidget();
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void CloseBookWidget();
+	// Reference UMG Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		TSubclassOf<class UUserWidget> wBook;
+	// Variable to hold the widget After Creating it.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		UUserWidget* wBookWidget;
 	/************************************************************************/
 	/* Keys                                                      */
 	/************************************************************************/
