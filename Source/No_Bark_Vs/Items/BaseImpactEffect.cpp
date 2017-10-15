@@ -52,62 +52,77 @@ UParticleSystem* ABaseImpactEffect::GetImpactFX(EPhysicalSurface SurfaceType) co
 {
 	switch (SurfaceType)
 	{
-// 	case SURFACE_DEFAULT:
-// 		return DefaultFX;
+	// 	case SURFACE_DEFAULT:
+	// 		return DefaultFX;
 
-	case SURFACE_FLESH:
-		return PlayerFleshFX;
-		break;
-
-	case SURFACE_ENEMYBODY:
-		if (IsEnemyInDark)
+		case SURFACE_FLESH:
 		{
-			return EnemySparkFX;
-		}
-		else
-		{
-			return EnemyFleshFX;
+			return PlayerFleshFX;
 		}
 		break;
 
-	case SURFACE_ENEMYHEAD:
-		if (IsEnemyInDark)
+		case SURFACE_ENEMYBODY:
 		{
-			return EnemySparkFX;
-		}
-		else
-		{
-			return EnemyFleshFX;
-		}
-		break;
-
-	case SURFACE_ENEMYLIMB:
-		if (IsEnemyInDark)
-		{
-			return EnemySparkFX;
-		}
-		else
-		{
-			return EnemyFleshFX;
+			if (IsEnemyInDark)
+			{
+				return EnemySparkFX;
+			}
+			else
+			{
+				return EnemyFleshFX;
+			}
 		}
 		break;
 
-	case SURFACE_METAL:
-		return MetalFX;
+		case SURFACE_ENEMYHEAD:
+		{
+			if (IsEnemyInDark)
+			{
+				return EnemySparkFX;
+			}
+			else
+			{
+				return EnemyFleshFX;
+			}
+		}
 		break;
 
-	case SURFACE_CONCRETE:
-		return ConcreteFX;
+		case SURFACE_ENEMYLIMB:
+		{			
+			if (IsEnemyInDark)
+			{
+				return EnemySparkFX;
+			}
+			else
+			{
+				return EnemyFleshFX;
+			}
+		}
 		break;
 
-	case SURFACE_WOOD:
-		return WoodFX;
+		case SURFACE_METAL:
+		{
+			return MetalFX;
+		}
 		break;
 
-	default:
-		return DefaultFX;
+		case SURFACE_CONCRETE:
+		{
+			return ConcreteFX;
+		}
 		break;
 
+		case SURFACE_WOOD:
+		{
+			return WoodFX;
+		}
+		break;
+
+		default:
+		{
+			return DefaultFX;
+		}
+		break;
 	}
 }
 
@@ -116,50 +131,79 @@ USoundCue* ABaseImpactEffect::GetImpactSound(EPhysicalSurface SurfaceType) const
 {
 	switch (SurfaceType)
 	{
-	case SURFACE_DEFAULT:
-		return DefaultSound;
+		case SURFACE_DEFAULT:
+		{
+			return DefaultSound;
+		}
+		break;
 
-	case SURFACE_FLESH:
-		return PlayerFleshSound;
+		case SURFACE_FLESH:
+		{
+			return PlayerFleshSound;
+		}
+		break;
 
-	case SURFACE_ENEMYBODY:
-		if (IsEnemyInDark)
+		case SURFACE_ENEMYBODY:
 		{
-			return EnemySparkSound;
+			if (IsEnemyInDark)
+			{
+				return EnemySparkSound;
+			}
+			else
+			{
+				return EnemyFleshSound;
+			}
 		}
-		else
+		break;
+
+		case SURFACE_ENEMYHEAD:
 		{
-			return EnemyFleshSound;
+			if (IsEnemyInDark)
+			{
+				return EnemySparkSound;
+			}
+			else
+			{
+				return EnemyFleshSound;
+			}
 		}
-	case SURFACE_ENEMYHEAD:
-		if (IsEnemyInDark)
+		break;
+
+		case SURFACE_ENEMYLIMB:
 		{
-			return EnemySparkSound;
+			if (IsEnemyInDark)
+			{
+				return EnemySparkSound;
+			}
+			else
+			{
+				return EnemyFleshSound;
+			}
 		}
-		else
-		{
-			return EnemyFleshSound;
-		}
-	case SURFACE_ENEMYLIMB:
-		if (IsEnemyInDark)
-		{
-			return EnemySparkSound;
-		}
-		else
-		{
-			return EnemyFleshSound;
-		}
+		break;
 		
-	case SURFACE_METAL:
-		return MetalSound;
+		case SURFACE_METAL:
+		{
+			return MetalSound;
+		}
+		break;
 
-	case SURFACE_CONCRETE:
-		return ConcreteSound;
+		case SURFACE_CONCRETE:
+		{
+			return ConcreteSound;
+		}
+		break;
 
-	case SURFACE_WOOD:
-		return WoodSound;
+		case SURFACE_WOOD:
+		{
+			return WoodSound;
+		}
+		break;
 
-	default:
-		return nullptr;
+		default:
+		{
+			return nullptr;
+		}
+		break;
 	}
 }
