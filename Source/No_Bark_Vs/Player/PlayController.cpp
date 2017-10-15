@@ -44,6 +44,37 @@ void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 	}
 
 }
+void APlayController::OpenBookWidget()
+{
+	if (isBookWidgetOpen)
+	{
+		CloseBookWidget();
+	}
+	else
+	{
+		if (wBook)
+		{
+			wBookWidget = CreateWidget<UUserWidget>(this, wBook);
+			if (wBookWidget)
+			{
+				SetInputModetoGameandUI(true);
+				wBookWidget->bIsFocusable = true;
+			//	bShowMouseCursor = true;
+				wBookWidget->AddToViewport(1);
+			}
+		}
+
+		isBookWidgetOpen = true;
+	}
+}
+void APlayController::CloseBookWidget()
+{
+	wBookWidget->RemoveFromParent();
+
+	isBookWidgetOpen = false;
+	SetInputModetoGameandUI(false);
+	bShowMouseCursor = false;
+}
 void APlayController::AddKeytoPossesion(FKeyData aKey)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));

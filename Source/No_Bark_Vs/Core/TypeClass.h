@@ -161,6 +161,34 @@ public:
 };
 
 
+//TableRowBase for Data TABLE. 
+//This will check if Items are allowed.
+//database system. only default functions will be written here
+USTRUCT(BlueprintType)
+struct FNotes : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+
+	FNotes()
+	{
+		Description = FText::FromString("Description here");
+		MaxStackNumber = 1;
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName ItemID;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSubclassOf<class APickup>ItemPickup;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UTexture2D* Thumbnail;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FText Description;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int32 MaxStackNumber;
+};
+
 //These are the  inventory Items // changeable 
 USTRUCT(BlueprintType)
 struct FCurrentInventoryItemInfo 

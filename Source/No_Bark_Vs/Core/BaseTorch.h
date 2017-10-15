@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Player/NBCharacter.h"
+//#include "Player/NBCharacter.h"
 #include "BaseTorch.generated.h"
 
 UCLASS()
