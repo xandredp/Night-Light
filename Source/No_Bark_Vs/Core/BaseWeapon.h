@@ -52,6 +52,9 @@ public:
 		float WeaponSpread;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 WeaponSplits;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 MaxClip;
 	//MaxAmmom Per Clip
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
