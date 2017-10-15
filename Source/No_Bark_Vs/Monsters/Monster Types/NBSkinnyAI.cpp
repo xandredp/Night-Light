@@ -72,7 +72,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	ChargeWalkSpeed = 100;
 	StunnedWalkSpeed = 0;
 	FleeWalkSpeed = 100;
-	SenseTimeOut = 2.5;
+	SenseTimeOut = 4.5;
 	DetectionMaxTime = 10.0f;
 	//BaseMonster Variables
 	CurrentAttackDamage = 20.0f;
