@@ -29,6 +29,7 @@ ABaseWeapon::ABaseWeapon()
 	PrimaryActorTick.TickGroup = TG_PrePhysics;
 
 	WeaponConfig.WeaponDamage = 20;
+	WeaponConfig.WeaponSplits = 5;
 	CurrentState = EWeaponState::Idle;
 	TrailTargetParam = "EndPoint";
 	MuzzleAttachPoint = "MuzzleTip";
@@ -81,15 +82,11 @@ void ABaseWeapon::Fire()
 	{
 		if (CurrentAmmo > 0)
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Spread"));
-			for (int32 i = 0; i <= WeaponConfig.WeaponSpread; i++)
+			for (int32 i = 0; i <= WeaponConfig.WeaponSplits; i++)
 			{
 				Instant_Fire();
 			}
-
-			
 			CurrentAmmo -= WeaponConfig.ShotCost;
-
 			// Signal a gunshot
 			MakeNoise(100, GetPawnOwner(), GetActorLocation());
 		}
@@ -102,6 +99,7 @@ void ABaseWeapon::Fire()
 	{
 		if (CurrentAmmo > 0)
 		{
+			
 		//	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Projectile"));
 			ProjectileFire();
 
@@ -226,8 +224,12 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	if (Enemy!= nullptr)
 	{	
 		ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
+	
+		
 		Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
-	if (PhysMat)
+		
+		
+		if (PhysMat)
 		{
 
 			if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)

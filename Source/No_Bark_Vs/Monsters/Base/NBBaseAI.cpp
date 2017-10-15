@@ -75,14 +75,17 @@ void ANBBaseAI::OnDeath()
 			Mesh3P->SetCollisionProfileName(TEXT("Ragdoll"));
 		
 		}
-		SetActorEnableCollision(true);
-
-		SetRagdollPhysics("skeleton", 1.0, false, false, true);
-
 		//stop sound
 		AudioLoopComp->Stop();
 
-		
+		UCharacterMovementComponent* CharacterComp = Cast<UCharacterMovementComponent>(GetMovementComponent());
+		if (CharacterComp)
+		{
+			CharacterComp->StopMovementImmediately();
+			CharacterComp->DisableMovement();
+			CharacterComp->SetComponentTickEnabled(false);
+		}
+		SetLifeSpan(10.0f);
 	}
 }
 void ANBBaseAI::OnStun()
@@ -104,6 +107,7 @@ bool ANBBaseAI::GetMonsterDead()
 {
 	if (Health <= 0.0f)
 	{
+		OnDeath();
 		return true;
 	}
 	else 
@@ -121,7 +125,7 @@ void ANBBaseAI::ReduceHealth(int DamageValue)
 {
 	if (Health <= 0.0f)
 	{
-	//	OnDeath();
+		Health = 0;
 	}
 	else
 	{
