@@ -53,14 +53,24 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void OpenBookWidget();
+
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void CloseBookWidget();
+
 	// Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		TSubclassOf<class UUserWidget> wBook;
+
 	// Variable to hold the widget After Creating it.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		UUserWidget* wBookWidget;
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddCurrentInstruction(FName aCurrentInstructionID);
+
+	//The interactable that player is currently looking at. 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FNotes CurrentInstruction;
 	/************************************************************************/
 	/* Keys                                                      */
 	/************************************************************************/

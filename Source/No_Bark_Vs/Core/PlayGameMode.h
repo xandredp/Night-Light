@@ -17,7 +17,7 @@ class NO_BARK_VS_API APlayGameMode : public AGameMode
 	GENERATED_BODY()
 public:
 	APlayGameMode();
-	class UDataTable* GetItemDB() const { return ItemDB; }
+	class UDataTable* GetInstructionDB() const { return InstructionDB; }
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 		EGameModeSoundType GameModeState;
@@ -25,6 +25,6 @@ public:
 protected:
 
 	UPROPERTY(EditDefaultsOnly)
-		class UDataTable* ItemDB;
+		class UDataTable* InstructionDB;
 
 };

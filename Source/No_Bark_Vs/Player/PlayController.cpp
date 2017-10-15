@@ -75,6 +75,18 @@ void APlayController::CloseBookWidget()
 	SetInputModetoGameandUI(false);
 	bShowMouseCursor = false;
 }
+void APlayController::AddCurrentInstruction(FName aCurrentInstructionID)
+{
+	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
+	UDataTable* ItemTable = PlayGameMode->GetInstructionDB();
+	if (ItemTable)
+	{
+		// find inventory item. 
+		FNotes* NoteToAdd = ItemTable->FindRow<FNotes>(aCurrentInstructionID, "");
+		CurrentInstruction = *NoteToAdd;
+	}	
+}
+
 void APlayController::AddKeytoPossesion(FKeyData aKey)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));

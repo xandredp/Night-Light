@@ -20,6 +20,8 @@ void AInstructionPickUp::Interact(APlayerController * playerController)
 		if (MyPawn)
 		{
 			MyPawn->PlayPickUpAnimation();
+
+			aPlayController->AddCurrentInstruction(ItemID);
 		}
 
 		DestroyItemOnGround();

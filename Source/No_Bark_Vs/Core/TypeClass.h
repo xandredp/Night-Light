@@ -187,6 +187,15 @@ public:
 		FText Description;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int32 MaxStackNumber;
+
+	//ureal requires oveloading the data. 
+	bool operator == (const FNotes& Item) const
+	{
+		if (ItemID == Item.ItemID)
+			return true;
+		else return false;
+
+	}
 };
 
 //These are the  inventory Items // changeable 
