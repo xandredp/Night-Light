@@ -176,11 +176,11 @@ void ABaseTorch::ActivateTorch()
 			{
 				if (isFlashed == false)
 				{
-					isFlashed = true;
 					PlayStunSound(StunSound);
-					TorchSpotlight->SetIntensity(1800);
+					TorchSpotlight->SetIntensity(24000);
 					TorchSpotlight->SetAttenuationRadius(5000);
 					TorchSpotlight->SetOuterConeAngle(50.0);
+					isFlashed = true;
 				}
 
 				EnemyPawn->OnStun();
