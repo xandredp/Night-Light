@@ -19,10 +19,12 @@ ABaseInteractable::ABaseInteractable()
 	//PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
 	PickupMesh->SetupAttachment(PickupSkeletalMesh);
 
-	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("PickUpSound"));
-	AudioLoopComp->bAutoActivate = false;
-	AudioLoopComp->bAutoDestroy = false;
-	AudioLoopComp->SetupAttachment(PickupMesh);
+// 	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("PickUpSound"));
+// 	AudioLoopComp->bAutoActivate = false;
+// 	AudioLoopComp->bAutoDestroy = false;
+// 	AudioLoopComp->bStopWhenOwnerDestroyed = false;
+// 	AudioLoopComp->SetupAttachment(PickupMesh);
+// 	AudioLoopComp->SetSound(SoundPickUp);
 
 	PickupCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("PickupCollisionComp"));
 	PickupCollisionComp->SetupAttachment(PickupMesh);
@@ -44,11 +46,10 @@ void ABaseInteractable::Interact(APlayerController * playerController)
 {
 	InteractEvent();
 
-	if (SoundPickUp)
-	{
-		AudioLoopComp->SetSound(SoundPickUp);
-		AudioLoopComp->Play();
-	}
+// 	if (SoundPickUp)
+// 	{
+// 		AudioLoopComp->Play();
+// 	}
 }
 
 FString ABaseInteractable::GetInteractText() const

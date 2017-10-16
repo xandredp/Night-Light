@@ -41,7 +41,11 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void DestroyItemOnGround();
+	UFUNCTION(BlueprintImplementableEvent)
+		void PlayPickupSound();
+
+	UFUNCTION(BlueprintCallable)
+		void DestroyItemOnGround();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		FKeyData KeyConfig;

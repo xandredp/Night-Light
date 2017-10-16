@@ -24,7 +24,7 @@ void AKeyForDoor::Interact(APlayerController* playerController)
 			MyPawn->PlayPickUpAnimation();
 		}
 		aPlayController->AddKeytoPossesion(KeyConfig);
-		DestroyItemOnGround();
+		PlayPickupSound();
 	}
 }
 

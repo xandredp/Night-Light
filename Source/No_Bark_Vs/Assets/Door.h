@@ -44,6 +44,9 @@ public:
 		class ADoor * AnotherDoor;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sounds")
+		USoundCue* DoorLockedSound;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sounds")
 		USoundCue* DoorOpen;
 
 	//Does the door close

@@ -24,7 +24,7 @@ public:
 		class UBoxComponent* PickupCollisionComp;
 
 	/* Plays the pickup sound*/
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sound")
 		UAudioComponent* AudioLoopComp;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
