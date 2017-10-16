@@ -23,6 +23,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 		class UBoxComponent* PickupCollisionComp;
 
+	/* Plays the pickup sound*/
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+		UAudioComponent* AudioLoopComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+		class USoundCue* SoundPickUp;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
