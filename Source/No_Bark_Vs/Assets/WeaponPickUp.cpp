@@ -18,6 +18,10 @@ void AWeaponPickUp::Interact(APlayerController * playerController)
 		ANBCharacter* MyPawn = Cast<ANBCharacter>(aPlayController->GetPawn());
 		if (MyPawn)
 		{
+			if (SoundPickUp != nullptr)
+			{	
+				PlaySound(SoundPickUp);
+			}
 			if (MyPawn->CurrentWeapon == NULL)
 			{
 				MyPawn->PlayPickUpAnimation();

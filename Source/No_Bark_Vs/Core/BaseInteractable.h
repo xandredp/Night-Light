@@ -27,8 +27,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Sound")
 		UAudioComponent* AudioLoopComp;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Sound")
-		USoundCue* SoundPickUp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+		USoundBase* SoundPickUp;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -51,5 +51,5 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
-	UAudioComponent* PlayCharacterSound(USoundCue* CueToPlay);
+	void PlaySound(USoundBase* CueToPlay);
 };

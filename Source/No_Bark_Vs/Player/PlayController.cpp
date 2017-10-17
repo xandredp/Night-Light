@@ -7,6 +7,7 @@
 #include "Core/TypeClass.h"
 #include "Core/PlayGameMode.h"
 #include "Core/BaseTorch.h"
+#include "Engine/DataTable.h"
 #include "Blueprint/UserWidget.h"
 
 APlayController::APlayController()
@@ -80,7 +81,7 @@ void APlayController::AddCurrentInstruction(FName aCurrentInstructionID)
 {
 	APlayGameMode* PlayGameMode = Cast<APlayGameMode>(GetWorld()->GetAuthGameMode());
 	UDataTable* ItemTable = PlayGameMode->GetInstructionDB();
-	if (ItemTable)
+	if (ItemTable!=nullptr)
 	{
 		// find inventory item. 
 		FNotes* NoteToAdd = ItemTable->FindRow<FNotes>(aCurrentInstructionID, "");

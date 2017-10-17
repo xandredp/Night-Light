@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "BaseInteractable.h"
+#include "Components/AudioComponent.h"
 #include "Components/SceneComponent.h"
-#include "Core/No_Bark_Vs.h"
-
-
+#include "Components/StaticMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Sound/SoundCue.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 ABaseInteractable::ABaseInteractable()
@@ -63,12 +65,8 @@ FString ABaseInteractable::GetInteractText() const
 	return RetVal;
 }
 
-UAudioComponent * ABaseInteractable::PlayCharacterSound(USoundCue * CueToPlay)
+void ABaseInteractable::PlaySound(USoundBase * CueToPlay)
 {
-	if (CueToPlay)
-	{
-		return UGameplayStatics::SpawnSoundAttached(CueToPlay, RootComponent, NAME_None, FVector::ZeroVector, EAttachLocation::SnapToTarget, true);
-	}
-
-	return nullptr;
+	AudioLoopComp->SetSound(CueToPlay);
+	AudioLoopComp->Play();
 }
