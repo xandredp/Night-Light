@@ -22,6 +22,15 @@ void AInstructionPickUp::Interact(APlayerController * playerController)
 			MyPawn->PlayPickUpAnimation();
 
 			aPlayController->AddCurrentInstruction(ItemID);
+			if (aPlayController->isBookWidgetOpen)
+			{
+				aPlayController->CloseBookWidget();
+			}
+			else
+			{
+				aPlayController->OpenBookWidget();
+			}
+			
 		}
 
 		DestroyItemOnGround();
