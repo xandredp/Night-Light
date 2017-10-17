@@ -13,6 +13,7 @@ APlayController::APlayController()
 {
 	bShowMouseCursor = false;
 	MyCurrentCurrency = 0.0f;
+	isBookWidgetOpen = false;
 }
 
 void APlayController::Interact()

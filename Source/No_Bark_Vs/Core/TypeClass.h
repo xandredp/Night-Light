@@ -180,8 +180,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FName ItemID;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TSubclassOf<class APickup>ItemPickup;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UTexture2D* Thumbnail;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText Description;

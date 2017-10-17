@@ -82,7 +82,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	InDarkMovementSpeed = 1.5f;
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
-	MinAgressiveDistant = 500.0f;
+	MinAgressiveDistant = 1000.0f;
 	
 
 }
