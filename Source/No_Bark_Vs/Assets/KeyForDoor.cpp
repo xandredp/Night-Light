@@ -17,6 +17,10 @@ void AKeyForDoor::Interact(APlayerController* playerController)
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
 	{
+		if (SoundPickUp != nullptr)
+		{
+			PlaySound(SoundPickUp);
+		}
 		//PlayPickupAnimation
 		ANBCharacter* MyPawn = Cast<ANBCharacter>(aPlayController->GetPawn());
 		if (MyPawn)
