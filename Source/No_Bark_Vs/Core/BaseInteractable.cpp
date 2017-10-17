@@ -8,23 +8,23 @@
 // Sets default values
 ABaseInteractable::ABaseInteractable()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	PickupSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("PickupSkeletalMesh");
 	PickupSkeletalMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
-	//PickupSkeletalMesh->SetupAttachment(RootComponent);
+	RootComponent = PickupSkeletalMesh;//PickupSkeletalMesh->SetupAttachment(RootComponent);
 	//SetRootComponent(PickupSkeletalMesh);
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>("PickupMesh");
 	//PickupMesh->SetRelativeLocation(FVector(0.0, 0.0, 0.0));
 	PickupMesh->SetupAttachment(PickupSkeletalMesh);
 
-// 	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("PickUpSound"));
-// 	AudioLoopComp->bAutoActivate = false;
-// 	AudioLoopComp->bAutoDestroy = false;
-// 	AudioLoopComp->bStopWhenOwnerDestroyed = false;
-// 	AudioLoopComp->SetupAttachment(PickupMesh);
-// 	AudioLoopComp->SetSound(SoundPickUp);
+ 	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("PickUpSound"));
+ 	AudioLoopComp->bAutoActivate = false;
+ 	AudioLoopComp->bAutoDestroy = false;
+ 	AudioLoopComp->bStopWhenOwnerDestroyed = false;
+ 	AudioLoopComp->SetupAttachment(PickupMesh);
+ 	AudioLoopComp->SetSound(SoundPickUp);
 
 	PickupCollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("PickupCollisionComp"));
 	PickupCollisionComp->SetupAttachment(PickupMesh);
@@ -45,11 +45,6 @@ void ABaseInteractable::BeginPlay()
 void ABaseInteractable::Interact(APlayerController * playerController)
 {
 	InteractEvent();
-
-// 	if (SoundPickUp)
-// 	{
-// 		AudioLoopComp->Play();
-// 	}
 }
 
 FString ABaseInteractable::GetInteractText() const
@@ -66,4 +61,14 @@ FString ABaseInteractable::GetInteractText() const
 		RetVal = "";
 	}
 	return RetVal;
+}
+
+UAudioComponent * ABaseInteractable::PlayCharacterSound(USoundCue * CueToPlay)
+{
+	if (CueToPlay)
+	{
+		return UGameplayStatics::SpawnSoundAttached(CueToPlay, RootComponent, NAME_None, FVector::ZeroVector, EAttachLocation::SnapToTarget, true);
+	}
+
+	return nullptr;
 }
