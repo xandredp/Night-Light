@@ -407,7 +407,6 @@ void ANBCharacter::MoveForward(float Value)
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
@@ -447,15 +446,6 @@ void ANBCharacter::OnStartSprinting()
 			GetWorldTimerManager().ClearTimer(StopSprintingTimerHandle);
 			//Stops Health Increase
 			GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
-
-			//UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			//
-			//if (aAnimInstance != NULL)
-			//{
-			//	aAnimInstance->IsSprinting = true;
-			//}
-		
-
 			// Sprinting is noisy
 			MakeNoise(100, this, GetActorLocation());
 
@@ -477,14 +467,6 @@ void ANBCharacter::OnStopSprinting()
 			GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
 			//health gain
 			GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
-
-			//UCharacterAnimInstance* aAnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
-			//if (aAnimInstance != NULL)
-			//{
-			//	aAnimInstance->IsSprinting = false;
-			//}
-
-			
 		}
 	}
 
@@ -545,15 +527,9 @@ void ANBCharacter::FireWeapon()
 								ArmAnimInstance->Montage_Play(NoClipAnimation, 1.0f);
 
 							}
-
-						}
-
-
-					
+						}					
 					}
-
 				}
-
 			}
 			else if (CurrentAmmoInWeapon > 0)
 			{		
@@ -728,19 +704,13 @@ void ANBCharacter::TorchCrank()
 						IsTorchCrankerUp = true;
 						IsTorchCrancking = true;
 						ArmAnimInstance->Montage_Play(StartCrankAnimation, 1.0f);
-
-
 					}
 				}
-			
-			}
-			
+			}		
 			//end animation played using animation blueprint
 			//play end inside animation blueprint using notify
 		}
-		
 	}
-
 }
 
 void ANBCharacter::PowerUpTorch()
