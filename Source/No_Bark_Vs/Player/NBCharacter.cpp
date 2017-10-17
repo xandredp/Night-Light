@@ -271,7 +271,8 @@ void ANBCharacter::DecreaseHealth(float decreaseVal)
 		bIsDead = true;
 		DestroyAndBackToMenu();
 	}
-	GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
+	/*Health Regenration Diabled to enable comment this one back*/
+	//GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
 
 }
 
@@ -285,7 +286,7 @@ void ANBCharacter::IncreaseHealthByTime()
 	if (CurrentHealth >= MaxHealth)
 	{
 		//Stops Health Increase
-		GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
+		//GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
 	}
 	else
 	{
