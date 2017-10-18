@@ -62,7 +62,7 @@ void ABaseWeapon::FireBullets()
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, TEXT("Bullet"));
 		Instant_Fire();
-		MakeNoise(100, GetPawnOwner(), GetActorLocation());
+	//	MakeNoise(0.5, GetPawnOwner(), GetActorLocation());
 
 		CurrentAmmo -= WeaponConfig.ShotCost;
 	}
@@ -88,7 +88,7 @@ void ABaseWeapon::Fire()
 			}
 			CurrentAmmo -= WeaponConfig.ShotCost;
 			// Signal a gunshot
-			MakeNoise(100, GetPawnOwner(), GetActorLocation());
+		//	MakeNoise(0.5, GetPawnOwner(), GetActorLocation());
 		}
 		else
 		{
@@ -106,7 +106,7 @@ void ABaseWeapon::Fire()
 			CurrentAmmo -= WeaponConfig.ShotCost;
 
 			// Signal a gunshot
-			MakeNoise(100, GetPawnOwner(), GetActorLocation());
+		//	MakeNoise(0.5, GetPawnOwner(), GetActorLocation());
 		}
 		else
 		{
@@ -406,7 +406,7 @@ UAudioComponent * ABaseWeapon::PlayWeaponSound(USoundCue * Sound)
 	{
 		WeaponAC = UGameplayStatics::SpawnSoundAttached(Sound, MyPawn->GetRootComponent());
 		// Signal a gunshot
-		MakeNoise(100, GetPawnOwner(), GetActorLocation());
+		MakeNoise(0.0, GetPawnOwner(), GetActorLocation());
 
 	}
 	return WeaponAC;

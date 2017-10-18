@@ -24,7 +24,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 	// This sphere component is attached to the hand to detect a hit
 	RightHandStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("RightHandStrikePlayerSphere"));
-	RightHandStrikePlayerSphere->SetSphereRadius(15);
+	RightHandStrikePlayerSphere->SetSphereRadius(10);
 	RightHandStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	RightHandStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	RightHandStrikePlayerSphere->SetupAttachment(GetCapsuleComponent());
@@ -33,7 +33,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 	// This sphere component is attached to the hand to detect a hit
 	LeftHandStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("LeftHandStrikePlayerSphere"));
-	LeftHandStrikePlayerSphere->SetSphereRadius(15);
+	LeftHandStrikePlayerSphere->SetSphereRadius(10);
 	LeftHandStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	LeftHandStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	LeftHandStrikePlayerSphere->SetupAttachment(GetCapsuleComponent());
@@ -42,7 +42,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 	// This sphere component is attached to the hand to detect a hit
 	HeadStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("HeadStrikePlayerSphere"));
-	HeadStrikePlayerSphere->SetSphereRadius(15);
+	HeadStrikePlayerSphere->SetSphereRadius(12);
 	HeadStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	HeadStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	HeadStrikePlayerSphere->SetupAttachment(GetCapsuleComponent());
@@ -82,7 +82,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	InDarkMovementSpeed = 1.5f;
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
-	MinAgressiveDistant = 1000.0f;
+	MinAgressiveDistant = 5000.0f;
 	
 
 }
@@ -164,13 +164,16 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 			}
 			//if player is closer
 			else
-			{
+			{ 
 				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
 				{
 					OnReact();
 					//continue updating Last SeenTime.
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 					SetAIState(EBotBehaviorType::Agression);
+				}
+				else
+				{
 				}
 
 			}
