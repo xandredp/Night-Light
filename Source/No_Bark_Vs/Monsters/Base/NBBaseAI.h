@@ -142,6 +142,10 @@ public:
 	/* Checks If Monster is in Lighth (Generator) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool bisMonsterInLight;
+
+	/* Checks If Monster can be killable in torchActivation */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool bisMonsterkillableAtStun;
 	/* Checks If Monster is in Lighth (Generator) This is used on Blueprint For easy Twick*/
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Status")

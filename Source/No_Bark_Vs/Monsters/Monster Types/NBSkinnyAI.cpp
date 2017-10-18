@@ -408,7 +408,6 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 			break;
 		case EBotBehaviorType::Suspicious:
 			AIController->SetAIStateKey(EBotBehaviorType::Suspicious);
-			SetWalkSpeed(SuspiciousWalkSpeed);
 			//Settimeto start for animation and sound of melleestrike. 
 			GetWorldTimerManager().SetTimer(TimerHandle_CountUnSeenTime, this, &ANBSkinnyAI::CountingPlayerUndetectedTime, 1.0, true, 0.0f);
 			break;
@@ -422,8 +421,14 @@ void ANBSkinnyAI::SetAIState(EBotBehaviorType AIState)
 			AIController->SetAIStateKey(EBotBehaviorType::Stunned);
 			if (IsAnimPlaying != true)
 			{
+				if (bisMonsterkillableAtStun)
+				{
+					bisMonsterInLight = true;
+					MonsterInLight(bisMonsterInLight);
+				}
 				PlayAnimation(StunAnimation);
 			}
+
 			break;
 		case EBotBehaviorType::Flee:
 			AIController->SetAIStateKey(EBotBehaviorType::Flee);
