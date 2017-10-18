@@ -214,6 +214,9 @@ public:
 		bool LockMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool PlayerCanBeDamaged;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float CurrentHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)

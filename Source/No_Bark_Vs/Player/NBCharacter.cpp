@@ -105,6 +105,7 @@ ANBCharacter::ANBCharacter()
 	FPSCharacterArmMesh->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
 	LockMovement = false;
 	IsBeingAttacked = false;
+	PlayerCanBeDamaged = true;
 }
 
 void ANBCharacter::BeginPlay()
@@ -257,23 +258,27 @@ void ANBCharacter::SpawnWeapon(TSubclassOf<class ABaseWeapon> iWeaponClass)
 	
 void ANBCharacter::DecreaseHealth(float decreaseVal)
 {
-	if (CurrentHealth > 0)
+	if (PlayerCanBeDamaged)
 	{
-		CurrentHealth -= decreaseVal;	
-		HitBlur = 10;
+		if (CurrentHealth > 0)
+		{
+			CurrentHealth -= decreaseVal;
+			HitBlur = 10;
 
-		APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
-		PC->ClientPlayCameraShake(HitCameraShake, 1, ECameraAnimPlaySpace::CameraLocal, FRotator(0, 0, 0));
+			APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+			PC->ClientPlayCameraShake(HitCameraShake, 1, ECameraAnimPlaySpace::CameraLocal, FRotator(0, 0, 0));
+
+		}
+		else
+		{
+			bIsDead = true;
+			DestroyAndBackToMenu();
+		}
+		/*Health Regenration Diabled to enable comment this one back*/
+		//GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
 
 	}
-	else
-	{
-		bIsDead = true;
-		DestroyAndBackToMenu();
-	}
-	/*Health Regenration Diabled to enable comment this one back*/
-	//GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
-
+	
 }
 
 void ANBCharacter::IncreaseHealth(float increaseVal)
@@ -466,7 +471,7 @@ void ANBCharacter::OnStopSprinting()
 			//stops decreasing stamina
 			GetWorldTimerManager().ClearTimer(StartSprintingTimerHandle);
 			//health gain
-			GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
+		//	GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
 		}
 	}
 

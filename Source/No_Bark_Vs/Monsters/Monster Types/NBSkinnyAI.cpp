@@ -127,7 +127,7 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 		/* if sensed pawn is the player*/
 		if (NBCharacterPawn && AIController)
 		{
-
+			/*SetsTargetKey*/
 			if (NBPlayerCharacter == nullptr)
 			{
 				NBPlayerCharacter = NBCharacterPawn;
@@ -159,8 +159,6 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 						SetAIState(EBotBehaviorType::Agression);
 					}
 				}
-
-				
 			}
 			//if player is closer
 			else
