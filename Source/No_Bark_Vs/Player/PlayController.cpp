@@ -19,6 +19,11 @@ APlayController::APlayController()
 
 void APlayController::Interact()
 {//ABaseInteractable
+
+	if (isBookWidgetOpen)
+	{
+		CloseBookWidget();
+	}
 	if (CurrentInteractable)
 	{
 		CurrentInteractable->Interact(this);
