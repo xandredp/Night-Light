@@ -14,10 +14,9 @@ public class No_Bark_Vs : ModuleRules
             "CoreUObject",
             "Engine",
             "InputCore",
-
             "UMG",
             "GameplayTasks",
-
+            "MoviePlayer"
             //AI
            // "AIModule"
         });
