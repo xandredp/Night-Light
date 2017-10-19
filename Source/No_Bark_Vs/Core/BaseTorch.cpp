@@ -29,6 +29,7 @@ ABaseTorch::ABaseTorch()
 
 
 	StunIntensity = 80000.0f;
+	StunAttenuationRadious = 2000.0f;
 	MaxIntensity = 8000.0f;
 	MaxEnergy = 100.0f;
 	CurrentEnergy = MaxEnergy;
@@ -37,6 +38,7 @@ ABaseTorch::ABaseTorch()
 	EnergyReductionRate = 1.0f;
 	ReductionTimerRate = 0.5f;
 	EnergyReductionOnPowerUse = 20.0f;
+	EnergyIncreaseOnBatteryPickUp = 40.0f;
 	EnergyIncreaseOnCrank = 5.0;
 	IsEnemySeen = false;
 	isFlashed = false;
@@ -47,13 +49,7 @@ void ABaseTorch::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (isFlashed)
-	{
-		TorchSpotlight->SetIntensity(8000);
-		TorchSpotlight->SetAttenuationRadius(2000);
-		TorchSpotlight->SetOuterConeAngle(33.0);
-		isFlashed = false;
-	}
+
 }
 
 // Called when the game starts or when spawned
@@ -119,7 +115,7 @@ void ABaseTorch::DrainTorchEnergy()
 {
 	if (CurrentEnergy <= 0)
 	{
-		GetWorldTimerManager().ClearTimer(StartReducingEnergyTimerHandle);
+	//	GetWorldTimerManager().ClearTimer(StartReducingEnergyTimerHandle);
 		CurrentEnergy = 0;
 	}
 	else
@@ -153,11 +149,23 @@ void ABaseTorch::DecreaseEnergy()
 	{
 		CurrentEnergy = CurrentEnergy - EnergyReductionOnPowerUse;
 	}
+
+	SetTorchIntensity();
 }
 
 void ABaseTorch::IncreaseEnergy()
 {
 	CurrentEnergy = CurrentEnergy + EnergyIncreaseOnCrank;
+	if (CurrentEnergy >= MaxEnergy)
+	{
+		CurrentEnergy = MaxEnergy;
+	}
+	SetTorchIntensity();
+}
+
+void ABaseTorch::IncreaseEnergyByFloat(float EnergyToAdd)
+{
+	CurrentEnergy = CurrentEnergy + EnergyToAdd;
 	if (CurrentEnergy >= MaxEnergy)
 	{
 		CurrentEnergy = MaxEnergy;
@@ -174,15 +182,16 @@ void ABaseTorch::ActivateTorch()
 			//there is enough energy
 			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
 			{
-				if (isFlashed == false)
+				isFlashed = true;
+		
+				if (isFlashed)
 				{
 					PlayStunSound(StunSound);
-					TorchSpotlight->SetIntensity(24000);
-					TorchSpotlight->SetAttenuationRadius(5000);
-					TorchSpotlight->SetOuterConeAngle(50.0);
-					isFlashed = true;
+					TorchSpotlight->SetIntensity(StunIntensity);
+					TorchSpotlight->SetAttenuationRadius(StunAttenuationRadious);
+					TorchSpotlight->SetOuterConeAngle(33.0);
+					isFlashed = false;
 				}
-
 				EnemyPawn->OnStun();
 				DecreaseEnergy();
 			}
@@ -212,12 +221,12 @@ void ABaseTorch::TorchOnOff(bool bSpotLightVisiblity)
 	
 	if (bSpotLightVisiblity == true)
 	{
-		GetWorldTimerManager().SetTimer(StartReducingEnergyTimerHandle, this, &ABaseTorch::DrainTorchEnergy, ReductionTimerRate, true);
+	//	GetWorldTimerManager().SetTimer(StartReducingEnergyTimerHandle, this, &ABaseTorch::DrainTorchEnergy, ReductionTimerRate, true);
 		SetTorchIntensity();
 	}
 	else
 	{
-		GetWorldTimerManager().ClearTimer(StartReducingEnergyTimerHandle);
+	//	GetWorldTimerManager().ClearTimer(StartReducingEnergyTimerHandle);
 	}
 
 	IsTorchOn = bSpotLightVisiblity;

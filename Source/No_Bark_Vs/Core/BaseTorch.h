@@ -41,6 +41,9 @@ public:
 		float StunIntensity;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		float StunAttenuationRadious;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float MaxIntensity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
@@ -66,6 +69,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyIncreaseOnCrank;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		float EnergyIncreaseOnBatteryPickUp;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsEnemySeen;
@@ -97,6 +104,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void IncreaseEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Torch")
+		void IncreaseEnergyByFloat(float EnergyToAdd);
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void ActivateTorch();
