@@ -152,8 +152,8 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 		PlayerInputComponent->BindAction("SprintHold", IE_Pressed, this, &ANBCharacter::OnStartSprinting);
 		PlayerInputComponent->BindAction("SprintHold", IE_Released, this, &ANBCharacter::OnStopSprinting);
-
-		PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
+		/*crouch disabled*/
+	//	PlayerInputComponent->BindAction("CrouchToggle", IE_Released, this, &ANBCharacter::OnCrouchToggle);
 		PlayerInputComponent->BindAction("PrimaryWeapon", IE_Pressed, this, &ANBCharacter::EquipPrimaryWeapon);
 
 		PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
@@ -417,7 +417,7 @@ void ANBCharacter::MoveForward(float Value)
 		AddMovementInput(Direction, Value);
 
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual MoveForward noise!"));
-		MakeNoise(0.1, this, GetActorLocation());
+		MakeNoise(0.8, this, GetActorLocation());
 	}
 }
 
@@ -434,7 +434,7 @@ void ANBCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, this->GetName() + TEXT(" - Making a virtual MoveRight noise!"));
-		MakeNoise(0.1, this, GetActorLocation());
+		MakeNoise(1.0, this, GetActorLocation());
 	}
 }
 //When sprinting the health will not gain and Stamina will decrease.  the effect will stop when firing
@@ -452,7 +452,7 @@ void ANBCharacter::OnStartSprinting()
 			//Stops Health Increase
 			GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
 			// Sprinting is noisy
-			MakeNoise(0.3, this, GetActorLocation());
+			MakeNoise(1.0, this, GetActorLocation());
 
 		}
 	}

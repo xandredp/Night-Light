@@ -55,6 +55,33 @@ void ANBBaseAI::Tick(float DeltaTime)
 
 }
 
+ASoundBlockingActor * ANBBaseAI::GetSoundBlockingActorInView()
+{
+	FCollisionQueryParams TraceParams(TEXT("TraceBlcokingActor"), true, this);
+	TraceParams.bTraceAsyncScene = true;
+	TraceParams.bReturnPhysicalMaterial = false;
+
+	/* Not tracing complex uses the rough collision instead making tiny objects easier to select. */
+	TraceParams.bTraceComplex = false;
+
+	ANBAIController* AIController = Cast<ANBAIController>(GetController());
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+
+	// Re-Initialize hit info
+	FHitResult Hit(ForceInit);
+	// Define start point of the trace
+	FVector PlayerLocation = PlayerCharacter->GetActorLocation();
+	APawn* AIPawn = AIController->GetPawn();
+	FVector AILocation = AIPawn->GetActorLocation();
+
+	//	Controller->GetPlayerViewPoint(CamLoc, CamRot);
+	const FVector TraceStart = PlayerLocation;
+	const FVector TraceEnd = AILocation;
+	GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
+	//DrawDebugLine(GetWorld(), TraceStart, Hit.TraceEnd, FColor::Green, true, 0.05f, 0.0f, 1.0f);
+	return Cast<ASoundBlockingActor>(Hit.GetActor());
+}
+
 //OnDeath function sets ragdoll and stops the sound. 
 void ANBBaseAI::OnDeath()
 {

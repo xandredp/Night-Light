@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../../Core/SoundBlockingActor.h"
 #include "NBBaseAI.generated.h"
 
 UCLASS()
@@ -74,10 +75,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		float SenseTimeOut;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		float AgrresionTimeOut;
 
 public:	
-
-
+	// retrns sound blocking actor. checkes if sound blocking actor is in between player and self
+	UFUNCTION(BlueprintCallable, Category = "AI")
+		ASoundBlockingActor* GetSoundBlockingActorInView();
 
 	UFUNCTION(BlueprintCallable, Category = "Status")
 		void OnDeath();
@@ -110,7 +114,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		bool GetMonsterDead();
 
-	// inventory interaction functions
+	// Apply damage to point damage 
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void ApplyDamage(AActor* DamagedActor, float BaseDamage,
 			FVector const& HitFromDirection,
@@ -165,6 +169,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Health")
 		void SpawnDropItems();
+
+
 
 
 };

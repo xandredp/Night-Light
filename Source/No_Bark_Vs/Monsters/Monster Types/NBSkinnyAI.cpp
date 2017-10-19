@@ -15,7 +15,7 @@
 ANBSkinnyAI::ANBSkinnyAI()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	//PrimaryActorTick.bCanEverTick = true;
 
 	RightHandSocket = TEXT("rightHandSocket");
 	LeftHandSocket = TEXT("leftHandSocket");
@@ -64,7 +64,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	PawnSensingComp->SetPeripheralVisionAngle(60.0f);
 	PawnSensingComp->SightRadius = 2000;
 	PawnSensingComp->HearingThreshold = 200;
-	PawnSensingComp->LOSHearingThreshold = 300;
+	PawnSensingComp->LOSHearingThreshold = 1000;
 
 	NeutralWalkSpeed = 100;
 	SuspiciousWalkSpeed = 150;
@@ -72,7 +72,8 @@ ANBSkinnyAI::ANBSkinnyAI()
 	ChargeWalkSpeed = 100;
 	StunnedWalkSpeed = 0;
 	FleeWalkSpeed = 100;
-	SenseTimeOut = 4.5;
+	SenseTimeOut = 10.0;
+	AgrresionTimeOut = 3.0;
 	DetectionMaxTime = 10.0f;
 	//BaseMonster Variables
 	CurrentAttackDamage = 20.0f;
@@ -82,7 +83,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	InDarkMovementSpeed = 1.5f;
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
-	MinAgressiveDistant = 5000.0f;
+	MinAgressiveDistant = 1000;
 	
 
 }
@@ -133,49 +134,22 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 				NBPlayerCharacter = NBCharacterPawn;
 				AIController->SetTargetKey(NBPlayerCharacter);
 			}
-
-			/*if the monster detect the player for first  time*/
+			/*If firt time seen react and go aggressive. */
 			if (bIsSuspicious == false)
 			{
 				FirstDetectedTime = GetWorld()->GetTimeSeconds();
 				LastDetectedTime = GetWorld()->GetTimeSeconds();
 				bIsSuspicious = true;
 				SetAIState(EBotBehaviorType::Suspicious);
-			}
-
-			//if player is further away than MinAgressiveDistant 
-			if (GetDistanceTo(NBCharacterPawn) > MinAgressiveDistant)
-			{				
-				/*When the monster has already seen you few seconds ago*/		
-				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
-				{
-					//continue updating Last SeenTime.
-					LastDetectedTime = GetWorld()->GetTimeSeconds();
-
-					//if the last time seen is bigger than maximun duration
-					if (LastDetectedTime - FirstDetectedTime > NBCharacterPawn->ValToMakePawnUnDetected* DetectionMaxTime)
-					{
-						OnReact();
-						SetAIState(EBotBehaviorType::Agression);
-					}
-				}
-			}
-			//if player is closer
+				OnReact();
+				SetAIState(EBotBehaviorType::Agression);
+			} 	/*If seen just go aggressive. */
 			else
-			{ 
-				if (AIController->GetAIStateKey() == EBotBehaviorType::Suspicious)
-				{
-					OnReact();
-					//continue updating Last SeenTime.
-					LastDetectedTime = GetWorld()->GetTimeSeconds();
-					SetAIState(EBotBehaviorType::Agression);
-				}
-				else
-				{
-				}
-
+			{
+			//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "SeenAggressive");
+				LastDetectedTime = GetWorld()->GetTimeSeconds();
+				SetAIState(EBotBehaviorType::Agression);
 			}
-			
 
 
 		}
@@ -188,32 +162,34 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 {
 	if (GetMonsterDead() == false)
 	{
-
 		ANBAIController* AIController = Cast<ANBAIController>(GetController());
 		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
 		/* if sensed pawn is the player*/
 		if (NBCharacterPawn && AIController)
 		{
-			//if player is further away than MinAgressiveDistant 
-			if (GetDistanceTo(NBCharacterPawn) > MinAgressiveDistant)
+		//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Heard");
+
+			if (ASoundBlockingActor* blockingActor = GetSoundBlockingActorInView())
 			{
-				//do nothing
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
 			}
+			//if there is nothing blocking in between assign the target enemy
 			else
 			{
-				AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
-				/*if the monster detect the player for first  time*/
+			//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
 				if (bIsSuspicious == false)
 				{
 					FirstDetectedTime = GetWorld()->GetTimeSeconds();
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 					bIsSuspicious = true;
 					SetAIState(EBotBehaviorType::Suspicious);
-				}
-				/*When the monster has already seen you few seconds ago*/
+					OnReact();
+					SetAIState(EBotBehaviorType::Agression);
+				} 	/*If seen just go aggressive. */
 				else
-				{	//continue updating Last DetectedTime.
+				{
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
+					SetAIState(EBotBehaviorType::Agression);
 				}
 			}
 		}
@@ -232,16 +208,28 @@ void ANBSkinnyAI::OnShotAt()
 			{
 				AIController->SetLastDetectedLocationKey(NBPlayerCharacter->GetActorLocation());
 			}
-			/*if the monster detect the player for first  time*/
 			if (bIsSuspicious == false)
 			{
 				FirstDetectedTime = GetWorld()->GetTimeSeconds();
 				LastDetectedTime = GetWorld()->GetTimeSeconds();
 				bIsSuspicious = true;
 				SetAIState(EBotBehaviorType::Suspicious);
+				OnReact();
+				SetAIState(EBotBehaviorType::Agression);
+			}
+			else
+			{
+				SetAIState(EBotBehaviorType::Agression);
 			}
 
 		}
+	}
+}
+void ANBSkinnyAI::OnLostPlayer()
+{
+	if (IsAnimPlaying != true)
+	{
+		PlayAnimation(SearchAnimation);
 	}
 }
 void ANBSkinnyAI::CountingPlayerUndetectedTime()
@@ -250,15 +238,29 @@ void ANBSkinnyAI::CountingPlayerUndetectedTime()
 	/*Currenttime - last detected time > SenseTime out*/
 	if (bIsSuspicious)
 	{
-		//FString TheFloatStr = FString::SanitizeFloat(GetWorld()->TimeSeconds - LastDetectedTime);
-		//FString TheFloatStr1 = FString::SanitizeFloat(SenseTimeOut);
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TheFloatStr);
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TheFloatStr1);
-		if (GetWorld()->TimeSeconds - LastDetectedTime > SenseTimeOut)
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		if (AIController)
 		{
-			//set back the monster to neutral 
-			SetAIState(EBotBehaviorType::Neutral);
+			EBotBehaviorType AIState = AIController->GetAIStateKey();
 
+				if (AIState == EBotBehaviorType::Agression)
+			{
+				if (GetWorld()->TimeSeconds - LastDetectedTime > AgrresionTimeOut)
+				{
+					//set back the monster to neutral 
+					OnLostPlayer();
+					SetAIState(EBotBehaviorType::Suspicious);
+				}
+			}
+			else
+			{
+				if (GetWorld()->TimeSeconds - LastDetectedTime > SenseTimeOut)
+				{
+					//set back the monster to neutral 
+					SetAIState(EBotBehaviorType::Neutral);
+
+				}
+			}
 		}
 	}
 
@@ -288,10 +290,8 @@ void ANBSkinnyAI::OnOverlapStrikeCharacter(UPrimitiveComponent * OverlappedComp,
 			ANBCharacter* OtherPawn = Cast<ANBCharacter>(OtherActor);
 			if (OtherPawn)
 			{
-				if (OtherPawn->IsBeingAttacked == false)
+				if (OtherPawn->IsBeingAttacked == true)
 				{
-					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, "true");
-					OtherPawn->IsBeingAttacked = true;
 					//health decrease of other pawn. 
 					OtherPawn->DecreaseHealth(CurrentAttackDamage);
 				}
@@ -336,10 +336,13 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 					bIsSuspicious = true;
 					SetAIState(EBotBehaviorType::Suspicious);
+					OnReact();
+					SetAIState(EBotBehaviorType::Agression);
 				}
 				/*When the monster has already seen you few seconds ago*/
 				else
 				{
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
 					SetAIState(EBotBehaviorType::Agression);
 				}
 

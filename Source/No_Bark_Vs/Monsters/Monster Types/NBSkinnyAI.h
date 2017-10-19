@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 #include "Monsters/Base/NBBaseAI.h"
 #include "NBSkinnyAI.generated.h"
 
@@ -50,6 +50,9 @@ public:
 	UFUNCTION()
 		virtual void OnShotAt();
 
+	UFUNCTION()
+		void OnLostPlayer();
+
 	/*counting howlong the player has been undetected for if long calms the monster*/
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void CountingPlayerUndetectedTime();
@@ -73,6 +76,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
 		class UAnimMontage* ReactAnimation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+		class UAnimMontage* SearchAnimation;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
 		class UAnimMontage* StunAnimation;
