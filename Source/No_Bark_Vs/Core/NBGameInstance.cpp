@@ -15,7 +15,7 @@ void UNBGameInstance::Init()
 	UGameInstance::Init();
 
 	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UNBGameInstance::BeginLoadingScreen);
-	FCoreUObjectDelegates::PostLoadMap.AddUObje.ct(this, &UNBGameInstance::EndLoadingScreen);
+	FCoreUObjectDelegates::PostLoadMap.AddUObject(this, &UNBGameInstance::EndLoadingScreen);
 }
 
 
@@ -25,11 +25,17 @@ void UNBGameInstance::BeginLoadingScreen(const FString& MapName)
 	{
 		FLoadingScreenAttributes LoadingScreen;
 		LoadingScreen.bAutoCompleteWhenLoadingCompletes = false;
-// 		LoadingScreen.bMoviesAreSkippable = true;
-// 		LoadingScreen.MoviePaths.Add(TEXT("Loading_Screen"));
-// 
-// 		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
-// 		GetMoviePlayer()->PlayMovie();
+		LoadingScreen.WidgetLoadingScreen = FLoadingScreenAttributes::NewTestLoadingScreenWidget();
+		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+
+		// 		LoadingScreen.bMoviesAreSkippable = true;
+		// 		LoadingScreen.MoviePaths.Add(TEXT("Loading_Screen"));
+		// 		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+		// 		GetMoviePlayer()->PlayMovie();
+
+
+	}
+}
 
 void UNBGameInstance::EndLoadingScreen()
 {
