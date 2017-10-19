@@ -33,8 +33,6 @@ void UNBGameInstance::BeginLoadingScreen(const FString& MapName)
 		// 		LoadingScreen.MoviePaths.Add(TEXT("Loading_Screen"));
 		// 		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 		// 		GetMoviePlayer()->PlayMovie();
-
-
 	}
 }
 
