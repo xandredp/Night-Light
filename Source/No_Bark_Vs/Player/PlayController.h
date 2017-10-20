@@ -32,6 +32,9 @@ public:
 		void Interact();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void UseBattery();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		bool IsInteract();
 
 	/************************************************************************/
@@ -93,6 +96,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		FBatteryData CurrentPossesedBattery;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		bool IstherepossesedBattery;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void BatteryUsed();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddBatteryToPossesion(FBatteryData aBattery);

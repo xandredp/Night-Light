@@ -15,6 +15,7 @@ APlayController::APlayController()
 	bShowMouseCursor = false;
 	MyCurrentCurrency = 0.0f;
 	isBookWidgetOpen = false;
+	IstherepossesedBattery = false;
 }
 
 void APlayController::Interact()
@@ -28,6 +29,14 @@ void APlayController::Interact()
 	{
 		CurrentInteractable->Interact(this);
 	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
+	}
+}
+void APlayController::UseBattery()
+{
+	if (IstherepossesedBattery == true)
+	{
+		BatteryUsed();
+		IstherepossesedBattery = false;
 	}
 }
 bool APlayController::IsInteract()
@@ -108,6 +117,7 @@ void APlayController::AddKeytoPossesion(FKeyData aKey)
 void APlayController::AddBatteryToPossesion(FBatteryData aBattery)
 {
 	CurrentPossesedBattery = aBattery;
+	IstherepossesedBattery = true;
 	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
 
 }
@@ -127,4 +137,5 @@ void APlayController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	InputComponent->BindAction("Use", IE_Pressed, this, &APlayController::Interact);
+	InputComponent->BindAction("UseBattery", IE_Pressed, this, &APlayController::UseBattery);
 }
