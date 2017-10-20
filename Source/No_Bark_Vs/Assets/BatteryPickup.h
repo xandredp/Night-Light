@@ -2,19 +2,57 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Core/BaseInteractable.h"
 #include "BatteryPickup.generated.h"
 
 /**
  * 
  */
+
+
+USTRUCT(BlueprintType)
+struct FBatteryData
+{
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		FName BatteryID;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		UTexture2D* SplashArt;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		float ChargeAmount;
+
+};
+
+
 UCLASS()
 class NO_BARK_VS_API ABatteryPickup : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
+public:
+	ABatteryPickup();
 	
-	
-	
+	virtual void Interact(APlayerController* playerController) override;
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void PlayPickupSound();
+
+	UFUNCTION(BlueprintCallable)
+		void DestroyItemOnGround();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		FBatteryData BatteryConfig;
+
+	//Interactable DoorID
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		FName ItemID;
+
 };

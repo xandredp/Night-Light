@@ -103,6 +103,14 @@ void APlayController::AddKeytoPossesion(FKeyData aKey)
 	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
 
 }
+
+
+void APlayController::AddBatteryToPossesion(FBatteryData aBattery)
+{
+	CurrentPossesedBattery = aBattery;
+	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
+
+}
 void APlayController::RemoveKeyfromPossesion(FKeyData aKey)
 {
 	for (int32 i = 0; i < CurrentPossesedKeys.Num(); i++)

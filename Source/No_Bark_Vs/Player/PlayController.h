@@ -6,6 +6,7 @@
 #include "Player/NBCharacter.h"
 #include "Core/TypeClass.h"
 #include "Assets/KeyForDoor.h"
+#include "Assets/BatteryPickup.h"
 #include "PlayController.generated.h"
 
 /**
@@ -86,8 +87,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void RemoveKeyfromPossesion(FKeyData aKey);
+	/************************************************************************/
+	/* Batteries                                                    */
+	/************************************************************************/
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		FBatteryData CurrentPossesedBattery;
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddBatteryToPossesion(FBatteryData aBattery);
 	/************************************************************************/
 	/* Game Currency                                                      */
 	/************************************************************************/
