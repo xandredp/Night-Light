@@ -33,7 +33,7 @@ void AInstructionPickUp::Interact(APlayerController * playerController)
 			
 		}
 
-		DestroyItemOnGround();
+		//DestroyItemOnGround();
 	}
 }
 

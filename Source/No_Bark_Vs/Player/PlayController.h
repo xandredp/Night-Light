@@ -6,6 +6,7 @@
 #include "Player/NBCharacter.h"
 #include "Core/TypeClass.h"
 #include "Assets/KeyForDoor.h"
+#include "Assets/BatteryPickup.h"
 #include "PlayController.generated.h"
 
 /**
@@ -29,6 +30,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void Interact();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void UseBattery();
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		bool IsInteract();
@@ -86,8 +90,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void RemoveKeyfromPossesion(FKeyData aKey);
+	/************************************************************************/
+	/* Batteries                                                    */
+	/************************************************************************/
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		FBatteryData CurrentPossesedBattery;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		bool IstherepossesedBattery;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void BatteryUsed();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+		void AddBatteryToPossesion(FBatteryData aBattery);
 	/************************************************************************/
 	/* Game Currency                                                      */
 	/************************************************************************/
