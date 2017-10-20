@@ -106,11 +106,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 		void AddBatteryToPossesion(FBatteryData aBattery);
 	/************************************************************************/
-	/* Game Currency                                                      */
+	/* Game play status                                                      */
 	/************************************************************************/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int MyCurrentCurrency;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		int ShotsFired;
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")

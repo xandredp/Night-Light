@@ -16,6 +16,7 @@ APlayController::APlayController()
 	MyCurrentCurrency = 0.0f;
 	isBookWidgetOpen = false;
 	IstherepossesedBattery = false;
+	ShotsFired = 0;
 }
 
 void APlayController::Interact()
