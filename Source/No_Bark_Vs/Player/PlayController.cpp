@@ -78,8 +78,9 @@ void APlayController::OpenBookWidget()
 			{
 				SetInputMode(UIonlyInputMode);
 			
-				SetInputModetoGameandUI(true);
+			//	SetInputModetoGameandUI(true);
 				wBookWidget->bIsFocusable = true;
+				wBookWidget->
 				
 			//	bShowMouseCursor = true;
 				wBookWidget->AddToViewport(1);
