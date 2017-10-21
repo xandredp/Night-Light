@@ -34,7 +34,6 @@ ANBBaseAI::ANBBaseAI()
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
 	bisMonsterkillableAtStun = false;
-	bisMonsterInLight = false;
 
 }
 
