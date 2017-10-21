@@ -15,22 +15,21 @@ void AInstructionPickUp::Interact(APlayerController * playerController)
 	APlayController* aPlayController = Cast<APlayController>(playerController);
 	if (aPlayController)
 	{
+		if (aPlayController->isBookWidgetOpen)
+		{
+			aPlayController->CloseBookWidget();
+		}
+		else
+		{
+			aPlayController->AddCurrentInstruction(ItemID);
+			aPlayController->OpenBookWidget();
+		}
+
 		//PlayPickupAnimation
 		ANBCharacter* MyPawn = Cast<ANBCharacter>(aPlayController->GetPawn());
 		if (MyPawn)
 		{
 			MyPawn->PlayPickUpAnimation();
-
-			aPlayController->AddCurrentInstruction(ItemID);
-			if (aPlayController->isBookWidgetOpen)
-			{
-				aPlayController->CloseBookWidget();
-			}
-			else
-			{
-				aPlayController->OpenBookWidget();
-			}
-			
 		}
 
 		//DestroyItemOnGround();
