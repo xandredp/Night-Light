@@ -221,6 +221,8 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	APlayController* const PC = Instigator ? Cast<APlayController>(Instigator->Controller) : nullptr;
 
 	PC->ShotsFired++;
+	MyPawn->ShotsFiredEvent();
+
 	float CurrentDamage = 0;
 //	if (PhysMat && DmgType)
 	if (Enemy!= nullptr)

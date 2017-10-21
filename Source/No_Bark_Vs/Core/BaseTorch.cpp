@@ -41,7 +41,6 @@ ABaseTorch::ABaseTorch()
 	EnergyIncreaseOnBatteryPickUp = 40.0f;
 	EnergyIncreaseOnCrank = 5.0;
 	IsEnemySeen = false;
-	isFlashed = false;
 }
 
 //Called every frame
@@ -182,16 +181,7 @@ void ABaseTorch::ActivateTorch()
 			//there is enough energy
 			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
 			{
-				isFlashed = true;
-		
-				if (isFlashed)
-				{
-					PlayStunSound(StunSound);
-					TorchSpotlight->SetIntensity(StunIntensity);
-					TorchSpotlight->SetAttenuationRadius(StunAttenuationRadious);
-					TorchSpotlight->SetOuterConeAngle(33.0);
-					isFlashed = false;
-				}
+				TorchActivatedEvent();		
 				EnemyPawn->OnStun();
 				DecreaseEnergy();
 			}

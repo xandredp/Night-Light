@@ -179,6 +179,8 @@ public:
 	ABaseWeapon *CurrentWeapon;
 	//Primary Weapon Held Item
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void ShotsFiredEvent();
 	/************************************************************************/
 	/* Torch use                                                           */
 	/************************************************************************/

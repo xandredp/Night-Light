@@ -77,9 +77,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsEnemySeen;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
-		bool isFlashed;
-
 	UPROPERTY(EditAnywhere, Category = "Config | Sound")
 		USoundCue* StunSound;
 
@@ -104,6 +101,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void IncreaseEnergy();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void TorchActivatedEvent();
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void IncreaseEnergyByFloat(float EnergyToAdd);

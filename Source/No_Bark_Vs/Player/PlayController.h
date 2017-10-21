@@ -117,6 +117,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int ShotsFired;
+
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")

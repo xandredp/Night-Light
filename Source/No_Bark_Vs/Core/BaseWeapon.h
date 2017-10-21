@@ -164,6 +164,9 @@ public:
 	void StopReloading();
 
 
+
+
+
 protected:
 
 	virtual void SimulateWeaponFire();
