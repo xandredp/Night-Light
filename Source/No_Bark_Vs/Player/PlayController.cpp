@@ -49,7 +49,6 @@ void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 {
 	FInputModeGameAndUI InputMode;
 	FInputModeGameOnly GameOnlyInputMode;
-
 	if (bHideCursor == true)
 	{
 		InputMode.SetHideCursorDuringCapture(bHideCursor);
@@ -64,7 +63,6 @@ void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 }
 void APlayController::OpenBookWidget()
 {
-	FInputModeUIOnly UIonlyInputMode;
 	if (isBookWidgetOpen)
 	{
 		CloseBookWidget();
@@ -76,11 +74,8 @@ void APlayController::OpenBookWidget()
 			wBookWidget = CreateWidget<UUserWidget>(this, wBook);
 			if (wBookWidget)
 			{
-				SetInputMode(UIonlyInputMode);
-			
 				SetInputModetoGameandUI(true);
 				wBookWidget->bIsFocusable = true;
-				
 			//	bShowMouseCursor = true;
 				wBookWidget->AddToViewport(1);
 			}

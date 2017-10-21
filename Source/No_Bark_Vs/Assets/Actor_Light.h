@@ -26,39 +26,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		class USpotLightComponent *SpotLightComp;
 
-
 	UFUNCTION(BlueprintImplementableEvent)
 		void ToggleSpotLightComp(bool blightvisiblity);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		bool bIsLightOn;
-
-
-	/************************************************************************/
-	/* Overlap functions                                      */
-	/************************************************************************/
-
-	// Sphere component around monster this triggers attack animation
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class USphereComponent* SphereComp0;
-
-	// Sphere component attached to the hand 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class USphereComponent* SphereComp1;
-
-	// Sphere component attached to the hand 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class USphereComponent* SphereComp2;
-
-	// Sphere component attached to the hand 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class USphereComponent* SphereComp3;
-
-	UFUNCTION()
-		void OnOverlapChangeCharacterStatus(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-		void OnEndOverlapChangeCharacterStatus(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex);
-	
 };
 

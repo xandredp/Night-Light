@@ -21,28 +21,14 @@ void AInstructionPickUp::Interact(APlayerController * playerController)
 		{
 			MyPawn->PlayPickUpAnimation();
 
-			
 			aPlayController->AddCurrentInstruction(ItemID);
 			if (aPlayController->isBookWidgetOpen)
 			{
 				aPlayController->CloseBookWidget();
-
-				if (SoundPickUp != nullptr)
-				{
-					PlaySound(SoundPickUp);
-				}
-
-
 			}
 			else
 			{
 				aPlayController->OpenBookWidget();
-
-				if (SoundPickUp != nullptr)
-				{
-					PlaySound(SoundPickUp);
-				}
-
 			}
 			
 		}
