@@ -30,6 +30,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		FName ItemID;
+	/*this bool variable checkes if door is interactable or not. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool LockDoorForSpecificMechanic;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsDoorLock;

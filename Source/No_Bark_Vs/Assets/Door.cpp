@@ -10,22 +10,31 @@ ADoor::ADoor()
 	IsDoorOpen = false;
 	IsDoorLock = true;
 	IsDoubleDoor = false;
+	LockDoorForSpecificMechanic = false;
 }
 
 void ADoor::Interact(APlayerController* playerController)
 {
-	APlayController* aPlayController = Cast<APlayController>(playerController);
-	if (aPlayController)
+	if(LockDoorForSpecificMechanic ==  true)
 	{
-		if (IsDoubleDoor)
-		{
-			if (AnotherDoor)
-			{
-				AnotherDoor->ToggleDoor();
-			}
-		}
-		ToggleDoor();
+		Action = "Power needed";
 	}
+	else
+	{
+		APlayController* aPlayController = Cast<APlayController>(playerController);
+		if (aPlayController)
+		{
+			if (IsDoubleDoor)
+			{
+				if (AnotherDoor)
+				{
+					AnotherDoor->ToggleDoor();
+				}
+			}
+			ToggleDoor();
+		}
+	}
+	
 }
 
 void ADoor::BeginPlay()

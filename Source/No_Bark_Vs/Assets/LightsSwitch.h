@@ -45,4 +45,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsSwitchOn;
+
+	/*this bool variable checkes if door is interactable or not. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool LockSwitchForSpecificMechanic;
 };

@@ -11,25 +11,31 @@
 ALightsSwitch::ALightsSwitch()
 {
 	ItemID = FName("Please EnterID");
+	LockSwitchForSpecificMechanic = false;
 }
 
 void ALightsSwitch::Interact(APlayerController* playerController)
 {
-	APlayController* aPlayController = Cast<APlayController>(playerController);
-	if (aPlayController)
+	if (LockSwitchForSpecificMechanic == true)
 	{
-		if (LightActors.Num() != 0)
+		Action = " ";
+	}
+	else
+	{
+		APlayController* aPlayController = Cast<APlayController>(playerController);
+		if (aPlayController)
 		{
-			ToggleSwitchOnAndOff();
-			InteractionFeedBack();
-		}
-		else
-		{	
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Not assigned");
+			if (LightActors.Num() != 0)
+			{
+				//ToggleSwitchOnAndOff();
+				InteractionFeedBack();
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Not assigned");
+			}
 		}
 	}
-
-
 }
 
 void ALightsSwitch::BeginPlay()
