@@ -45,4 +45,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool IsSwitchOn;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
+		bool isInteracted;
 };
