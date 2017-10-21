@@ -31,5 +31,28 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LightObj")
 		bool bIsLightOn;
+
+	// Sphere component around monster this triggers attack animation
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* SphereComp0;
+
+	// Sphere component attached to the hand 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* SphereComp1;
+
+	// Sphere component attached to the hand 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* SphereComp2;
+
+	// Sphere component attached to the hand 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USphereComponent* SphereComp3;
+
+	UFUNCTION()
+		void OnOverlapChangeAIStates(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void OnEndOverlapChangeAIStates(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 };
 
