@@ -134,6 +134,10 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 				NBPlayerCharacter = NBCharacterPawn;
 				AIController->SetTargetKey(NBPlayerCharacter);
 			}
+			else
+			{
+				AIController->SetTargetKey(NBPlayerCharacter);
+			}
 			/*If firt time seen react and go aggressive. */
 			if (bIsSuspicious == false)
 			{
@@ -168,7 +172,16 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 		if (NBCharacterPawn && AIController)
 		{
 		//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Heard");
-
+		/*SetsTargetKey*/
+			if (NBPlayerCharacter == nullptr)
+			{
+				NBPlayerCharacter = NBCharacterPawn;
+				AIController->SetTargetKey(NBPlayerCharacter);
+			}
+			else
+			{
+				AIController->SetTargetKey(NBPlayerCharacter);
+			}
 			if (ASoundBlockingActor* blockingActor = GetSoundBlockingActorInView())
 			{
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
