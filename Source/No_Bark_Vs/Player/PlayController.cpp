@@ -22,15 +22,19 @@ APlayController::APlayController()
 void APlayController::Interact()
 {//ABaseInteractable
 
-	if (isBookWidgetOpen)
+	if (isBookWidgetOpen == true)
 	{
 		CloseBookWidget();
 	}
-	if (CurrentInteractable)
+	else
 	{
-		CurrentInteractable->Interact(this);
-	//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
+		if (CurrentInteractable)
+		{
+			CurrentInteractable->Interact(this);
+			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(FCurrentInventory.Num()));
+		}
 	}
+
 }
 void APlayController::UseBattery()
 {
@@ -65,7 +69,7 @@ void APlayController::SetInputModetoGameandUI(bool bHideCursor)
 void APlayController::OpenBookWidget()
 {
 	FInputModeUIOnly UIonlyInputMode;
-	if (isBookWidgetOpen)
+	if (isBookWidgetOpen == true)
 	{
 		CloseBookWidget();
 	}
