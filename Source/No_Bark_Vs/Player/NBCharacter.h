@@ -1,15 +1,6 @@
 
 #pragma once
-#include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-//#include "Animation Instances/CharacterAnimInstance.h"
-#include "AI/Spawning/MonsterSpawner.h"
-#include "PlayerSensingPawn.h"
-//#include "Perception/PawnSensingComponent.h"
-#include "Engine/DataTable.h"
-#include "Core/BaseWeapon.h"
-#include "Core/BaseTorch.h"
-#include "Core/TypeClass.h"
 #include "NBCharacter.generated.h"
 
 
@@ -126,7 +117,7 @@ public:
 		void PlayPickUpAnimation();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-		UAnimInstance* ArmAnimInstance;
+		class UAnimInstance* ArmAnimInstance;
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 		float PlayArmAnimation(UAnimMontage * Animation, float InPlayRate, FName StartSectionName);
@@ -190,10 +181,10 @@ public:
 		TSubclassOf <class ABaseTorch> TorchClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		ABaseTorch *CurrentTorch;
+		class ABaseTorch *CurrentTorch;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		APlayerSensingPawn *SensingComponentPawn;
+		class APlayerSensingPawn *SensingComponentPawn;
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void SpawnTorch();
@@ -316,10 +307,10 @@ public:
 		bool IsBeingAttacked;
 
 private:
+
 	/* Attachpoint for active weapon/item in hands */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName TorchAttachPoint;
-
 
 	/* Attachpoint for active weapon/item in hands */
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")

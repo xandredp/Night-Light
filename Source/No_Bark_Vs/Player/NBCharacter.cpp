@@ -1,11 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "Player/NBCharacter.h"
-#include "Core/No_Bark_Vs.h"
 #include "Core/BaseInteractable.h"
 #include "Player/PlayController.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/PawnNoiseEmitterComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Actor.h"
+#include "../Core/BaseTorch.h"
+#include "../Core/BaseWeapon.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/PlayerSensingPawn.h"
 //#include "Perception/PawnSensingComponent.h"
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
@@ -44,7 +52,7 @@ ANBCharacter::ANBCharacter()
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
 
-	MoveComp = GetCharacterMovement();
+	MoveComp = wwwwwwwwwterMovement();
 	// Adjust jump to make it less floaty
 	MoveComp->GravityScale = 1.5f;
 	MoveComp->JumpZVelocity = 620;
@@ -55,6 +63,12 @@ ANBCharacter::ANBCharacter()
 	// Enable movements
 	MoveComp->GetNavAgentPropertiesRef().bCanCrouch = true;
 	MoveComp->GetNavAgentPropertiesRef().bCanFly = true;
+	// Configure character movement
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
+	GetCharacterMovement()->JumpZVelocity = 600.f;
+	GetCharacterMovement()->AirControl = 0.2f;
+
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -68,11 +82,7 @@ ANBCharacter::ANBCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
-	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
-	GetCharacterMovement()->JumpZVelocity = 600.f;
-	GetCharacterMovement()->AirControl = 0.2f;
+
 
 	CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	////CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
@@ -186,7 +196,7 @@ void ANBCharacter::OnSeeEnemy(APawn * Pawn)
 {
 	if (CurrentTorch != nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "You Seean an Enemy!");
+	
 	}
 
 }
@@ -196,7 +206,7 @@ void ANBCharacter::EquipPrimaryWeapon()
 	
 	if (WeaponClass == NULL)
 	{			
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "WeaponClassIsEmpty");
+
 	}
 	else
 	{
@@ -215,6 +225,7 @@ void ANBCharacter::SpawnTorch()
 	{
 		CurrentTorch = GetWorld()->SpawnActor<ABaseTorch>(TorchClass, SpawnParams);
 	} 
+	
 	CurrentTorch->SetOwningPawn(this);
 
 	//Attach Sensing component This is used as Torch collision component
@@ -566,13 +577,10 @@ void ANBCharacter::StopFireWeapon()
 		if (AutoReload)
 		{
 			int32 CurrentAmmoInWeapon = CurrentWeapon->CurrentAmmo;
-			int32 CurrentClipInWeapon = CurrentWeapon->CurrentClip;
+
 			if (CurrentAmmoInWeapon == 0)
 			{
-				if (CurrentClipInWeapon > 0)
-				{
-					ReloadWeapon();
-				}
+				ReloadWeapon();
 			}
 		}
 	
@@ -589,15 +597,24 @@ void ANBCharacter::ReloadWeapon()
 		{
 			if (IsAnimPlaying == false)
 			{
-				if (ReloadAnimation != NULL)
+				int32 CurrentAmmoInWeapon = CurrentWeapon->CurrentAmmo;
+				int32 MaxAmmo = CurrentWeapon->WeaponConfig.MaxAmmo;
+				if (CurrentAmmoInWeapon == MaxAmmo)
 				{
-					ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
-					if (ArmAnimInstance != NULL)
-					{
-						ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
-					}
+
 				}
-				CurrentWeapon->ReloadAmmo();
+				else
+				{
+					if (ReloadAnimation != NULL)
+					{
+						ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+						if (ArmAnimInstance != NULL)
+						{
+							ArmAnimInstance->Montage_Play(ReloadAnimation, 1.0f);
+						}
+					}
+					CurrentWeapon->ReloadAmmo();
+				}
 			}
 		}
 	}
