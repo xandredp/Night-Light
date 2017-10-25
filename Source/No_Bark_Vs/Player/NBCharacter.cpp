@@ -106,15 +106,13 @@ ANBCharacter::ANBCharacter()
 	LockMovement = false;
 	IsBeingAttacked = false;
 	PlayerCanBeDamaged = true;
+	AutoReload = true;
 }
 
 void ANBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-//	FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), CameraAttachPoint);
 
-	//FollowCamera->AttachToComponent(CharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, CameraAttachPoint);
-	//AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	bIsDead = false;
 	CharacterMesh->SetHiddenInGame(true, true);
 
@@ -564,6 +562,21 @@ void ANBCharacter::StopFireWeapon()
 	if (CurrentWeapon)
 	{
 		CurrentWeapon->StopTimerForFiring();
+
+		if (AutoReload)
+		{
+			int32 CurrentAmmoInWeapon = CurrentWeapon->CurrentAmmo;
+			int32 CurrentClipInWeapon = CurrentWeapon->CurrentClip;
+			if (CurrentAmmoInWeapon == 0)
+			{
+				if (CurrentClipInWeapon > 0)
+				{
+					ReloadWeapon();
+				}
+			}
+		}
+	
+	
 	}
 	
 }

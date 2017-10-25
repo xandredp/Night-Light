@@ -259,6 +259,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int CurrentScore;
 
+	/** AutoReload*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool AutoReload;
+
 	/* DecreaseStamina, used by timer. */
 	UFUNCTION(BlueprintCallable, Category = "Condition")
 	void DecreaseHealth(float decreaseVal);
