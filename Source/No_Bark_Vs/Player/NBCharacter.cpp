@@ -52,7 +52,7 @@ ANBCharacter::ANBCharacter()
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
 
-	MoveComp = wwwwwwwwwterMovement();
+	MoveComp = GetCharacterMovement();
 	// Adjust jump to make it less floaty
 	MoveComp->GravityScale = 1.5f;
 	MoveComp->JumpZVelocity = 620;
