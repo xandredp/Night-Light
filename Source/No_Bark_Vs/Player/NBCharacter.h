@@ -167,7 +167,7 @@ public:
 		TSubclassOf <class ABaseWeapon> WeaponClass;
 	//Hand Held Item
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	ABaseWeapon *CurrentWeapon;
+		class ABaseWeapon *CurrentWeapon;
 	//Primary Weapon Held Item
 
 	UFUNCTION(BlueprintImplementableEvent)
