@@ -7,7 +7,7 @@
 
 // This is NOT included by default in an empty project! It's required for replication and setting of the GetLifetimeReplicatedProps
 #include "Net/UnrealNetwork.h"
-
+#include "SaveGameModule.h"
 
 #define WEAPON_TRACE				ECC_GameTraceChannel1
 #define TORCH_TRACE					ECC_GameTraceChannel2
