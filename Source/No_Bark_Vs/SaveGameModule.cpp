@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SaveGameModule.h"
+#include "GameFramework/Character.h"
+#include "Player/NBCharacter.h"
+#include "Core/BaseWeapon.h"
 
 #include "Engine.h"
 
@@ -21,6 +24,26 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 	USaveGameModule* SaveGameInstance = Cast<USaveGameModule>(UGameplayStatics::CreateSaveGameObject(USaveGameModule::StaticClass()));
 	SaveGameInstance->PlayerPosition = Location;
 
+	ANBCharacter* nb = Cast<ANBCharacter>(ThisCharacter);
+
+	SaveGameInstance->Health = nb->CurrentHealth;
+	SaveGameInstance->CurrentScore = nb->CurrentScore;
+	SaveGameInstance->MaxHealth = nb->MaxHealth;
+
+
+	SaveGameInstance->WeaponClass = nb->WeaponClass;
+
+	if (nb->CurrentWeapon)
+	{
+		SaveGameInstance->HasWeapon = true;
+		SaveGameInstance->CurrentClip = nb->CurrentWeapon->CurrentClip;
+		SaveGameInstance->CurrentAmmo = nb->CurrentWeapon->CurrentAmmo;
+	}
+	else
+	{
+		SaveGameInstance->HasWeapon = false;
+	}
+
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Saved in c++");
 
@@ -32,13 +55,33 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 {
 	USaveGameModule* LoadGameInstance = Cast<USaveGameModule>(UGameplayStatics::CreateSaveGameObject(USaveGameModule::StaticClass()));
 	LoadGameInstance = Cast<USaveGameModule>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
-	FVector PlayerPosition = LoadGameInstance->PlayerPosition;
 
+	// Reset the player position
+	FVector PlayerPosition = LoadGameInstance->PlayerPosition;
 	ThisCharacter->SetActorLocation(PlayerPosition);
+
+	ANBCharacter* nb = Cast<ANBCharacter>(ThisCharacter);
+
+	// reload the basic NBCharacter settings
+	nb->CurrentHealth = LoadGameInstance->Health;
+	nb->CurrentScore = LoadGameInstance->CurrentScore;
+	nb->MaxHealth = LoadGameInstance->MaxHealth;
+
+
+	nb->WeaponClass = LoadGameInstance->WeaponClass;
+
+	if (LoadGameInstance->HasWeapon)
+	{	
+		nb->EquipPrimaryWeapon();
+		nb->CurrentWeapon->CurrentClip = LoadGameInstance->CurrentClip;
+		nb->CurrentWeapon->CurrentAmmo = LoadGameInstance->CurrentAmmo;
+	}
+
+	
 
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "loaded from c++");
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Loaded from c++");
 	}
 }
 
