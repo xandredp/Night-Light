@@ -52,6 +52,14 @@ public:
 
 	//Primary Weapon Held Item
 
+	// Torch
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
+		TSubclassOf <class ABaseTorch> TorchClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool HasTorch;
+
 
 	// This stuff belongs to the current weapon
 

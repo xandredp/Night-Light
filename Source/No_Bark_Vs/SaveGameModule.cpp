@@ -32,6 +32,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 
 
 	SaveGameInstance->WeaponClass = nb->WeaponClass;
+	SaveGameInstance->TorchClass = nb->TorchClass;
 
 	if (nb->CurrentWeapon)
 	{
@@ -44,6 +45,15 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 		SaveGameInstance->HasWeapon = false;
 	}
 
+
+	if (nb->CurrentTorch)
+	{
+		SaveGameInstance->HasTorch = true;
+	}
+	else
+	{
+		SaveGameInstance->HasTorch = false;
+	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Saved in c++");
 
@@ -76,7 +86,10 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 		nb->CurrentWeapon->CurrentClip = LoadGameInstance->CurrentClip;
 		nb->CurrentWeapon->CurrentAmmo = LoadGameInstance->CurrentAmmo;
 	}
-
+	if (LoadGameInstance->HasTorch)
+	{
+		nb->SpawnTorch();
+	}
 	
 
 	if (GEngine)
