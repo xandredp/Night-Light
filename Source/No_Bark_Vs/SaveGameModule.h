@@ -43,14 +43,11 @@ public:
 
 	// Weapon stuff 
 
-	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
 		TSubclassOf <class ABaseWeapon> WeaponClass;
 	//Hand Held Item
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	  bool HasWeapon;
-
-	//Primary Weapon Held Item
 
 	// Torch
 
