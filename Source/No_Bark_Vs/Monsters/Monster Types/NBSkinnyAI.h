@@ -4,6 +4,7 @@
 
 //#include "CoreMinimal.h"
 #include "Monsters/Base/NBBaseAI.h"
+
 #include "NBSkinnyAI.generated.h"
 
 /**

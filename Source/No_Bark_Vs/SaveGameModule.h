@@ -58,6 +58,12 @@ public:
 		bool HasTorch;
 
 
+	// Try to save Array of Players
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+	TArray<FString> Zombies;
+	//
+
+
 	// This stuff belongs to the current weapon
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)

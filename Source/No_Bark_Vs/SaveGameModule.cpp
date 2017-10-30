@@ -2,6 +2,7 @@
 
 #include "SaveGameModule.h"
 #include "GameFramework/Character.h"
+#include "Monsters/Monster Types/NBSkinnyAI.h"
 #include "Player/NBCharacter.h"
 #include "Core/BaseWeapon.h"
 
@@ -55,9 +56,25 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 		SaveGameInstance->HasTorch = false;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Saved in c++");
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Saved in c++");
 
+	UWorld* World = ThisCharacter->GetWorld();
 
+	for (TActorIterator<ANBBaseAI> It(World); It; ++It)
+	{
+
+		if (It->GetMonsterDead()) 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "Monster Dead");
+		}
+		else
+		{ 		
+			//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, It->GetFullName());
+			SaveGameInstance->Zombies.Add(It->GetFullName());
+		}
+
+	}
+	
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 }
 
@@ -91,6 +108,24 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 		nb->SpawnTorch();
 	}
 	
+	UWorld* World = ThisCharacter->GetWorld();
+	for (TActorIterator<ANBBaseAI> It(World); It; ++It)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, It->GetFullName());
+
+		int32 Idx;
+
+		if (LoadGameInstance->Zombies.Find(It->GetFullName(), Idx))
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, It->GetFullName());
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Not found in save so Destroying" );
+			It->Destroy();
+		}
+	}
+
 
 	if (GEngine)
 	{
