@@ -117,7 +117,7 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 	UWorld* World = ThisCharacter->GetWorld();
 	for (TActorIterator<ANBBaseAI> It(World); It; ++It)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, It->GetFullName());
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, It->GetFullName());
 
 		int32 Idx;
 
@@ -134,9 +134,9 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 
 	APlayController* Controller = Cast<APlayController>(World->GetFirstPlayerController());
 
-	LoadGameInstance->Hours = Controller->Hours;
-	LoadGameInstance->Minutes = Controller->Minutes;
-	LoadGameInstance->Seconds = Controller->Seconds;
+	 Controller->Hours = LoadGameInstance->Hours;
+	 Controller->Minutes = LoadGameInstance->Minutes;
+	 Controller->Seconds= LoadGameInstance->Seconds;
 
 	if (GEngine)
 	{
