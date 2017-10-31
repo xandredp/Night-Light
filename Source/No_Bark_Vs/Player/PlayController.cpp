@@ -17,6 +17,9 @@ APlayController::APlayController()
 	isBookWidgetOpen = false;
 	IstherepossesedBattery = false;
 	ShotsFired = 0;
+	Hours = 0;
+	Minutes = 0;
+	Seconds = 0;
 }
 
 void APlayController::Interact()

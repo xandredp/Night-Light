@@ -118,6 +118,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		int ShotsFired;
 
+	// Time data
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 Hours;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 Minutes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 Seconds;
+
+
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")

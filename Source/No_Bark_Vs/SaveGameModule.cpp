@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "Monsters/Monster Types/NBSkinnyAI.h"
 #include "Player/NBCharacter.h"
+#include "Player/PlayController.h"
 #include "Core/BaseWeapon.h"
 
 #include "Engine.h"
@@ -18,7 +19,6 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 {
 	ThisCharacter;
 	
-
 	FVector Location = ThisCharacter->GetActorLocation();
 	Location;
 
@@ -72,9 +72,15 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 			//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, It->GetFullName());
 			SaveGameInstance->Zombies.Add(It->GetFullName());
 		}
-
 	}
 	
+
+	APlayController* Controller = Cast<APlayController>(World->GetFirstPlayerController());
+
+	SaveGameInstance->Hours = Controller->Hours;
+	SaveGameInstance->Minutes = Controller->Minutes;
+	SaveGameInstance->Seconds = Controller->Seconds;
+
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 }
 
@@ -126,6 +132,11 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 		}
 	}
 
+	APlayController* Controller = Cast<APlayController>(World->GetFirstPlayerController());
+
+	LoadGameInstance->Hours = Controller->Hours;
+	LoadGameInstance->Minutes = Controller->Minutes;
+	LoadGameInstance->Seconds = Controller->Seconds;
 
 	if (GEngine)
 	{

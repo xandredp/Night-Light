@@ -10,7 +10,7 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
-#include "GameFramework/PlayerController.h"
+//#include "GameFramework/PlayerController.h"
 
 #include "SaveGameModule.generated.h" 
 
@@ -71,6 +71,18 @@ public:
 	//weapon reloaded ammo
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 		int32 CurrentAmmo;
+
+	// This stuff actually comes from the Player Controller Blueprint 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 Hours;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 Minutes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
+		int32 Seconds;
+
 
 	UPROPERTY(EditAnywhere, Category = "Basic")
 		FString SaveSlotName;
