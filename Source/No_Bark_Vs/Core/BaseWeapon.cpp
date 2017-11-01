@@ -41,6 +41,7 @@ ABaseWeapon::ABaseWeapon()
 
 	MaxUseDistance =600;
 	CurrentUseDistance = MaxUseDistance;
+	PushRange = 100;
 }
 
 class ANBCharacter* ABaseWeapon::GetPawnOwner() const
@@ -150,6 +151,17 @@ void ABaseWeapon::Instant_Fire()
 	ProcessInstantHit(Impact, MuzzleOrigin, AdjustedAimDir, RandomSeed, CurrentSpread);
 }
 
+void ABaseWeapon::PushEnemy()
+{
+	const FVector AimDir = GetAdjustedAim();
+	const FVector CameraPos = GetCameraDamageStartLocation(AimDir);
+
+	const FVector EndPos = CameraPos + (AimDir * PushRange);
+
+	/* Check for impact by tracing from the camera position */
+	FHitResult Impact = WeaponTrace(CameraPos, EndPos);
+}
+
 FVector ABaseWeapon::GetAdjustedAim() const
 {
 	APlayController* const PC = Instigator ? Cast<APlayController>(Instigator->Controller) : nullptr;
@@ -205,6 +217,7 @@ FHitResult ABaseWeapon::WeaponTrace(const FVector & TraceFrom, const FVector & T
 	FHitResult Hit(ForceInit);
 
 	GetWorld()->LineTraceSingleByChannel(Hit, TraceFrom, TraceTo, WEAPON_TRACE, TraceParams);
+	DrawDebugLine(GetWorld(), TraceFrom, TraceTo, FColor::Green, false, 10.0, 0, 0.5f);
 
 	return Hit;
 }

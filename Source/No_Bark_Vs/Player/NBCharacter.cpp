@@ -14,6 +14,8 @@
 #include "../Core/BaseWeapon.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/PlayerSensingPawn.h"
+#include "Animation/AnimInstance.h"
+#include "Public/TimerManager.h"
 //#include "Perception/PawnSensingComponent.h"
 //#include "GameFramework/InputSettings.h"
 //#include "HeadMountedDisplayFunctionLibrary.h"
@@ -188,6 +190,8 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANBCharacter::FireWeapon);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ANBCharacter::StopFireWeapon);
+
+	PlayerInputComponent->BindAction("Push", IE_Pressed, this, &ANBCharacter::PushAI);
 
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ANBCharacter::ReloadWeapon);
 }
@@ -565,6 +569,30 @@ void ANBCharacter::FireWeapon()
 			}
 		}
 	}
+}
+
+void ANBCharacter::PushAI()
+{
+	if (CurrentWeapon)
+	{
+		if (IsAnimPlaying == false)
+		{
+			if (PushingAnimation != NULL)
+			{
+				ArmAnimInstance = FPSCharacterArmMesh->GetAnimInstance();
+				if (ArmAnimInstance != NULL)
+				{
+					ArmAnimInstance->Montage_Play(PushingAnimation, 1.0f);
+				}
+			}
+		}
+
+		CurrentWeapon->PushEnemy();
+		
+	}
+	
+
+	
 }
 
 void ANBCharacter::StopFireWeapon()

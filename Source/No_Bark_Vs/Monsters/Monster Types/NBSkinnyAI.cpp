@@ -138,58 +138,12 @@ void ANBSkinnyAI::OnSeePlayer(APawn * Pawn)
 			{
 				AIController->SetTargetKey(NBPlayerCharacter);
 			}
-			/*If firt time seen react and go aggressive. */
-			if (bIsSuspicious == false)
-			{
-				FirstDetectedTime = GetWorld()->GetTimeSeconds();
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
-				bIsSuspicious = true;
-				SetAIState(EBotBehaviorType::Suspicious);
-				OnReact();
-				SetAIState(EBotBehaviorType::Agression);
-			} 	/*If seen just go aggressive. */
-			else
-			{
-			//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "SeenAggressive");
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
-				SetAIState(EBotBehaviorType::Agression);
-			}
 
+			EBotBehaviorType AIState = AIController->GetAIStateKey();
 
-		}
-	}
-
-	
-}
-
-void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
-{
-	if (GetMonsterDead() == false)
-	{
-		ANBAIController* AIController = Cast<ANBAIController>(GetController());
-		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
-		/* if sensed pawn is the player*/
-		if (NBCharacterPawn && AIController)
-		{
-		//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Heard");
-		/*SetsTargetKey*/
-			if (NBPlayerCharacter == nullptr)
+			if (AIState != EBotBehaviorType::Stunned)
 			{
-				NBPlayerCharacter = NBCharacterPawn;
-				AIController->SetTargetKey(NBPlayerCharacter);
-			}
-			else
-			{
-				AIController->SetTargetKey(NBPlayerCharacter);
-			}
-			if (ASoundBlockingActor* blockingActor = GetSoundBlockingActorInView())
-			{
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
-			}
-			//if there is nothing blocking in between assign the target enemy
-			else
-			{
-			//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
+				/*If firt time seen react and go aggressive. */
 				if (bIsSuspicious == false)
 				{
 					FirstDetectedTime = GetWorld()->GetTimeSeconds();
@@ -201,8 +155,64 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 				} 	/*If seen just go aggressive. */
 				else
 				{
+					//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "SeenAggressive");
 					LastDetectedTime = GetWorld()->GetTimeSeconds();
 					SetAIState(EBotBehaviorType::Agression);
+				}
+			}
+		}
+	}
+}
+
+void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, float Volume)
+{
+	if (GetMonsterDead() == false)
+	{
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		if (AIController)
+		{
+
+			ANBAIController* AIController = Cast<ANBAIController>(GetController());
+			ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
+			/* if sensed pawn is the player*/
+			if (NBCharacterPawn && AIController)
+			{
+				EBotBehaviorType AIState = AIController->GetAIStateKey();
+
+				if (AIState != EBotBehaviorType::Stunned)
+				{
+					if (NBPlayerCharacter == nullptr)
+					{
+						NBPlayerCharacter = NBCharacterPawn;
+						AIController->SetTargetKey(NBPlayerCharacter);
+					}
+					else
+					{
+						AIController->SetTargetKey(NBPlayerCharacter);
+					}
+					if (ASoundBlockingActor* blockingActor = GetSoundBlockingActorInView())
+					{
+						//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
+					}
+					//if there is nothing blocking in between assign the target enemy
+					else
+					{
+						//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
+						if (bIsSuspicious == false)
+						{
+							FirstDetectedTime = GetWorld()->GetTimeSeconds();
+							LastDetectedTime = GetWorld()->GetTimeSeconds();
+							bIsSuspicious = true;
+							SetAIState(EBotBehaviorType::Suspicious);
+							OnReact();
+							SetAIState(EBotBehaviorType::Agression);
+						} 	/*If seen just go aggressive. */
+						else
+						{
+							LastDetectedTime = GetWorld()->GetTimeSeconds();
+							SetAIState(EBotBehaviorType::Agression);
+						}
+					}
 				}
 			}
 		}
@@ -214,27 +224,30 @@ void ANBSkinnyAI::OnShotAt()
 	if (GetMonsterDead() == false)
 	{
 		ANBAIController* AIController = Cast<ANBAIController>(GetController());
-		/* if sensed pawn is the player*/
 		if (AIController)
 		{
-			if (NBPlayerCharacter != nullptr)
-			{
-				AIController->SetLastDetectedLocationKey(NBPlayerCharacter->GetActorLocation());
-			}
-			if (bIsSuspicious == false)
-			{
-				FirstDetectedTime = GetWorld()->GetTimeSeconds();
-				LastDetectedTime = GetWorld()->GetTimeSeconds();
-				bIsSuspicious = true;
-				SetAIState(EBotBehaviorType::Suspicious);
-				OnReact();
-				SetAIState(EBotBehaviorType::Agression);
-			}
-			else
-			{
-				SetAIState(EBotBehaviorType::Agression);
-			}
+			EBotBehaviorType AIState = AIController->GetAIStateKey();
 
+			if (AIState != EBotBehaviorType::Stunned)
+			{
+				if (NBPlayerCharacter != nullptr)
+				{
+					AIController->SetLastDetectedLocationKey(NBPlayerCharacter->GetActorLocation());
+				}
+				if (bIsSuspicious == false)
+				{
+					FirstDetectedTime = GetWorld()->GetTimeSeconds();
+					LastDetectedTime = GetWorld()->GetTimeSeconds();
+					bIsSuspicious = true;
+					SetAIState(EBotBehaviorType::Suspicious);
+					OnReact();
+					SetAIState(EBotBehaviorType::Agression);
+				}
+				else
+				{
+					SetAIState(EBotBehaviorType::Agression);
+				}
+			}
 		}
 	}
 }
@@ -256,24 +269,28 @@ void ANBSkinnyAI::CountingPlayerUndetectedTime()
 		{
 			EBotBehaviorType AIState = AIController->GetAIStateKey();
 
+			if (AIState != EBotBehaviorType::Stunned)
+			{
 				if (AIState == EBotBehaviorType::Agression)
-			{
-				if (GetWorld()->TimeSeconds - LastDetectedTime > AgrresionTimeOut)
 				{
-					//set back the monster to neutral 
-					OnLostPlayer();
-					SetAIState(EBotBehaviorType::Suspicious);
+					if (GetWorld()->TimeSeconds - LastDetectedTime > AgrresionTimeOut)
+					{
+						//set back the monster to neutral 
+						OnLostPlayer();
+						SetAIState(EBotBehaviorType::Suspicious);
+					}
 				}
-			}
-			else
-			{
-				if (GetWorld()->TimeSeconds - LastDetectedTime > SenseTimeOut)
+				else
 				{
-					//set back the monster to neutral 
-					SetAIState(EBotBehaviorType::Neutral);
+					if (GetWorld()->TimeSeconds - LastDetectedTime > SenseTimeOut)
+					{
+						//set back the monster to neutral 
+						SetAIState(EBotBehaviorType::Neutral);
 
+					}
 				}
 			}
+			
 		}
 	}
 
@@ -338,30 +355,37 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 
 			ANBAIController* AIController = Cast<ANBAIController>(GetController());
 			ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(OtherActor);
+
 			/* if sensed pawn is the player*/
 			if (NBCharacterPawn && AIController)
 			{
-				AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
+				EBotBehaviorType AIState = AIController->GetAIStateKey();
 
-				if (bIsSuspicious == false)
+				if (AIState != EBotBehaviorType::Stunned)
 				{
-					FirstDetectedTime = GetWorld()->GetTimeSeconds();
-					LastDetectedTime = GetWorld()->GetTimeSeconds();
-					bIsSuspicious = true;
-					SetAIState(EBotBehaviorType::Suspicious);
-					OnReact();
-					SetAIState(EBotBehaviorType::Agression);
-				}
-				/*When the monster has already seen you few seconds ago*/
-				else
-				{
-					LastDetectedTime = GetWorld()->GetTimeSeconds();
-					SetAIState(EBotBehaviorType::Agression);
-				}
+					AIController->SetLastDetectedLocationKey(NBCharacterPawn->GetActorLocation());
 
-				//Settimeto start for animation and sound of melleestrike. 
-				GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 1.0, true, 0.0f);
-			}
+					if (bIsSuspicious == false)
+					{
+						FirstDetectedTime = GetWorld()->GetTimeSeconds();
+						LastDetectedTime = GetWorld()->GetTimeSeconds();
+						bIsSuspicious = true;
+						SetAIState(EBotBehaviorType::Suspicious);
+						OnReact();
+						SetAIState(EBotBehaviorType::Agression);
+					}
+					/*When the monster has already seen you few seconds ago*/
+					else
+					{
+						LastDetectedTime = GetWorld()->GetTimeSeconds();
+						SetAIState(EBotBehaviorType::Agression);
+					}
+
+					//Settimeto start for animation and sound of melleestrike. 
+					GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 1.0, true, 0.0f);
+
+				}
+							}
 
 		
 	}

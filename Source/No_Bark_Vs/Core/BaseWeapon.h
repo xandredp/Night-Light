@@ -110,6 +110,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
 		float CurrentUseDistance;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Config")
+		float PushRange;
+
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		void SetTimerForFiring();
 	UFUNCTION(BlueprintCallable, Category = "Config")
@@ -122,6 +125,9 @@ public:
 		void FireBullets();
 	UFUNCTION(BlueprintCallable, Category = "Config")
 	void Instant_Fire();
+
+	UFUNCTION(BlueprintCallable, Category = "Config")
+		void PushEnemy();
 
 	UFUNCTION(BlueprintCallable, Category = "Config")
 		virtual void ProjectileFire();
