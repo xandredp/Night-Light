@@ -53,7 +53,6 @@ void APlayerSensingPawn::OnSeeEnemy(APawn * Pawn)
 		ANBSkinnyAI *Enemy = Cast<ANBSkinnyAI>(Pawn);
 		if (Enemy)
 		{
-			NBCharacter->CurrentTorch->IsEnemySeen = true;
 			NBCharacter->CurrentTorch->EnemyPawn = Enemy;
 			//SpawnParticleEffect(Pawn);
 		}

@@ -360,7 +360,7 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 				}
 
 				//Settimeto start for animation and sound of melleestrike. 
-				GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 2.0, true, 0.0f);
+				GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 1.0, true, 0.0f);
 			}
 
 		

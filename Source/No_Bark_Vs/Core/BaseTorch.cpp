@@ -40,7 +40,7 @@ ABaseTorch::ABaseTorch()
 	EnergyReductionOnPowerUse = 20.0f;
 	EnergyIncreaseOnBatteryPickUp = 40.0f;
 	EnergyIncreaseOnCrank = 5.0;
-	IsEnemySeen = false;
+	StunMultiple = false;
 }
 
 //Called every frame
@@ -174,14 +174,52 @@ void ABaseTorch::IncreaseEnergyByFloat(float EnergyToAdd)
 
 void ABaseTorch::ActivateTorch()
 {
-	if (IsEnemySeen)
+	if (StunMultiple == true)
+	{
+		for (int32 j = 0; j < EnemyPawns.Num(); j++)
+		{
+			if (EnemyPawns[j]!=nullptr)
+			{
+				//there is enough energy
+				if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
+				{
+					TorchActivatedEvent();
+					EnemyPawns[j]->OnStun();
+					DecreaseEnergy();
+				}
+
+				// if we don't have energy 
+				else
+				{
+					// say warning. 
+				}
+			}
+		}
+		if (EnemyPawn)
+		{
+			//there is enough energy
+			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
+			{
+				TorchActivatedEvent();
+				EnemyPawn->OnStun();
+				DecreaseEnergy();
+			}
+
+			// if we don't have energy 
+			else
+			{
+				// say warning. 
+			}
+		}
+	}
+	else
 	{
 		if (EnemyPawn)
 		{
 			//there is enough energy
 			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
 			{
-				TorchActivatedEvent();		
+				TorchActivatedEvent();
 				EnemyPawn->OnStun();
 				DecreaseEnergy();
 			}

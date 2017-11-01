@@ -73,10 +73,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		float EnergyIncreaseOnBatteryPickUp;
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
-		bool IsEnemySeen;
-
 	UPROPERTY(EditAnywhere, Category = "Config | Sound")
 		USoundCue* StunSound;
 
@@ -86,6 +82,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
 		class ANBSkinnyAI* EnemyPawn;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owning")
+		TArray<ANBSkinnyAI*> EnemyPawns;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool StunMultiple;
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void DrainTorchEnergy();
