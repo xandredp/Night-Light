@@ -97,11 +97,17 @@ public:
 	/* Batteries                                                    */
 	/************************************************************************/
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FBatteryData> CurrentPossesedBatteries;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		FBatteryData CurrentPossesedBattery;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
 		bool IstherepossesedBattery;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		bool AllowToCarryMultipleBatteries;
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void BatteryUsed();

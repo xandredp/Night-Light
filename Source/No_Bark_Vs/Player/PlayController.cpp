@@ -20,6 +20,8 @@ APlayController::APlayController()
 	Hours = 0;
 	Minutes = 0;
 	Seconds = 0;
+
+	AllowToCarryMultipleBatteries = true;
 }
 
 void APlayController::Interact()
@@ -41,11 +43,19 @@ void APlayController::Interact()
 }
 void APlayController::UseBattery()
 {
-	if (IstherepossesedBattery == true)
+	if (AllowToCarryMultipleBatteries == true)
 	{
-		BatteryUsed();
-		IstherepossesedBattery = false;
+			BatteryUsed();
 	}
+	else
+	{
+		if (IstherepossesedBattery == true)
+		{
+			BatteryUsed();
+			IstherepossesedBattery = false;
+		}
+	}
+
 }
 bool APlayController::IsInteract()
 {//ABaseInteractable
@@ -130,8 +140,16 @@ void APlayController::AddKeytoPossesion(FKeyData aKey)
 
 void APlayController::AddBatteryToPossesion(FBatteryData aBattery)
 {
-	CurrentPossesedBattery = aBattery;
-	IstherepossesedBattery = true;
+	if (AllowToCarryMultipleBatteries == true)
+	{
+		CurrentPossesedBatteries.Add(aBattery);
+	}
+	else
+	{
+		CurrentPossesedBattery = aBattery;
+		IstherepossesedBattery = true;
+	}
+
 	//GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::FromInt(CurrentPossesedKeys.Num()));
 
 }
