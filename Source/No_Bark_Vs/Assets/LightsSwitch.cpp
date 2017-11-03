@@ -39,11 +39,13 @@ void ALightsSwitch::BeginPlay()
 		IsSwitchOn = false;
 		for (int32 i = 0; i < LightActors.Num(); i++)
 		{
-			LightActors[i]->bIsLightOn = false;
+			if (LightActors[i]) {
+				LightActors[i]->bIsLightOn = false;
 
-			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
+				//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Blue, "Light Turned off");
 
-			LightActors[i]->ToggleSpotLightComp(false);
+				LightActors[i]->ToggleSpotLightComp(false);
+			}
 		}
 	}
 }
