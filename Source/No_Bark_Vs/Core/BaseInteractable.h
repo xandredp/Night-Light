@@ -5,15 +5,16 @@
 #include "GameFramework/Actor.h"
 #include "BaseInteractable.generated.h"
 
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ABaseInteractable : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
-	ABaseInteractable();
+protected:
 
+	// Sets default values for this actor's properties
+	ABaseInteractable(const FObjectInitializer& ObjectInitializer);
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Colllision")
 		USkeletalMeshComponent* PickupSkeletalMesh;
 

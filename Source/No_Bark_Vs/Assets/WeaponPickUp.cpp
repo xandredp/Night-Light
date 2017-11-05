@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WeaponPickUp.h"
+#include "Core/No_Bark_Vs.h"
 #include "Player/PlayController.h"
 
-AWeaponPickUp::AWeaponPickUp()
+AWeaponPickUp::AWeaponPickUp(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 }

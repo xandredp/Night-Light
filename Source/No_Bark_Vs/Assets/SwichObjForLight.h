@@ -8,7 +8,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ASwichObjForLight : public ABaseInteractable
 {
 	GENERATED_BODY()
@@ -18,8 +18,10 @@ class NO_BARK_VS_API ASwichObjForLight : public ABaseInteractable
 	FTimerHandle StopLightingTimerHandle;
 
 
+protected:
+	ASwichObjForLight(const FObjectInitializer& ObjectInitializer);
+
 public:
-	ASwichObjForLight();
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

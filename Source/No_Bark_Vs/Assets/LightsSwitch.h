@@ -8,14 +8,16 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ALightsSwitch : public ABaseInteractable
 {
 	GENERATED_BODY()
-	
+
+protected:
+	ALightsSwitch(const FObjectInitializer& ObjectInitializer);
+
 
 public:
-	ALightsSwitch();
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

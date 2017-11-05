@@ -12,10 +12,12 @@ class NO_BARK_VS_API ANBBaseAI : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	// Sets default values for this character's properties
+	ANBBaseAI(const FObjectInitializer& ObjectInitializer);
 
 public:
-	// Sets default values for this character's properties
-	ANBBaseAI();
+
 
 	/* The thinking part of the brain, steers our zombie and makes decisions based on the data we feed it from the Blackboard */
 	/* Assigned at the Character level (instead of Controller) so we may use different zombie behaviors while re-using one controller. */

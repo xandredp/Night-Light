@@ -7,7 +7,8 @@
 
 
 
-AKeyForDoor::AKeyForDoor()
+AKeyForDoor::AKeyForDoor(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 }

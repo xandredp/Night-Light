@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "NBBaseAI.h"
+#include "Core/No_Bark_Vs.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/AudioComponent.h"
@@ -12,18 +13,19 @@
 
 
 // Sets default values
-ANBBaseAI::ANBBaseAI()
+ANBBaseAI::ANBBaseAI(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	AudioLoopComp = CreateDefaultSubobject<UAudioComponent>(TEXT("MonsterLoopedSoundComp"));
+	AudioLoopComp = ObjectInitializer.CreateDefaultSubobject<UAudioComponent>(this, TEXT("MonsterLoopedSoundComp"));
 	AudioLoopComp->bAutoActivate = false;
 	AudioLoopComp->bAutoDestroy = false;
 	AudioLoopComp->SetupAttachment(RootComponent);
 
 	/* Our sensing component to detect players by visibility and noise checks. */
-	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
+	PawnSensingComp = ObjectInitializer.CreateDefaultSubobject<UPawnSensingComponent>(this, TEXT("PawnSensingComp"));
 	PawnSensingComp->SetPeripheralVisionAngle(60.0f);
 	PawnSensingComp->SightRadius = 2000;
 	PawnSensingComp->HearingThreshold = 600;

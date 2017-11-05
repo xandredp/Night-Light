@@ -4,7 +4,8 @@
 #include "Player/PlayController.h"
 
 
-ADoor::ADoor()
+ADoor::ADoor(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 	IsDoorOpen = false;

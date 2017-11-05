@@ -7,7 +7,8 @@
 
 
 
-ASwichObjForLight::ASwichObjForLight()
+ASwichObjForLight::ASwichObjForLight(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 	EnergyTimerRate = 0.2f;	

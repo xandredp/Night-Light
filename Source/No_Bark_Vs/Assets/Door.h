@@ -8,14 +8,16 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ADoor : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
 
+protected:
+	ADoor(const FObjectInitializer& ObjectInitializer);
+
 public:
-	ADoor();
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

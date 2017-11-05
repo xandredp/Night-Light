@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "NBSkinnyAI.h"
+#include "Core/No_Bark_Vs.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -12,7 +13,8 @@
 #include "../../Player/PlayerSensingPawn.h"
 
 // Sets default values
-ANBSkinnyAI::ANBSkinnyAI()
+ANBSkinnyAI::ANBSkinnyAI(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
@@ -23,7 +25,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	IsAnimPlaying = false;
 
 	// This sphere component is attached to the hand to detect a hit
-	RightHandStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("RightHandStrikePlayerSphere"));
+	RightHandStrikePlayerSphere = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("RightHandStrikePlayerSphere"));
 	RightHandStrikePlayerSphere->SetSphereRadius(10);
 	RightHandStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	RightHandStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
@@ -32,7 +34,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	RightHandStrikePlayerSphere->OnComponentEndOverlap.AddDynamic(this, &ANBSkinnyAI::OnEndOverlapStrikeCharacter);
 
 	// This sphere component is attached to the hand to detect a hit
-	LeftHandStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("LeftHandStrikePlayerSphere"));
+	LeftHandStrikePlayerSphere = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("LeftHandStrikePlayerSphere"));
 	LeftHandStrikePlayerSphere->SetSphereRadius(10);
 	LeftHandStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	LeftHandStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
@@ -41,7 +43,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 	LeftHandStrikePlayerSphere->OnComponentEndOverlap.AddDynamic(this, &ANBSkinnyAI::OnEndOverlapStrikeCharacter);
 
 	// This sphere component is attached to the hand to detect a hit
-	HeadStrikePlayerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("HeadStrikePlayerSphere"));
+	HeadStrikePlayerSphere = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("HeadStrikePlayerSphere"));
 	HeadStrikePlayerSphere->SetSphereRadius(12);
 	HeadStrikePlayerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	HeadStrikePlayerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
@@ -51,7 +53,7 @@ ANBSkinnyAI::ANBSkinnyAI()
 
 
 	// This sphere component surrounds the monster to determine attack range
-	AttackRangeAnimationTriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("AttackRangeAnimationTriggerSphere"));
+	AttackRangeAnimationTriggerSphere = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("AttackRangeAnimationTriggerSphere"));
 	AttackRangeAnimationTriggerSphere->SetSphereRadius(150);
 	AttackRangeAnimationTriggerSphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	AttackRangeAnimationTriggerSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);

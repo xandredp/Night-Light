@@ -8,14 +8,14 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ACrackingObjForLight : public ABaseInteractable
 {
 	GENERATED_BODY()
 
-
+protected:
+	ACrackingObjForLight(const FObjectInitializer& ObjectInitializer);
 public:
-	ACrackingObjForLight();
 	
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

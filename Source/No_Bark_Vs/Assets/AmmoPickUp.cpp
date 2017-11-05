@@ -7,12 +7,10 @@
 
 
 
-
-
-AAmmoPickUp::AAmmoPickUp()
+AAmmoPickUp::AAmmoPickUp(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
-	ItemID = FName("Please EnterID");
-	ClipsInBox = 5;
+
 }
 
 void AAmmoPickUp::Interact(APlayerController* playerController)
@@ -36,8 +34,10 @@ void AAmmoPickUp::Interact(APlayerController* playerController)
 
 void AAmmoPickUp::BeginPlay()
 {
-	Super::BeginPlay();
 
+	Super::BeginPlay();
+	ItemID = FName("Please EnterID");
+	ClipsInBox = 5;
 }
 
 void AAmmoPickUp::DestroyItemOnGround()

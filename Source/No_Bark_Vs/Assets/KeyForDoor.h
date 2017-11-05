@@ -27,13 +27,15 @@ public:
 };
 
 
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API AKeyForDoor : public ABaseInteractable
 {
 	GENERATED_BODY()
-	
+
+protected:
+	AKeyForDoor(const FObjectInitializer& ObjectInitializer);
+
 public:
-	AKeyForDoor();
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

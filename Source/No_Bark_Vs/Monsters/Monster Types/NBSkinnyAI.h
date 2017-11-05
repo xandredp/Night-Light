@@ -32,8 +32,9 @@ class NO_BARK_VS_API ANBSkinnyAI : public ANBBaseAI
 	/* Timer handle to manage seen time ticks to get player unseen*/
 	FTimerHandle TimerHandle_CountUnSeenTime;
 	
+protected:
+	ANBSkinnyAI(const FObjectInitializer& ObjectInitializer);
 public:
-	ANBSkinnyAI();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -7,8 +7,8 @@
 
 
 
-
-ACrackingObjForLight::ACrackingObjForLight()
+ACrackingObjForLight::ACrackingObjForLight(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 	Energy = 10.0f;

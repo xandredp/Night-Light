@@ -9,15 +9,18 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API AWeaponPickUp : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
 	
-	
+
+protected:
+	AWeaponPickUp(const FObjectInitializer& ObjectInitializer);
+
 public:
-	AWeaponPickUp();
+
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

@@ -8,7 +8,8 @@
 
 
 
-ALightsSwitch::ALightsSwitch()
+ALightsSwitch::ALightsSwitch(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 	LockSwitchForSpecificMechanic = false;

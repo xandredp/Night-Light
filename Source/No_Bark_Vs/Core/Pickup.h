@@ -8,14 +8,17 @@
 /**
  * 
  */
-UCLASS()
+
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API APickup : public ABaseInteractable
 {
 	GENERATED_BODY()
-	
-	
+
+protected:
+	APickup(const FObjectInitializer& ObjectInitializer);
+
 public:
-	APickup();
+
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

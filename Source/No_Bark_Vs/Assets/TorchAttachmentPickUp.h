@@ -8,13 +8,15 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ATorchAttachmentPickUp : public ABaseInteractable
 {
 	GENERATED_BODY()
 
+protected:
+	ATorchAttachmentPickUp(const FObjectInitializer& ObjectInitializer);
+
 public:
-	ATorchAttachmentPickUp();
 
 	// Called when the game starts or when spawned
 	virtual void Interact(APlayerController* playerController) override;

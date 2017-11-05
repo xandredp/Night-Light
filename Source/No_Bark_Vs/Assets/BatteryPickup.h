@@ -29,13 +29,15 @@ public:
 };
 
 
-UCLASS()
+UCLASS(ABSTRACT)
 class NO_BARK_VS_API ABatteryPickup : public ABaseInteractable
 {
 	GENERATED_BODY()
 	
+protected:
+	ABatteryPickup(const FObjectInitializer& ObjectInitializer);
 public:
-	ABatteryPickup();
+
 	
 	virtual void Interact(APlayerController* playerController) override;
 

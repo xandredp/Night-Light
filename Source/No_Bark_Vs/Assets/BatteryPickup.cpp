@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BatteryPickup.h"
+#include "Core/No_Bark_Vs.h"
 #include "Player/PlayController.h"
 #include "Player/NBCharacter.h"
 
@@ -8,8 +9,8 @@
 
 
 
-
-ABatteryPickup::ABatteryPickup()
+ABatteryPickup::ABatteryPickup(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	ItemID = FName("Please EnterID");
 }

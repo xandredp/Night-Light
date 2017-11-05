@@ -3,8 +3,8 @@
 #include "Core/No_Bark_Vs.h"
 #include "Player/PlayController.h"
 
-
-APickup::APickup()
+APickup::APickup(const class FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 
 
