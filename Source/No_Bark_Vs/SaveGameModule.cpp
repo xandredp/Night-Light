@@ -30,7 +30,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 	SaveGameInstance->Health = nb->CurrentHealth;
 	SaveGameInstance->CurrentScore = nb->CurrentScore;
 	SaveGameInstance->MaxHealth = nb->MaxHealth;
-
+	//SaveGameInstance->KillCount = nb->kill
 
 	SaveGameInstance->WeaponClass = nb->WeaponClass;
 	SaveGameInstance->TorchClass = nb->TorchClass;
