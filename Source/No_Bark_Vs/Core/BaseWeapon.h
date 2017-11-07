@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Particles/ParticleSystemComponent.h"
+#include "Animation/AnimMontage.h"
 #include "Core/Pickup.h"
 #include "Engine/DataTable.h"
 #include "BaseWeapon.generated.h"

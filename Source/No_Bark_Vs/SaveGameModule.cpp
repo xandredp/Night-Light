@@ -17,10 +17,10 @@ USaveGameModule::USaveGameModule()
 
 void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 {
-	ThisCharacter;
+	//ThisCharacter;
 	
 	FVector Location = ThisCharacter->GetActorLocation();
-	Location;
+	//Location;
 
 	USaveGameModule* SaveGameInstance = Cast<USaveGameModule>(UGameplayStatics::CreateSaveGameObject(USaveGameModule::StaticClass()));
 	SaveGameInstance->PlayerPosition = Location;
