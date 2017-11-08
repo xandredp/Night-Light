@@ -86,7 +86,7 @@ ANBSkinnyAI::ANBSkinnyAI(const class FObjectInitializer& ObjectInitializer)
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
 	MinAgressiveDistant = 1000;
-	IsEnemyInCircle=false
+	IsEnemyInCircle = false;
 	
 
 }
