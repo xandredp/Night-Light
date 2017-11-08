@@ -86,6 +86,7 @@ ANBSkinnyAI::ANBSkinnyAI(const class FObjectInitializer& ObjectInitializer)
 	MaxHealth = 100.0f;
 	Health = MaxHealth;
 	MinAgressiveDistant = 1000;
+	IsEnemyInCircle=false
 	
 
 }
@@ -361,6 +362,7 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 			/* if sensed pawn is the player*/
 			if (NBCharacterPawn && AIController)
 			{
+				IsEnemyInCircle = true;
 				EBotBehaviorType AIState = AIController->GetAIStateKey();
 
 				if (AIState != EBotBehaviorType::Stunned)
@@ -395,11 +397,21 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 }
 
 void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
-{
+{	
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-		//Stops Stamina increase
-		GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
+
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(OtherActor);
+
+		/* if sensed pawn is the player*/
+		if (NBCharacterPawn && AIController)
+		{
+			IsEnemyInCircle = false;
+			//Stops Stamina increase
+			GetWorldTimerManager().ClearTimer(TimerHandle_MeleeAttack);
+
+		}
 	}
 }
 

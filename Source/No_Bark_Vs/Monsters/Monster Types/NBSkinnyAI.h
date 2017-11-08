@@ -126,6 +126,8 @@ public:
 	UFUNCTION()
 		void OnEndOverlapStopAnim(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool IsEnemyInCircle;
 	/************************************************************************/
 	/* Status Change variables & Functions          */
 	/************************************************************************/
