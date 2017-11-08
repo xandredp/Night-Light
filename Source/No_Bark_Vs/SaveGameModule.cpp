@@ -65,7 +65,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 
 		if (It->GetMonsterDead()) 
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "Monster Dead");
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "Monster Dead");
 		}
 		else
 		{ 		
@@ -128,7 +128,7 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Not found in save so Destroying" );
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Not found in save so Destroying" );
 			It->Destroy();
 		}
 	}
@@ -141,7 +141,7 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Loaded from c++");
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Loaded from c++");
 	}
 }
 
