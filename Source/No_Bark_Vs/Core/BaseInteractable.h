@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Components/AudioComponent.h"
 #include "GameFramework/Actor.h"
 #include "BaseInteractable.generated.h"
 

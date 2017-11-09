@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Assets/Actor_Light.h"
+#include "Assets/CrackingObjForLight.h"
 #include "Core/BaseInteractable.h"
 #include "SwichObjForLight.generated.h"
 

@@ -15,7 +15,7 @@ EBTNodeResult::Type UBTTargetPointSelection::ExecuteTask(UBehaviorTreeComponent&
 
 	AActor* Mon = Cast<AActor>(AICon->GetPawn());
 
-	AICon;
+	//AICon;
 	FName WaveTag;
 	WaveTag = FName(TEXT("NoZone"));
 

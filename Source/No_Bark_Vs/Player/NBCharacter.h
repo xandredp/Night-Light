@@ -253,6 +253,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int CurrentScore;
 
+	/* Monster kill count*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		int MonsterKillCount;
+
 	/** AutoReload*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		bool AutoReload;

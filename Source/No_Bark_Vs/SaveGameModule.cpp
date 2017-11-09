@@ -17,10 +17,10 @@ USaveGameModule::USaveGameModule()
 
 void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 {
-	ThisCharacter;
+	//ThisCharacter;
 	
 	FVector Location = ThisCharacter->GetActorLocation();
-	Location;
+	//Location;
 
 	USaveGameModule* SaveGameInstance = Cast<USaveGameModule>(UGameplayStatics::CreateSaveGameObject(USaveGameModule::StaticClass()));
 	SaveGameInstance->PlayerPosition = Location;
@@ -30,7 +30,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 	SaveGameInstance->Health = nb->CurrentHealth;
 	SaveGameInstance->CurrentScore = nb->CurrentScore;
 	SaveGameInstance->MaxHealth = nb->MaxHealth;
-
+	SaveGameInstance->KillCount = nb->MonsterKillCount;
 
 	SaveGameInstance->WeaponClass = nb->WeaponClass;
 	SaveGameInstance->TorchClass = nb->TorchClass;
@@ -65,7 +65,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 
 		if (It->GetMonsterDead()) 
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "Monster Dead");
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "Monster Dead");
 		}
 		else
 		{ 		
@@ -99,6 +99,7 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 	nb->CurrentHealth = LoadGameInstance->Health;
 	nb->CurrentScore = LoadGameInstance->CurrentScore;
 	nb->MaxHealth = LoadGameInstance->MaxHealth;
+    nb->MonsterKillCount = LoadGameInstance->KillCount;
 
 
 	nb->WeaponClass = LoadGameInstance->WeaponClass;
@@ -127,7 +128,7 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Not found in save so Destroying" );
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Not found in save so Destroying" );
 			It->Destroy();
 		}
 	}
@@ -140,7 +141,7 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Loaded from c++");
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Loaded from c++");
 	}
 }
 

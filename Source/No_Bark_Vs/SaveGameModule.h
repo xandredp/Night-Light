@@ -40,6 +40,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float MaxHealth;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		int KillCount;
 
 	// Weapon stuff 
 
