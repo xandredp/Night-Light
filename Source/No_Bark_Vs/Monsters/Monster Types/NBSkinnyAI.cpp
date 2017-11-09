@@ -88,6 +88,8 @@ ANBSkinnyAI::ANBSkinnyAI(const class FObjectInitializer& ObjectInitializer)
 	MinAgressiveDistant = 1000;
 	IsEnemyInCircle = false;
 	
+	DebugDrawEnabledAI = false;
+	DebugDrawEnabledAI2 = false;
 
 }
 
@@ -107,6 +109,23 @@ void ANBSkinnyAI::BeginPlay()
 
 	SetAIState(EBotBehaviorType::Neutral);
 
+}
+
+void ANBSkinnyAI::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (GetMonsterDead() == false)
+	{
+		ANBAIController* AIController = Cast<ANBAIController>(GetController());
+		APawn* AIPawn = AIController->GetPawn();
+
+		if (DebugDrawEnabledAI2)
+		{
+			DrawDebugCone(GetWorld(), AIController->GetPawn()->GetActorLocation(), AIPawn->GetActorForwardVector(), this->PawnSensingComp->SightRadius, (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), (this->PawnSensingComp->GetPeripheralVisionAngle() * (3.14159265 / 180)), 40, FColor::Purple, false, 0.05, 1, 0.5);
+			DrawDebugSphere(GetWorld(), AIController->GetPawn()->GetActorLocation(), this->PawnSensingComp->LOSHearingThreshold, 40, FColor::Yellow, false, 0.05, 0, 0.5f);
+		}
+	}
 }
 
 void ANBSkinnyAI::OnStun()
@@ -200,7 +219,7 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 					//if there is nothing blocking in between assign the target enemy
 					else
 					{
-						//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
+						//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
 						if (bIsSuspicious == false)
 						{
 							FirstDetectedTime = GetWorld()->GetTimeSeconds();

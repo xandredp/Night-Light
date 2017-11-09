@@ -36,6 +36,8 @@ protected:
 	ANBSkinnyAI(const FObjectInitializer& ObjectInitializer);
 public:
 
+	void Tick(float DeltaSeconds) override;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -150,10 +152,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
 		class ANBCharacter* NBPlayerCharacter;
 
-
 	UFUNCTION(BlueprintCallable, Category = "Monster")
 		void SetTranparentMaterial();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool DebugDrawEnabledAI;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool DebugDrawEnabledAI2;
 
 private:
 
