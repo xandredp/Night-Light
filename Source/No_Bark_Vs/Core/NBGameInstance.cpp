@@ -15,8 +15,8 @@ void UNBGameInstance::Init()
 	UGameInstance::Init();
 
 	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UNBGameInstance::BeginLoadingScreen);
-	FCoreUObjectDelegates::PostLoadMap.AddUObject(this, &UNBGameInstance::EndLoadingScreen);
-	//FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject
+	//FCoreUObjectDelegates::PostLoadMap.AddUObject(this, &UNBGameInstance::EndLoadingScreen);
+
 }
 
 

@@ -37,6 +37,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 
 	if (nb->CurrentWeapon)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Orange, "Weapon Saved");
 		SaveGameInstance->HasWeapon = true;
 		SaveGameInstance->CurrentClip = nb->CurrentWeapon->CurrentClip;
 		SaveGameInstance->CurrentAmmo = nb->CurrentWeapon->CurrentAmmo;
@@ -49,6 +50,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 
 	if (nb->CurrentTorch)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Orange, "Torch Saved");
 		SaveGameInstance->HasTorch = true;
 	}
 	else
@@ -56,7 +58,6 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 		SaveGameInstance->HasTorch = false;
 	}
 
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Saved in c++");
 
 	UWorld* World = ThisCharacter->GetWorld();
 
@@ -65,11 +66,11 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 
 		if (It->GetMonsterDead()) 
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, "Monster Dead");
+			GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Orange, "Monster Dead");
 		}
 		else
 		{ 		
-			//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, It->GetFullName());
+			GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Blue, It->GetFullName());
 			SaveGameInstance->Zombies.Add(It->GetFullName());
 		}
 	}
@@ -82,6 +83,9 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 	SaveGameInstance->Seconds = Controller->Seconds;
 
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Saved to Slot in c++");
 }
 
 void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
@@ -102,33 +106,42 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
     nb->MonsterKillCount = LoadGameInstance->KillCount;
 
 
-	nb->WeaponClass = LoadGameInstance->WeaponClass;
+	//nb->WeaponClass = LoadGameInstance->WeaponClass;
 
 	if (LoadGameInstance->HasWeapon)
 	{	
+		GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Green, "Has Weapon");
 		nb->EquipPrimaryWeapon();
 		nb->CurrentWeapon->CurrentClip = LoadGameInstance->CurrentClip;
 		nb->CurrentWeapon->CurrentAmmo = LoadGameInstance->CurrentAmmo;
 	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Green, "No Weapon loaded");
+	}
+
+
 	if (LoadGameInstance->HasTorch)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Emerald, "Has Torch");
 		nb->SpawnTorch();
 	}
 	
 	UWorld* World = ThisCharacter->GetWorld();
 	for (TActorIterator<ANBBaseAI> It(World); It; ++It)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, It->GetFullName());
+		//GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Blue, It->GetFullName());
 
 		int32 Idx;
 
 		if (LoadGameInstance->Zombies.Find(It->GetFullName(), Idx))
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, It->GetFullName());
+
 		}
 		else
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Not found in save so Destroying" );
+		{			
+			GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Green, It->GetFullName());
+			GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Green, "   Not found in save so Destroying" );
 			It->Destroy();
 		}
 	}
@@ -138,6 +151,8 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 	 Controller->Hours = LoadGameInstance->Hours;
 	 Controller->Minutes = LoadGameInstance->Minutes;
 	 Controller->Seconds= LoadGameInstance->Seconds;
+
+	 //nb->dead
 
 	if (GEngine)
 	{
