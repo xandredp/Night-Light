@@ -30,6 +30,8 @@ ABaseWeapon::ABaseWeapon()
 
 	WeaponConfig.WeaponDamage = 20;
 	WeaponConfig.WeaponSplits = 5;
+	WeaponConfig.MaxAmmo = 5;
+	WeaponConfig.MaxClip = 5;
 	CurrentState = EWeaponState::Idle;
 	TrailTargetParam = "EndPoint";
 	MuzzleAttachPoint = "MuzzleTip";
@@ -107,7 +109,7 @@ void ABaseWeapon::Fire()
 			CurrentAmmo -= WeaponConfig.ShotCost;
 
 			// Signal a gunshot
-		//	MakeNoise(0.5, GetPawnOwner(), GetActorLocation());
+		MakeNoise(0.5, GetPawnOwner(), GetActorLocation());
 		}
 		else
 		{
