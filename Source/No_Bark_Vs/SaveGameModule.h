@@ -10,6 +10,8 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
+#include "Player/PlayController.h"
+#include "Assets/BatteryPickup.h"
 //#include "GameFramework/PlayerController.h"
 
 #include "SaveGameModule.generated.h" 
@@ -64,6 +66,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Config)
 	TArray<FString> Zombies;
 	//
+
+	// Playcontroller Battery data and Key daya
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FBatteryData> CurrentPossesedBatteries;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		FBatteryData CurrentPossesedBattery;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		TArray<FKeyData> CurrentPossesedKeys;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets)
+		FKeyData CurrentPossesedKey;
 
 
 	// This stuff belongs to the current weapon
