@@ -194,7 +194,6 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 		ANBAIController* AIController = Cast<ANBAIController>(GetController());
 		if (AIController)
 		{
-
 			ANBAIController* AIController = Cast<ANBAIController>(GetController());
 			ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
 			/* if sensed pawn is the player*/
@@ -204,23 +203,25 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 
 				if (AIState != EBotBehaviorType::Stunned)
 				{
-					if (NBPlayerCharacter == nullptr)
+					bool blockingActor = GetSoundBlockingActorInView();
+					if (blockingActor)
 					{
-						NBPlayerCharacter = NBCharacterPawn;
-						AIController->SetTargetKey(NBPlayerCharacter);
-					}
-					else
-					{
-						AIController->SetTargetKey(NBPlayerCharacter);
-					}
-					if (ASoundBlockingActor* blockingActor = GetSoundBlockingActorInView())
-					{
-						//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
+						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
 					}
 					//if there is nothing blocking in between assign the target enemy
 					else
 					{
-						//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
+						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "not blocked");
+
+						if (NBPlayerCharacter == nullptr)
+						{
+							NBPlayerCharacter = NBCharacterPawn;
+							AIController->SetTargetKey(NBPlayerCharacter);
+						}
+						else
+						{
+							AIController->SetTargetKey(NBPlayerCharacter);
+						}
 						if (bIsSuspicious == false)
 						{
 							FirstDetectedTime = GetWorld()->GetTimeSeconds();
