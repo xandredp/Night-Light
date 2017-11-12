@@ -170,9 +170,9 @@ void ANBCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 		PlayerInputComponent->BindAxis("MoveForward", this, &ANBCharacter::MoveForward);
 		PlayerInputComponent->BindAxis("MoveRight", this, &ANBCharacter::MoveRight);
 
-		PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+		//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 		PlayerInputComponent->BindAxis("TurnRate", this, &ANBCharacter::TurnAtRate);
-		PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+		//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 		PlayerInputComponent->BindAxis("LookUpRate", this, &ANBCharacter::LookUpAtRate);
 	}
 	// handle touch devices
