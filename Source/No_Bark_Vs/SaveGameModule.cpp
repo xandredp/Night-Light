@@ -4,7 +4,7 @@
 #include "GameFramework/Character.h"
 #include "Monsters/Monster Types/NBSkinnyAI.h"
 #include "Player/NBCharacter.h"
-#include "Player/PlayController.h"
+//#include "Player/PlayController.h"
 #include "Core/BaseWeapon.h"
 
 #include "Engine.h"
@@ -70,7 +70,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 		}
 		else
 		{ 		
-			GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Blue, It->GetFullName());
+			//GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Blue, It->GetFullName());
 			SaveGameInstance->Zombies.Add(It->GetFullName());
 		}
 	}
@@ -82,6 +82,14 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 	SaveGameInstance->Minutes = Controller->Minutes;
 	SaveGameInstance->Seconds = Controller->Seconds;
 
+	SaveGameInstance->CurrentPossesedBatteries = Controller->CurrentPossesedBatteries;
+	SaveGameInstance->CurrentPossesedBattery = Controller->CurrentPossesedBattery;
+
+	SaveGameInstance->CurrentPossesedKeys = Controller->CurrentPossesedKeys;
+	SaveGameInstance->CurrentPossesedKey = Controller->CurrentPossesedKey;
+
+
+
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 
 
@@ -89,6 +97,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 }
 
 void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
+
 {
 	USaveGameModule* LoadGameInstance = Cast<USaveGameModule>(UGameplayStatics::CreateSaveGameObject(USaveGameModule::StaticClass()));
 	LoadGameInstance = Cast<USaveGameModule>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
@@ -151,6 +160,17 @@ void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
 	 Controller->Hours = LoadGameInstance->Hours;
 	 Controller->Minutes = LoadGameInstance->Minutes;
 	 Controller->Seconds= LoadGameInstance->Seconds;
+
+	 Controller->CurrentPossesedBatteries = LoadGameInstance->CurrentPossesedBatteries;
+	 Controller->CurrentPossesedBattery = LoadGameInstance->CurrentPossesedBattery;
+
+	 Controller->CurrentPossesedKeys = LoadGameInstance->CurrentPossesedKeys;
+	 Controller->CurrentPossesedKey = LoadGameInstance->CurrentPossesedKey;
+
+
+	 GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Green, FString::Printf(TEXT("Batteries count %d"), Controller->CurrentPossesedBatteries.Num()));
+	 GEngine->AddOnScreenDebugMessage(-1, 8.0f, FColor::Green, FString::Printf(TEXT("Keys count %d"), Controller->CurrentPossesedKeys.Num()));
+
 
 	 //nb->dead
 

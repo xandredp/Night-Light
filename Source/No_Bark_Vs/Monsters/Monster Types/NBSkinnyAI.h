@@ -149,6 +149,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		float MinAgressiveDistant;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool CharacterInRange;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
 		class ANBCharacter* NBPlayerCharacter;
 
@@ -161,7 +164,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		bool DebugDrawEnabledAI2;
 
-private:
+protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sockets")
 		FName RightHandSocket;

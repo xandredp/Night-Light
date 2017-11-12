@@ -83,7 +83,7 @@ protected:
 public:	
 	// retrns sound blocking actor. checkes if sound blocking actor is in between player and self
 	UFUNCTION(BlueprintCallable, Category = "AI")
-		ASoundBlockingActor* GetSoundBlockingActorInView();
+		bool GetSoundBlockingActorInView();
 
 	UFUNCTION(BlueprintCallable, Category = "Status")
 		void OnDeath();

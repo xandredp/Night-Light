@@ -90,6 +90,7 @@ ANBSkinnyAI::ANBSkinnyAI(const class FObjectInitializer& ObjectInitializer)
 	
 	DebugDrawEnabledAI = false;
 	DebugDrawEnabledAI2 = false;
+	CharacterInRange = false;
 
 }
 
@@ -193,7 +194,6 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 		ANBAIController* AIController = Cast<ANBAIController>(GetController());
 		if (AIController)
 		{
-
 			ANBAIController* AIController = Cast<ANBAIController>(GetController());
 			ANBCharacter* NBCharacterPawn = Cast<ANBCharacter>(PawnInstigator);
 			/* if sensed pawn is the player*/
@@ -203,23 +203,25 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 
 				if (AIState != EBotBehaviorType::Stunned)
 				{
-					if (NBPlayerCharacter == nullptr)
+					bool blockingActor = GetSoundBlockingActorInView();
+					if (blockingActor)
 					{
-						NBPlayerCharacter = NBCharacterPawn;
-						AIController->SetTargetKey(NBPlayerCharacter);
-					}
-					else
-					{
-						AIController->SetTargetKey(NBPlayerCharacter);
-					}
-					if (ASoundBlockingActor* blockingActor = GetSoundBlockingActorInView())
-					{
-						//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
+						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
 					}
 					//if there is nothing blocking in between assign the target enemy
 					else
 					{
-						//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "attack");
+						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "not blocked");
+
+						if (NBPlayerCharacter == nullptr)
+						{
+							NBPlayerCharacter = NBCharacterPawn;
+							AIController->SetTargetKey(NBPlayerCharacter);
+						}
+						else
+						{
+							AIController->SetTargetKey(NBPlayerCharacter);
+						}
 						if (bIsSuspicious == false)
 						{
 							FirstDetectedTime = GetWorld()->GetTimeSeconds();
@@ -328,7 +330,6 @@ void ANBSkinnyAI::SimulateMeleeStrike()
 			PlayAnimation(AttackAnimation);
 			//PlaySound(SoundIdle);
 		}
-
 	}
 }
 
@@ -406,13 +407,12 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 
 					//Settimeto start for animation and sound of melleestrike. 
 					GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 1.0, true, 0.0f);
-
+				
 				}
-							}
+			}
+		}
 
-		
-	}
-	
+	CharacterInRange = true;
 }
 
 void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
@@ -432,6 +432,7 @@ void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AAc
 
 		}
 	}
+	CharacterInRange = false;
 }
 
 void ANBSkinnyAI::SetTranparentMaterial()
