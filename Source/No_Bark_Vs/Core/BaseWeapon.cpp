@@ -243,13 +243,10 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	if (Enemy!= nullptr)
 	{	
 		ANBBaseAI *BaseAI = Cast<ANBBaseAI>(Impact.GetActor());
-	
-		
-		Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
-		
-		
+			
 		if (PhysMat)
 		{
+			Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
 
 			if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
 			{
