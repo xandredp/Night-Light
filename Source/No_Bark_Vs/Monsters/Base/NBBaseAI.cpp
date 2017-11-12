@@ -57,9 +57,9 @@ void ANBBaseAI::Tick(float DeltaTime)
 
 }
 
-ASoundBlockingActor * ANBBaseAI::GetSoundBlockingActorInView()
+bool ANBBaseAI::GetSoundBlockingActorInView()
 {
-	FCollisionQueryParams TraceParams(TEXT("TraceBlcokingActor"), true, this);
+	FCollisionQueryParams TraceParams(TEXT("TraceBlockingActor"), true, this);
 	TraceParams.bTraceAsyncScene = true;
 	TraceParams.bReturnPhysicalMaterial = false;
 
@@ -79,9 +79,9 @@ ASoundBlockingActor * ANBBaseAI::GetSoundBlockingActorInView()
 	//	Controller->GetPlayerViewPoint(CamLoc, CamRot);
 	const FVector TraceStart = PlayerLocation;
 	const FVector TraceEnd = AILocation;
-	GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
+	bool anyhits = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, TraceParams);
 	//DrawDebugLine(GetWorld(), TraceStart, Hit.TraceEnd, FColor::Green, true, 0.05f, 0.0f, 1.0f);
-	return Cast<ASoundBlockingActor>(Hit.GetActor());
+	return anyhits;
 }
 
 //OnDeath function sets ragdoll and stops the sound. 

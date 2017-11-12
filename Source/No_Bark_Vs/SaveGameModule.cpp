@@ -97,6 +97,7 @@ void USaveGameModule::SaveGame(ACharacter * ThisCharacter)
 }
 
 void USaveGameModule::LoadGame(ACharacter * ThisCharacter)
+
 {
 	USaveGameModule* LoadGameInstance = Cast<USaveGameModule>(UGameplayStatics::CreateSaveGameObject(USaveGameModule::StaticClass()));
 	LoadGameInstance = Cast<USaveGameModule>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
