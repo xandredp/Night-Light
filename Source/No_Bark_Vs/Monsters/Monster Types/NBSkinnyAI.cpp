@@ -90,6 +90,7 @@ ANBSkinnyAI::ANBSkinnyAI(const class FObjectInitializer& ObjectInitializer)
 	
 	DebugDrawEnabledAI = false;
 	DebugDrawEnabledAI2 = false;
+	CharacterInRange = false;
 
 }
 
@@ -328,7 +329,6 @@ void ANBSkinnyAI::SimulateMeleeStrike()
 			PlayAnimation(AttackAnimation);
 			//PlaySound(SoundIdle);
 		}
-
 	}
 }
 
@@ -406,13 +406,12 @@ void ANBSkinnyAI::OnOverlapStartAnim(UPrimitiveComponent * OverlappedComp, AActo
 
 					//Settimeto start for animation and sound of melleestrike. 
 					GetWorldTimerManager().SetTimer(TimerHandle_MeleeAttack, this, &ANBSkinnyAI::SimulateMeleeStrike, 1.0, true, 0.0f);
-
+				
 				}
-							}
+			}
+		}
 
-		
-	}
-	
+	CharacterInRange = true;
 }
 
 void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
@@ -432,6 +431,7 @@ void ANBSkinnyAI::OnEndOverlapStopAnim(UPrimitiveComponent * OverlappedComp, AAc
 
 		}
 	}
+	CharacterInRange = false;
 }
 
 void ANBSkinnyAI::SetTranparentMaterial()
