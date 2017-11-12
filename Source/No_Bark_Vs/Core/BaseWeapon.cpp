@@ -246,13 +246,12 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 			
 		if (PhysMat)
 		{
-			Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
-
 			if (PhysMat->SurfaceType == SURFACE_ENEMYHEAD)
 			{
 
 				CurrentDamage = WeaponConfig.WeaponDamage * 2.0f;
 			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Head!!");
+				Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
 				Enemy->ReduceHealth(CurrentDamage);
 				Enemy->OnShotAt();
 			}
@@ -260,6 +259,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 			{
 				CurrentDamage = WeaponConfig.WeaponDamage* 0.5f;
 			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A Limb!!");
+				Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
 				Enemy->ReduceHealth(CurrentDamage);
 				Enemy->OnShotAt();
 			}
@@ -267,6 +267,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 			{
 				CurrentDamage = WeaponConfig.WeaponDamage;
 			//	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, "YOU HIT A BODY!!");
+				Enemy->ApplyDamage(Enemy, Damage, Origin, Impact, PC, this, DamageType);//TSubclassOf<UDamageType> DamageTypeClass)
 				Enemy->ReduceHealth(CurrentDamage);
 				Enemy->OnShotAt();
 			}
