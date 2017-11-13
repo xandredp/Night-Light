@@ -131,6 +131,11 @@ void ANBSkinnyAI::Tick(float DeltaSeconds)
 
 void ANBSkinnyAI::OnStun()
 {
+	if (IsAnimPlaying)
+	{
+		IsAnimPlaying = false;
+	}
+	
 	SetAIState(EBotBehaviorType::Stunned);
 }
 
@@ -206,12 +211,12 @@ void ANBSkinnyAI::OnHearNoise(APawn * PawnInstigator, const FVector & Location, 
 					bool blockingActor = GetSoundBlockingActorInView();
 					if (blockingActor)
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
+					//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "blocked");
 					}
 					//if there is nothing blocking in between assign the target enemy
 					else
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "not blocked");
+					//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "not blocked");
 
 						if (NBPlayerCharacter == nullptr)
 						{
