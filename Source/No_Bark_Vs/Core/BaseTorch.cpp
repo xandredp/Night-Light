@@ -195,22 +195,24 @@ void ABaseTorch::ActivateTorch()
 				}
 			}
 		}
-		if (EnemyPawn)
+	
+		//there is enough energy
+		if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
 		{
-			//there is enough energy
-			if (CurrentEnergy - EnergyReductionOnPowerUse >= 0)
+			TorchActivatedEvent();
+			if (EnemyPawn)
 			{
-				TorchActivatedEvent();
 				EnemyPawn->OnStun();
-				DecreaseEnergy();
 			}
-
-			// if we don't have energy 
-			else
-			{
-				// say warning. 
-			}
+			DecreaseEnergy();
 		}
+
+		// if we don't have energy 
+		else
+		{
+			// say warning. 
+		}
+		
 	}
 	else
 	{
