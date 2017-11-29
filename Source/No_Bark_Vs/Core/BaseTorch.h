@@ -87,6 +87,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
 		bool StunMultiple;
+	/*When enabled torch will be able to stun enemies. off by defalut because torch does not need to stun for current game desgin. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+		bool StunEnemiesOn;
+
 
 	UFUNCTION(BlueprintCallable, Category = "Torch")
 		void DrainTorchEnergy();

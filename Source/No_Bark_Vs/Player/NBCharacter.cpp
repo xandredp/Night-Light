@@ -768,7 +768,10 @@ void ANBCharacter::PowerUpTorch()
 {
 	if (CurrentTorch)
 	{
-		CurrentTorch->ActivateTorch();
+		if (CurrentTorch->StunEnemiesOn == true)
+		{
+			CurrentTorch->ActivateTorch();
+		}
 	}
 
 }

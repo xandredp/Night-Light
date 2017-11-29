@@ -27,7 +27,7 @@ ABaseTorch::ABaseTorch()
 	TorchSpotlight->SetOuterConeAngle(33.0);
 	TorchSpotlight->SetInnerConeAngle(22.0);
 
-
+	StunEnemiesOn = false;
 	StunIntensity = 80000.0f;
 	StunAttenuationRadious = 2000.0f;
 	MaxIntensity = 8000.0f;
@@ -174,6 +174,7 @@ void ABaseTorch::IncreaseEnergyByFloat(float EnergyToAdd)
 
 void ABaseTorch::ActivateTorch()
 {
+	
 	if (StunMultiple == true)
 	{
 		for (int32 j = 0; j < EnemyPawns.Num(); j++)
