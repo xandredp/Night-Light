@@ -6,6 +6,7 @@
 #include "Animation/AnimMontage.h"
 #include "Core/Pickup.h"
 #include "Engine/DataTable.h"
+#include "Sound/SoundCue.h"
 #include "BaseWeapon.generated.h"
 
 class ANBCharacter;

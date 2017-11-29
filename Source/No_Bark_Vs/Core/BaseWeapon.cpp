@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Items/BaseImpactEffect.h"
 #include "NBDamageType.h"
-#include "Monsters/Base/Monster.h"
 #include "Monsters/Base/NBBaseAI.h"
 
 ABaseWeapon::ABaseWeapon()
@@ -230,7 +229,7 @@ void ABaseWeapon::ProcessInstantHit(const FHitResult & Impact, const FVector & O
 	UPhysicalMaterial * PhysMat = Impact.PhysMaterial.Get();
 	
 	ANBBaseAI *Enemy = Cast<ANBBaseAI>(Impact.GetActor());
-	//AMonster *Enemy = Cast<AMonster>(Impact.GetActor());
+
 	float Damage = 10.0f;
 
 	APlayController* const PC = Instigator ? Cast<APlayController>(Instigator->Controller) : nullptr;
