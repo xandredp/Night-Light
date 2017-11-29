@@ -16,12 +16,6 @@
 #include "Player/PlayerSensingPawn.h"
 #include "Animation/AnimInstance.h"
 #include "Public/TimerManager.h"
-//#include "Perception/PawnSensingComponent.h"
-//#include "GameFramework/InputSettings.h"
-//#include "HeadMountedDisplayFunctionLibrary.h"
-//#include "Engine.h"
-
-
 
 ANBCharacter::ANBCharacter()
 {
@@ -87,10 +81,7 @@ ANBCharacter::ANBCharacter()
 
 
 
-	CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
-	////CharacterMesh = GetMesh();// CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
-	//CharacterMesh->SetupAttachment(RootComponent);
-			
+	CharacterMesh = GetMesh();
 	
 	// Create a follow camera
 	CameraMovemetMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSArmMeshForCameraMovemet"));
@@ -288,9 +279,6 @@ void ANBCharacter::DecreaseHealth(float decreaseVal)
 			bIsDead = true;
 			DestroyAndBackToMenu();
 		}
-		/*Health Regenration Diabled to enable comment this one back*/
-		//GetWorldTimerManager().SetTimer(StartHealTimerHandle, this, &ANBCharacter::IncreaseHealthByTime, HealthTimerRate, true);
-
 	}
 	
 }
@@ -304,8 +292,7 @@ void ANBCharacter::IncreaseHealthByTime()
 {
 	if (CurrentHealth >= MaxHealth)
 	{
-		//Stops Health Increase
-		//GetWorldTimerManager().ClearTimer(StartHealTimerHandle);
+
 	}
 	else
 	{
